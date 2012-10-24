@@ -188,7 +188,7 @@ void BattlescapeGame::handleAI(BattleUnit *unit)
 		statePushBack(new UnitWalkBState(this, action));
 	}
 
-	if (action.type == BA_SNAPSHOT || action.type == BA_AUTOSHOT || action.type == BA_THROW)
+	if (action.type == BA_SNAPSHOT || action.type == BA_AUTOSHOT || action.type == BA_FULLAUTO || action.type == BA_THROW)
 	{
 		statePushBack(new ProjectileFlyBState(this, action));
 	}
@@ -705,7 +705,7 @@ void BattlescapeGame::popState()
 			if (_save->getSide() != FACTION_PLAYER && !_debugPlay)
 			{
 				 // AI does two things per unit, before switching to the next, or it got killed before doing the second thing
-				if (_AIActionCounter > 1 || _save->getSelectedUnit() == 0 || _save->getSelectedUnit()->isOut())
+				if (_AIActionCounter > 2 || _save->getSelectedUnit() == 0 || _save->getSelectedUnit()->isOut())
 				{
 					_AIActionCounter = 0;
 					if (_save->selectNextPlayerUnit(true) == 0)
@@ -847,6 +847,8 @@ bool BattlescapeGame::handlePanickingPlayer()
  */
 bool BattlescapeGame::handlePanickingUnit(BattleUnit *unit)
 {
+	if(unit->getSpecialAbility() == SPECAB_MORPHONDEATH && unit->getType() != "ZOMBIE")
+		unit->killUnit();
 	UnitStatus status = unit->getStatus();
 	if (status != STATUS_PANICKING && status != STATUS_BERSERK) return false;
 	unit->setVisible(true);
@@ -1016,7 +1018,7 @@ void BattlescapeGame::primaryAction(const Position &pos)
 		}
 		else if (_currentAction.type == BA_USE && _currentAction.weapon->getRules()->getBattleType() == BT_MINDPROBE)
 		{
-			if (_save->selectUnit(pos) && _save->selectUnit(pos)->getFaction() != _save->getSelectedUnit()->getFaction())
+			if (_save->selectUnit(pos)->getFaction() != _save->getSelectedUnit()->getFaction())
 			{
 				_parentState->getGame()->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_currentAction.weapon->getRules()->getHitSound())->play();
 				_parentState->getGame()->pushState (new UnitInfoState (_parentState->getGame(), _save->selectUnit(pos)));

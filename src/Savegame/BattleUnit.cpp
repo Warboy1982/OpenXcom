@@ -77,6 +77,7 @@ BattleUnit::BattleUnit(Soldier *soldier, UnitFaction faction) : _faction(faction
 	_health = _stats.health;
 	_morale = 100;
 	_stunlevel = 0;
+	_flashlevel = 0;
 	_currentArmor[SIDE_FRONT] = _armor->getFrontArmor();
 	_currentArmor[SIDE_LEFT] = _armor->getSideArmor();
 	_currentArmor[SIDE_RIGHT] = _armor->getSideArmor();
@@ -116,6 +117,7 @@ BattleUnit::BattleUnit(Unit *unit, UnitFaction faction, int id, Armor *armor) : 
 	_health = _stats.health;
 	_morale = 100;
 	_stunlevel = 0;
+	_flashlevel = 0;
 	_currentArmor[SIDE_FRONT] = _armor->getFrontArmor();
 	_currentArmor[SIDE_LEFT] = _armor->getSideArmor();
 	_currentArmor[SIDE_RIGHT] = _armor->getSideArmor();
@@ -157,6 +159,7 @@ void BattleUnit::load(const YAML::Node &node)
 	node["tu"] >> _tu;
 	node["health"] >> _health;
 	node["stunlevel"] >> _stunlevel;
+	node["flashlevel"] >> _flashlevel;
 	node["energy"] >> _energy;
 	node["morale"] >> _morale;
 	node["kneeled"] >> _kneeled;
@@ -198,6 +201,7 @@ void BattleUnit::save(YAML::Emitter &out) const
 	out << YAML::Key << "tu" << YAML::Value << _tu;
 	out << YAML::Key << "health" << YAML::Value << _health;
 	out << YAML::Key << "stunlevel" << YAML::Value << _stunlevel;
+	out << YAML::Key << "flashlevel" << YAML::Value << _flashlevel;
 	out << YAML::Key << "energy" << YAML::Value << _energy;
 	out << YAML::Key << "morale" << YAML::Value << _morale;
 	out << YAML::Key << "kneeled" << YAML::Value << _kneeled;
@@ -327,7 +331,7 @@ UnitStatus BattleUnit::getStatus() const
  * @param direction Which way to walk.
  * @param destination The position we should end up on.
  */
-void BattleUnit::startWalking(int direction, const Position &destination, Tile *destinationTile)
+void BattleUnit::startWalking(int direction, const Position &destination)
 {
 	if (direction < Pathfinding::DIR_UP)
 	{
@@ -340,7 +344,7 @@ void BattleUnit::startWalking(int direction, const Position &destination, Tile *
 		_status = STATUS_FLYING;
 	}
 
-	if (!_tile->getMapData(MapData::O_FLOOR) || (direction >= Pathfinding::DIR_UP && !destinationTile->getMapData(MapData::O_FLOOR)))
+	if (!_tile->getMapData(MapData::O_FLOOR))
 	{
 		_status = STATUS_FLYING;
 		_floating = true;
@@ -717,7 +721,8 @@ void BattleUnit::damage(Position position, int power, ItemDamageType type, bool 
 		return;
 	}
 
-	power = (int)floor(power * _armor->getDamageModifier(type));
+	if (type != DT_FLASH)
+		power = (int)floor(power * _armor->getDamageModifier(type));
 
 	if (!ignoreArmor)
 	{
@@ -814,6 +819,11 @@ void BattleUnit::damage(Position position, int power, ItemDamageType type, bool 
 		{
 			_stunlevel += power;
 		}
+		else if (type == DT_FLASH)
+		{
+			int number = RNG::generate(2,3);
+			_flashlevel += number;
+		}
 		else
 		{
 			// health damage
@@ -850,11 +860,21 @@ void BattleUnit::healStun(int power)
 	if (_stunlevel < 0) _stunlevel = 0;
 }
 
+void BattleUnit::healFlash(int power)
+{
+	_flashlevel -= power;
+	if (_flashlevel < 0) _flashlevel = 0;
+}
+
 int BattleUnit::getStunlevel() const
 {
 	return _stunlevel;
 }
 
+int BattleUnit::getFlashlevel() const
+{
+	return _flashlevel;
+}
 /**
  * Intialises the falling sequence. Occurs after death or stunned.
  */
@@ -871,13 +891,21 @@ void BattleUnit::startFalling()
 void BattleUnit::keepFalling()
 {
 	_fallPhase++;
-	if (_fallPhase == 3)
+	if (_fallPhase == 3 && _race != "STR_ZOMBIE")
 	{
 		_fallPhase = 2;
-		if (_health == 0)
+		if (_health <= 0)
 			_status = STATUS_DEAD;
 		else
 			_status = STATUS_UNCONSCIOUS;
+	}
+	else if (_fallPhase == 18)
+	{
+		_fallPhase = 17;
+		if (_health <= 0)
+		{
+			_status = STATUS_DEAD;
+		}
 	}
 	_cacheInvalid = true;
 }
@@ -924,6 +952,7 @@ int BattleUnit::getActionTUs(BattleActionType actionType, BattleItem *item)
 		case BA_AUTOSHOT:
 			return (int)(getStats()->tu * item->getRules()->getTUAuto() / 100);
 		case BA_SNAPSHOT:
+		case BA_FULLAUTO:
 			return (int)(getStats()->tu * item->getRules()->getTUSnap() / 100);
 		case BA_HIT:
 			return (int)(getStats()->tu * item->getRules()->getTUMelee() / 100);
@@ -1111,8 +1140,12 @@ double BattleUnit::getAccuracyModifier()
 		wounds = 9;
 
 	result *= 1 + (-0.1*wounds);
-
-	return result;
+	if(_flashlevel > 1)
+		return result/3;
+	else if(_flashlevel > 0)
+		return (result/3)*2;
+	else
+		return result;
 }
 
 /**
@@ -1169,6 +1202,11 @@ double BattleUnit::getReactionScore()
 {
 	//(Reactions Stat) x (Current Time Units / Max TUs)
 	double score = ((double)getStats()->reactions * (double)getTimeUnits()) / (double)getStats()->tu;
+	if(_flashlevel > 1)
+		return score / 3;
+	else if(_flashlevel > 0)
+		return (score / 3)*2;
+	else
 	return score;
 }
 
@@ -1222,7 +1260,8 @@ void BattleUnit::prepareNewTurn()
 	// recover stun 1pt/turn
 	if (_stunlevel > 0)
 		healStun(1);
-
+	if(_flashlevel > 0)
+		healFlash(1);
 	if (!isOut())
 	{
 		int chance = 100 - (2 * getMorale());
@@ -1523,7 +1562,11 @@ bool BattleUnit::isInExitArea() const
 */
 int BattleUnit::getHeight() const
 {
-	return isKneeled()?getKneelHeight():getStandHeight();
+
+	if(_kneeled)
+	return getKneelHeight();
+	else
+	return getStandHeight();
 }
 
 /**
@@ -1933,6 +1976,26 @@ void BattleUnit::convertToFaction(UnitFaction f)
 {
 	_faction = f;
 }
+void BattleUnit::setFemale(int g)
+{
+	if(g)
+	_gender = GENDER_FEMALE;
+}
 
+void BattleUnit::setFaction(UnitFaction f)
+{
+	_faction = f;
+	_originalFaction = f;
+}
+
+void BattleUnit::setSpecAb()
+{
+	if(!_specab)
+	_specab = SPECAB_MORPHONDEATH;
+}
+void BattleUnit::killUnit()
+{
+	_health = 0;
+}
 }
 

@@ -130,7 +130,7 @@ void AggroBAIState::think(BattleAction *action)
 		_aggroTarget = (*j);
 	}
 
-	// if we currently see no target, we either can move to it's last seen position or loose aggro
+	// if we currently see no target, we either can move to it's last seen position or lose aggro
 	if (_aggroTarget == 0 || _aggroTarget->isOut())
 	{
 		_timesNotSeen++;
@@ -153,7 +153,7 @@ void AggroBAIState::think(BattleAction *action)
 		if (_unit->getHealth() < _unit->getStats()->health)
 			number += 10;
 
-		// aggrotarget has no weapon - changes of take cover get smaller
+		// aggrotarget has no weapon - chances of take cover get smaller
 		if (!_aggroTarget->getMainHandWeapon())
 			number -= 50;
 
@@ -177,10 +177,12 @@ void AggroBAIState::think(BattleAction *action)
 			// distance must be more than 6 tiles, otherwise it's too dangerous to play with explosives
 			if (_game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()) > 6)
 			{
+				if((_unit->getFaction() == FACTION_NEUTRAL && _aggroTarget->getFaction() == FACTION_HOSTILE) || _unit->getFaction() == FACTION_HOSTILE)
+				{
 				// do we have a grenade on our belt?
 				BattleItem *grenade = _unit->getGrenadeFromBelt();
 				// do we have enough TUs to prime and throw the grenade?
-				if (grenade)
+				if (grenade && RNG::generate(0,2) == 0)
 				{
 					action->weapon = grenade;
 					tu += _unit->getActionTUs(BA_PRIME, grenade);
@@ -196,6 +198,7 @@ void AggroBAIState::think(BattleAction *action)
 						}
 					}
 				}
+				}
 			}
 
 			if (action->type == BA_NONE)
@@ -208,16 +211,21 @@ void AggroBAIState::think(BattleAction *action)
 				}
 				else
 				{
-					if (RNG::generate(1,10) < 5)
-						action->type = BA_SNAPSHOT;
-					else
-						action->type = BA_AUTOSHOT;
-					tu = action->actor->getActionTUs(action->type, action->weapon);
-					// enough time units to shoot?
-					if (tu > _unit->getTimeUnits())
+					if(((_unit->getFaction() == FACTION_NEUTRAL && _aggroTarget->getFaction() == FACTION_HOSTILE) || _unit->getFaction() == FACTION_HOSTILE) && _game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()) <= action->weapon->getRules()->getWeaponRange())
 					{
-						takeCover = true;
+						if (RNG::generate(1,10) < 5)
+							action->type = BA_SNAPSHOT;
+						else
+							action->type = BA_AUTOSHOT;
+						tu = action->actor->getActionTUs(action->type, action->weapon);
+						// enough time units to shoot?
+						if (tu > _unit->getTimeUnits())
+						{
+							takeCover = true;
+						}
 					}
+					else
+						takeCover = true;
 				}
 			}
 		}

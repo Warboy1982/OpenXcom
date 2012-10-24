@@ -299,7 +299,6 @@
     <ClCompile Include="Geoscape\ConfirmNewBaseState.cpp" />
     <ClCompile Include="Geoscape\CraftPatrolState.cpp" />
     <ClCompile Include="Geoscape\DogfightState.cpp" />
-    <ClCompile Include="Geoscape\NewPossibleManufactureState.cpp" />
     <ClCompile Include="Geoscape\ResearchCompleteState.cpp" />
     <ClCompile Include="Geoscape\FundingState.cpp" />
     <ClCompile Include="Geoscape\GeoscapeCraftState.cpp" />
@@ -520,7 +519,6 @@
     <ClInclude Include="Geoscape\DogfightState.h" />
     <ClInclude Include="Geoscape\FundingState.h" />
     <ClInclude Include="Geoscape\GeoscapeCraftState.h" />
-    <ClInclude Include="Geoscape\NewPossibleManufactureState.h" />
     <ClInclude Include="Geoscape\NewPossibleResearchState.h" />
     <ClInclude Include="Geoscape\ProductionCompleteState.h" />
     <ClInclude Include="Geoscape\GeoscapeState.h" />
@@ -562,7 +560,6 @@
     <ClInclude Include="Menu\SaveGameState.h" />
     <ClInclude Include="Menu\StartState.h" />
     <ClInclude Include="Menu\TestState.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Resource\ResourcePack.h" />
     <ClInclude Include="Resource\XcomResourcePack.h" />
     <ClInclude Include="Ruleset\ArticleDefinition.h" />
@@ -627,9 +624,6 @@
     <ClInclude Include="Ufopaedia\Ufopaedia.h" />
     <ClInclude Include="Ufopaedia\UfopaediaSelectState.h" />
     <ClInclude Include="Ufopaedia\UfopaediaStartState.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="OpenXcom.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\media\openxcom.ico" />

@@ -23,7 +23,7 @@
 #include <vector>
 #include <yaml-cpp/yaml.h>
 
-enum ItemDamageType { DT_NONE, DT_AP, DT_IN, DT_HE, DT_LASER, DT_PLASMA, DT_STUN, DT_MELEE, DT_ACID, DT_SMOKE };
+enum ItemDamageType { DT_NONE, DT_AP, DT_IN, DT_HE, DT_LASER, DT_PLASMA, DT_STUN, DT_MELEE, DT_ACID, DT_SMOKE, DT_FLASH };
 enum BattleType { BT_NONE, BT_FIREARM, BT_AMMO, BT_MELEE, BT_GRENADE, BT_PROXIMITYGRENADE, BT_MEDIKIT, BT_SCANNER, BT_MINDPROBE, BT_PSIAMP, BT_FLARE, BT_CORPSE };
 
 namespace OpenXcom
@@ -54,7 +54,7 @@ private:
 	int _accuracyAuto, _accuracySnap, _accuracyAimed, _tuAuto, _tuSnap, _tuAimed;
 	int _clipSize, _accuracyMelee, _tuMelee;
 	BattleType _battleType;
-	bool _twoHanded, _waypoint, _fixedWeapon;
+	bool _twoHanded, _waypoint, _fixedWeapon, _fullAuto;
 	int _invWidth, _invHeight;
 	int _painKiller, _heal, _stimulant;
 	int _healAmount, _healthAmount;
@@ -63,6 +63,11 @@ private:
 	int _recoveryPoints;
 	int _armor;
 	bool _recover;
+	int _weaponRange;
+	bool _shotgunRules;
+	bool _flamerRules;
+	bool _grenadeRules;
+	int _projectiles;
 public:
 	/// Creates a blank item ruleset.
 	RuleItem(const std::string &type);
@@ -100,6 +105,8 @@ public:
 	bool isWaypoint() const;
 	/// Gets if the item is fixed.
 	bool isFixed() const;
+	/// Gets if the item uses full auto behaviour.
+	bool isFullAuto() const;
 	/// Gets the item's bullet sprite reference.
 	int getBulletSprite() const;
 	/// Gets the item's fire sound.
@@ -164,6 +171,11 @@ public:
 	int getArmor() const;
 	/// Gets the item's recoverability.
 	bool isRecoverable() const;
+	bool isShotgun() const;
+	bool isFlamer() const;
+	bool isGrenade() const;
+	int getWeaponRange() const;
+	int getProjectiles() const;
 };
 
 }

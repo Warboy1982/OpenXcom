@@ -60,7 +60,7 @@ DebriefingState::DebriefingState(Game *game) : State(game)
 	_txtQuantity = new Text(60, 9, 200, 24);
 	_txtScore = new Text(50, 9, 260, 24);
 	_txtUfoRecovery = new Text(180, 9, 16, 60);
-	_txtRating = new Text(120, 9, 64, 180);
+	_txtRating = new Text(100, 9, 64, 180);
 	_lstStats = new TextList(280, 80, 16, 32);
 	_lstUfoRecovery = new TextList(280, 80, 16, 32);
 	_lstTotal = new TextList(280, 9, 16, 12);
@@ -452,7 +452,7 @@ void DebriefingState::prepareDebriefing()
 
 	if (!aborted && playersSurvived > 0) 	// RECOVER UFO : run through all tiles to recover UFO components and items
 	{
-		if (battle->getMissionType() == "STR_BASE_DEFENSE")
+		if (battle->getMissionType() == "STR_BASE_DEFENSE" || battle->getMissionType() == "STR_MILITARY_DEFENSE")
 		{
 			_txtTitle->setText(_game->getLanguage()->getString("STR_BASE_IS_SAVED"));
 		}
@@ -527,7 +527,7 @@ void DebriefingState::prepareDebriefing()
 	}
 	else
 	{
-		if (battle->getMissionType() == "STR_BASE_DEFENSE")
+		if (battle->getMissionType() == "STR_BASE_DEFENSE"||battle->getMissionType() == "STR_MILITARY_DEFENSE")
 		{
 			_txtTitle->setText(_game->getLanguage()->getString("STR_BASE_IS_LOST"));
 		}

@@ -61,6 +61,9 @@ private:
 	Tile *_craftInventoryTile;
 	std::string _alienRace;
 	int _alienItemLevel;
+	int _PoliceItems;
+	std::string officerGender;
+	BattleUnit *unit;
 
 	/// Generate a new battlescape map.
 	void generateMap();
@@ -71,6 +74,7 @@ private:
 	/// Add an alien to the game
 	BattleUnit *addAlien(Unit *rules, int alienRank, bool outside);
 	BattleUnit *addCivilian(Unit *rules);
+	BattleUnit *addPoliceman(Unit *rules);
 	/// Add an item to the game
 	BattleItem* addItem(BattleItem *item);
 	// Add an item to a unit
@@ -83,6 +87,8 @@ private:
 	void explodePowerSources();
 	void deployAliens(AlienRace *race, AlienDeployment *deployment);
 	void deployCivilians(int max);
+	void deployPolice(int max);
+	void deployMilitary(int max);
 public:
 	/// Creates a new BattlescapeGenerator class
 	BattlescapeGenerator(Game *game);
@@ -106,7 +112,6 @@ public:
 	void setTerrorSite(TerrorSite* site);
 	/// Runs the generator.
 	void run();
-
 };
 
 }

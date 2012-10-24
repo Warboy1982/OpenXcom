@@ -22,8 +22,6 @@
 #include "../Engine/Game.h"
 #include "../Engine/Surface.h"
 #include "../Engine/Language.h"
-#include "../Resource/ResourcePack.h"
-#include "../Engine/Palette.h"
 #include "../Interface/TextButton.h"
 
 namespace OpenXcom
@@ -75,7 +73,6 @@ namespace OpenXcom
 	void ArticleState::btnOkClick(Action *action)
 	{
 		_game->popState();
-		_game->setPalette(_game->getResourcePack()->getPalette("PALETTES.DAT_0")->getColors());
 	}
 
 	/**

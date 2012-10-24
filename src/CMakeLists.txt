@@ -262,8 +262,6 @@ set ( geoscape_src
   Geoscape/NewPossibleResearchState.cpp
   Geoscape/AlienTerrorState.h
   Geoscape/AlienTerrorState.cpp
-  Geoscape/NewPossibleManufactureState.h
-  Geoscape/NewPossibleManufactureState.cpp
 )
 
 set ( interface_src

@@ -38,7 +38,7 @@ namespace OpenXcom
  * @param x X position in pixels.
  * @param y Y position in pixels.
  */
-Surface::Surface(int width, int height, int x, int y) : _x(x), _y(y), _visible(true), _hidden(false), _redraw(false), _originalColors(0)
+Surface::Surface(int width, int height, int x, int y) : _x(x), _y(y), _visible(true), _hidden(false), _redraw(false), _originalColors(0), _animated(false)
 {
 	_surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 8, 0, 0, 0, 0);
 
@@ -762,5 +762,9 @@ void Surface::blitNShade(Surface *surface, int x, int y, int off, bool half, int
 void Surface::invalidate()
 {
 	_redraw = true;
+}
+void Surface::setAnimated(bool animate)
+{
+	_animated = animate;
 }
 }

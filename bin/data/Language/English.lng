@@ -1628,9 +1628,9 @@ Pistol
 STR_PISTOL_CLIP
 Pistol Clip
 STR_RIFLE
-Rifle
+Assault Rifle
 STR_RIFLE_CLIP
-Rifle Clip
+Assault Rifle Clip
 STR_HEAVY_CANNON
 Heavy Cannon
 STR_HC_AP_AMMO
@@ -1642,7 +1642,7 @@ HC-I Ammo
 STR_AUTO_CANNON
 Auto-Cannon
 STR_AC_AP_AMMO
-AC-AP Ammo
+Auto-Cannon Ammo
 STR_AC_HE_AMMO
 AC-HE Ammo
 STR_AC_I_AMMO
@@ -1662,7 +1662,7 @@ Smoke Grenade
 STR_PROXIMITY_GRENADE
 Proximity Grenade
 STR_HIGH_EXPLOSIVE
-High Explosive
+Demolition Charge
 STR_STUN_ROD
 Stun Rod
 STR_HEAVY_PLASMA
@@ -1924,7 +1924,7 @@ AMMO:{NEWLINE}ROUNDS{NEWLINE}LEFT=
 STR_THROW
 Throw
 STR_AUTO_SHOT
-Auto Shot
+Burst Fire
 STR_SNAP_SHOT
 Snap Shot
 STR_AIMED_SHOT
@@ -2038,7 +2038,7 @@ UNDER ARMOR
 STR_TIME_UNITS_RESERVED_FOR_SNAP_SHOT
 Time Units reserved for Snap Shot
 STR_TIME_UNITS_RESERVED_FOR_AUTO_SHOT
-Time Units reserved for Auto Shot
+Time Units reserved for Burst Fire
 STR_TIME_UNITS_RESERVED_FOR_AIMED_SHOT
 Time Units reserved for Aimed Shot
 STR_UNITS_IN_EXIT_AREA
@@ -2083,3 +2083,77 @@ STR_DESERT
 Desert
 STR_POLAR
 Polar
+STR_FULLAUTO
+Full Auto
+STR_GRENADE_LAUNCHER
+Grenade Launcher
+STR_LAUNCHER_FRAG
+44mm Grenade
+STR_LAUNCHER_INC
+44mm Inc. Grenade
+STR_LAUNCHER_STUN
+44mm Conc. Grenade
+STR_COMBAT_ARMOR
+Combat Armor
+STR_FLASHBANG
+Flashbang
+STR_COMBAT_ARMOR_UC
+COMBAT ARMOR
+STR_PLASMA_BLADE
+Plasma Blade
+STR_LONG_BURN
+Long Burn
+STR_SHORT_BURN
+Short Burn
+STR_SNIPER_RIFLE
+Sniper Rifle
+STR_SNIPER_AMMO
+Sniper Rifle Clip
+STR_MELEE
+Melee Attack
+STR_SHOTGUN
+Shotgun
+STR_SHOTGUN_AMMO
+Shotgun Ammo
+STR_FLAMETHROWER
+Flamethrower
+STR_FLAMETHROWER_AMMO
+Flamethrower Fuel
+STR_STUN_GRENADE
+Concussion Grenade
+STR_INCEND_GRENADE
+Incendiary Grenade
+STR_COMBAT_KNIFE
+Combat Knife
+STR_TIME_UNITS_RESERVED_FOR_FULLAUTO
+Time Units reserved for Full Auto
+STR_MALE_POLICE
+Police Officer
+STR_FEMALE_POLICE
+Police Officer
+STR_DISRUPTOR_PISTOL
+Disruptor Pistol
+STR_DISRUPTOR_RIFLE
+Disruptor Rifle
+STR_GAUSS_RIFLE
+Gauss Rifle
+STR_POLICE
+Local Law Enforcement
+STR_PRIME_THROW
+Prime/Throw
+STR_MILITARY_DEFENSE
+Military Defense
+STR_GAUSS_RIFLE_CLIP
+Gauss Rifle Clip
+STR_RAIL_GUN
+Rail Gun
+STR_RAIL_GUN_CLIP
+Rail Gun Clip
+STR_HUMAN_SOLDIER
+Military Personnel
+STR_MILITARY_DEFENCE
+Military Defence
+STR_ANTI_INFILTRATION
+Counter-Infiltration
+STR_UNABLE_TO_SHOOT_HERE
+Unable to shoot here!

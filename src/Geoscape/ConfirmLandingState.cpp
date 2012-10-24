@@ -35,6 +35,7 @@
 #include "../Savegame/TerrorSite.h"
 #include "../Battlescape/BriefingState.h"
 #include "../Battlescape/BattlescapeGenerator.h"
+#include "../SaveGame/GameTime.h"
 
 namespace OpenXcom
 {
@@ -131,7 +132,13 @@ void ConfirmLandingState::btnYesClick(Action *action)
 		bgen.setCraft(_craft);
 		bgen.setUfo(u);
 		bgen.setAlienRace(u->getAlienRace());
-		bgen.setAlienItemlevel(0);
+		_game->getSavedGame()->getTime();
+		if(_game->getSavedGame()->getTime()->getTotalDays() < 90)
+			bgen.setAlienItemlevel(0);
+		else if(_game->getSavedGame()->getTime()->getTotalDays() < 180)
+			bgen.setAlienItemlevel(1);
+		else
+			bgen.setAlienItemlevel(2);
 		bgen.run();
 
 		_game->pushState(new BriefingState(_game, _craft));
@@ -147,7 +154,12 @@ void ConfirmLandingState::btnYesClick(Action *action)
 		bgen.setCraft(_craft);
 		bgen.setTerrorSite(t);
 		bgen.setAlienRace(t->getAlienRace());
-		bgen.setAlienItemlevel(0);
+		if(_game->getSavedGame()->getTime()->getTotalDays() < 90)
+			bgen.setAlienItemlevel(0);
+		else if(_game->getSavedGame()->getTime()->getTotalDays() < 180)
+			bgen.setAlienItemlevel(1);
+		else
+			bgen.setAlienItemlevel(2);
 		bgen.run();
 
 		_game->pushState(new BriefingState(_game, _craft));

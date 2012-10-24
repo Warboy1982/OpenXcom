@@ -45,18 +45,10 @@ InteractiveSurface::InteractiveSurface(int width, int height, int x, int y) : Su
  */
 InteractiveSurface::~InteractiveSurface()
 {
+	if(_clicks[0])
 	delete[] _clicks;
+	if(_buttonsPressed[0])
 	delete[] _buttonsPressed;
-}
-
-bool InteractiveSurface::isButtonPressed()
-{
-	for (int i = 0; i <= NUM_BUTTONS; ++i)
-	{
-		if (_buttonsPressed[i])
-			return true;
-	}
-	return false;
 }
 
 /**
@@ -136,6 +128,7 @@ void InteractiveSurface::handle(Action *action, State *state)
 			mouseRelease(action, state);
 			if (_isHovered)
 			{
+				if(action->getDetails()->button.button != 7 && action->getDetails()->button.button != 6)
 				mouseClick(action, state);
 			}
 		}
@@ -170,12 +163,9 @@ void InteractiveSurface::focus()
  */
 void InteractiveSurface::unpress(State *state)
 {
-	if (isButtonPressed())
+	if (_buttonsPressed[SDL_BUTTON_LEFT])
 	{
-		for (int i = 0; i <= NUM_BUTTONS; ++i)
-		{
-			_buttonsPressed[i] = false;
-		}
+		_buttonsPressed[SDL_BUTTON_LEFT] = false;
 		SDL_Event ev;
 		ev.type = SDL_MOUSEBUTTONUP;
 		ev.button.button = SDL_BUTTON_LEFT;

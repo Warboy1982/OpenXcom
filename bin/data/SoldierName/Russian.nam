@@ -2,8 +2,8 @@ maleFirst:
   - Anatoly
   - Andrei
   - Boris
-  - Dmitry
-  - Gennady
+  - Dmitriy
+  - Gennadi
   - Grigoriy
   - Igor
   - Ivan
@@ -15,62 +15,30 @@ maleFirst:
   - Vladimir
   - Yuri
 femaleFirst:
-  - Anna
-  - Elena
+  - Astra
   - Galina
-  - Inna
-  - Irina
   - Lyudmila
-  - Marina
-  - Oksana
   - Olga
   - Tatyana
-  - Tamara
-  - Varvara
-  - Yana
 maleLast:
-  - Antonov
+  - Andianov
   - Belov
-  - Chernov
-  - Doronin
-  - Gromov
-  - Komarov
-  - Korolev
-  - Lebedev
+  - Chukarin
+  - Gorokhova
+  - Kolotov
+  - Korkia
   - Likhachev
-  - Matveev
+  - Maleev
   - Mikhailov
-  - Nikitin
   - Petrov
+  - Ragulin
   - Romanov
-  - Samoylenko
-  - Sharov
-  - Shedrin
+  - Samusenko
+  - Scharov
+  - Shadrin
   - Shalimov
-  - Tarasov
+  - Torban
   - Voronin
-  - Yakushev
+  - Yakubik
   - Zhdanovich
-femaleLast:
-  - Antonova
-  - Belova
-  - Chernova
-  - Doronina
-  - Gromova
-  - Komarova
-  - Koroleva
-  - Lebedeva
-  - Likhacheva
-  - Matveeva
-  - Mikhailova
-  - Nikitina
-  - Petrova
-  - Romanova
-  - Samoylenko
-  - Sharova
-  - Shedrina
-  - Shalimova
-  - Tarasova
-  - Voronina
-  - Yakusheva
-  - Zhdanovich
+  

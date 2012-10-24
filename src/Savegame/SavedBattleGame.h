@@ -176,6 +176,7 @@ public:
 	int getScrollButtonTimeTolerancy() const;
 	/// get ScrollButtonPixelTolerancy
 	int getScrollButtonPixelTolerancy() const;
+	void addUnit(BattleUnit *unit);
 };
 
 }

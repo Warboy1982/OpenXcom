@@ -42,11 +42,12 @@ private:
 	SavedBattleGame *_save;
 	BattleAction _action;
 	Position _origin;
-	std::vector<Position> _trajectory;
-	unsigned int _position;
+	int counter;
+	int _position;
 	static const int _trail[11][36];
 	Surface *_sprite;
 	void applyAccuracy(const Position& origin, Position *target, double accuracy, bool keepRange = false);
+	std::vector<Position> _trajectory;
 public:
 	/// Creates a new Projectile.
 	Projectile(ResourcePack *res, SavedBattleGame *save, BattleAction action, Position origin);
@@ -66,6 +67,7 @@ public:
 	BattleItem *getItem() const;
 	/// Get the sprite
 	Surface *getSprite() const;
+	std::vector<Position> getTrajectory() const;
 };
 
 }

@@ -27,6 +27,7 @@ namespace OpenXcom
 class BattleUnit;
 class BattleItem;
 class SurfaceSet;
+class Game;
 
 /**
  * A class that renders a specific unit, given its render rules
@@ -35,8 +36,10 @@ class SurfaceSet;
 class UnitSprite : public Surface
 {
 private:
+	Game *_game;
 	BattleUnit *_unit;
 	BattleItem *_item;
+	BattleItem *_itema;
 	SurfaceSet *_unitSurface;
 	SurfaceSet *_itemSurface;
 	int _part, _animationFrame;
@@ -46,6 +49,9 @@ private:
 	void drawRoutine3();
 	void drawRoutine4();
 	void drawRoutine5();
+	void drawRoutine6();
+	void drawRoutine7();
+	void drawRoutine8();
 public:
 	/// Creates a new UnitSprite at the specified position and size.
 	UnitSprite(int width, int height, int x, int y);

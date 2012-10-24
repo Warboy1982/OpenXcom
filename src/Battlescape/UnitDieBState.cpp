@@ -23,6 +23,8 @@
 #include "BattlescapeState.h"
 #include "Map.h"
 #include "Camera.h"
+#include "PatrolBAIState.h"
+#include "Pathfinding.h"
 #include "../Engine/Game.h"
 #include "../Savegame/BattleUnit.h"
 #include "../Savegame/SavedBattleGame.h"
@@ -34,6 +36,7 @@
 #include "../Engine/RNG.h"
 #include "../Ruleset/Armor.h"
 #include "../Ruleset/Unit.h"
+#include "../Savegame/BattleItem.h"
 
 namespace OpenXcom
 {
@@ -61,11 +64,11 @@ UnitDieBState::UnitDieBState(BattlescapeGame *parent, BattleUnit *unit, ItemDama
 
 	if (!_noSound)
 	{
-		if ((_unit->getType() == "SOLDIER" && _unit->getGender() == GENDER_MALE) || _unit->getType() == "MALE_CIVILIAN")
+		if ((_unit->getType() == "SOLDIER" && _unit->getGender() == GENDER_MALE) || _unit->getType() == "MALE_CIVILIAN" || _unit->getType() == "MALE_POLICE" )
 		{
 			_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(RNG::generate(41,43))->play();
 		}
-		else if ((_unit->getType() == "SOLDIER" && _unit->getGender() == GENDER_FEMALE) || _unit->getType() == "FEMALE_CIVILIAN")
+		else if ((_unit->getType() == "SOLDIER" && _unit->getGender() == GENDER_FEMALE) || _unit->getType() == "FEMALE_CIVILIAN" || _unit->getType() == "FEMALE_POLICE" )
 		{
 			_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(RNG::generate(44,46))->play();
 		}
@@ -110,7 +113,11 @@ void UnitDieBState::think()
 
 	if (_unit->getStatus() == STATUS_DEAD || _unit->getStatus() == STATUS_UNCONSCIOUS)
 	{
+		if (_unit->getSpecialAbility() == SPECAB_MORPHONDEATH && _unit->getArmor()->getSize() == 1)
+		convertUnitToChryssalid();
+		else 
 		convertUnitToCorpse();
+
 		_parent->getTileEngine()->calculateUnitLighting();
 		_parent->popState();
 		if (_unit->getSpecialAbility() == SPECAB_EXPLODEONDEATH)
@@ -178,6 +185,52 @@ void UnitDieBState::convertUnitToCorpse()
 			}
 		}
 	}
+}
+
+void UnitDieBState::convertUnitToChryssalid()
+{
+	// in case the unit was unconscious
+	_parent->getSave()->removeUnconsciousBodyItem(_unit);
+	if(_unit->getType() != "ZOMBIE")
+	for (std::vector<BattleItem*>::iterator i = _unit->getInventory()->begin(); i != _unit->getInventory()->end(); ++i)
+	{
+		_parent->dropItem(_unit->getPosition(), (*i));
+	}
+
+	_unit->getInventory()->clear();
+
+	// remove unit-tile link
+	_unit->setTile(0);
+
+	_parent->getSave()->getTile(_unit->getPosition())->setUnit(0);
+		char *_newRace = "ZOMBIE";
+		char *_newArmor = "ZOMBIE_ARMOR";
+		char *_newWeapon = "ZOMBIE_WEAPON";
+	
+	if(_unit->getType() == "ZOMBIE")
+	{
+		_newRace = "CHRYSSALID";
+		_newArmor = "CHRYSSALID_ARMOR";
+		_newWeapon = "CHRYSSALID_WEAPON";
+	}
+
+	BattleUnit *unit = new BattleUnit(_parent->getRuleset()->getUnit(_newRace), FACTION_HOSTILE, _parent->getSave()->getUnits()->size()+1, _parent->getRuleset()->getArmor(_newArmor));
+	RuleItem *ruleItem = _parent->getRuleset()->getItem(_newWeapon);
+
+	_parent->getSave()->getTile(_unit->getPosition())->setUnit(unit);
+	unit->setPosition(_unit->getPosition());
+	unit->setDirection(3);
+	unit->setCache(0);
+	_parent->getSave()->addUnit(unit);
+	_parent->getMap()->cacheUnit(unit);
+
+
+	unit->setAIState(new PatrolBAIState(_parent->getSave(), unit, 0));
+	
+	BattleItem *bi = new BattleItem(ruleItem, _parent->getSave()->getCurrentItemId());
+	bi->moveToOwner(unit);
+	bi->setSlot(_parent->getRuleset()->getInventory("STR_RIGHT_HAND"));
+
 }
 
 }

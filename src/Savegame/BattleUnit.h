@@ -69,7 +69,7 @@ private:
 	int _walkPhase, _fallPhase;
 	std::vector<BattleUnit *> _visibleUnits;
 	std::vector<Tile *> _visibleTiles;
-	int _tu, _energy, _health, _morale, _stunlevel;
+	int _tu, _energy, _health, _morale, _stunlevel, _flashlevel;
 	bool _kneeled, _floating, _dontReselect;
 	int _currentArmor[5];
 	int _fatalWounds[6];
@@ -129,7 +129,7 @@ public:
 	/// Gets the unit's status.
 	UnitStatus getStatus() const;
 	/// Start the walkingPhase
-	void startWalking(int direction, const Position &destination, Tile *destinationTile);
+	void startWalking(int direction, const Position &destination);
 	/// Increase the walkingPhase
 	void keepWalking();
 	/// Gets the walking phase for animation and sound
@@ -174,8 +174,11 @@ public:
 	void damage(Position position, int power, ItemDamageType type, bool ignoreArmor = false);
 	/// Heal stun level of the unit.
 	void healStun(int power);
+	void healFlash(int power);
 	/// Gets the unit's stun level.
 	int getStunlevel() const;
+	/// Gets the unit's stun level.
+	int getFlashlevel() const;
 	/// Start falling sequence.
 	void startFalling();
 	/// Increment the falling sequence.
@@ -323,6 +326,10 @@ public:
 	std::string getActiveHand() const;
 	/// Convert's unit to a faction
 	void convertToFaction(UnitFaction f);
+	void setFemale(int g);
+	void setFaction(UnitFaction f);
+	void setSpecAb();
+	void killUnit();
 };
 
 }

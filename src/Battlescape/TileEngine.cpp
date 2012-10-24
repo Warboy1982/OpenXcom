@@ -158,7 +158,7 @@ void TileEngine::calculateUnitLighting()
 		// add lighting of soldiers
 		for (std::vector<BattleUnit*>::iterator i = _save->getUnits()->begin(); i != _save->getUnits()->end(); ++i)
 		{
-			if ((*i)->getFaction() == FACTION_PLAYER && !(*i)->isOut())
+			if ((*i)->getFaction() == FACTION_PLAYER && !(*i)->isOut() && !(*i)->getFlashlevel())
 			{
 				addLight((*i)->getPosition(), personalLightPower, layer);
 			}
@@ -227,13 +227,18 @@ bool TileEngine::calculateFOV(BattleUnit *unit)
 
 	if (unit->isOut())
 		return false;
+	int viewDistance = MAX_VIEW_DISTANCE;
+	if(unit->getFlashlevel() > 1)
+		viewDistance = viewDistance / 3;
+	else if(unit->getFlashlevel() > 0)
+		viewDistance = (viewDistance / 3) * 2;
 
-	for (int x = 0; x <= MAX_VIEW_DISTANCE; ++x)
+	for (int x = 0; x <= viewDistance; ++x)
 	{
 		if (unit->getDirection()%2)
 		{
 			y1 = 0;
-			y2 = MAX_VIEW_DISTANCE - x;
+			y2 = viewDistance - x;
 		}
 		else
 		{
@@ -246,7 +251,7 @@ bool TileEngine::calculateFOV(BattleUnit *unit)
 			{
 				int distance = int(floor(sqrt(float(x*x + y*y)) + 0.5));
 				test.z = z;
-				if (distance <= MAX_VIEW_DISTANCE)
+				if (distance <= viewDistance)
 				{
 					test.x = center.x + signX[unit->getDirection()]*(swap?y:x);
 					test.y = center.y + signY[unit->getDirection()]*(swap?x:y);
@@ -264,7 +269,7 @@ bool TileEngine::calculateFOV(BattleUnit *unit)
 								visibleUnit->setVisible(true);
 						}
 
-						if (unit->getFaction() == FACTION_PLAYER)
+						if (unit->getFaction() == FACTION_PLAYER || _save->getDebugMode())
 						{
 							// this sets tiles to discovered if they are in LOS - tile visibility is not calculated in voxelspace but in tilespace
 							if (calculateLine(unit->getPosition(), test, false, 0, unit, false) <= 0)
@@ -294,8 +299,8 @@ bool TileEngine::calculateFOV(BattleUnit *unit)
 	// or we stop if there are more visible units seen
 	if (visibleUnitsChecksum != newChecksum && unit->getVisibleUnits()->size() >= oldNumVisibleUnits && unit->getVisibleUnits()->size() > 0)
 	{
-		// a hostile unit will aggro on the new unit if it sees one - it will not start walking
-		if (unit->getFaction() == FACTION_HOSTILE)
+		// a hostile unit will aggro on the new unit if it sees one - it will not start walking - make cops shoot!
+		if ( unit->getFaction() != FACTION_PLAYER )
 		{
 			AggroBAIState *aggro = dynamic_cast<AggroBAIState*>(unit->getCurrentAIState());
 			if (aggro == 0)
@@ -381,6 +386,10 @@ bool TileEngine::visible(BattleUnit *currentUnit, Tile *tile)
 		calculateLine(originVoxel, targetVoxel, true, &_trajectory, currentUnit);
 		Tile *t = _save->getTile(currentUnit->getPosition());
 		int maxViewDistance = MAX_VIEW_DISTANCE - (t->getSmoke()/2);
+		if(currentUnit->getFlashlevel() > 1)
+			maxViewDistance = maxViewDistance / 3;
+		else if(currentUnit->getFlashlevel() > 0)
+			maxViewDistance = (maxViewDistance / 3) * 2;
 		for (unsigned int i = 0; i < _trajectory.size(); i++)
 		{
 			if (t != _save->getTile(Position(_trajectory.at(i).x/16,_trajectory.at(i).y/16, _trajectory.at(i).z/24)))
@@ -431,7 +440,7 @@ bool TileEngine::checkReactionFire(BattleUnit *unit, BattleAction *action, Battl
 	action->actor = 0;
 
 	// reaction fire only triggered when the actioning unit is of the currently playing side
-	if (unit->getFaction() != _save->getSide())
+	if (unit->getFaction() != _save->getSide() || unit->getFaction() == FACTION_NEUTRAL )
 	{
 		return false;
 	}
@@ -494,7 +503,7 @@ bool TileEngine::checkReactionFire(BattleUnit *unit, BattleAction *action, Battl
 		{
 			action->targeting = true;
 			// if the target is hostile, it will aggro
-			if (unit->getFaction() == FACTION_HOSTILE)
+			if (unit->getFaction() == FACTION_HOSTILE || unit->getFaction() == FACTION_NEUTRAL)
 			{
 				AggroBAIState *aggro = dynamic_cast<AggroBAIState*>(unit->getCurrentAIState());
 				if (aggro == 0)
@@ -659,6 +668,13 @@ void TileEngine::explode(const Position &center, int power, ItemDamageType type,
 										done = it == dest->getInventory()->end();
 									}
 								}
+							}
+						}
+						if (type == DT_FLASH)
+						{
+							if (dest->getUnit())
+							{
+								dest->getUnit()->damage(Position(0, 0, 0), (int)(RNG::generate(power_/2.0, power_*1.5)), type, true);
 							}
 						}
 						if (type == DT_SMOKE)

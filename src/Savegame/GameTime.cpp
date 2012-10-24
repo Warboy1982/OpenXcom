@@ -31,7 +31,7 @@ namespace OpenXcom
  * @param minute Starting minute.
  * @param second Starting second.
  */
-GameTime::GameTime(int weekday, int day, int month, int year, int hour, int minute, int second) : _second(second), _minute(minute), _hour(hour), _weekday(weekday), _day(day), _month(month), _year(year)
+GameTime::GameTime(int weekday, int day, int month, int year, int hour, int minute, int second, int totaldays) : _second(second), _minute(minute), _hour(hour), _weekday(weekday), _day(day), _month(month), _year(year), _totaldays(totaldays)
 {
 }
 
@@ -56,6 +56,7 @@ void GameTime::load(const YAML::Node &node)
 	node["day"] >> _day;
 	node["month"] >> _month;
 	node["year"] >> _year;
+	node["totaldays"] >> _totaldays;
 }
 
 /**
@@ -72,6 +73,7 @@ void GameTime::save(YAML::Emitter &out) const
 	out << YAML::Key << "day" << YAML::Value << _day;
 	out << YAML::Key << "month" << YAML::Value << _month;
 	out << YAML::Key << "year" << YAML::Value << _year;
+	out << YAML::Key << "totaldays" << YAML::Value << _totaldays;
 	out << YAML::EndMap;
 }
 
@@ -112,6 +114,7 @@ TimeTrigger GameTime::advance()
 	}
 	if (_hour >= 24)
 	{
+		_totaldays++;
 		_day++;
 		_weekday++;
 		_hour = 0;
@@ -254,6 +257,11 @@ int GameTime::getYear() const
 double GameTime::getDaylight() const
 {
 	return (double)((((((_hour + 18) % 24) * 60) + _minute) * 60) + _second) / (60 * 60 * 24);
+}
+
+int GameTime::getTotalDays()
+{
+	return _totaldays;
 }
 
 }

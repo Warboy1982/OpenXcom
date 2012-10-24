@@ -157,7 +157,7 @@ void UnitWalkBState::think()
 			unitspotted = _terrain->calculateFOV(_unit);
 
 			BattleAction action;
-			
+
 			// check for proximity grenades (1 tile around the unit in every direction) (for large units, we need to check every tile it occupies)
 			int size = _unit->getArmor()->getSize() - 1;
 			for (int x = size; x >= 0; x--)
@@ -271,7 +271,7 @@ void UnitWalkBState::think()
 			{
 				if (_unit->spendEnergy(tu, _parent->dontSpendTUs()))
 				{
-					_unit->startWalking(dir, destination, _parent->getSave()->getTile(destination));
+					_unit->startWalking(dir, destination);
 				}
 				else
 				{

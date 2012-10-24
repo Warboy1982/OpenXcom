@@ -36,6 +36,24 @@
 #include "../Ruleset/RuleItem.h"
 #include "../Engine/Options.h"
 
+#include "ExplosionBState.h"
+#include "BattlescapeState.h"
+#include "Explosion.h"
+#include "TileEngine.h"
+#include "UnitDieBState.h"
+#include "Map.h"
+#include "../Engine/Game.h"
+#include "../Savegame/BattleUnit.h"
+#include "../Savegame/BattleItem.h"
+#include "../Savegame/SavedGame.h"
+#include "../Savegame/SavedBattleGame.h"
+#include "../Savegame/Tile.h"
+#include "../Resource/ResourcePack.h"
+#include "../Engine/SoundSet.h"
+#include "../Engine/Sound.h"
+#include "../Ruleset/RuleItem.h"
+#include "../Engine/RNG.h"
+
 namespace OpenXcom
 {
 
@@ -73,6 +91,7 @@ void ProjectileFlyBState::init()
 	BattleItem *weapon = _action.weapon;
 	_projectileItem = 0;
 	_autoshotCounter = 0;
+	_buckshotCounter = 0;
 
 	if (!weapon) // can't shoot without weapon
 		return;
@@ -104,12 +123,16 @@ void ProjectileFlyBState::init()
 	// (in case of reaction "shots" with a melee weapon)
 	if (weapon->getRules()->getBattleType() == BT_MELEE && _action.type == BA_SNAPSHOT)
 		_action.type = BA_HIT;
+	// full auto weapons can't snap shot, so do a full auto instead 
+	if (weapon->getRules()->isFullAuto() && _action.type == BA_SNAPSHOT)
+		_action.type = BA_FULLAUTO;
 
 	switch (_action.type)
 	{
 	case BA_SNAPSHOT:
 	case BA_AIMEDSHOT:
 	case BA_AUTOSHOT:
+	case BA_FULLAUTO:
 	case BA_LAUNCH:
 		if (_ammo == 0)
 		{
@@ -120,6 +143,13 @@ void ProjectileFlyBState::init()
 		if (_ammo->getAmmoQuantity() == 0)
 		{
 			_action.result = "STR_NO_ROUNDS_LEFT";
+			_parent->popState();
+			return;
+		}
+		if (!validShootRange(&_action))
+		{
+			// out of range
+			_action.result = "STR_OUT_OF_RANGE";
 			_parent->popState();
 			return;
 		}
@@ -173,10 +203,9 @@ void ProjectileFlyBState::createNewProjectile()
 	// create a new projectile
 	Projectile *projectile = new Projectile(_parent->getResourcePack(), _parent->getSave(), _action, _origin);
 
-	_autoshotCounter++;
 	// add the projectile on the map
 	_parent->getMap()->setProjectile(projectile);
-	_parent->setStateInterval(Options::getInt("battleFireSpeed"));
+	_parent->setStateInterval(Options::getInt("battleFireSpeed")/2);
 
 	// let it calculate a trajectory
 	_projectileImpact = -1;
@@ -202,19 +231,39 @@ void ProjectileFlyBState::createNewProjectile()
 	}
 	else
 	{
-		_projectileImpact = projectile->calculateTrajectory(_unit->getFiringAccuracy(_action.type, _action.weapon));
+		if(_action.weapon->getRules()->isGrenade())
+		{
+			_projectileImpact = projectile->calculateThrow(_unit->getFiringAccuracy(_action.type, _action.weapon));
+			if (!_projectileImpact)
+			{
+				// unable to shoot here
+				delete projectile;
+				_parent->getMap()->setProjectile(0);
+				_action.result = "STR_UNABLE_TO_SHOOT_HERE";
+				_parent->popState();
+				return;
+			}
+
+		}
+		else if(_action.weapon->getRules()->isShotgun())
+			_projectileImpact = projectile->calculateTrajectory((_unit->getFiringAccuracy(_action.type, _action.weapon))-(_buckshotCounter * .5));
+		else
+			_projectileImpact = projectile->calculateTrajectory(_unit->getFiringAccuracy(_action.type, _action.weapon));
 		if (_projectileImpact != -1 || _action.type == BA_LAUNCH)
 		{
 				// set the soldier in an aiming position
 				_unit->aim(true);
 				_parent->getMap()->cacheUnit(_unit);
 				// and we have a lift-off
+				if (!_action.weapon->getRules()->isShotgun())
+				{
 				if (_action.weapon->getRules()->getFireSound() != -1)
 					_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_action.weapon->getRules()->getFireSound())->play();
 				if (!_parent->getSave()->getDebugMode() && _action.type != BA_LAUNCH && _ammo->spendBullet() == false)
 				{
 					_parent->getSave()->removeItem(_ammo);
 					_action.weapon->setAmmoItem(0);
+				}
 				}
 		}
 		else
@@ -239,8 +288,28 @@ void ProjectileFlyBState::think()
 	/* TODO refactoring : store the projectile in this state, instead of getting it from the map each time? */
 	if (_parent->getMap()->getProjectile() == 0)
 	{
-		if (_action.type == BA_AUTOSHOT && _autoshotCounter < 3 && !_action.actor->isOut() && _ammo->getAmmoQuantity() != 0)
+
+		if(_action.weapon->getRules()->isShotgun())
 		{
+			if( _buckshotCounter < 5 )
+			{
+				_buckshotCounter++;
+				createNewProjectile();
+			}
+			else
+			{
+				_parent->popState();
+			}
+		}
+		else 
+		if (_action.type == BA_FULLAUTO && _autoshotCounter < 4 && !_action.actor->isOut() && _ammo->getAmmoQuantity() != 0)
+		{
+			_autoshotCounter++;
+			createNewProjectile();
+		}
+		else if (_action.type == BA_AUTOSHOT && _autoshotCounter < 2 && !_action.actor->isOut() && _ammo->getAmmoQuantity() != 0)
+		{
+			_autoshotCounter++;
 			createNewProjectile();
 		}
 		else
@@ -262,7 +331,7 @@ void ProjectileFlyBState::think()
 				BattleItem *item = _parent->getMap()->getProjectile()->getItem();
 				_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(38)->play();
 
-				if (Options::getBool("battleAltGrenade") && item->getRules()->getBattleType() == BT_GRENADE && item->getExplodeTurn() > 0)
+				if ((Options::getBool("battleAltGrenade") && item->getRules()->getBattleType() == BT_GRENADE && item->getExplodeTurn() > 0 )|| (item->getRules()->getBattleType() == BT_GRENADE && item->getRules()->getDamageType() == DT_FLASH))
 				{
 					// it's a hot grenade to explode immediately
 					_parent->statePushFront(new ExplosionBState(_parent, _parent->getMap()->getProjectile()->getPosition(-1), item, _action.actor));
@@ -292,12 +361,78 @@ void ProjectileFlyBState::think()
 				{
 					int offset = 0;
 					// explosions impact not inside the voxel but one step back
-					if (_ammo && (
-						_ammo->getRules()->getDamageType() == DT_HE ||
-						_ammo->getRules()->getDamageType() == DT_IN))
+					if (_ammo && ((	_ammo->getRules()->getDamageType() == DT_HE) ||	(_ammo->getRules()->getDamageType() == DT_IN && !_action.weapon->getRules()->isFlamer())))
 					{
 						offset = -1;
 					}
+					
+					if(_action.weapon->getRules()->isShotgun())
+					{
+						if( _buckshotCounter <= 5 )
+						{
+							if(_buckshotCounter == 1 )
+							{
+								if (_action.weapon->getRules()->getFireSound() != -1)
+									_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_action.weapon->getRules()->getFireSound())->play();
+
+								//for (size_t i = 0; i < _parent->getMap()->getProjectile()->getTrajectory().size() - 1; i++) 
+								//	dummy++;
+								pelleta = _parent->getMap()->getProjectile()->getPosition(offset); //_parent->getMap()->getProjectile()->getTrajectory().at(dummy);
+								
+							}
+							if(_buckshotCounter == 1 )
+							{
+								pelletb = _parent->getMap()->getProjectile()->getPosition(offset);
+							}
+							if(_buckshotCounter == 2 )
+							{
+								pelletc = _parent->getMap()->getProjectile()->getPosition(offset);
+							}
+							if(_buckshotCounter == 3 )
+							{
+								pelletd = _parent->getMap()->getProjectile()->getPosition(offset);
+							}
+							if(_buckshotCounter == 4 )
+							{
+								pellete = _parent->getMap()->getProjectile()->getPosition(offset);
+							}
+							if(_buckshotCounter == 5 )
+							{
+								pelletf = _parent->getMap()->getProjectile()->getPosition(offset);
+								Explosion *explosion = new Explosion(pelleta, _action.weapon->getAmmoItem()->getRules()->getHitAnimation(), false);
+								_parent->getMap()->getExplosions()->insert(explosion);
+								_parent->getSave()->getTileEngine()->hit(pelleta, _action.weapon->getAmmoItem()->getRules()->getPower(), _action.weapon->getAmmoItem()->getRules()->getDamageType(), _unit);
+								explosion = new Explosion(pelletb, _action.weapon->getAmmoItem()->getRules()->getHitAnimation(), false);
+								_parent->getMap()->getExplosions()->insert(explosion);
+								_parent->getSave()->getTileEngine()->hit(pelletb, _action.weapon->getAmmoItem()->getRules()->getPower(), _action.weapon->getAmmoItem()->getRules()->getDamageType(), _unit);
+								explosion = new Explosion(pelletc, _action.weapon->getAmmoItem()->getRules()->getHitAnimation(), false);
+								_parent->getMap()->getExplosions()->insert(explosion);
+								_parent->getSave()->getTileEngine()->hit(pelletc, _action.weapon->getAmmoItem()->getRules()->getPower(), _action.weapon->getAmmoItem()->getRules()->getDamageType(), _unit);
+								explosion = new Explosion(pelletd, _action.weapon->getAmmoItem()->getRules()->getHitAnimation(), false);
+								_parent->getMap()->getExplosions()->insert(explosion);
+								_parent->getSave()->getTileEngine()->hit(pelletd, _action.weapon->getAmmoItem()->getRules()->getPower(), _action.weapon->getAmmoItem()->getRules()->getDamageType(), _unit);
+								explosion = new Explosion(pellete, _action.weapon->getAmmoItem()->getRules()->getHitAnimation(), false);
+								_parent->getMap()->getExplosions()->insert(explosion);
+								_parent->getSave()->getTileEngine()->hit(pellete, _action.weapon->getAmmoItem()->getRules()->getPower(), _action.weapon->getAmmoItem()->getRules()->getDamageType(), _unit);
+								explosion = new Explosion(pelletf, _action.weapon->getAmmoItem()->getRules()->getHitAnimation(), false);
+								_parent->getMap()->getExplosions()->insert(explosion);
+								_parent->getSave()->getTileEngine()->hit(pelletf, _action.weapon->getAmmoItem()->getRules()->getPower(), _action.weapon->getAmmoItem()->getRules()->getDamageType(), _unit);
+							
+								_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_action.weapon->getAmmoItem()->getRules()->getHitSound())->play();
+								_parent->statePushFront(new ExplosionBState(_parent, pelletf, _ammo, _action.actor));
+								_unit->aim(false);
+								_parent->getMap()->cacheUnits();
+								
+								if (!_parent->getSave()->getDebugMode() && _ammo->spendBullet() == false)
+								{
+									_parent->getSave()->removeItem(_ammo);
+									_action.weapon->setAmmoItem(0);
+								}
+
+							}
+						}
+					}
+					else
 					_parent->statePushFront(new ExplosionBState(_parent, _parent->getMap()->getProjectile()->getPosition(offset), _ammo, _action.actor));
 				}
 				else
@@ -341,6 +476,16 @@ bool ProjectileFlyBState::validThrowRange(BattleAction *action)
 	return realDistance < maxDistance;
 }
 
+bool ProjectileFlyBState::validShootRange(BattleAction *action)
+{
+	// note that all coordinates and thus also distances below are in number of tiles (not in voxels).
+	int xdiff = action->target.x - action->actor->getPosition().x;
+	int ydiff = action->target.y - action->actor->getPosition().y;
+	int zdiff = action->target.z - action->actor->getPosition().z;
+	double realDistance = sqrt((double)(xdiff*xdiff)+(double)(ydiff*ydiff));
+
+	return realDistance < action->weapon->getRules()->getWeaponRange();
+}
 /*
  * Validate the melee range.
  * @return true when range is valid.

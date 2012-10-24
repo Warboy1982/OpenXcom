@@ -205,8 +205,7 @@ int Pathfinding::getTUCost(const Position &startPosition, int direction, Positio
 
 			// can't walk on top of other units
 			if (_save->getTile(*endPosition + Position(x,y,-1))
-				&& _save->getTile(*endPosition + Position(x,y,-1))->getUnit()
-				&& _save->getTile(*endPosition + Position(x,y,-1))->getUnit() != _unit)
+				&& _save->getTile(*endPosition + Position(x,y,-1))->getUnit())
 				return 255;
 
 
@@ -224,7 +223,7 @@ int Pathfinding::getTUCost(const Position &startPosition, int direction, Positio
 				// check if we can go up or down through gravlift or fly
 				if (validateUpDown(unit, startPosition, direction))
 				{
-					cost = 8; // vertical movement by flying suit or grav lift
+					cost += 4; // vertical movement
 				}
 				else
 				{
@@ -234,7 +233,7 @@ int Pathfinding::getTUCost(const Position &startPosition, int direction, Positio
 
 
 			// if we are on a stairs try to go up a level
-			if (direction < DIR_UP && startTile->getTerrainLevel() < -12 && x==0 && y==0)
+			if (startTile->getTerrainLevel() < -12 && x==0 && y==0)
 			{
 				endPosition->z++;
 				destinationTile = _save->getTile(*endPosition);
@@ -265,7 +264,7 @@ int Pathfinding::getTUCost(const Position &startPosition, int direction, Positio
 			}
 
 			// if we don't want to fall down and there is no floor, we can't know the TUs so it's default to 4
-			if (direction < DIR_UP && !fellDown && destinationTile->hasNoFloor() && x==0 && y==0)
+			if (!fellDown && destinationTile->hasNoFloor() && x==0 && y==0)
 			{
 				cost = 4;
 			}
@@ -277,17 +276,14 @@ int Pathfinding::getTUCost(const Position &startPosition, int direction, Positio
 			}
 
 			// calculate the cost by adding floor walk cost and object walk cost
-			if (direction < DIR_UP)
+			cost += destinationTile->getTUCost(MapData::O_FLOOR, _movementType);
+			if (!fellDown)
 			{
-				cost += destinationTile->getTUCost(MapData::O_FLOOR, _movementType);
-				if (!fellDown)
-				{
-					cost += destinationTile->getTUCost(MapData::O_OBJECT, _movementType);
-				}
+				cost += destinationTile->getTUCost(MapData::O_OBJECT, _movementType);
 			}
 
 			// diagonal walking (uneven directions) costs 50% more tu's
-			if (direction < DIR_UP && direction & 1)
+			if (direction & 1)
 			{
 				wallcost /= 2;
 				cost = (int)((double)cost * 1.5);

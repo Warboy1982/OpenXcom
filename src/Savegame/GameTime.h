@@ -38,10 +38,10 @@ enum TimeTrigger { TIME_5SEC, TIME_10MIN, TIME_30MIN, TIME_1HOUR, TIME_1DAY, TIM
 class GameTime
 {
 private:
-	int _second, _minute, _hour, _weekday, _day, _month, _year;
+	int _second, _minute, _hour, _weekday, _day, _month, _year, _totaldays;
 public:
 	/// Creates a new ingame time at a certain point.
-	GameTime(int weekday, int day, int month, int year, int hour, int minute, int second);
+	GameTime(int weekday, int day, int month, int year, int hour, int minute, int second, int totaldays);
 	/// Cleans up the ingame time.
 	~GameTime();
 	/// Loads the time from YAML.
@@ -72,6 +72,7 @@ public:
 	int getYear() const;
 	/// Gets the position of the daylight according to the ingame time.
 	double getDaylight() const;
+	int getTotalDays();
 };
 
 }

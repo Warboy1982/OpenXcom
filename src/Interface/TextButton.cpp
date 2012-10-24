@@ -42,7 +42,6 @@ TextButton::TextButton(int width, int height, int x, int y) : InteractiveSurface
 	_text->setSmall();
 	_text->setAlign(ALIGN_CENTER);
 	_text->setVerticalAlign(ALIGN_MIDDLE);
-	_text->setWordWrap(true);
 }
 
 /**
@@ -195,7 +194,7 @@ void TextButton::draw()
 
 	bool press;
 	if (_group == 0)
-		press = isButtonPressed();
+		press = _buttonsPressed[SDL_BUTTON_LEFT];
 	else
 		press = (*_group == this);
 
@@ -215,19 +214,22 @@ void TextButton::draw()
  */
 void TextButton::mousePress(Action *action, State *state)
 {
-	if (soundPress != 0 && _group == 0)
-		soundPress->play();
-
-	if (action->getDetails()->button.button == SDL_BUTTON_LEFT && _group != 0)
+	if (action->getDetails()->button.button == SDL_BUTTON_LEFT)
 	{
-		TextButton *old = *_group;
-		*_group = this;
-		if (old != 0)
-			old->draw();
+		if (soundPress != 0 && _group == 0)
+			soundPress->play();
+
+		if (_group != 0)
+		{
+			TextButton *old = *_group;
+			*_group = this;
+			if (old != 0)
+				old->draw();
+		}
 	}
-	draw();
+
 	InteractiveSurface::mousePress(action, state);
-	//_redraw = true;
+	_redraw = true;
 }
 
 /**
@@ -237,9 +239,8 @@ void TextButton::mousePress(Action *action, State *state)
  */
 void TextButton::mouseRelease(Action *action, State *state)
 {
-	draw();
 	InteractiveSurface::mouseRelease(action, state);
-	//_redraw = true;
+	_redraw = true;
 }
 
 }

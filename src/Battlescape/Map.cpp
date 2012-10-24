@@ -640,6 +640,12 @@ void Map::drawTerrain(Surface *surface)
 				_camera->convertVoxelToScreen(voxelPos, &bulletPositionScreen);
 				tmpSurface = _res->getSurfaceSet("X1.PCK")->getFrame((*i)->getCurrentFrame());
 				tmpSurface->blitNShade(surface, bulletPositionScreen.x - 64, bulletPositionScreen.y - 64, 0);
+				// if the projectile is outside the viewport - center it back on it
+				if (bulletPositionScreen.x < -_spriteWidth || bulletPositionScreen.x > surface->getWidth() ||
+					bulletPositionScreen.y < -_spriteHeight || bulletPositionScreen.y > surface->getHeight()  )
+				{
+					_camera->centerOnPosition(Position(voxelPos.x/16, voxelPos.y/16, voxelPos.z/24), false);
+				}
 			}
 			else
 			{
@@ -682,7 +688,7 @@ void Map::keyboardPress(Action *action, State *state)
 void Map::mouseOver(Action *action, State *state)
 {
 	InteractiveSurface::mouseOver(action, state);
-	int posX = action->getXMouse();
+  int posX = action->getXMouse();
 	int posY = action->getYMouse();
 
 	_camera->mouseOver(action, state);
@@ -727,7 +733,7 @@ void Map::animate(bool redraw)
 	// animate certain units (large flying units have a propultion animation)
 	for (std::vector<BattleUnit*>::iterator i = _save->getUnits()->begin(); i != _save->getUnits()->end(); ++i)
 	{
-		if ((*i)->getArmor()->getSize() > 1 && (*i)->getArmor()->getMovementType() == MT_FLY)
+		if (((*i)->getArmor()->getSize() > 1 && (*i)->getArmor()->getMovementType() == MT_FLY)||(*i)->getArmor()->getDrawingRoutine() == 8)
 		{
 			(*i)->setCache(0);
 			cacheUnit(*i);
@@ -915,19 +921,26 @@ void Map::cacheUnit(BattleUnit *unit)
 				cache->setPalette(this->getPalette());
 			}
 			unitSprite->setBattleUnit(unit, i);
-			BattleItem *handItem = unit->getItem(unit->getActiveHand());
-			if (handItem)
+
+			BattleItem *rhandItem = unit->getItem("STR_RIGHT_HAND");
+			BattleItem *lhandItem = unit->getItem("STR_LEFT_HAND");
+			if (rhandItem)
 			{
-				unitSprite->setBattleItem(handItem);
+				unitSprite->setBattleItem(rhandItem);
 			}
-			else
+			if (lhandItem)
+			{
+				unitSprite->setBattleItem(lhandItem);
+			}
+			
+			if(!lhandItem && !rhandItem)
 			{
 				unitSprite->setBattleItem(0);
 			}
 			unitSprite->setSurfaces(_res->getSurfaceSet(unit->getArmor()->getSpriteSheet()),
 									_res->getSurfaceSet("HANDOB.PCK"));
 			unitSprite->setAnimationFrame(_animFrame);
-			cache->clear();
+				cache->clear();
 			unitSprite->blit(cache);
 			unit->setCache(cache, i);
 		}

@@ -38,7 +38,7 @@ protected:
 	SDL_Surface *_surface;
 	int _x, _y;
 	SDL_Rect _crop;
-	bool _visible, _hidden, _redraw;
+	bool _visible, _hidden, _redraw, _animated;
 	SDL_Color *_originalColors;
 public:
 	/// Creates a new surface with the specified size and position.
@@ -123,6 +123,7 @@ public:
 	void blitNShade(Surface *surface, int x, int y, int off, bool half = false, int newBaseColor = 0);
 	/// Invalidate the surface: force it to be redrawn
 	void invalidate();
+	void Surface::setAnimated(bool animate);
 };
 
 }

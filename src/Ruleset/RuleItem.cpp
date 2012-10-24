@@ -31,8 +31,8 @@ namespace OpenXcom
 RuleItem::RuleItem(const std::string &type) : _type(type), _name(type), _size(0.0), _costBuy(0), _costSell(0), _transferTime(24), _weight(999), _bigSprite(0), _floorSprite(-1), _handSprite(120), _bulletSprite(-1),
 											_fireSound(-1), _hitSound(-1), _hitAnimation(0), _power(0), _priority(0), _compatibleAmmo(), _damageType(DT_NONE),
 											_accuracyAuto(0), _accuracySnap(0), _accuracyAimed(0), _tuAuto(0), _tuSnap(0), _tuAimed(0), _clipSize(0), _accuracyMelee(0), _tuMelee(0),
-											_battleType(BT_NONE), _twoHanded(false), _waypoint(false), _fixedWeapon(false), _invWidth(1), _invHeight(1),
-											_painKiller(0), _heal(0), _stimulant(0), _healAmount(0), _healthAmount(0), _stun(0), _energy(0), _tuUse(0), _recoveryPoints(0), _armor(20), _recover(true)
+											_battleType(BT_NONE), _twoHanded(false), _waypoint(false), _fixedWeapon(false), _fullAuto(false), _invWidth(1), _invHeight(1),
+											_painKiller(0), _heal(0), _stimulant(0), _healAmount(0), _healthAmount(0), _stun(0), _energy(0), _tuUse(0), _recoveryPoints(0), _armor(20), _recover(true), _weaponRange(10000), _grenadeRules(false), _shotgunRules(false), _flamerRules(false), _projectiles(1)
 {
 }
 
@@ -236,6 +236,30 @@ void RuleItem::load(const YAML::Node &node)
 		{
 			i.second() >> _recover;
 		}
+		else if (key == "weaponRange")
+		{
+			i.second() >> _weaponRange;
+		}
+		else if (key == "shotgunRules")
+		{
+			i.second() >> _shotgunRules;
+		}
+		else if (key == "flamerRules")
+		{
+			i.second() >> _flamerRules;
+		}
+		else if (key == "grenadeRules")
+		{
+			i.second() >> _grenadeRules;
+		}
+		else if (key == "fullAuto")
+		{
+			i.second() >> _fullAuto;
+		}
+		else if (key == "projectiles")
+		{
+			i.second() >> _projectiles;
+		}
 	}
 }
 
@@ -278,6 +302,7 @@ void RuleItem::save(YAML::Emitter &out) const
 	out << YAML::Key << "twoHanded" << YAML::Value << _twoHanded;
 	out << YAML::Key << "waypoint" << YAML::Value << _waypoint;
 	out << YAML::Key << "fixedWeapon" << YAML::Value << _fixedWeapon;
+	out << YAML::Key << "fullAuto" << YAML::Value << _fixedWeapon;
 	out << YAML::Key << "invWidth" << YAML::Value << _invWidth;
 	out << YAML::Key << "invHeight" << YAML::Value << _invHeight;
 	out << YAML::Key << "painKiller" << YAML::Value << _painKiller;
@@ -291,6 +316,9 @@ void RuleItem::save(YAML::Emitter &out) const
 	out << YAML::Key << "recoveryPoints" << YAML::Value << _recoveryPoints;
 	out << YAML::Key << "armor" << YAML::Value << _armor;
 	out << YAML::Key << "recover" << YAML::Value << _recover;
+	out << YAML::Key << "fullAuto" << YAML::Value << _fullAuto;
+	out << YAML::Key << "weaponRange" << YAML::Value << _weaponRange;
+	out << YAML::Key << "projectiles" << YAML::Value << _projectiles;
 	out << YAML::EndMap;
 }
 
@@ -425,6 +453,11 @@ bool RuleItem::isWaypoint() const
 bool RuleItem::isFixed() const
 {
 	return _fixedWeapon;
+}
+
+bool RuleItem::isFullAuto() const
+{
+	return _fullAuto;
 }
 
 /**
@@ -735,4 +768,24 @@ bool RuleItem::isRecoverable() const
 	return _recover;
 }
 
+int RuleItem::getWeaponRange() const
+{
+	return _weaponRange;
+}
+bool RuleItem::isFlamer() const
+{
+	return _flamerRules;
+}
+bool RuleItem::isShotgun() const
+{
+	return _shotgunRules;
+}
+bool RuleItem::isGrenade() const
+{
+	return _grenadeRules;
+}
+int RuleItem::getProjectiles() const
+{
+	return _projectiles;
+}
 }

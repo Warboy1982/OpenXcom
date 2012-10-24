@@ -772,7 +772,7 @@ void SavedBattleGame::setDebugMode()
  */
 bool SavedBattleGame::getDebugMode() const
 {
-	return _debugMode;
+	return true;//_debugMode;
 }
 
 /**
@@ -1164,7 +1164,12 @@ int SavedBattleGame::getScrollButtonTimeTolerancy() const
  */
 int SavedBattleGame::getScrollButtonPixelTolerancy() const
 {
-	return _scrollButtonPixelTolerancy;
+	return _scrollButtonPixelTolerancy;	
+}
+
+void SavedBattleGame::addUnit(BattleUnit *unit)
+{
+	_units.push_back(unit);
 }
 
 }

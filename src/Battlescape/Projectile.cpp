@@ -66,6 +66,7 @@ Projectile::Projectile(ResourcePack *res, SavedBattleGame *save, BattleAction ac
 	{
 		_sprite = _res->getSurfaceSet("FLOOROB.PCK")->getFrame(getItem()->getRules()->getFloorSprite());
 	}
+		int counter = 0;
 }
 
 /**
@@ -84,8 +85,24 @@ int Projectile::calculateTrajectory(double accuracy)
 {
 	Position originVoxel, targetVoxel;
 	int direction;
+	
 	int dirYshift[8] = {1, 4, 12, 15, 15, 15, 8, 1 };
 	int dirXshift[8] = {12, 14, 15, 15, 8, 1, 1, 1 };
+	
+	if(_action.weapon == _action.weapon->getOwner()->getItem("STR_LEFT_HAND") && !_action.weapon->getRules()->isTwoHanded())
+	{
+	dirYshift[0] = 2;
+	dirYshift[1] = 0;
+	dirYshift[4] = 22;
+	dirYshift[5] = 20;
+	dirYshift[6] = 20;
+	dirXshift[0] = 6;
+	dirXshift[2] = 18;
+	dirXshift[3] = 19;
+	dirXshift[5] = -1;
+	dirXshift[6] = -1;
+	dirXshift[7] = -5;
+	}
 
 	originVoxel = Position(_origin.x*16, _origin.y*16, _origin.z*24);
 	BattleUnit *bu = _action.actor;
@@ -215,6 +232,8 @@ bool Projectile::calculateThrow(double accuracy)
 	originVoxel = Position(_origin.x*16 + 8, _origin.y*16 + 8, _origin.z*24);
 	originVoxel.z += -_save->getTile(_origin)->getTerrainLevel();
 	BattleUnit *bu = _save->getTile(_origin)->getUnit();
+	if(!bu)
+		bu = _save->getTile(Position(_origin.x, _origin.y, _origin.z-1))->getUnit();
 	originVoxel.z += bu->getHeight();
 	originVoxel.z -= 3;
 	if (originVoxel.z >= (_origin.z + 1)*24)
@@ -298,7 +317,7 @@ void Projectile::applyAccuracy(const Position& origin, Position *target, double 
 	*/
 	if (Options::getBool("battleRangeBasedAccuracy"))
 	{
-		if (_action.type == BA_AUTOSHOT && realDistance > 112)
+		if ((_action.type == BA_AUTOSHOT && realDistance > 112)||(_action.type == BA_FULLAUTO && realDistance > 112))
 		{
 			accuracy -= 0.00125 * (realDistance - 112);
 		}
@@ -348,15 +367,103 @@ void Projectile::applyAccuracy(const Position& origin, Position *target, double 
  * Move further in the trajectory.
  * @return false if the trajectory is finished - no new position exists in the trajectory.
  */
+	
 bool Projectile::move()
 {
+	if(_action.weapon->getRules()->isShotgun())
+	{
+		_position = _trajectory.size()-1;
+    	return false;
+	}
+	
+	if(_action.weapon->getRules()->isFlamer() && _position < 16 )
+	{
+		counter = 0;
+	}
+
+	if(_action.weapon->getRules()->isFlamer() && _position > 20 && _position < _action.weapon->getRules()->getWeaponRange()*16)
+	{
+		Tile *burntile = _save->getTile(Position(_trajectory.at(_position).x/16, _trajectory.at(_position).y/16, _trajectory.at(_position).z/24));
+		if(burntile)
+		{
+			if (burntile->getUnit())
+			{
+				_action.actor->addFiringExp();
+				if(_action.type == BA_AIMEDSHOT)
+					burntile->getUnit()->damage(Position(0, 0, 0), RNG::generate(0, _action.weapon->getAmmoItem()->getRules()->getPower()), DT_IN); // double IN damage for aimed shot
+				else
+					burntile->getUnit()->damage(Position(0, 0, 0), RNG::generate(0, _action.weapon->getAmmoItem()->getRules()->getPower()/2), DT_IN); // immediate IN damage
+				burntile->getUnit()->setFire(RNG::generate(1, 5)); // catch fire and burn for 1-5 rounds
+			}
+			if (burntile->getFire() == 0)
+			{
+				burntile->ignite();
+			}
+		}
+	}
+	if(_action.weapon->getRules()->isFlamer() && _position >= (64)) // && _action.type == BA_SNAPSHOT) warboytodo - 5x5 flame grid?
+	{
+		for (int i = -1; i < 2; i++)
+		for (int j = -1; j < 2; j++)
+			{
+				Tile *burntile = _save->getTile(Position((_trajectory.at(_position).x/16)+i, (_trajectory.at(_position).y/16)+j, _trajectory.at(_position).z/24));
+				if(burntile)
+				{
+					if(!(j == 1 && burntile->getMapData(MapData::O_NORTHWALL)) && !(i == 1 && burntile->getMapData(MapData::O_WESTWALL))&&!(j == -1 && _save->getTile(Position((_trajectory.at(_position).x/16)+i, _trajectory.at(_position).y/16, _trajectory.at(_position).z/24))->getMapData(MapData::O_NORTHWALL)) && !(i == -1 && _save->getTile(Position(_trajectory.at(_position).x/16, (_trajectory.at(_position).y/16)+j, _trajectory.at(_position).z/24))->getMapData(MapData::O_WESTWALL)))
+					{
+						if (burntile->getFire() == 0)
+						{
+							burntile->ignite();
+						}
+						if (burntile->getUnit())
+						{
+							if(_action.type == BA_AIMEDSHOT)
+								burntile->getUnit()->damage(Position(0, 0, 0), RNG::generate(0, _action.weapon->getAmmoItem()->getRules()->getPower()), DT_IN); // double IN damage for aimed shot
+							else
+								burntile->getUnit()->damage(Position(0, 0, 0), RNG::generate(0, _action.weapon->getAmmoItem()->getRules()->getPower()/2), DT_IN); // immediate IN damage
+							burntile->getUnit()->setFire(RNG::generate(1, 5)); // catch fire and burn for 1-5 rounds
+						}
+					}
+				}
+			}
+
+	}
+	if (counter >= 16 && _action.weapon->getRules()->isFlamer())
+	{
+		counter = 0;
+		if (!_save->getDebugMode() && _action.weapon->getAmmoItem()->spendBullet() == false)
+		{
+			_save->removeItem(_action.weapon->getAmmoItem());
+			_action.weapon->setAmmoItem(0);
+		}
+		if(_action.type == BA_AIMEDSHOT)
+			if (!_save->getDebugMode() && _action.weapon->getAmmoItem()->spendBullet() == false)
+			{
+				_save->removeItem(_action.weapon->getAmmoItem());
+				_action.weapon->setAmmoItem(0);
+			}
+	}
+	if(_action.weapon->getRules()->isFlamer())
+	{
+		if(!_action.weapon->getAmmoItem())
+		{
+			return false;
+		}
+		if (_position >= _action.weapon->getRules()->getWeaponRange()*16)
+		{
+			return false;
+		}
+	}
+
 	_position++;
+	counter++;
 	if (_position == _trajectory.size())
 	{
 		_position--;
 		return false;
 	}
 	_position++;
+	counter++;
 	if (_position == _trajectory.size())
 	{
 		_position--;
@@ -408,6 +515,10 @@ BattleItem *Projectile::getItem() const
 		return 0;
 }
 
+std::vector<Position> Projectile::getTrajectory() const
+{
+	return _trajectory;
+}
 /**
  * Get the bullet sprite.
  * @return pointer to Surface
@@ -416,5 +527,6 @@ Surface *Projectile::getSprite() const
 {
 	return _sprite;
 }
+
 
 }

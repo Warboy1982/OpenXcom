@@ -486,4 +486,5 @@ bool BattleItem::getXCOMProperty () const
 {
 	return _XCOMProperty;
 }
+
 }

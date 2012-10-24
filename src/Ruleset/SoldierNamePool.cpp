@@ -20,7 +20,6 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include "../Savegame/Soldier.h"
 #include "../Engine/RNG.h"
 #include "../Engine/Language.h"
 #include "../Engine/Exception.h"
@@ -100,25 +99,23 @@ void SoldierNamePool::load(const std::string &filename)
  * @param gender Returned gender of the name.
  * @return Soldier name.
  */
-std::wstring SoldierNamePool::genName(SoldierGender *gender) const
+std::wstring SoldierNamePool::genName(int *gender) const
 {
 	std::wstringstream name;
-	int gen = RNG::generate(1, 10);
-	if (gen <= 5)
+	size_t first = RNG::generate(1, _maleFirst.size() + _femaleFirst.size());
+	if (first <= _maleFirst.size())
 	{
-		*gender = GENDER_MALE;
-		size_t first = RNG::generate(0, _maleFirst.size() - 1);
-		name << _maleFirst[first];
-		size_t last = RNG::generate(0, _maleLast.size() - 1);
-		name << " " << _maleLast[last];
+		*gender = 0;
+		name << _maleFirst[first - 1];
+		size_t last = RNG::generate(1, _maleLast.size());
+		name << " " << _maleLast[last - 1];
 	}
 	else
 	{
-		*gender = GENDER_FEMALE;
-		size_t first = RNG::generate(0, _femaleFirst.size() - 1);
-		name << _femaleFirst[first];
-		size_t last = RNG::generate(0, _femaleLast.size() - 1);
-		name << " " << _femaleLast[last];
+		*gender = 1;
+		name << _femaleFirst[first - _maleFirst.size() - 1];
+		size_t last = RNG::generate(1, _femaleLast.size());
+		name << " " << _femaleLast[last - 1];
 	}
 	return name.str();
 }

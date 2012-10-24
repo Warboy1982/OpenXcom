@@ -38,8 +38,6 @@ class PrimeGrenadeState : public State
 {
 private:
 	BattleAction *_action;
-	bool _inInventoryView;
-	BattleItem *_grenadeInInventory;
 	Text *_number[24];
 	Text *_title;
 	Window *_window;
@@ -47,7 +45,7 @@ private:
 	Surface *_bg;
 public:
 	/// Creates the Prime Grenade state.
-	PrimeGrenadeState(Game *game, BattleAction *action, bool inInventoryView, BattleItem *grenadeInInventory);
+	PrimeGrenadeState(Game *game, BattleAction *action);
 	/// Cleans up the Prime Grenade state.
 	~PrimeGrenadeState();
 	/// Handler for right-clicking anything.

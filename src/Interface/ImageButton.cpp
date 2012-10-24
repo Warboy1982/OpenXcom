@@ -79,17 +79,13 @@ void ImageButton::setGroup(ImageButton **group)
  */
 void ImageButton::mousePress(Action *action, State *state)
 {
-	if (_group != 0)
+	if (action->getDetails()->button.button == SDL_BUTTON_LEFT)
 	{
-		if (action->getDetails()->button.button == SDL_BUTTON_LEFT)
+		if (_group != 0)
 		{
 			(*_group)->invert((*_group)->getColor() + 3);
 			*_group = this;
-			invert(_color + 3);
 		}
-	}
-	else if (isButtonPressed())
-	{
 		invert(_color + 3);
 	}
 	InteractiveSurface::mousePress(action, state);
@@ -102,8 +98,11 @@ void ImageButton::mousePress(Action *action, State *state)
  */
 void ImageButton::mouseRelease(Action *action, State *state)
 {
-	if (_group == 0)
-		invert(_color + 3);
+	if (action->getDetails()->button.button == SDL_BUTTON_LEFT)
+	{
+		if (_group == 0)
+			invert(_color + 3);
+	}
 	InteractiveSurface::mouseRelease(action, state);
 }
 

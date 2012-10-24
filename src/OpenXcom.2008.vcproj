@@ -1403,14 +1403,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Geoscape\NewPossibleManufactureState.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Geoscape\NewPossibleManufactureState.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Geoscape\GeoscapeOptionsState.cpp"
 				>
 			</File>
