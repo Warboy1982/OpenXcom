@@ -108,6 +108,9 @@ void UnitDieBState::think()
 	}
 	else if (_unit->getStatus() == STATUS_COLLAPSING)
 	{
+		if(_unit->getType() != "ZOMBIE" && _unit->getSpecialAbility() == SPECAB_MORPHONDEATH)
+			_unit->killUnit();
+		else
 		_unit->keepFalling();
 	}
 

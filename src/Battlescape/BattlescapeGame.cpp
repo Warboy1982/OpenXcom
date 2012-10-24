@@ -192,7 +192,7 @@ void BattlescapeGame::handleAI(BattleUnit *unit)
 	{
 		statePushBack(new ProjectileFlyBState(this, action));
 	}
-
+	
 	if (action.type == BA_NONE)
 	{
 		_AIActionCounter = 0;
@@ -509,6 +509,15 @@ void BattlescapeGame::handleNonTargetAction()
 			{
 				if (_currentAction.actor->spendTimeUnits(_currentAction.TU, dontSpendTUs()))
 				{
+					if (_currentAction.actor->getType() == "CHRYSSALID")
+					{
+						Tile *targetTile = _save->getTile(_currentAction.target);
+						BattleUnit *target = targetTile->getUnit();
+						if (target != 0 && target->getType() != "CHRYSSALID" && target->getArmor()->getSize() == 1)
+						{
+							target->setSpecAb();
+						}
+					}
 					Position p;
 					Pathfinding::directionToVector(_currentAction.actor->getDirection(), &p);
 					Tile * tile (_save->getTile(_currentAction.actor->getPosition() + p));

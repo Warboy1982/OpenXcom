@@ -1996,6 +1996,7 @@ void BattleUnit::setSpecAb()
 void BattleUnit::killUnit()
 {
 	_health = 0;
+	_status = STATUS_DEAD;
 }
 }
 
