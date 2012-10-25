@@ -772,7 +772,7 @@ void SavedBattleGame::setDebugMode()
  */
 bool SavedBattleGame::getDebugMode() const
 {
-	return true;//_debugMode;
+	return _debugMode;
 }
 
 /**

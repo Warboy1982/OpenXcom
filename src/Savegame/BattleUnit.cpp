@@ -1513,6 +1513,8 @@ BattleItem *BattleUnit::getMainHandWeapon(bool quickest) const
 	BattleItem *weaponLeftHand = getItem("STR_LEFT_HAND");
 
 	// if there is only one weapon, or only one weapon loaded (rules out grenades) it's easy:
+	if (weaponRightHand && weaponRightHand->getRules()->isFixed())
+		return weaponRightHand;
 	if (!weaponRightHand || !weaponRightHand->getAmmoItem() || !weaponRightHand->getAmmoItem()->getAmmoQuantity())
 		return weaponLeftHand;
 	if (!weaponLeftHand || !weaponLeftHand->getAmmoItem() || !weaponLeftHand->getAmmoItem()->getAmmoQuantity())

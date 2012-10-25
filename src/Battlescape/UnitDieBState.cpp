@@ -98,6 +98,7 @@ void UnitDieBState::init()
  */
 void UnitDieBState::think()
 {
+	
 	if (_unit->getStatus() == STATUS_TURNING)
 	{
 		_unit->turn();
@@ -108,9 +109,6 @@ void UnitDieBState::think()
 	}
 	else if (_unit->getStatus() == STATUS_COLLAPSING)
 	{
-		if(_unit->getType() != "ZOMBIE" && _unit->getSpecialAbility() == SPECAB_MORPHONDEATH)
-			_unit->killUnit();
-		else
 		_unit->keepFalling();
 	}
 
@@ -194,6 +192,7 @@ void UnitDieBState::convertUnitToChryssalid()
 {
 	// in case the unit was unconscious
 	_parent->getSave()->removeUnconsciousBodyItem(_unit);
+	_unit->killUnit();
 	if(_unit->getType() != "ZOMBIE")
 	for (std::vector<BattleItem*>::iterator i = _unit->getInventory()->begin(); i != _unit->getInventory()->end(); ++i)
 	{

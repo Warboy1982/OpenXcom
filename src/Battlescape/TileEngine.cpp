@@ -484,7 +484,8 @@ bool TileEngine::checkReactionFire(BattleUnit *unit, BattleAction *action, Battl
 				{
 					// I see you!
 					highestReactionScore = (*i)->getReactionScore();
-					action->actor = (*i);
+					if(!action->actor || distance(unit->getPosition(), (*i)->getPosition()) < distance(unit->getPosition(), action->actor->getPosition()))
+						action->actor = (*i);
 				}
 			}
 		}
@@ -492,11 +493,25 @@ bool TileEngine::checkReactionFire(BattleUnit *unit, BattleAction *action, Battl
 
 	if (action->actor && highestReactionScore > unit->getReactionScore())
 	{
-		action->actor->addReactionExp();
-		action->type = BA_SNAPSHOT;
-		action->target = unit->getPosition();
-		// lets try and shoot: we need a weapon, ammo and enough time units
+		// lets try and shoot: first we need a weapon and a target
 		action->weapon = action->actor->getMainHandWeapon();
+		action->target = unit->getPosition();
+		double realDistance = distance(unit->getPosition(), action->actor->getPosition());
+
+		//compare the relative distance of our target to the capabilities of our weapon
+		if(action->weapon && action->weapon->getRules()->getBattleType() == BT_MELEE )
+		{
+			if(realDistance > 1)
+				return false;
+			action->type = BA_HIT;
+		}
+		else if(action->weapon && realDistance < action->weapon->getRules()->getWeaponRange())
+			action->type = BA_SNAPSHOT;
+		else
+			return false;
+
+
+		//now check if we have enough ammo and enough time units
 		int tu = action->actor->getActionTUs(action->type, action->weapon);
 		action->TU = tu;
 		if (action->weapon && action->weapon->getAmmoItem() && action->weapon->getAmmoItem()->getAmmoQuantity() && action->actor->getTimeUnits() >= tu)
@@ -513,6 +528,7 @@ bool TileEngine::checkReactionFire(BattleUnit *unit, BattleAction *action, Battl
 				}
 				aggro->setAggroTarget(action->actor);
 			}
+			action->actor->addReactionExp();
 			return true;
 		}
 	}

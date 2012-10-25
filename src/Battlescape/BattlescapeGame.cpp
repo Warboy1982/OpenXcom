@@ -193,6 +193,23 @@ void BattlescapeGame::handleAI(BattleUnit *unit)
 		statePushBack(new ProjectileFlyBState(this, action));
 	}
 	
+	if (action.type == BA_HIT)
+	{
+		
+		Tile *targetTile = _save->getTile(_currentAction.target);
+		BattleUnit *target = targetTile->getUnit();
+		if (action.actor->getType() == "CHRYSSALID"||action.actor->getType() == "ZOMBIE")
+			{
+				if (target != 0 && target->getType() != "CHRYSSALID" && target->getArmor()->getSize() == 1)
+				{
+					target->setSpecAb();
+				}
+			}
+		action.actor->lookAt(action.target);
+		Position voxel = Position(targetTile->getPosition().x*16,targetTile->getPosition().y*16,targetTile->getPosition().z*24);
+		voxel.x += 8;voxel.y += 8;voxel.z += 8;
+		statePushBack(new ExplosionBState(this, voxel, action.weapon, action.actor));
+	}
 	if (action.type == BA_NONE)
 	{
 		_AIActionCounter = 0;
@@ -856,8 +873,6 @@ bool BattlescapeGame::handlePanickingPlayer()
  */
 bool BattlescapeGame::handlePanickingUnit(BattleUnit *unit)
 {
-	if(unit->getSpecialAbility() == SPECAB_MORPHONDEATH && unit->getType() != "ZOMBIE")
-		unit->killUnit();
 	UnitStatus status = unit->getStatus();
 	if (status != STATUS_PANICKING && status != STATUS_BERSERK) return false;
 	unit->setVisible(true);
@@ -915,11 +930,14 @@ bool BattlescapeGame::handlePanickingUnit(BattleUnit *unit)
 		}
 		if (_save->getTile(ba.target) != 0)
 		{
-			ba.type = BA_SNAPSHOT;
 			ba.weapon = unit->getMainHandWeapon();
-			for (int i= 0; i < 10; i++)
+			if(ba.weapon)
 			{
-				statePushBack(new ProjectileFlyBState(this, ba));
+				ba.type = BA_SNAPSHOT;
+				for (int i= 0; i < 10; i++)
+				{
+					statePushBack(new ProjectileFlyBState(this, ba));
+				}
 			}
 		}
 		ba.type = BA_NONE;

@@ -156,13 +156,16 @@ void AggroBAIState::think(BattleAction *action)
 		// aggrotarget has no weapon - chances of take cover get smaller
 		if (!_aggroTarget->getMainHandWeapon())
 			number -= 50;
-
 		if (aggression == 0 && number < 10)
 			takeCover = false;
 		if (aggression == 1 && number < 50)
 			takeCover = false;
 		if (aggression == 2 && number < 90)
 			takeCover = false;
+		
+		// we're using melee, so CHAAAAAAAARGE!!!!!
+		if (_unit->getMainHandWeapon()->getRules()->getBattleType() == BT_MELEE && _game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()) > 1)
+			takeCover = true;
 
 		if (!takeCover)
 		{
@@ -205,7 +208,8 @@ void AggroBAIState::think(BattleAction *action)
 			{
 				action->weapon = action->actor->getMainHandWeapon();
 				// out of ammo or no weapon or ammo at all, we have to take cover
-				if (!action->weapon || !action->weapon->getAmmoItem() || !action->weapon->getAmmoItem()->getAmmoQuantity())
+				// no need for an ammo check here, getmainweapon does that already
+				if (!action->weapon)
 				{
 					takeCover = true;
 				}
@@ -213,7 +217,9 @@ void AggroBAIState::think(BattleAction *action)
 				{
 					if(((_unit->getFaction() == FACTION_NEUTRAL && _aggroTarget->getFaction() == FACTION_HOSTILE) || _unit->getFaction() == FACTION_HOSTILE) && _game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()) <= action->weapon->getRules()->getWeaponRange())
 					{
-						if (RNG::generate(1,10) < 5)
+						if (action->weapon->getRules()->getBattleType() == BT_MELEE)
+							action->type = BA_HIT;
+						else if (RNG::generate(1,10) < 5)
 							action->type = BA_SNAPSHOT;
 						else
 							action->type = BA_AUTOSHOT;
@@ -234,9 +240,28 @@ void AggroBAIState::think(BattleAction *action)
 		{
 			// the idea is to check within a 5 tile radius for a tile which is not seen by our aggroTarget
 			// if there is no such tile, we run away from the target.
+			// unless we use melee, in which case, try to get within one tile of our target asap.
 			action->type = BA_WALK;
 			int tries = 0;
+			int i = -1;
+			int j = -1;
 			bool coverFound = false;
+			if(action->actor->getMainHandWeapon()->getRules()->getBattleType() == BT_MELEE )
+			{
+				while (tries < 10 && !coverFound)
+				{
+					action->target = Position(_aggroTarget->getPosition());
+					action->target.x += RNG::generate(-1,1);
+					action->target.y += RNG::generate(-1,1);
+					
+					_game->getPathfinding()->calculate(_unit, action->target);
+					if (_game->getPathfinding()->getStartDirection() != -1)
+						coverFound = true;
+					_game->getPathfinding()->abortPath();
+					tries++;
+				}
+			}
+			else
 			while (tries < 30 && !coverFound)
 			{
 				tries++;
