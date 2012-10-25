@@ -509,7 +509,7 @@ void BattlescapeGame::handleNonTargetAction()
 			{
 				if (_currentAction.actor->spendTimeUnits(_currentAction.TU, dontSpendTUs()))
 				{
-					if (_currentAction.actor->getType() == "CHRYSSALID")
+					if (_currentAction.actor->getType() == "CHRYSSALID"||_currentAction.actor->getType() == "ZOMBIE")
 					{
 						Tile *targetTile = _save->getTile(_currentAction.target);
 						BattleUnit *target = targetTile->getUnit();

@@ -87,7 +87,7 @@ bool equalProduction::operator()(const Production * p) const
 SavedGame::SavedGame() : _difficulty(DIFF_BEGINNER), _funds(0), _globeLon(0.0), _globeLat(0.0), _globeZoom(0), _battleGame(0), _debug(false)
 {
 	RNG::init();
-	_time = new GameTime(6, 1, 1, 1999, 12, 0, 0);
+	_time = new GameTime(6, 1, 1, 1999, 12, 0, 0, 0);
 }
 
 /**
@@ -148,7 +148,7 @@ void SavedGame::getList(TextList *list, Language *lang)
 			YAML::Node doc;
 
 			parser.GetNextDocument(doc);
-			GameTime time = GameTime(6, 1, 1, 1999, 12, 0, 0);
+			GameTime time = GameTime(6, 1, 1, 1999, 12, 0, 0, 0);
 			time.load(doc["time"]);
 			std::stringstream saveTime;
 			std::wstringstream saveDay, saveMonth, saveYear;
