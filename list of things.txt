@@ -1,0 +1,30 @@
+hard: involves editing source code:
+todo: balancing, check all weapon damage types (grenades especially), play with armour values, fix all sounds and hit types - explosions making sectoid death noise, lol. - frag grenade seems to make 
+mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
+re-implement celatid - no drawing method, projectile stored in pck - use plasma?, silacoid - weird hitbox, fix.
+fix AI and melee - not targetting properly, seems to be tracing line of sight to target's feet rather than chest? - make it add target height to check?
+finish rank assignments and loadouts for commanders, etc.
+
+done:
+all missing alien races re-implemented, including Chryssalids, and their evil powers.
+terror missions at military bases (new map type) with military personnel (new unit type) with flashbangs and all mundane weapon types available
+plasma blade (alien combat knife), disruptors (alien laser tech) and gauss guns (alien AP tech) - aliens spawn with them - researchable, manufacturable
+flashbangs - explode immediately, no priming, reduces reactions, accuracy and detection radius for 2-3 turns
+sped up all projectiles by a factor of 2
+heavy weapons will only be issued to soldiers capable of using them (weight > 10, strength > 35)
+added police, they will show up as local law enforcement on terror missions and actually fight aliens
+incendiary grenades
+stun grenades
+combat knife
+grenade launcher with arcing projectile
+flamethrower with area of effect
+shotgun with multiple simultaneous projectiles
+full automatic fire mode for selected weapons (5 bullet auto fire)
+sniper rifle replaces heavy cannon
+combat armor added, purchasable from buy interface
+power armour replaced with re-coloured TFTD ion armour
+flying armour helmet graphics altered
+inventory screens for all new/updated armour
+left handedness now graphically represented
+dual wielding now properly represented on battlescape
+soldiers, if issued with pistols, will grab a melee weapon in their left hand, if one is available

@@ -563,7 +563,7 @@ void UnitSprite::drawRoutine4()
 	{
 		s = _unitSurface->getFrame(stand + _unit->getDirection());
 	}
-	if(_item)
+	if(_item && !_item->getRules()->isFixed())
 	{
 		// draw handob item
 		if (_unit->getStatus() == STATUS_AIMING && _item->getRules()->isTwoHanded())
@@ -591,7 +591,7 @@ void UnitSprite::drawRoutine4()
 	}
 		
 		//if we are dual wielding...
-		if(_itema)
+		if(_itema && !_itema->getRules()->isFixed())
 		{
 			itema = _itemSurface->getFrame(_itema->getRules()->getHandSprite() + _unit->getDirection());
 			itema->setX(offX2[_unit->getDirection()]);
