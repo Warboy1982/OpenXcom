@@ -127,11 +127,15 @@ void AggroBAIState::think(BattleAction *action)
 	_aggroTarget = 0;
 	for (std::vector<BattleUnit*>::iterator j = _unit->getVisibleUnits()->begin(); j != _unit->getVisibleUnits()->end(); ++j)
 	{
-		_aggroTarget = (*j);
+		//pick closest living unit
+		if (!_aggroTarget || _game->getTileEngine()->distance(_unit->getPosition(), (*j)->getPosition()) < _game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()))
+		{
+			if(!(*j)->isOut())
+			_aggroTarget = (*j);
+		}
 	}
-
 	// if we currently see no target, we either can move to it's last seen position or lose aggro
-	if (_aggroTarget == 0 || _aggroTarget->isOut())
+	if (_aggroTarget == 0)
 	{
 		_timesNotSeen++;
 		if (_timesNotSeen > _unit->getIntelligence() || aggression == 0)
@@ -164,9 +168,12 @@ void AggroBAIState::think(BattleAction *action)
 			takeCover = false;
 		
 		// we're using melee, so CHAAAAAAAARGE!!!!!
-		if (_unit->getMainHandWeapon()->getRules()->getBattleType() == BT_MELEE && _game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()) > 1)
-			takeCover = true;
-
+		if (_unit->getMainHandWeapon()->getRules()->getBattleType() == BT_MELEE)
+			if (_game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()) > 1)
+				takeCover = true;
+			else
+				takeCover = false;
+		//if distance ==1 attack instead
 		if (!takeCover)
 		{
 			_timesNotSeen = 0;
@@ -248,18 +255,16 @@ void AggroBAIState::think(BattleAction *action)
 			bool coverFound = false;
 			if(action->actor->getMainHandWeapon()->getRules()->getBattleType() == BT_MELEE )
 			{
-				while (tries < 10 && !coverFound)
-				{
-					action->target = Position(_aggroTarget->getPosition());
-					action->target.x += RNG::generate(-1,1);
-					action->target.y += RNG::generate(-1,1);
-					
-					_game->getPathfinding()->calculate(_unit, action->target);
-					if (_game->getPathfinding()->getStartDirection() != -1)
-						coverFound = true;
-					_game->getPathfinding()->abortPath();
-					tries++;
-				}
+				for (int i = -1; i < 2; i++)
+					for (int j = -1; j < 2; j++)
+					{
+						Position checkPath = Position (_aggroTarget->getPosition().x+i, _aggroTarget->getPosition().y+j, _aggroTarget->getPosition().z);
+						_game->getPathfinding()->calculate(_unit, checkPath);
+						if (_game->getPathfinding()->getStartDirection() != -1)
+							if (_game->getTileEngine()->distance(_unit->getPosition(), checkPath) < _game->getTileEngine()->distance(_unit->getPosition(), action->target))
+								action->target = checkPath;
+						_game->getPathfinding()->abortPath();
+					}
 			}
 			else
 			while (tries < 30 && !coverFound)

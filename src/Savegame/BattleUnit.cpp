@@ -2000,5 +2000,9 @@ void BattleUnit::killUnit()
 	_health = 0;
 	_status = STATUS_DEAD;
 }
+void BattleUnit::InvalidateCache()
+{
+	_cacheInvalid = true;
+}
 }
 

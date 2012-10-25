@@ -216,21 +216,20 @@ void UnitDieBState::convertUnitToChryssalid()
 		_newWeapon = "CHRYSSALID_WEAPON";
 	}
 
-	BattleUnit *unit = new BattleUnit(_parent->getRuleset()->getUnit(_newRace), FACTION_HOSTILE, _parent->getSave()->getUnits()->size()+1, _parent->getRuleset()->getArmor(_newArmor));
-	RuleItem *ruleItem = _parent->getRuleset()->getItem(_newWeapon);
+	BattleUnit *_newUnit = new BattleUnit(_parent->getRuleset()->getUnit(_newRace), FACTION_HOSTILE, _parent->getSave()->getUnits()->size(), _parent->getRuleset()->getArmor(_newArmor));
+	RuleItem *newItem = _parent->getRuleset()->getItem(_newWeapon);
 
-	_parent->getSave()->getTile(_unit->getPosition())->setUnit(unit);
-	unit->setPosition(_unit->getPosition());
-	unit->setDirection(3);
-	unit->setCache(0);
-	_parent->getSave()->addUnit(unit);
-	_parent->getMap()->cacheUnit(unit);
-
-
-	unit->setAIState(new PatrolBAIState(_parent->getSave(), unit, 0));
+	_parent->getSave()->getTile(_unit->getPosition())->setUnit(_newUnit);
+	_newUnit->setPosition(_unit->getPosition());
+	_newUnit->setDirection(3);
+	_newUnit->setCache(0);
+	_newUnit->InvalidateCache();
+	_parent->getSave()->addUnit(_newUnit);
+	_parent->getMap()->cacheUnit(_newUnit);
+	_newUnit->setAIState(new PatrolBAIState(_parent->getSave(), _newUnit, 0));
 	
-	BattleItem *bi = new BattleItem(ruleItem, _parent->getSave()->getCurrentItemId());
-	bi->moveToOwner(unit);
+	BattleItem *bi = new BattleItem(newItem, _parent->getSave()->getCurrentItemId());
+	bi->moveToOwner(_newUnit);
 	bi->setSlot(_parent->getRuleset()->getInventory("STR_RIGHT_HAND"));
 
 }

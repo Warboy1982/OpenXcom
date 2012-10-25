@@ -196,7 +196,7 @@ void BattlescapeGame::handleAI(BattleUnit *unit)
 	if (action.type == BA_HIT)
 	{
 		
-		Tile *targetTile = _save->getTile(_currentAction.target);
+		Tile *targetTile = _save->getTile(action.target);
 		BattleUnit *target = targetTile->getUnit();
 		if (action.actor->getType() == "CHRYSSALID"||action.actor->getType() == "ZOMBIE")
 			{

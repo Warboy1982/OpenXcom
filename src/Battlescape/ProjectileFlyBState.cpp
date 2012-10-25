@@ -299,7 +299,7 @@ void ProjectileFlyBState::think()
 	if (_parent->getMap()->getProjectile() == 0)
 	{
 
-		if(_action.weapon->getRules()->isShotgun())
+		if(_action.weapon && _action.weapon->getRules()->isShotgun())
 		{
 			if( _buckshotCounter < 5 )
 			{

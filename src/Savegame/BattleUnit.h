@@ -330,6 +330,7 @@ public:
 	void setFaction(UnitFaction f);
 	void setSpecAb();
 	void killUnit();
+	void InvalidateCache();
 };
 
 }
