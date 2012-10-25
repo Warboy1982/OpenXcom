@@ -2234,6 +2234,7 @@ items:
     handSprite: 104
     hitSound: 48
     hitAnimation: 36
+    clipSize: -1
     power: 90
     damageType: 7
     accuracyMelee: 80
@@ -2250,6 +2251,7 @@ items:
     handSprite: 104
     hitSound: 48
     hitAnimation: 36
+    clipSize: -1
     power: 114
     damageType: 7
     accuracyMelee: 80
@@ -2259,6 +2261,7 @@ items:
     invWidth: 1
     invHeight: 2
     recover: false
+    weaponRange: 1
   - type: CELATID_WEAPON
     weight: 3
     bigSprite: 32
@@ -4397,7 +4400,7 @@ units:
     armor: CHRYSSALID_ARMOR
     standHeight: 21
     kneelHeight: 16
-    loftemps: 2
+    loftemps: 4
     value: 25
     deathSound: 10
     intelligence: 4

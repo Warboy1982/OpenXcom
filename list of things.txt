@@ -2,7 +2,6 @@ hard: involves editing source code:
 todo: balancing, check all weapon damage types (grenades especially), play with armour values, fix all sounds and hit types - explosions making sectoid death noise, lol. - frag grenade seems to make 
 mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
 re-implement celatid - no drawing method, projectile stored in pck - use plasma?, silacoid - weird hitbox, fix.
-fix AI and melee - not targetting properly, seems to be tracing line of sight to target's feet rather than chest? - make it add target height to check?
 finish rank assignments and loadouts for commanders, etc.
 
 done:
