@@ -81,3 +81,5 @@ STR_UNABLE_TO_SHOOT_HERE
 Unable to shoot here!
 STR_ZOMBIE
 Zombie
+STR_GUARDIAN
+Guardian

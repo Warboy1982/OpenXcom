@@ -661,12 +661,23 @@ crafts:
     refuelRate: 50
     transferTime: 96
     score: 250
+  - type: STR_GUARDIAN
+    sprite: 3
+    fuelMax: 1000
+    damageMax: 500
+    speedMax: 2500
+    accel: 6
+    weapons: 2
+    costBuy: 1200000
+    refuelRate: 50
+    transferTime: 96
+    score: 250
   - type: STR_FIRESTORM
     sprite: 4
-    fuelMax: 20
-    damageMax: 50
-    speedMax: 4200
-    accel: 9
+    fuelMax: 60
+    damageMax: 1200
+    speedMax: 5400
+    accel: 10
     weapons: 2
     refuelItem: STR_ELERIUM_115
     refuelRate: 5
@@ -695,9 +706,9 @@ crafts:
     sprite: 2
     fuelMax: 60
     damageMax: 1200
-    speedMax: 5400
+    speedMax: 4200
     accel: 10
-    weapons: 2
+    weapons: 1
     soldiers: 26
     vehicles: 4
     refuelItem: STR_ELERIUM_115
@@ -916,20 +927,84 @@ items:
     costSell: 594000
     transferTime: 96
     weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 110
+    damageType: 4
+    accuracySnap: 50
+    accuracyAimed: 58
+    tuSnap: 33
+    tuAimed: 75
+    battleType: 1
+    fixedWeapon: true
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
   - type: STR_HOVERTANK_PLASMA
     size: 6
     costSell: 980000
     transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 8
+    fireSound: 11
+    hitSound: 19
+    power: 110
+    damageType: 5
+    hitAnimation: 46
+    accuracySnap: 85
+    accuracyAimed: 100
+    tuSnap: 30
+    tuAimed: 60
+    battleType: 1
+    fixedWeapon: true
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
   - type: STR_HOVERTANK_LAUNCHER
     size: 6
     costSell: 1043000
     transferTime: 96
     weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 10
+    fireSound: 53
+    compatibleAmmo:
+      - STR_HWP_FUSION_BOMB
+    accuracyAimed: 120
+    tuAimed: 80
+    battleType: 1
+    fixedWeapon: true
+    waypoint: true
+    invWidth: 2
+    invHeight: 3
+    armor: 20
   - type: STR_HWP_FUSION_BOMB
     size: 6
     costSell: 31500
-    transferTime: 48
-    weight: 1
+    weight: 3
+    bigSprite: 36
+    floorSprite: 35
+    hitSound: 0
+    hitAnimation: 0
+    power: 140
+    damageType: 3
+    clipSize: 8
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    armor: 20
   - type: STR_COMBAT_KNIFE
     size: 0.1
     costBuy: 100
@@ -3349,6 +3424,46 @@ armors:
       - 1.2
       - 1.6
       - 1.0
+  - type: FLOATER_ARMOR1
+    spriteSheet: FLOATER.PCK
+    corpseItem: STR_FLOATER_CORPSE
+    frontArmor: 16
+    sideArmor: 12
+    rearArmor: 8
+    underArmor: 12
+    drawingRoutine: 1
+    movementType: 1
+    damageModifier:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.2
+      - 1.6
+      - 1.0
+  - type: FLOATER_ARMOR2
+    spriteSheet: FLOATER.PCK
+    corpseItem: STR_FLOATER_CORPSE
+    frontArmor: 24
+    sideArmor: 18
+    rearArmor: 12
+    underArmor: 16
+    drawingRoutine: 1
+    movementType: 1
+    damageModifier:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.2
+      - 1.6
+      - 1.0
   - type: CYBERDISC_ARMOR
     spriteSheet: CYBER.PCK
     corpseItem: CYBERDISC_CORPSE_
@@ -3418,6 +3533,27 @@ armors:
     rearArmor: 60
     underArmor: 60
     drawingRoutine: 2
+    size: 2
+    damageModifier:
+      - 1.0
+      - 1.0
+      - 0.4
+      - 0.75
+      - 1.0
+      - 1.0
+      - 0.0
+      - 0.9
+      - 0.4
+      - 1.0
+  - type: HOVERTANK_ARMOR
+    spriteSheet: TANKS.PCK
+    corpseItem: HOVERTANK_CORPSE_
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 100
+    drawingRoutine: 2
+    movementType: 1
     size: 2
     damageModifier:
       - 1.0
@@ -3852,6 +3988,29 @@ units:
     deathSound: 10
     intelligence: 6
     aggression: 2
+  - type: SECTOID_MEDIC
+    race: STR_SECTOID
+    rank: STR_LIVE_MEDIC
+    stats:
+      tu: 54
+      stamina: 90
+      health: 30
+      bravery: 80
+      reactions: 63
+      firing: 52
+      throwing: 58
+      strength: 30
+      psiStrength: 40
+      psiSkill: 0
+      melee: 76
+    armor: SECTOID_ARMOR0
+    standHeight: 16
+    kneelHeight: 12
+    loftemps: 2
+    value: 14
+    deathSound: 10
+    intelligence: 5
+    aggression: 1
   - type: SECTOID_NAVIGATOR
     race: STR_SECTOID
     rank: STR_LIVE_NAVIGATOR
@@ -3875,6 +4034,52 @@ units:
     deathSound: 10
     intelligence: 4
     aggression: 2
+  - type: SECTOID_LEADER
+    race: STR_SECTOID
+    rank: STR_LIVE_LEADER
+    stats:
+      tu: 54
+      stamina: 90
+      health: 30
+      bravery: 80
+      reactions: 63
+      firing: 52
+      throwing: 58
+      strength: 30
+      psiStrength: 40
+      psiSkill: 50
+      melee: 76
+    armor: SECTOID_ARMOR0
+    standHeight: 16
+    kneelHeight: 12
+    loftemps: 2
+    value: 20
+    deathSound: 10
+    intelligence: 7
+    aggression: 1
+  - type: SECTOID_COMMANDER
+    race: STR_SECTOID
+    rank: STR_LIVE_COMMANDER
+    stats:
+      tu: 54
+      stamina: 90
+      health: 30
+      bravery: 80
+      reactions: 63
+      firing: 52
+      throwing: 58
+      strength: 30
+      psiStrength: 40
+      psiSkill: 60
+      melee: 76
+    armor: SECTOID_ARMOR0
+    standHeight: 16
+    kneelHeight: 12
+    loftemps: 2
+    value: 25
+    deathSound: 10
+    intelligence: 8
+    aggression: 0
   - type: CYBERDISC
     race: STR_CYBERDISC
     stats:
@@ -3967,6 +4172,75 @@ units:
     deathSound: 10
     intelligence: 5
     aggression: 2
+  - type: FLOATER_MEDIC
+    race: STR_FLOATER
+    rank: STR_LIVE_MEDIC
+    stats:
+      tu: 50
+      stamina: 90
+      health: 35
+      bravery: 80
+      reactions: 50
+      firing: 50
+      throwing: 58
+      strength: 40
+      psiStrength: 35
+      psiSkill: 0
+      melee: 70
+    armor: FLOATER_ARMOR0
+    standHeight: 21
+    kneelHeight: 16
+    loftemps: 3
+    value: 16
+    deathSound: 10
+    intelligence: 6
+    aggression: 1
+  - type: FLOATER_LEADER
+    race: STR_FLOATER
+    rank: STR_LIVE_LEADER
+    stats:
+      tu: 55
+      stamina: 95
+      health: 40
+      bravery: 80
+      reactions: 60
+      firing: 60
+      throwing: 58
+      strength: 47
+      psiStrength: 40
+      psiSkill: 0
+      melee: 70
+    armor: FLOATER_ARMOR1
+    standHeight: 21
+    kneelHeight: 16
+    loftemps: 3
+    value: 25
+    deathSound: 10
+    intelligence: 8
+    aggression: 0
+  - type: FLOATER_COMMANDER
+    race: STR_FLOATER
+    rank: STR_LIVE_COMMANDER
+    stats:
+      tu: 60
+      stamina: 100
+      health: 45
+      bravery: 80
+      reactions: 66
+      firing: 63
+      throwing: 65
+      strength: 48
+      psiStrength: 45
+      psiSkill: 0
+      melee: 76
+    armor: FLOATER_ARMOR2
+    standHeight: 21
+    kneelHeight: 16
+    loftemps: 3
+    value: 35
+    deathSound: 10
+    intelligence: 8
+    aggression: 0
   - type: REAPER
     race: STR_REAPER
     stats:
@@ -4009,6 +4283,26 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
+  - type: TANK_LASER_CANNON
+    race: STR_TANK_LASER_CANNON
+    stats:
+      tu: 70
+      stamina: 100
+      health: 90
+      bravery: 110
+      reactions: 20
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: TANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
   - type: TANK_ROCKET_LAUNCHER
     race: STR_TANK_ROCKET_LAUNCHER
     stats:
@@ -4024,6 +4318,46 @@ units:
       psiSkill: 0
       melee: 0
     armor: TANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+  - type: HOVERTANK_PLASMA
+    race: STR_HOVERTANK_PLASMA
+    stats:
+      tu: 100
+      stamina: 100
+      health: 90
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: HOVERTANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+  - type: HOVERTANK_LAUNCHER
+    race: STR_HOVERTANK_LAUNCHER
+    stats:
+      tu: 100
+      stamina: 100
+      health: 90
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: HOVERTANK_ARMOR
     standHeight: 15
     kneelHeight: 15
     loftemps: 4
@@ -4820,6 +5154,48 @@ alienDeployments:
             - STR_RAIL_GUN
             - STR_RAIL_GUN_CLIP
             - STR_RAIL_GUN_CLIP
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 25
+        itemSets:
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
       - alienRank: 2
         lowQty: 1
         highQty: 2
@@ -4862,6 +5238,36 @@ alienDeployments:
             - STR_PLASMA_BLADE
             - STR_STUN_BOMB
             - STR_STUN_BOMB
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets:
+          -
+            - STR_PLASMA_PISTOL
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_BLADE
+          -
+            - STR_DISRUPTOR_PISTOL
+            - STR_PLASMA_BLADE
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
     width: 50
     length: 50
     height: 4
@@ -4927,6 +5333,48 @@ alienDeployments:
             - STR_RAIL_GUN
             - STR_RAIL_GUN_CLIP
             - STR_RAIL_GUN_CLIP
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 25
+        itemSets:
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB            
       - alienRank: 2
         lowQty: 1
         highQty: 2
@@ -4969,6 +5417,36 @@ alienDeployments:
             - STR_PLASMA_BLADE
             - STR_STUN_BOMB
             - STR_STUN_BOMB
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets:
+          -
+            - STR_PLASMA_PISTOL
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_BLADE
+          -
+            - STR_DISRUPTOR_PISTOL
+            - STR_PLASMA_BLADE
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
     width: 50
     length: 50
     height: 4
@@ -5034,6 +5512,48 @@ alienDeployments:
             - STR_RAIL_GUN
             - STR_RAIL_GUN_CLIP
             - STR_RAIL_GUN_CLIP
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 25
+        itemSets:
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
       - alienRank: 2
         lowQty: 1
         highQty: 2
@@ -5076,6 +5596,36 @@ alienDeployments:
             - STR_PLASMA_BLADE
             - STR_STUN_BOMB
             - STR_STUN_BOMB
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets:
+          -
+            - STR_PLASMA_PISTOL
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_BLADE
+          -
+            - STR_DISRUPTOR_PISTOL
+            - STR_PLASMA_BLADE
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
       - alienRank: 6
         lowQty: 1
         highQty: 3
@@ -5084,6 +5634,14 @@ alienDeployments:
         itemSets:
           -
             []			
+      - alienRank: 7
+        lowQty: 0
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets:
+          -
+            []		
     width: 50
     length: 50
     height: 4
@@ -5149,11 +5707,11 @@ alienDeployments:
             - STR_RAIL_GUN
             - STR_RAIL_GUN_CLIP
             - STR_RAIL_GUN_CLIP
-      - alienRank: 2
+      - alienRank: 3
         lowQty: 1
-        highQty: 2
+        highQty: 1
         dQty: 1
-        percentageOutsideUfo: 35
+        percentageOutsideUfo: 25
         itemSets:
           -
             - STR_SMALL_LAUNCHER
@@ -5191,6 +5749,130 @@ alienDeployments:
             - STR_PLASMA_BLADE
             - STR_STUN_BOMB
             - STR_STUN_BOMB
+      - alienRank: 2
+        lowQty: 1
+        highQty: 2
+        dQty: 1
+        percentageOutsideUfo: 35
+        itemSets:
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets:
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+      - alienRank: 0
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets:
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+      - alienRank: 6
+        lowQty: 1
+        highQty: 3
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets:
+          -
+            []			
+      - alienRank: 7
+        lowQty: 0
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets:
+          -
+            []		
     width: 50
     length: 50
     height: 4
@@ -5256,6 +5938,48 @@ alienDeployments:
             - STR_RAIL_GUN
             - STR_RAIL_GUN_CLIP
             - STR_RAIL_GUN_CLIP
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 25
+        itemSets:
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB       
       - alienRank: 2
         lowQty: 1
         highQty: 2
@@ -5298,6 +6022,36 @@ alienDeployments:
             - STR_PLASMA_BLADE
             - STR_STUN_BOMB
             - STR_STUN_BOMB
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets:
+          -
+            - STR_PLASMA_PISTOL
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_BLADE
+          -
+            - STR_DISRUPTOR_PISTOL
+            - STR_PLASMA_BLADE
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
     width: 50
     length: 50
     height: 4
@@ -5340,17 +6094,25 @@ alienDeployments:
         percentageOutsideUfo: 0
         itemSets:
           -
-            []
+            []	
+      - alienRank: 7
+        lowQty: 0
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 50
+        itemSets:
+          -
+            []	
     width: 50
     length: 50
     height: 4
   - type: STR_ALIEN_BASE_ASSAULT
     data:
       - alienRank: 5
-        lowQty: 5
-        highQty: 7
-        dQty: 4
-        percentageOutsideUfo: 0
+        lowQty: 1
+        highQty: 3
+        dQty: 5
+        percentageOutsideUfo: 65
         itemSets:
           -
             - STR_PLASMA_PISTOL
@@ -5376,31 +6138,154 @@ alienDeployments:
             - STR_RAIL_GUN
             - STR_RAIL_GUN_CLIP
             - STR_RAIL_GUN_CLIP
-      - alienRank: 6
+      - alienRank: 4
         lowQty: 1
-        highQty: 3
+        highQty: 1
         dQty: 1
-        percentageOutsideUfo: 0
+        percentageOutsideUfo: 25
         itemSets:
           -
-            []
-      - alienRank: 7
-        lowQty: 0
+            - STR_PLASMA_PISTOL
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_BLADE
+          -
+            - STR_DISRUPTOR_PISTOL
+            - STR_PLASMA_BLADE
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 25
+        itemSets:
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+          -
+            - STR_SMALL_LAUNCHER
+            - STR_STUN_BOMB
+            - STR_PLASMA_BLADE
+            - STR_STUN_BOMB
+            - STR_STUN_BOMB
+      - alienRank: 2
+        lowQty: 1
         highQty: 2
         dQty: 1
+        percentageOutsideUfo: 35
+        itemSets:
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
         percentageOutsideUfo: 0
         itemSets:
           -
-            []			
-    width: 50
-    length: 50
-    height: 4
-  - type: STR_BASE_DEFENSE
-    data:
-      - alienRank: 5
-        lowQty: 4
-        highQty: 8
-        dQty: 4
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+      - alienRank: 0
+        lowQty: 1
+        highQty: 1
+        dQty: 0
         percentageOutsideUfo: 0
         itemSets:
           -
@@ -5431,13 +6316,108 @@ alienDeployments:
         lowQty: 1
         highQty: 3
         dQty: 2
+        percentageOutsideUfo: 50
+        itemSets:
+          -
+            []			
+      - alienRank: 7
+        lowQty: 0
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets:
+          -
+            []		
+    width: 50
+    length: 50
+    height: 4
+  - type: STR_BASE_DEFENSE
+    data:
+      - alienRank: 5
+        lowQty: 6
+        highQty: 10
+        dQty: 6
         percentageOutsideUfo: 0
         itemSets:
           -
-            []
+            - STR_PLASMA_PISTOL
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_PISTOL_CLIP
+            - STR_PLASMA_BLADE
+          -
+            - STR_DISRUPTOR_PISTOL
+            - STR_PLASMA_BLADE
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets:
+          -
+            - STR_GAUSS_RIFLE
+            - STR_GAUSS_RIFLE_CLIP
+            - STR_GAUSS_RIFLE_CLIP
+          -
+            - STR_PLASMA_RIFLE
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_PLASMA_RIFLE_CLIP
+            - STR_MIND_PROBE
+          -
+            - STR_DISRUPTOR_RIFLE
+            - STR_MIND_PROBE
+          -
+            - STR_RAIL_GUN
+            - STR_RAIL_GUN_CLIP
+            - STR_RAIL_GUN_CLIP
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+          -
+            - STR_BLASTER_LAUNCHER
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+            - STR_BLASTER_BOMB
+      - alienRank: 6
+        lowQty: 1
+        highQty: 3
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets:
+          -
+            []			
+      - alienRank: 7
+        lowQty: 0
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets:
+          -
+            []		
     width: 60
     length: 60
-    height: 2
+    height: 2	
   - type: STR_MILITARY_DEFENSE
     data:
       - alienRank: 5
@@ -6139,12 +7119,12 @@ manufacture:
     category: STR_CRAFT
     requires:
       - STR_NEW_FIGHTER_CRAFT
-    space: 30
-    time: 14000
-    cost: 400000
+    space: 34
+    time: 26000
+    cost: 600000
     requiredItems:
-      STR_ALIEN_ALLOYS: 65
-      STR_UFO_POWER_SOURCE: 1
+      STR_ALIEN_ALLOYS: 100
+      STR_UFO_POWER_SOURCE: 2
       STR_UFO_NAVIGATION: 1
   - name: STR_LIGHTNING
     category: STR_CRAFT
@@ -6284,21 +7264,21 @@ ufopaedia:
     type_id: 3
     section: STR_HEAVY_WEAPONS_PLATFORMS
     text: STR_TANK_ROCKET_LAUNCHER_UFOPEDIA
-#  - id: TANK_LASER_CANNON
-#    title: STR_TANK_LASER_CANNON
-#    type_id: 3
-#    section: STR_HEAVY_WEAPONS_PLATFORMS
-#    text: STR_TANK_LASER_CANNON_UFOPEDIA
-#  - id: HOVERTANK_PLASMA
-#    title: STR_HOVERTANK_PLASMA
-#    type_id: 3
-#    section: STR_HEAVY_WEAPONS_PLATFORMS
-#    text: STR_HOVERTANK_PLASMA_UFOPEDIA
-#  - id: HOVERTANK_LAUNCHER
-#    title: STR_HOVERTANK_LAUNCHER
-#    type_id: 3
-#    section: STR_HEAVY_WEAPONS_PLATFORMS
-#    text: STR_HOVERTANK_LAUNCHER_UFOPEDIA
+  - id: TANK_LASER_CANNON
+    title: STR_TANK_LASER_CANNON
+    type_id: 3
+    section: STR_HEAVY_WEAPONS_PLATFORMS
+    text: STR_TANK_LASER_CANNON_UFOPEDIA
+  - id: HOVERTANK_PLASMA
+    title: STR_HOVERTANK_PLASMA
+    type_id: 3
+    section: STR_HEAVY_WEAPONS_PLATFORMS
+    text: STR_HOVERTANK_PLASMA_UFOPEDIA
+  - id: HOVERTANK_LAUNCHER
+    title: STR_HOVERTANK_LAUNCHER
+    type_id: 3
+    section: STR_HEAVY_WEAPONS_PLATFORMS
+    text: STR_HOVERTANK_LAUNCHER_UFOPEDIA
   - id: STR_PERSONAL_ARMOR_UC
     type_id: 5
     section: STR_WEAPONS_AND_EQUIPMENT

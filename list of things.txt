@@ -1,11 +1,28 @@
-hard: involves editing source code:
-todo: balancing, check all weapon damage types (grenades especially), play with armour values, fix all sounds and hit types - explosions making sectoid death noise, lol.
+todo:
+ruleset:
+disruptor/gauss vehicle weapons, and tank variants.
+balancing, check all weapon damage types (grenades especially), play with armour values, fix all sounds and hit types - explosions making sectoid death noise, lol.
+ufopedia entries for new weapons
+
+code:
+fix weapon placements on muton and snakeman
+why are hovertanks disabled?
 mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
-re-implement celatid - no drawing method, projectile stored in pck - use plasma?, silacoid - weird hitbox, fix.
-finish rank assignments and loadouts for commanders, etc.
-make melee units attack diagonally?
+are melee units attacking diagonally? they're REACTING diagonally but this is by no means a definitive answer.
+make terror more likely (1/4 UFOs will instead spawn as terror sites?)
+make funding nations much harder to please, make them drop out more often, and when they sign a pact, start generating anti-infiltration missions somewhere in their country (use alien base as a template for how to generate a hidden mission) at a rate of about 1.5 per month, and start generating military defence missions every few weeks or so until all anti-infiltration missions are complete, and set the funding nation to "happy" 
+sattelite defense network? - extra base with free planet wide hyper-wave decode, quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
+
+maps:
+add HWP factory as terror site
+find more maps to use as terror sites.
+look into including modified versions of existing maps in the tilesets
+
 
 done:
+added Guardian class interceptor (costs more, is better)
+tweaked lightning to be actually good
+set avenger to have one weapon slot only, hybrid transports don't get to be effective fighter craft too, sorry.
 all missing alien races re-implemented, including Chryssalids, and their evil powers.
 terror missions at military bases (new map type) with military personnel (new unit type) with flashbangs and all mundane weapon types available
 plasma blade (alien combat knife), disruptors (alien laser tech) and gauss guns (alien AP tech) - aliens spawn with them - researchable, manufacturable
