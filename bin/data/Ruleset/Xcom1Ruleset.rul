@@ -1244,7 +1244,7 @@ items:
     floorSprite: 9
     handSprite: 144
     bulletSprite: 5
-    fireSound: 2
+    fireSound: 16
     compatibleAmmo:
       - STR_FLAMETHROWER_AMMO
     accuracyAimed: 56
@@ -1311,7 +1311,7 @@ items:
     floorSprite: 2
     hitSound: 0
     hitAnimation: 0
-    power: 30
+    power: 90
     damageType: 3
     clipSize: 1
     battleType: 2
@@ -1325,7 +1325,7 @@ items:
     floorSprite: 2
     hitSound: 0
     hitAnimation: 0
-    power: 30
+    power: 90
     damageType: 2
     clipSize: 1
     battleType: 2
@@ -1339,7 +1339,7 @@ items:
     floorSprite: 2
     hitSound: 0
     hitAnimation: 0
-    power: 30
+    power: 90
     damageType: 6
     clipSize: 1
     battleType: 2

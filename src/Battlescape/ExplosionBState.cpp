@@ -68,38 +68,35 @@ void ExplosionBState::init()
 {
 	if (_item)
 	{
-//		if (!_item->getRules()->isShotgun())
-//		{
-			if (_item->getRules()->getHitAnimation() == 0)
+		if (_item->getRules()->getHitAnimation() == 0)
+		{
+			_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED);
+			for (int i = 0; i < _item->getRules()->getPower()/5; i++)
 			{
-				_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED);
-				for (int i = 0; i < _item->getRules()->getPower()/5; i++)
-				{
-					int X = RNG::generate(-_item->getRules()->getPower()/2,_item->getRules()->getPower()/2);
-					int Y = RNG::generate(-_item->getRules()->getPower()/2,_item->getRules()->getPower()/2);
-					Position p = _center;
-					p.x += X; p.y += Y;
-					Explosion *explosion = new Explosion(p, RNG::generate(0,6), true);
-					// add the explosion on the map
-					_parent->getMap()->getExplosions()->insert(explosion);
-				}
-				// explosion sound
-				 if (_item->getRules()->getPower() <= 80)
-					   _parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(10)->play();
-				 else
-					 _parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(5)->play();
-			}
-			else
-			{
-				_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED/2);
-				// create a bulet hit
-				Explosion *explosion = new Explosion(_center, _item->getRules()->getHitAnimation(), false);
+				int X = RNG::generate(-_item->getRules()->getPower()/2,_item->getRules()->getPower()/2);
+				int Y = RNG::generate(-_item->getRules()->getPower()/2,_item->getRules()->getPower()/2);
+				Position p = _center;
+				p.x += X; p.y += Y;
+				Explosion *explosion = new Explosion(p, RNG::generate(0,6), true);
 				// add the explosion on the map
 				_parent->getMap()->getExplosions()->insert(explosion);
-				// bullet hit sound
-				_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_item->getRules()->getHitSound())->play();
 			}
-//		}
+			// explosion sound
+			 if (_item->getRules()->getPower() <= 80)
+				   _parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(12)->play();
+			 else
+				 _parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(5)->play();
+		}
+		else
+		{
+			_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED/2);
+			// create a bulet hit
+			Explosion *explosion = new Explosion(_center, _item->getRules()->getHitAnimation(), false);
+			// add the explosion on the map
+			_parent->getMap()->getExplosions()->insert(explosion);
+			// bullet hit sound
+			_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_item->getRules()->getHitSound())->play();
+		}
 	}
 	else
 	{

@@ -158,7 +158,7 @@ void UnitSprite::drawRoutine0()
 	Surface *torso = 0, *legs = 0, *leftArm = 0, *rightArm = 0, *item = 0, *itema = 0;
 	// magic numbers
 	const int maleTorso = 32, femaleTorso = 267, legsStand = 16, legsKneel = 24, die = 264, legsFloat = 275;
-	const int larmStand = 0, rarmStand = 8, rarm1H = 232, larm2H = 240, ramr2H = 248, rarmShoot = 256;
+	const int larmStand = 0, rarmStand = 8, rarm1H = 232, larm2H = 240, rarm2H = 248, rarmShoot = 256;
 	const int legsWalk[8] = { 56, 56+24, 56+24*2, 56+24*3, 56+24*4, 56+24*5, 56+24*6, 56+24*7 };
 	const int larmWalk[8] = { 40, 40+24, 40+24*2, 40+24*3, 40+24*4, 40+24*5, 40+24*6, 40+24*7 };
 	const int rarmWalk[8] = { 48, 48+24, 48+24*2, 48+24*3, 48+24*4, 48+24*5, 48+24*6, 48+24*7 };
@@ -166,8 +166,14 @@ void UnitSprite::drawRoutine0()
 	const int alternateyoffWalk[8] = {1, 1, 0, 0, 1, 1, 0, 0}; // bobbing up and down (muton)
 	const int offX[8] = { 8, 10, 7, 4, -9, -11, -7, -3 }; // for the weapons
 	const int offY[8] = { -6, -3, 0, 2, 0, -4, -7, -9 }; // for the weapons
-	const int offX2[8] = { -8, 3, 5, 12, 6, -1, -5, -13 }; // for the weapons
-	const int offY2[8] = { 1, -4, -2, 0, 3, 3, 5, 0 }; // for the weapons
+	const int offX2[8] = { -8, 3, 5, 12, 6, -1, -5, -13 }; // for the left handed weapons
+	const int offY2[8] = { 1, -4, -2, 0, 3, 3, 5, 0 }; // for the left handed weapons
+	const int offX3[8] = { 0, 0, 2, 2, 0, 0, 0, 0 }; // for the weapons (muton)
+	const int offY3[8] = { -3, -3, -1, -1, -1, -3, -3, -2 }; // for the weapons (muton)
+	const int offX4[8] = { -8, 2, 7, 14, 7, -2, -4, -8 }; // for the left handed weapons
+	const int offY4[8] = { -3, -3, -1, 0, 3, 3, 0, 1 }; // for the left handed weapons
+	const int offX5[8] = { -1, 1, 1, 2, 0, -1, 0, 0 }; // for the weapons (muton)
+	const int offY5[8] = { 1, -1, -1, -1, -1, -2, -3, 0 }; // for the weapons (muton)
 	const int offYKneel = 4;
 
 	if (_unit->isOut())
@@ -234,8 +240,24 @@ void UnitSprite::drawRoutine0()
 		else
 		{
 			item = _itemSurface->getFrame(_item->getRules()->getHandSprite() + _unit->getDirection());
-			item->setX(0);
-			item->setY(0);
+			if(_unit->getArmor()->getModifiedWalk())
+			{
+				if(_item->getRules()->isTwoHanded())
+				{
+						item->setX(offX3[_unit->getDirection()]);
+						item->setY(offY3[_unit->getDirection()]);
+				}
+				else
+				{
+					item->setX(offX5[_unit->getDirection()]);
+					item->setY(offY5[_unit->getDirection()]);
+				}
+			}
+			else
+			{
+				item->setX(0);
+				item->setY(0);
+			}
 		}
 
 
@@ -249,22 +271,35 @@ void UnitSprite::drawRoutine0()
 			}
 			else
 			{
-				rightArm = _unitSurface->getFrame(ramr2H + _unit->getDirection());
+				rightArm = _unitSurface->getFrame(rarm2H + _unit->getDirection());
 			}
 		}
 		else
 		{
-			rightArm = _unitSurface->getFrame(rarm1H + _unit->getDirection());
+			if(_unit->getArmor()->getModifiedWalk())
+				rightArm = _unitSurface->getFrame(rarm2H + _unit->getDirection()); // missing/wrong arms on muton here, investigate spriteset
+			else
+				rightArm = _unitSurface->getFrame(rarm1H + _unit->getDirection());
 		}
 		
 
 		// the fixed arm(s) have to be animated up/down when walking
 		if (_unit->getStatus() == STATUS_WALKING)
 		{
-			item->setY(yoffWalk[_unit->getWalkingPhase()]);
-			rightArm->setY(yoffWalk[_unit->getWalkingPhase()]);
-			if (_item->getRules()->isTwoHanded())
-				leftArm->setY(yoffWalk[_unit->getWalkingPhase()]);
+			if(_unit->getArmor()->getModifiedWalk())
+			{
+				item->setY(item->getY() + alternateyoffWalk[_unit->getWalkingPhase()]);
+				rightArm->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
+				if (_item->getRules()->isTwoHanded())
+					leftArm->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
+			}
+			else
+			{
+				item->setY(item->getY() + yoffWalk[_unit->getWalkingPhase()]);
+				rightArm->setY(yoffWalk[_unit->getWalkingPhase()]);
+				if (_item->getRules()->isTwoHanded())
+					leftArm->setY(yoffWalk[_unit->getWalkingPhase()]);
+			}
 		}
 	}
 	//if we are left handed or dual wielding...
@@ -274,12 +309,29 @@ void UnitSprite::drawRoutine0()
 		{
 			leftArm = _unitSurface->getFrame(larm2H + _unit->getDirection());
 			itema = _itemSurface->getFrame(_itema->getRules()->getHandSprite() + _unit->getDirection());
-			itema->setX(offX2[_unit->getDirection()]);
-			itema->setY(offY2[_unit->getDirection()]);
+			if(_unit->getArmor()->getModifiedWalk())
+			{
+				itema->setX(offX4[_unit->getDirection()]);
+				itema->setY(offY4[_unit->getDirection()]);
+			}
+			else
+			{
+				itema->setX(offX2[_unit->getDirection()]);
+				itema->setY(offY2[_unit->getDirection()]);
+			}
+
 			if (_unit->getStatus() == STATUS_WALKING)
 			{
-				leftArm->setY(yoffWalk[_unit->getWalkingPhase()]);
-				itema->setY(offY2[_unit->getDirection()] + yoffWalk[_unit->getWalkingPhase()]);
+				if(_unit->getArmor()->getModifiedWalk())
+				{
+					leftArm->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
+					itema->setY(itema->getY() + alternateyoffWalk[_unit->getWalkingPhase()]);
+				}
+				else
+				{
+					leftArm->setY(yoffWalk[_unit->getWalkingPhase()]);
+					itema->setY(itema->getY() + yoffWalk[_unit->getWalkingPhase()]);
+				}
 			}
 		}
 	}

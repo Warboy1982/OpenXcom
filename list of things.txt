@@ -1,12 +1,11 @@
 todo:
 ruleset:
 disruptor/gauss vehicle weapons, and tank variants.
-balancing, check all weapon damage types (grenades especially), play with armour values, fix all sounds and hit types - explosions making sectoid death noise, lol.
+balancing, check all weapon damage types, play with armour values
 ufopedia entries for new weapons
 
 code:
 fix weapon placements on muton and snakeman
-why are hovertanks disabled?
 mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
 are melee units attacking diagonally? they're REACTING diagonally but this is by no means a definitive answer.
 make terror more likely (1/4 UFOs will instead spawn as terror sites?)
@@ -20,7 +19,8 @@ look into including modified versions of existing maps in the tilesets
 
 
 done:
-added Guardian class interceptor (costs more, is better)
+hovertanks and laser tanks and guardian fighters, oh my!
+added Guardian class interceptor (costs more, is better, funky new sprite(when i can touch dogfight code)
 tweaked lightning to be actually good
 set avenger to have one weapon slot only, hybrid transports don't get to be effective fighter craft too, sorry.
 all missing alien races re-implemented, including Chryssalids, and their evil powers.

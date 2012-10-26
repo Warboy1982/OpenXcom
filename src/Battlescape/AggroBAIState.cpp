@@ -168,7 +168,7 @@ void AggroBAIState::think(BattleAction *action)
 			takeCover = false;
 		
 		// we're using melee, so CHAAAAAAAARGE!!!!!
-		if (_unit->getMainHandWeapon()->getRules()->getBattleType() == BT_MELEE)
+		if (_unit->getMainHandWeapon() && _unit->getMainHandWeapon()->getRules()->getBattleType() == BT_MELEE)
 			if (_game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()) > 1)
 				takeCover = true;
 			else
@@ -253,7 +253,7 @@ void AggroBAIState::think(BattleAction *action)
 			int i = -1;
 			int j = -1;
 			bool coverFound = false;
-			if(action->actor->getMainHandWeapon()->getRules()->getBattleType() == BT_MELEE )
+			if(action->actor->getMainHandWeapon() && action->actor->getMainHandWeapon()->getRules()->getBattleType() == BT_MELEE )
 			{
 				for (int i = -1; i < 2; i++)
 					for (int j = -1; j < 2; j++)
