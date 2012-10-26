@@ -142,6 +142,9 @@ void UnitSprite::draw()
 	case 8:
 		drawRoutine8();
 		break;
+	case 9:
+		drawRoutine9();
+		break;
 	}
 
 }
@@ -855,7 +858,7 @@ void UnitSprite::drawRoutine7()
 //silacoids
 void UnitSprite::drawRoutine8()
 {
-	Surface *body = 0;
+	Surface *legs = 0;
 	// magic numbers
 	const int Body = 0, aim = 5, die = 6;
 	const int Pulsate[8] = { 0, 1, 2, 3, 4, 3, 2, 1 };
@@ -866,15 +869,37 @@ void UnitSprite::drawRoutine8()
 		return;
 	}
 
-	body = _unitSurface->getFrame(Body + Pulsate[_animationFrame]);
+	legs = _unitSurface->getFrame(Body + Pulsate[_animationFrame]);
 	_redraw = true;
 
 	if (_unit->getStatus() == STATUS_COLLAPSING)
-		body = _unitSurface->getFrame(die + _unit->getFallingPhase());
+		legs = _unitSurface->getFrame(die + _unit->getFallingPhase());
 	
 	if (_unit->getStatus() == STATUS_AIMING)
-		body = _unitSurface->getFrame(aim);
+		legs = _unitSurface->getFrame(aim);
 
-	body->blit(this);
+	legs->blit(this);
 }
+//celatids
+void UnitSprite::drawRoutine9()
+{
+	Surface *torso = 0;
+	// magic numbers
+	const int Body = 0, die = 24;
+	
+	if (_unit->isOut())
+	{
+		// unit is drawn as an item
+		return;
+	}
+
+	torso = _unitSurface->getFrame(Body + _animationFrame);
+	_redraw = true;
+
+	if (_unit->getStatus() == STATUS_COLLAPSING)
+		torso = _unitSurface->getFrame(die + _unit->getFallingPhase());
+
+	torso->blit(this);
+}
+
 }
