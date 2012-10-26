@@ -506,7 +506,12 @@ bool TileEngine::checkReactionFire(BattleUnit *unit, BattleAction *action, Battl
 			action->type = BA_HIT;
 		}
 		else if(action->weapon && realDistance < action->weapon->getRules()->getWeaponRange())
-			action->type = BA_SNAPSHOT;
+		{
+			if(action->weapon->getRules()->isFullAuto())
+				action->type = BA_AUTOSHOT;
+			else
+				action->type = BA_SNAPSHOT;
+		}
 		else
 			return false;
 

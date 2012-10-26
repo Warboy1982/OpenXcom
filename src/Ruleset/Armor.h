@@ -41,6 +41,7 @@ private:
 	MovementType _movementType;
 	int _size;
 	float _damageModifier[DAMAGE_TYPES];
+	bool _modifiedWalk;
 public:
 	/// Creates a blank armor ruleset.
 	Armor(const std::string &type, std::string spriteSheet, int drawingRoutine, MovementType _movementType = MT_WALK, int size = 1);
@@ -76,6 +77,8 @@ public:
 	int getSize() const;
 	/// Gets damage modifier.
 	float getDamageModifier(ItemDamageType dt);
+	/// Use alternate walk frames?
+	bool getModifiedWalk() const;
 };
 
 }

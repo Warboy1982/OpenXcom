@@ -1,9 +1,8 @@
 hard: involves editing source code:
-todo: balancing, check all weapon damage types (grenades especially), play with armour values, fix all sounds and hit types - explosions making sectoid death noise, lol. - frag grenade seems to make 
+todo: balancing, check all weapon damage types (grenades especially), play with armour values, fix all sounds and hit types - explosions making sectoid death noise, lol.
 mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
 re-implement celatid - no drawing method, projectile stored in pck - use plasma?, silacoid - weird hitbox, fix.
 finish rank assignments and loadouts for commanders, etc.
-make reaction shots not use full auto
 make melee units attack diagonally?
 
 done:

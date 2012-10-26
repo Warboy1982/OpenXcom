@@ -160,6 +160,7 @@ void UnitSprite::drawRoutine0()
 	const int larmWalk[8] = { 40, 40+24, 40+24*2, 40+24*3, 40+24*4, 40+24*5, 40+24*6, 40+24*7 };
 	const int rarmWalk[8] = { 48, 48+24, 48+24*2, 48+24*3, 48+24*4, 48+24*5, 48+24*6, 48+24*7 };
 	const int yoffWalk[8] = {1, 0, -1, 0, 1, 0, -1, 0}; // bobbing up and down
+	const int alternateyoffWalk[8] = {1, 1, 0, 0, 1, 1, 0, 0}; // bobbing up and down (muton)
 	const int offX[8] = { 8, 10, 7, 4, -9, -11, -7, -3 }; // for the weapons
 	const int offY[8] = { -6, -3, 0, 2, 0, -4, -7, -9 }; // for the weapons
 	const int offX2[8] = { -8, 3, 5, 12, 6, -1, -5, -13 }; // for the weapons
@@ -192,6 +193,8 @@ void UnitSprite::drawRoutine0()
 	if (_unit->getStatus() == STATUS_WALKING)
 	{
 		torso->setY(yoffWalk[_unit->getWalkingPhase()]);
+		if(_unit->getArmor()->getModifiedWalk())
+		torso->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
 		legs = _unitSurface->getFrame(legsWalk[_unit->getDirection()] + _unit->getWalkingPhase());
 		leftArm = _unitSurface->getFrame(larmWalk[_unit->getDirection()] + _unit->getWalkingPhase());
 		rightArm = _unitSurface->getFrame(rarmWalk[_unit->getDirection()] + _unit->getWalkingPhase());
@@ -646,7 +649,9 @@ void UnitSprite::drawRoutine6()
 	const int Torso = 24, legsStand = 16, die = 96;
 	const int larmStand = 0, rarmStand = 8, rarm1H = 99, larm2H = 107, ramr2H = 115, rarmShoot = 123;
 	const int legsWalk[8] = { 32, 40, 48, 56, 64, 72, 80, 88 };
-	const int yoffWalk[8] = {1, 0, -1, 0, 1, 0, -1, 0}; // bobbing up and down
+	const int yoffWalk[8] = {3, 3, 2, 1, 0, 0, 1, 2}; // bobbing up and down
+	const int xoffWalka[8] = {0, 0, 0, 1, 2, 2, 0, 0};
+	const int xoffWalkb[8] = {0, 0, 0, -1, -2, -2, 0, 0};
 	const int offX[8] = { 8, 10, 7, 4, -9, -11, -7, -3 }; // for the weapons
 	const int offY[8] = { -6, -3, 0, -3, 0, -4, -7, -9 }; // for the weapons
 	const int offX2[8] = { -8, 3, 5, 12, 6, -1, -5, -13 }; // for the weapons
@@ -673,10 +678,18 @@ void UnitSprite::drawRoutine6()
 	// when walking, torso(fixed sprite) has to be animated up/down
 	if (_unit->getStatus() == STATUS_WALKING)
 	{
+		int xoffWalk = 0;
+		if(_unit->getDirection() < 3)
+			xoffWalk = xoffWalka[_unit->getWalkingPhase()];
+		if(_unit->getDirection() < 7 && _unit->getDirection() > 3)
+			xoffWalk = xoffWalkb[_unit->getWalkingPhase()];
 		torso->setY(yoffWalk[_unit->getWalkingPhase()]);
+		torso->setX(xoffWalk);
 		legs = _unitSurface->getFrame(legsWalk[_unit->getDirection()] + _unit->getWalkingPhase());
 		rightArm->setY(yoffWalk[_unit->getWalkingPhase()]);
 		leftArm->setY(yoffWalk[_unit->getWalkingPhase()]);
+		rightArm->setX(xoffWalk);
+		leftArm->setX(xoffWalk);
 	}
 	else
 	{

@@ -204,6 +204,9 @@ void UnitDieBState::convertUnitToChryssalid()
 	// remove unit-tile link
 	_unit->setTile(0);
 
+	// set up the new unit, i know it's bad to hardcode things like unit names, 
+	// especially in a manner like this, as it will crash if these units aren't defined in the ruleset
+	// todo: perhaps add additional flags to unit types, like _inflictsmorph, _morphToInflict and morphTo, instead of using hardcoded names?
 	_parent->getSave()->getTile(_unit->getPosition())->setUnit(0);
 		char *_newRace = "ZOMBIE";
 		char *_newArmor = "ZOMBIE_ARMOR";

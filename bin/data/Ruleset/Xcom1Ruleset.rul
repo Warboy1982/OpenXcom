@@ -3590,6 +3590,7 @@ armors:
     rearArmor: 20
     underArmor: 10
     drawingRoutine: 0
+    modifiedWalk: true
     damageModifier:
       - 1.0
       - 0.6
@@ -3609,6 +3610,7 @@ armors:
     rearArmor: 24
     underArmor: 15
     drawingRoutine: 0
+    modifiedWalk: true
     damageModifier:
       - 1.0
       - 0.6
@@ -3628,6 +3630,7 @@ armors:
     rearArmor: 28
     underArmor: 20
     drawingRoutine: 0
+    modifiedWalk: true
     damageModifier:
       - 1.0
       - 0.6
