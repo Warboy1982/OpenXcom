@@ -3,9 +3,10 @@ ruleset:
 disruptor/gauss vehicle weapons, and tank variants.
 balancing, check all weapon damage types, play with armour values
 ufopedia entries for new weapons
+use weapon mount on craft in missions?
 
 code:
-fix weapon placements on muton and snakeman
+fix weapon placements on snakeman, also walking noises.
 mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
 are melee units attacking diagonally? they're REACTING diagonally but this is by no means a definitive answer.
 make terror more likely (1/4 UFOs will instead spawn as terror sites?)
@@ -16,6 +17,10 @@ maps:
 add HWP factory as terror site
 find more maps to use as terror sites.
 look into including modified versions of existing maps in the tilesets
+
+to release next version:
+maps - all
+tanks, cannons, balance.
 
 
 done:

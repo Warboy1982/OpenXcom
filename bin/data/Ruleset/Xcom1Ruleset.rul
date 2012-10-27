@@ -1013,7 +1013,7 @@ items:
     bigSprite: 57
     floorSprite: 73
     handSprite: 128
-    hitSound: 4
+    hitSound: 39
     hitAnimation: 26
     power: 50
     damageType: 7
@@ -1034,7 +1034,7 @@ items:
     bigSprite: 69
     floorSprite: 73
     handSprite: 128
-    hitSound: 4
+    hitSound: 39
     hitAnimation: 26
     power: 50
     damageType: 7
@@ -1750,7 +1750,7 @@ items:
     bigSprite: 25
     floorSprite: 33
     hitSound: 19
-    hitAnimation: 46
+    hitAnimation: 56
     power: 90
     damageType: 1
     clipSize: 25
@@ -1791,7 +1791,7 @@ items:
     bigSprite: 25
     floorSprite: 33
     hitSound: 19
-    hitAnimation: 46
+    hitAnimation: 56
     power: 115
     damageType: 1
     clipSize: 25
@@ -3669,6 +3669,7 @@ armors:
     rearArmor: 16
     underArmor: 12
     drawingRoutine: 6
+    modifiedWalk: 0
     damageModifier:
       - 1.0
       - 1.0
@@ -3688,6 +3689,7 @@ armors:
     rearArmor: 22
     underArmor: 20
     drawingRoutine: 6
+    modifiedWalk: 0
     damageModifier:
       - 1.0
       - 1.0
@@ -3707,6 +3709,7 @@ armors:
     rearArmor: 22
     underArmor: 20
     drawingRoutine: 6
+    modifiedWalk: 0
     damageModifier:
       - 1.0
       - 1.0
@@ -3726,7 +3729,7 @@ armors:
     rearArmor: 20
     underArmor: 10
     drawingRoutine: 0
-    modifiedWalk: true
+    drawMethod: 1
     damageModifier:
       - 1.0
       - 0.6
@@ -3746,7 +3749,7 @@ armors:
     rearArmor: 24
     underArmor: 15
     drawingRoutine: 0
-    modifiedWalk: true
+    drawMethod: 1
     damageModifier:
       - 1.0
       - 0.6
@@ -3766,7 +3769,7 @@ armors:
     rearArmor: 28
     underArmor: 20
     drawingRoutine: 0
-    modifiedWalk: true
+    drawMethod: 1
     damageModifier:
       - 1.0
       - 0.6
@@ -3881,6 +3884,7 @@ armors:
     rearArmor: 50
     underArmor: 10
     drawingRoutine: 8
+    modifiedWalk: 47
     damageModifier:
       - 1.0
       - 1.0
@@ -3900,6 +3904,7 @@ armors:
     rearArmor: 50
     underArmor: 10
     drawingRoutine: 9
+    modifiedWalk: 16
     damageModifier:
       - 1.0
       - 1.0
@@ -4486,7 +4491,7 @@ units:
     kneelHeight: 18
     loftemps: 3
     value: 15
-    deathSound: 10
+    deathSound: 8
     intelligence: 2
     aggression: 2
   - type: SNAKEMAN_NAVIGATOR
@@ -4509,7 +4514,7 @@ units:
     kneelHeight: 18
     loftemps: 3
     value: 17
-    deathSound: 10
+    deathSound: 8
     intelligence: 3
     aggression: 2
   - type: SNAKEMAN_ENGINEER
@@ -4532,7 +4537,7 @@ units:
     kneelHeight: 18
     loftemps: 3
     value: 20
-    deathSound: 10
+    deathSound: 8
     intelligence: 4
     aggression: 2
   - type: SNAKEMAN_LEADER
@@ -4555,7 +4560,7 @@ units:
     kneelHeight: 18
     loftemps: 3
     value: 28
-    deathSound: 10
+    deathSound: 8
     intelligence: 5
     aggression: 2  
   - type: SNAKEMAN_COMMANDER
@@ -4578,7 +4583,7 @@ units:
     kneelHeight: 18
     loftemps: 3
     value: 36
-    deathSound: 10
+    deathSound: 8
     intelligence: 6
     aggression: 2 
   - type: MUTON_SOLDIER
@@ -4601,7 +4606,7 @@ units:
     kneelHeight: 16
     loftemps: 3
     value: 15
-    deathSound: 10
+    deathSound: 6
     intelligence: 2
     aggression: 2
   - type: MUTON_NAVIGATOR
@@ -4624,7 +4629,7 @@ units:
     kneelHeight: 16
     loftemps: 3
     value: 17
-    deathSound: 10
+    deathSound: 6
     intelligence: 3
     aggression: 2 
   - type: MUTON_ENGINEER
@@ -4647,7 +4652,7 @@ units:
     kneelHeight: 16
     loftemps: 3
     value: 19
-    deathSound: 10
+    deathSound: 6
     intelligence: 4
     aggression: 2 
   - type: ETHEREAL_SOLDIER
@@ -4670,7 +4675,7 @@ units:
     kneelHeight: 15
     loftemps: 3
     value: 20
-    deathSound: 10
+    deathSound: 9
     intelligence: 6
     aggression: 1     
   - type: ETHEREAL_LEADER
@@ -4693,7 +4698,7 @@ units:
     kneelHeight: 15
     loftemps: 3
     value: 30
-    deathSound: 10
+    deathSound: 9
     intelligence: 7
     aggression: 1    
   - type: ETHEREAL_COMMANDER
@@ -4716,7 +4721,7 @@ units:
     kneelHeight: 15
     loftemps: 3
     value: 40
-    deathSound: 10
+    deathSound: 9
     intelligence: 8
     aggression: 1 
   - type: CHRYSSALID
@@ -4739,7 +4744,7 @@ units:
     kneelHeight: 16
     loftemps: 4
     value: 25
-    deathSound: 10
+    deathSound: 49
     intelligence: 4
     aggression: 1
   - type: SILACOID
@@ -4762,7 +4767,7 @@ units:
     kneelHeight: 10
     loftemps: 2
     value: 20
-    deathSound: 10
+    deathSound: 51
     intelligence: 3
     aggression: 2
   - type: CELATID
@@ -4785,7 +4790,7 @@ units:
     kneelHeight: 10
     loftemps: 2
     value: 20
-    deathSound: 10
+    deathSound: 51
     intelligence: 3
     aggression: 2
   - type: SECTOPOD
@@ -4808,7 +4813,8 @@ units:
     kneelHeight: 16
     loftemps: 2
     value: 30
-    deathSound: 10
+    deathSound: 23
+    specab: 1
     intelligence: 4
     aggression: 1
   - type: ZOMBIE
@@ -4831,7 +4837,7 @@ units:
     kneelHeight: 18
     loftemps: 2
     value: 18
-    deathSound: 10
+    deathSound: 48
     intelligence: 3
     aggression: 2
     specab: 2

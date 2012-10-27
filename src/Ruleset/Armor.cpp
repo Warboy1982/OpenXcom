@@ -27,7 +27,7 @@ namespace OpenXcom
  * @param type String defining the type.
  * @param spriteSheet Spritesheet used to render the unit.
  */
-Armor::Armor(const std::string &type, std::string spriteSheet, int drawingRoutine, MovementType movementType, int size) : _type(type), _spriteSheet(spriteSheet), _spriteInv(""), _corpseItem(""), _storeItem(""), _frontArmor(0), _sideArmor(0), _rearArmor(0), _underArmor(0), _drawingRoutine(drawingRoutine), _movementType(movementType), _size(size), _modifiedWalk(false)
+Armor::Armor(const std::string &type, std::string spriteSheet, int drawingRoutine, MovementType movementType, int size) : _type(type), _spriteSheet(spriteSheet), _spriteInv(""), _corpseItem(""), _storeItem(""), _frontArmor(0), _sideArmor(0), _rearArmor(0), _underArmor(0), _drawingRoutine(drawingRoutine), _movementType(movementType), _size(size), _modifiedWalk(1), _drawMethod(0)
 {
 	for (int i=0; i < DAMAGE_TYPES; i++)
 		_damageModifier[i] = 1.0;
@@ -102,6 +102,10 @@ void Armor::load(const YAML::Node &node)
 		{
 			i.second() >> _modifiedWalk;
 		}
+		else if (key == "drawMethod")
+		{
+			i.second() >> _drawMethod;
+		}
 		else if (key == "size")
 		{
 			i.second() >> _size;
@@ -138,6 +142,7 @@ void Armor::save(YAML::Emitter &out) const
 	out << YAML::Key << "drawingRoutine" << YAML::Value << _drawingRoutine;
 	out << YAML::Key << "movementType" << YAML::Value << _movementType;
 	out << YAML::Key << "modifiedWalk" << YAML::Value << _modifiedWalk;
+	out << YAML::Key << "drawMethod" << YAML::Value << _drawMethod;
 	out << YAML::Key << "size" << YAML::Value << _size;
 	out << YAML::Key << "damageModifier" << YAML::Value << YAML::BeginSeq;
 	for (int i=0; i < 8; i++)
@@ -265,8 +270,14 @@ float Armor::getDamageModifier(ItemDamageType dt)
 	return _damageModifier[(int)dt];
 }
 
-bool Armor:: getModifiedWalk() const
+int Armor::getModifiedWalk() const
 {
 	return _modifiedWalk;
 }
+
+int Armor::getDrawMethod() const
+{
+	return _drawMethod;
+}
+
 }

@@ -37,11 +37,10 @@ class Armor
 private:
 	static const int DAMAGE_TYPES = 10;
 	std::string _type, _spriteSheet, _spriteInv, _corpseItem, _storeItem;
-	int _frontArmor, _sideArmor, _rearArmor, _underArmor, _drawingRoutine;
+	int _frontArmor, _sideArmor, _rearArmor, _underArmor, _drawingRoutine, _drawMethod, _modifiedWalk;
 	MovementType _movementType;
 	int _size;
 	float _damageModifier[DAMAGE_TYPES];
-	bool _modifiedWalk;
 public:
 	/// Creates a blank armor ruleset.
 	Armor(const std::string &type, std::string spriteSheet, int drawingRoutine, MovementType _movementType = MT_WALK, int size = 1);
@@ -77,8 +76,10 @@ public:
 	int getSize() const;
 	/// Gets damage modifier.
 	float getDamageModifier(ItemDamageType dt);
-	/// Use alternate walk frames?
-	bool getModifiedWalk() const;
+	/// Use alternate walk sounds?
+	int getModifiedWalk() const;
+	/// use alternate render method?
+	int getDrawMethod() const;
 };
 
 }

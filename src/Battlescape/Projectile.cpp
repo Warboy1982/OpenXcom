@@ -381,7 +381,7 @@ bool Projectile::move()
 		counter = 0;
 	}
 
-	if(_action.weapon->getRules()->isFlamer() && _position > 20 && _position < _action.weapon->getRules()->getWeaponRange()*16)
+	if(_action.weapon->getRules()->isFlamer() && _position > 20 && _position < _action.weapon->getRules()->getWeaponRange()*16 && _action.type != BA_THROW)
 	{
 		Tile *burntile = _save->getTile(Position(_trajectory.at(_position).x/16, _trajectory.at(_position).y/16, _trajectory.at(_position).z/24));
 		if(burntile)
@@ -401,7 +401,7 @@ bool Projectile::move()
 			}
 		}
 	}
-	if(_action.weapon->getRules()->isFlamer() && _position >= (64)) // && _action.type == BA_SNAPSHOT) warboytodo - 5x5 flame grid?
+	if(_action.weapon->getRules()->isFlamer() && _position >= (64) && _action.type != BA_THROW) // && _action.type == BA_SNAPSHOT) warboytodo - 5x5 flame grid?
 	{
 		for (int i = -1; i < 2; i++)
 		for (int j = -1; j < 2; j++)

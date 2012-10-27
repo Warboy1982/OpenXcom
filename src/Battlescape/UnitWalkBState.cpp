@@ -100,18 +100,26 @@ void UnitWalkBState::think()
 				if (_unit->getWalkingPhase() == 3)
 				{
 					Tile *tile = _unit->getTile();
-					if (tile->getFootstepSound())
+					if (tile->getFootstepSound() && _unit->getArmor()->getModifiedWalk() == 1)
 					{
 						_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(22 + (tile->getFootstepSound()*2))->play();
+					}
+					else if (tile->getFootstepSound())
+					{
+						_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_unit->getArmor()->getModifiedWalk())->play();
 					}
 				}
 				// play footstep sound 2
 				if (_unit->getWalkingPhase() == 7)
 				{
 					Tile *tile = _unit->getTile();
-					if (tile->getFootstepSound())
+					if (tile->getFootstepSound() && _unit->getArmor()->getModifiedWalk() == 1)
 					{
 						_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(23 + (tile->getFootstepSound()*2))->play();
+					}
+					else if (tile->getFootstepSound())
+					{
+						_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_unit->getArmor()->getModifiedWalk())->play();
 					}
 				}
 			}

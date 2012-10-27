@@ -202,7 +202,7 @@ void UnitSprite::drawRoutine0()
 	if (_unit->getStatus() == STATUS_WALKING)
 	{
 		torso->setY(yoffWalk[_unit->getWalkingPhase()]);
-		if(_unit->getArmor()->getModifiedWalk())
+		if(_unit->getArmor()->getDrawMethod() == 1)
 		torso->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
 		legs = _unitSurface->getFrame(legsWalk[_unit->getDirection()] + _unit->getWalkingPhase());
 		leftArm = _unitSurface->getFrame(larmWalk[_unit->getDirection()] + _unit->getWalkingPhase());
@@ -240,7 +240,7 @@ void UnitSprite::drawRoutine0()
 		else
 		{
 			item = _itemSurface->getFrame(_item->getRules()->getHandSprite() + _unit->getDirection());
-			if(_unit->getArmor()->getModifiedWalk())
+			if(_unit->getArmor()->getDrawMethod() == 1)
 			{
 				if(_item->getRules()->isTwoHanded())
 				{
@@ -276,7 +276,7 @@ void UnitSprite::drawRoutine0()
 		}
 		else
 		{
-			if(_unit->getArmor()->getModifiedWalk())
+			if(_unit->getArmor()->getDrawMethod() == 1)
 				rightArm = _unitSurface->getFrame(rarm2H + _unit->getDirection()); // missing/wrong arms on muton here, investigate spriteset
 			else
 				rightArm = _unitSurface->getFrame(rarm1H + _unit->getDirection());
@@ -286,7 +286,7 @@ void UnitSprite::drawRoutine0()
 		// the fixed arm(s) have to be animated up/down when walking
 		if (_unit->getStatus() == STATUS_WALKING)
 		{
-			if(_unit->getArmor()->getModifiedWalk())
+			if(_unit->getArmor()->getDrawMethod() == 1)
 			{
 				item->setY(item->getY() + alternateyoffWalk[_unit->getWalkingPhase()]);
 				rightArm->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
@@ -309,7 +309,7 @@ void UnitSprite::drawRoutine0()
 		{
 			leftArm = _unitSurface->getFrame(larm2H + _unit->getDirection());
 			itema = _itemSurface->getFrame(_itema->getRules()->getHandSprite() + _unit->getDirection());
-			if(_unit->getArmor()->getModifiedWalk())
+			if(_unit->getArmor()->getDrawMethod() == 1)
 			{
 				itema->setX(offX4[_unit->getDirection()]);
 				itema->setY(offY4[_unit->getDirection()]);
@@ -322,7 +322,7 @@ void UnitSprite::drawRoutine0()
 
 			if (_unit->getStatus() == STATUS_WALKING)
 			{
-				if(_unit->getArmor()->getModifiedWalk())
+				if(_unit->getArmor()->getDrawMethod() == 1)
 				{
 					leftArm->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
 					itema->setY(itema->getY() + alternateyoffWalk[_unit->getWalkingPhase()]);
@@ -709,7 +709,7 @@ void UnitSprite::drawRoutine6()
 	const int xoffWalkb[8] = {0, 0, 0, -1, -2, -2, 0, 0};
 	const int offX[8] = { 8, 10, 7, 4, -9, -11, -7, -3 }; // for the weapons
 	const int offY[8] = { -6, -3, 0, -3, 0, -4, -7, -9 }; // for the weapons
-	const int offX2[8] = { -8, 3, 5, 12, 6, -1, -5, -13 }; // for the weapons
+	const int offX2[8] = { -8, 2, 6, 12, 6, -1, -5, -16 }; // for the weapons
 	const int offY2[8] = { 1, -4, -2, 0, 3, 3, 5, 0 }; // for the weapons
 
 	if (_unit->isOut())
@@ -820,16 +820,6 @@ void UnitSprite::drawRoutine6()
 		leftArm->setY(0);
 		rightArm->setY(0);
 		torso->setY(0);
-	}
-
-	// items are calculated for soldier height (22) - some aliens are smaller, so item is drawn lower.
-	if (item)
-	{
-		item->setY(item->getY() + (22 - _unit->getStandHeight()));
-	}
-	if (itema)
-	{
-		itema->setY(itema->getY() + (22 - _unit->getStandHeight()));
 	}
 
 	// blit order depends on unit direction
