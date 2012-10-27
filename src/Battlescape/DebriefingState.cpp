@@ -18,6 +18,7 @@
  */
 #include "DebriefingState.h"
 #include <sstream>
+#include <map>
 #include "../Engine/Game.h"
 #include "../Resource/ResourcePack.h"
 #include "../Engine/Language.h"
@@ -60,7 +61,7 @@ DebriefingState::DebriefingState(Game *game) : State(game)
 	_txtQuantity = new Text(60, 9, 200, 24);
 	_txtScore = new Text(50, 9, 260, 24);
 	_txtUfoRecovery = new Text(180, 9, 16, 60);
-	_txtRating = new Text(100, 9, 64, 180);
+	_txtRating = new Text(120, 9, 64, 180);
 	_lstStats = new TextList(280, 80, 16, 32);
 	_lstUfoRecovery = new TextList(280, 80, 16, 32);
 	_lstTotal = new TextList(280, 9, 16, 12);
@@ -527,7 +528,7 @@ void DebriefingState::prepareDebriefing()
 	}
 	else
 	{
-		if (battle->getMissionType() == "STR_BASE_DEFENSE"||battle->getMissionType() == "STR_MILITARY_DEFENSE")
+		if (battle->getMissionType() == "STR_BASE_DEFENSE" || battle->getMissionType() == "STR_MILITARY_DEFENSE")
 		{
 			_txtTitle->setText(_game->getLanguage()->getString("STR_BASE_IS_LOST"));
 		}
@@ -595,6 +596,7 @@ void DebriefingState::reequipCraft(Base *base, Craft *craft)
 /* converts battlescape inventory into geoscape itemcontainer */
 void DebriefingState::recoverItems(std::vector<BattleItem*> *from, Base *base)
 {
+	std::map<RuleItem*, int> rounds;
 	for (std::vector<BattleItem*>::iterator it = from->begin(); it != from->end(); ++it)
 	{
 		if ((*it)->getRules()->getName() == "STR_ELERIUM_115")
@@ -619,17 +621,38 @@ void DebriefingState::recoverItems(std::vector<BattleItem*> *from, Base *base)
 			// put items back in the base
 			if ((*it)->getRules()->isRecoverable() && !(*it)->getRules()->isFixed())
 			{
-				base->getItems()->addItem((*it)->getRules()->getType(), 1);
-				if ((*it)->getAmmoItem())
+				switch ((*it)->getRules()->getBattleType())
 				{
-					base->getItems()->addItem((*it)->getAmmoItem()->getRules()->getType(), 1);
-					// TODO: account for ammo remaining in the clip
+					case BT_AMMO:
+						// It's a clip, count any rounds left.
+						rounds[(*it)->getRules()] += (*it)->getAmmoQuantity();
+						break;
+					case BT_FIREARM:
+					case BT_MELEE:
+						// It's a weapon, count any rounds left in the clip.
+						{
+							BattleItem *clip = (*it)->getAmmoItem();
+							if (clip)
+							{
+								rounds[clip->getRules()] += clip->getAmmoQuantity();
+							}
+						}
+						// Fall-through, to recover the weapon itself.
+					default:
+						base->getItems()->addItem((*it)->getRules()->getType(), 1);
 				}
 			}
 		}
 	}
-}
 
+	// Now calculate the clips for each type based on the recovered rounds.
+	for (std::map<RuleItem*, int>::const_iterator rl = rounds.begin(); rl != rounds.end(); ++rl)
+	{
+		//Count half-full clips as full.
+		int total_clips = (rl->second + rl->first->getClipSize()/2) / rl->first->getClipSize();
+		base->getItems()->addItem(rl->first->getType(), total_clips);
+	}
+}
 
 
 }
