@@ -125,7 +125,7 @@ int Projectile::calculateTrajectory(double accuracy)
 			_origin.z++;
 		}
 		direction = bu->getDirection();
-		if (bu->getTurretType() != -1)
+		if (_action.weapon->getRules()->getTurretType() != -1)
 			direction = bu->getTurretDirection();
 		originVoxel.x += dirXshift[direction];
 		originVoxel.y += dirYshift[direction];

@@ -60,7 +60,7 @@ void UnitTurnBState::init()
 		_parent->setStateInterval(Options::getInt("battleAlienSpeed"));
 
 	// if the unit has a turret and we are turning during targeting, then only the turret turns
-	turret = (_unit->getTurretType() != -1) && _action.targeting;
+	turret = (_action.weapon->getRules()->getTurretType() != -1) && _action.targeting;
 
 	_unit->lookAt(_action.target, turret);
 

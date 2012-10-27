@@ -81,7 +81,6 @@ private:
 	bool _cacheInvalid;
 	int _expBravery, _expReactions, _expFiring, _expThrowing, _expPsiSkill, _expMelee;
 	int improveStat(int exp);
-	int _turretType;
 	bool _needPainKiller;
 	int _motionPoints;
 	int _kills;
@@ -275,10 +274,6 @@ public:
 	bool postMissionProcedures(SavedGame *geoscape);
 	/// Get the sprite index for the minimap
 	int getMiniMapSpriteIndex () const;
-	/// Set the turret type. -1 is no turret.
-	void setTurretType(int turretType);
-	/// Get the turret type. -1 is no turret.
-	int getTurretType() const;
 	/// Get fatal wound amount of a body part
 	int getFatalWound(int part) const;
 	/// Heal one fatal wound

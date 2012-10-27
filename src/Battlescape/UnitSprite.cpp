@@ -531,6 +531,8 @@ void UnitSprite::drawRoutine2()
 	{
 		hoverTank = 32;
 	}
+	const int offX[8] = { -2, -7, -5, 0, 5, 7, 2, 0 }; // hovertank offsets
+	const int offy[8] = { -1, -3, -4, -5, -4, -3, -1, -1 }; // hovertank offsets
 
 	Surface *s = 0;
 	int turret = _unit->getMainHandWeapon()->getRules()->getTurretType();
@@ -550,8 +552,15 @@ void UnitSprite::drawRoutine2()
 	if (_part == 3 && turret != -1)
 	{
 		s = _unitSurface->getFrame(64 + (turret * 8) + _unit->getTurretDirection());
-		s->setX(0);
-		s->setY(-4);
+		int turretOffsetX = 0;
+		int turretOffsetY = -4;
+		if(hoverTank)
+		{
+			turretOffsetX += offX[_unit->getDirection()];
+			turretOffsetY += offy[_unit->getDirection()];
+		}
+		s->setX(turretOffsetX);
+		s->setY(turretOffsetY);
 		s->blit(this);
 	}
 
