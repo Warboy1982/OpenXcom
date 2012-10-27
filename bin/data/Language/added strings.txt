@@ -4,8 +4,14 @@ STR_TIME_UNITS_RESERVED_FOR_AUTO_SHOT
 Time Units reserved for Burst Fire
 STR_AC_AP_AMMO
 Auto-Cannon Ammo
+STR_SMALL_ROCKET
+Rocket
+STR_LARGE_ROCKET
+Guided Rocket
 STR_HIGH_EXPLOSIVE
 Demolition Charge
+
+
 
 STR_FULLAUTO
 Full Auto
@@ -82,4 +88,18 @@ Unable to shoot here!
 STR_ZOMBIE
 Zombie
 STR_GUARDIAN
-Guardian
+GUARDIAN
+STR_MIXED
+Mixed
+STR_HOVERTANK_DISRUPTOR
+Hovertank/Disruptor
+STR_HOVERTANK_RAIL
+Hovertank/Rail Cannon
+STR_HWP_RAIL_SLUG
+Rail Cannon Slug
+STR_RAIL_CANNON
+Rail Cannon
+STR_RAIL_CANNON_SLUG
+Rail Cannon Slug
+STR_DISRUPTOR_CANNON
+Disruptor Cannon

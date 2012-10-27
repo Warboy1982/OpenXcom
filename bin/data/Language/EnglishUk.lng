@@ -1650,9 +1650,9 @@ AC-I Ammo
 STR_ROCKET_LAUNCHER
 Rocket Launcher
 STR_SMALL_ROCKET
-Small Rocket
+Rocket
 STR_LARGE_ROCKET
-Large Rocket
+Guided Rocket
 STR_INCENDIARY_ROCKET
 Incendiary Rocket
 STR_GRENADE
@@ -2160,4 +2160,16 @@ Unable to shoot here!
 STR_ZOMBIE
 Zombie
 STR_GUARDIAN
-Guardian
+GUARDIAN
+STR_HOVERTANK_DISRUPTOR
+Hovertank/Disruptor
+STR_HOVERTANK_RAIL
+Hovertank/Rail Cannon
+STR_HWP_RAIL_SLUG
+Rail Cannon Slug
+STR_RAIL_CANNON
+Rail Cannon
+STR_RAIL_CANNON_SLUG
+Rail Cannon Slug
+STR_DISRUPTOR_CANNON
+Disruptor Cannon

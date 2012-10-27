@@ -181,10 +181,13 @@ void BattlescapeGenerator::run()
 	// find out the terrain type
 	if (_save->getMissionType() == "STR_TERROR_MISSION")
 	{
-		if(RNG::generate(0,2) == 0)
+		int terrortype = RNG::generate(0,2);
+		if( terrortype == 0)
 		_terrain = _game->getRuleset()->getTerrain("BASE");
-		else
+		else if( terrortype == 1)
 		_terrain = _game->getRuleset()->getTerrain("URBAN");
+		else
+		_terrain = _game->getRuleset()->getTerrain("COMMERCIAL");
 	}
 	else
 	if (_save->getMissionType() == "STR_ANTI_INFILTRATION")

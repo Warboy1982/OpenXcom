@@ -135,6 +135,7 @@ NewBattleState::NewBattleState(Game *game) : State(game), _craft(0)
 	_alienRaces.push_back("STR_SNAKEMAN");
 	_alienRaces.push_back("STR_MUTON");
 	_alienRaces.push_back("STR_ETHEREAL");
+	_alienRaces.push_back("STR_MIXED");
 
 	_selDifficulty = 0;
 	_difficulty.push_back("STR_1_BEGINNER");

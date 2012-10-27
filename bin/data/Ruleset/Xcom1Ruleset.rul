@@ -668,7 +668,7 @@ crafts:
     speedMax: 2500
     accel: 6
     weapons: 2
-    costBuy: 1200000
+    costBuy: 800000
     refuelRate: 50
     transferTime: 96
     score: 250
@@ -752,7 +752,7 @@ craftWeapons:
     sprite: 2
     sound: 4
     damage: 10
-    range: 10
+    range: 30
     accuracy: 25
     reloadCautious: 2
     reloadStandard: 2
@@ -765,7 +765,7 @@ craftWeapons:
     sprite: 4
     sound: 5
     damage: 70
-    range: 21
+    range: 40
     accuracy: 35
     reloadCautious: 12
     reloadStandard: 12
@@ -773,6 +773,18 @@ craftWeapons:
     ammoMax: 99
     rearmRate: 99
     launcher: STR_LASER_CANNON
+  - type: STR_DISRUPTOR_CANNON_UC
+    sprite: 4
+    sound: 5
+    damage: 90
+    range: 52
+    accuracy: 45
+    reloadCautious: 12
+    reloadStandard: 12
+    reloadAggressive: 12
+    ammoMax: 99
+    rearmRate: 99
+    launcher: STR_DISRUPTOR_CANNON
   - type: STR_PLASMA_BEAM_UC
     sprite: 5
     sound: 9
@@ -785,11 +797,23 @@ craftWeapons:
     ammoMax: 100
     rearmRate: 100
     launcher: STR_PLASMA_BEAM
+  - type: STR_RAIL_CANNON_UC
+    sprite: 3
+    sound: 7
+    damage: 140
+    range: 60
+    accuracy: 80
+    reloadCautious: 12
+    reloadStandard: 12
+    reloadAggressive: 12
+    ammoMax: 8
+    launcher: STR_RAIL_CANNON
+    clip: STR_RAIL_SLUG
   - type: STR_FUSION_BALL_UC
     sprite: 3
     sound: 7
     damage: 230
-    range: 65
+    range: 60
     accuracy: 100
     reloadCautious: 32
     reloadStandard: 24
@@ -821,9 +845,17 @@ items:
     size: 2.0
     costSell: 211000
     transferTime: 48
+  - type: STR_DISRUPTOR_CANNON
+    size: 2.0
+    costSell: 281000
+    transferTime: 48
   - type: STR_PLASMA_BEAM
     size: 1.2
     costSell: 267300
+    transferTime: 48
+  - type: STR_RAIL_CANNON
+    size: 2.0
+    costSell: 300000
     transferTime: 48
   - type: STR_STINGRAY_MISSILES
     size: 0.4
@@ -844,6 +876,10 @@ items:
     size: 0.6
     costSell: 53300
     transferTime: 48
+  - type: STR_RAIL_SLUG
+    size: 0.6
+    costSell: 53300
+    transferTime: 48
   - type: STR_TANK_CANNON
     size: 6
     costBuy: 420000
@@ -858,9 +894,9 @@ items:
     compatibleAmmo:
       - STR_HWP_CANNON_SHELLS
     accuracySnap: 60
-    accuracyAimed: 90
+    accuracyAimed: 120
     tuSnap: 33
-    tuAimed: 80
+    tuAimed: 66
     battleType: 1
     fixedWeapon: true
     turretType: 0
@@ -877,7 +913,7 @@ items:
     floorSprite: 12
     hitSound: 13
     hitAnimation: 26
-    power: 60
+    power: 110
     damageType: 1
     clipSize: 30
     battleType: 2
@@ -897,10 +933,10 @@ items:
     fireSound: 52
     compatibleAmmo:
       - STR_HWP_ROCKETS
-    accuracySnap: 55
-    accuracyAimed: 115
-    tuSnap: 45
-    tuAimed: 75
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
     battleType: 1
     fixedWeapon: true
     turretType: 1
@@ -917,7 +953,7 @@ items:
     floorSprite: 16
     hitSound: 0
     hitAnimation: 0
-    power: 85
+    power: 120
     damageType: 3
     clipSize: 8
     battleType: 2
@@ -936,12 +972,12 @@ items:
     fireSound: 11
     hitSound: 19
     hitAnimation: 36
-    power: 110
+    power: 100
     damageType: 4
-    accuracySnap: 50
-    accuracyAimed: 58
-    tuSnap: 33
-    tuAimed: 75
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
     battleType: 1
     fixedWeapon: true
     turretType: 2
@@ -960,13 +996,13 @@ items:
     bulletSprite: 8
     fireSound: 11
     hitSound: 19
-    power: 110
+    power: 150
     damageType: 5
     hitAnimation: 46
-    accuracySnap: 85
-    accuracyAimed: 100
-    tuSnap: 30
-    tuAimed: 60
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 40
+    tuAimed: 80
     battleType: 1
     fixedWeapon: true
     turretType: 3
@@ -974,6 +1010,67 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
+  - type: STR_HOVERTANK_DISRUPTOR
+    size: 6
+    costSell: 780000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 130
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HOVERTANK_RAIL
+    size: 6
+    costSell: 1043000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 10
+    fireSound: 53
+    compatibleAmmo:
+      - STR_HWP_RAIL_SLUG
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 4
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HWP_RAIL_SLUG
+    size: 3
+    costSell: 31500
+    weight: 3
+    bigSprite: 0
+    floorSprite: 0
+    hitSound: 19
+    hitAnimation: 56
+    power: 140
+    damageType: 1
+    clipSize: 25
+    battleType: 2
+    recoveryPoints: 2
+    armor: 5
   - type: STR_HOVERTANK_LAUNCHER
     size: 6
     costSell: 1043000
@@ -1003,7 +1100,7 @@ items:
     floorSprite: 35
     hitSound: 0
     hitAnimation: 0
-    power: 140
+    power: 200
     damageType: 3
     clipSize: 8
     battleType: 2
@@ -1020,7 +1117,7 @@ items:
     handSprite: 128
     hitSound: 39
     hitAnimation: 26
-    power: 50
+    power: 20
     damageType: 7
     accuracyMelee: 100
     tuMelee: 12
@@ -1041,7 +1138,7 @@ items:
     handSprite: 128
     hitSound: 39
     hitAnimation: 26
-    power: 50
+    power: 40
     damageType: 7
     accuracyMelee: 100
     tuMelee: 12
@@ -1064,9 +1161,9 @@ items:
     compatibleAmmo:
       - STR_PISTOL_CLIP
     accuracySnap: 60
-    accuracyAimed: 78
-    tuSnap: 18
-    tuAimed: 30
+    accuracyAimed: 120
+    tuSnap: 20
+    tuAimed: 40
     battleType: 1
     invWidth: 1
     invHeight: 2
@@ -1080,7 +1177,7 @@ items:
     floorSprite: 4
     hitSound: 22
     hitAnimation: 26
-    power: 26
+    power: 50
     damageType: 1
     clipSize: 12
     battleType: 2
@@ -1099,10 +1196,10 @@ items:
       - STR_RIFLE_CLIP
     accuracyAuto: 35
     accuracySnap: 60
-    accuracyAimed: 110
+    accuracyAimed: 120
     tuAuto: 35
     tuSnap: 25
-    tuAimed: 80
+    tuAimed: 50
     battleType: 1
     twoHanded: true
     invWidth: 1
@@ -1117,7 +1214,7 @@ items:
     floorSprite: 2
     hitSound: 22
     hitAnimation: 26
-    power: 30
+    power: 70
     damageType: 1
     clipSize: 20
     battleType: 2
@@ -1135,9 +1232,7 @@ items:
     compatibleAmmo:
       - STR_SHOTGUN_AMMO
     accuracySnap: 60
-    accuracyAuto: 50
     tuSnap: 33
-    tuAuto: 40
     battleType: 1
     twoHanded: true
     hitAnimation: 26
@@ -1155,7 +1250,7 @@ items:
     floorSprite: 14
     hitSound: 22
     hitAnimation: 26
-    power: 60
+    power: 20
     damageType: 1
     clipSize: 6
     battleType: 2
@@ -1193,7 +1288,7 @@ items:
     floorSprite: 12
     hitSound: 22
     hitAnimation: 26
-    power: 120
+    power: 90
     damageType: 1
     clipSize: 10
     battleType: 2
@@ -1212,12 +1307,10 @@ items:
     fireSound: 2
     compatibleAmmo:
       - STR_AC_AP_AMMO
-    accuracyAuto: 40
-    accuracySnap: 33
-    accuracyAimed: 0
+    accuracyAuto: 80
+    accuracySnap: 66
     tuAuto: 33
-    tuSnap: 40
-    tuAimed: 0
+    tuSnap: 45
     battleType: 1
     twoHanded: true
     invWidth: 2
@@ -1233,7 +1326,7 @@ items:
     floorSprite: 8
     hitSound: 13
     hitAnimation: 26
-    power: 42
+    power: 40
     damageType: 1
     clipSize: 32
     battleType: 2
@@ -1272,7 +1365,7 @@ items:
     floorSprite: 10
     hitSound: 0
     hitAnimation: 36
-    power: 42
+    power: 60
     damageType: 2
     clipSize: 50
     battleType: 2
@@ -1284,7 +1377,7 @@ items:
     size: 0.2
     costBuy: 5000
     costSell: 2250
-    weight: 10
+    weight: 11
     bigSprite: 60
     floorSprite: 1
     handSprite: 152
@@ -1294,12 +1387,10 @@ items:
       - STR_LAUNCHER_FRAG
       - STR_LAUNCHER_INC
       - STR_LAUNCHER_STUN
-    accuracyAuto: 0
-    accuracySnap: 60
+    accuracySnap: 55
     accuracyAimed: 110
-    tuAuto: 0
     tuSnap: 25
-    tuAimed: 80
+    tuAimed: 50
     battleType: 1
     twoHanded: true
     invWidth: 1
@@ -1381,7 +1472,7 @@ items:
     floorSprite: 16
     hitSound: 0
     hitAnimation: 0
-    power: 100
+    power: 120
     damageType: 3
     clipSize: 1
     battleType: 2
@@ -1397,7 +1488,7 @@ items:
     floorSprite: 17
     hitSound: 0
     hitAnimation: 0
-    power: 100
+    power: 120
     damageType: 3
     clipSize: 1
     battleType: 2
@@ -1414,7 +1505,7 @@ items:
     floorSprite: 18
     hitSound: 0
     hitAnimation: 0
-    power: 90
+    power: 120
     damageType: 2
     clipSize: 1
     battleType: 2
@@ -1432,14 +1523,14 @@ items:
     fireSound: 11
     hitSound: 19
     hitAnimation: 36
-    power: 46
+    power: 40
     damageType: 4
-    accuracyAuto: 28
-    accuracySnap: 40
-    accuracyAimed: 68
-    tuAuto: 25
+    accuracySnap: 60
+    accuracyAimed: 120
+    accuracyAuto: 35
+    tuAuto: 35
     tuSnap: 20
-    tuAimed: 55
+    tuAimed: 40
     clipSize: -1
     battleType: 1
     invWidth: 1
@@ -1459,14 +1550,14 @@ items:
     hitSound: 19
     hitAnimation: 36
     clipSize: -1
-    power: 52
+    power: 50
     damageType: 4
-    accuracyAuto: 50
-    accuracySnap: 65
-    accuracyAimed: 85
-    tuAuto: 30
-    tuSnap: 30
-    tuAimed: 60
+    accuracySnap: 60
+    accuracyAimed: 120
+    accuracyAuto: 35
+    tuAuto: 35
+    tuSnap: 20
+    tuAimed: 40
     battleType: 1
     invWidth: 1
     invHeight: 2
@@ -1485,12 +1576,12 @@ items:
     hitAnimation: 36
     power: 60
     damageType: 4
-    accuracyAuto: 46
-    accuracySnap: 65
-    accuracyAimed: 100
-    tuAuto: 34
-    tuSnap: 25
-    tuAimed: 50
+    accuracyAuto: 35
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuAuto: 30
+    tuSnap: 20
+    tuAimed: 40
     clipSize: -1
     battleType: 1
     twoHanded: true
@@ -1512,12 +1603,12 @@ items:
     hitAnimation: 36
     power: 70
     damageType: 4
-    accuracyAuto: 46
-    accuracySnap: 65
-    accuracyAimed: 100
-    tuAuto: 34
-    tuSnap: 25
-    tuAimed: 50
+    accuracyAuto: 35
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuAuto: 30
+    tuSnap: 20
+    tuAimed: 40
     clipSize: -1
     battleType: 1
     recoveryPoints: 8
@@ -1532,7 +1623,7 @@ items:
     weight: 3
     bigSprite: 19
     floorSprite: 19
-    power: 50
+    power: 90
     damageType: 3
     battleType: 4
     armor: 20
@@ -1598,7 +1689,7 @@ items:
     weight: 6
     bigSprite: 22
     floorSprite: 22
-    power: 110
+    power: 120
     damageType: 3
     battleType: 4
     invWidth: 2
@@ -1734,9 +1825,9 @@ items:
     fireSound: 53
     compatibleAmmo:
       - STR_GAUSS_RIFLE_CLIP
-    accuracyAuto: 50
-    accuracySnap: 75
-    accuracyAimed: 110
+    accuracyAuto: 40
+    accuracySnap: 50
+    accuracyAimed: 100
     tuAuto: 35
     tuSnap: 30
     tuAimed: 60
@@ -1756,7 +1847,7 @@ items:
     floorSprite: 33
     hitSound: 19
     hitAnimation: 56
-    power: 90
+    power: 80
     damageType: 1
     clipSize: 25
     battleType: 2
@@ -1775,12 +1866,10 @@ items:
     fireSound: 53
     compatibleAmmo:
       - STR_RAIL_GUN_CLIP
-    accuracyAuto: 50
-    accuracySnap: 75
-    accuracyAimed: 110
-    tuAuto: 35
-    tuSnap: 30
-    tuAimed: 60
+    accuracySnap: 70
+    accuracyAimed: 140
+    tuSnap: 40
+    tuAimed: 80
     battleType: 1
     twoHanded: true
     invWidth: 2
@@ -1797,7 +1886,7 @@ items:
     floorSprite: 33
     hitSound: 19
     hitAnimation: 56
-    power: 115
+    power: 110
     damageType: 1
     clipSize: 25
     battleType: 2
@@ -1816,10 +1905,10 @@ items:
     fireSound: 18
     compatibleAmmo:
       - STR_PLASMA_RIFLE_CLIP
-    accuracyAuto: 55
-    accuracySnap: 86
-    accuracyAimed: 100
-    tuAuto: 36
+    accuracyAuto: 35
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuAuto: 40
     tuSnap: 30
     tuAimed: 60
     battleType: 1
@@ -1838,7 +1927,7 @@ items:
     floorSprite: 33
     hitSound: 19
     hitAnimation: 46
-    power: 80
+    power: 90
     damageType: 5
     clipSize: 28
     battleType: 2
@@ -1857,10 +1946,8 @@ items:
     fireSound: 18
     compatibleAmmo:
       - STR_PLASMA_PISTOL_CLIP
-    accuracyAuto: 50
-    accuracySnap: 65
-    accuracyAimed: 85
-    tuAuto: 30
+    accuracySnap: 60
+    accuracyAimed: 120
     tuSnap: 30
     tuAimed: 60
     battleType: 1
@@ -1878,7 +1965,7 @@ items:
     floorSprite: 33
     hitSound: 19
     hitAnimation: 46
-    power: 52
+    power: 60
     damageType: 5
     clipSize: 26
     battleType: 2
@@ -1916,7 +2003,7 @@ items:
     floorSprite: 35
     hitSound: 0
     hitAnimation: 0
-    power: 200
+    power: 150
     damageType: 3
     clipSize: 1
     battleType: 2
@@ -3362,14 +3449,14 @@ armors:
     underArmor: 2
     damageModifier:
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
       - 1.2
-      - 1.6
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
       - 1.0
   - type: STR_COMBAT_ARMOR_UC
     spriteSheet: XCOM_3.PCK
@@ -3382,14 +3469,14 @@ armors:
     underArmor: 30
     damageModifier:
       - 1.0
+      - 0.8
       - 1.0
       - 0.8
       - 1.0
       - 1.0
-      - 1.0
+      - 0.9
       - 0.9
       - 1.0
-      - 1.1
       - 1.0
   - type: STR_PERSONAL_ARMOR_UC
     spriteSheet: XCOM_1.PCK
@@ -3402,14 +3489,14 @@ armors:
     underArmor: 40
     damageModifier:
       - 1.0
-      - 1.0
-      - 0.8
-      - 1.0
-      - 1.0
-      - 1.0
       - 0.9
       - 1.0
-      - 1.1
+      - 0.9
+      - 0.7
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
       - 1.0
   - type: STR_POWER_SUIT_UC
     spriteSheet: XCOM_2.PCK
@@ -3421,16 +3508,16 @@ armors:
     rearArmor: 70
     underArmor: 60
     damageModifier:
-      - 1.0
-      - 1.0
+      - 0.9
+      - 0.6
       - 0.0
+      - 0.9
+      - 0.9
+      - 0.9
+      - 0.9
+      - 0.9
       - 1.0
-      - 1.0
-      - 1.0
-      - 0.8
-      - 1.0
-      - 1.0
-      - 1.0
+      - 0.9
   - type: STR_FLYING_SUIT_UC
     spriteSheet: XCOM_4.PCK
     spriteInv: MAN_3
@@ -3442,16 +3529,16 @@ armors:
     underArmor: 70
     movementType: 1
     damageModifier:
-      - 1.0
+      - 0.9
       - 1.0
       - 0.0
-      - 1.0
-      - 1.0
-      - 1.0
+      - 0.9
+      - 0.7
+      - 0.7
       - 0.8
+      - 0.9
       - 1.0
-      - 1.0
-      - 1.0
+      - 0.0
   - type: SECTOID_ARMOR0
     spriteSheet: SECTOID.PCK
     corpseItem: STR_SECTOID_CORPSE
@@ -3461,14 +3548,14 @@ armors:
     underArmor: 2
     damageModifier:
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
       - 1.2
-      - 1.6
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
       - 1.0
   - type: FLOATER_ARMOR0
     spriteSheet: FLOATER.PCK
@@ -3481,14 +3568,14 @@ armors:
     movementType: 1
     damageModifier:
       - 1.0
+      - 0.8
+      - 1.0
+      - 0.8
       - 1.0
       - 1.0
+      - 0.9
+      - 0.9
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.2
-      - 1.6
       - 1.0
   - type: FLOATER_ARMOR1
     spriteSheet: FLOATER.PCK
@@ -3501,14 +3588,14 @@ armors:
     movementType: 1
     damageModifier:
       - 1.0
+      - 0.7
+      - 1.0
+      - 0.7
       - 1.0
       - 1.0
+      - 0.8
+      - 0.8
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.2
-      - 1.6
       - 1.0
   - type: FLOATER_ARMOR2
     spriteSheet: FLOATER.PCK
@@ -3521,14 +3608,14 @@ armors:
     movementType: 1
     damageModifier:
       - 1.0
+      - 0.6
+      - 1.0
+      - 0.6
       - 1.0
       - 1.0
+      - 0.7
+      - 0.7
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.2
-      - 1.6
       - 1.0
   - type: CYBERDISC_ARMOR
     spriteSheet: CYBER.PCK
@@ -3648,8 +3735,8 @@ armors:
       - 1.0
       - 1.0
       - 1.0
-      - 1.2
-      - 1.6
+      - 1.0
+      - 1.0
       - 1.0
   - type: CIVF_ARMOR
     spriteSheet: CIVF.PCK
@@ -3667,8 +3754,8 @@ armors:
       - 1.0
       - 1.0
       - 1.0
-      - 1.2
-      - 1.6
+      - 1.0
+      - 1.0
       - 1.0
   - type: COPM_ARMOR
     spriteSheet: POLICEM.PCK
@@ -3680,14 +3767,14 @@ armors:
     drawingRoutine: 0
     damageModifier:
       - 1.0
+      - 0.8
+      - 1.0
+      - 0.8
       - 1.0
       - 1.0
+      - 0.9
+      - 0.9
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.2
-      - 1.6
       - 1.0
   - type: COPF_ARMOR
     spriteSheet: POLICEF.PCK
@@ -3699,14 +3786,14 @@ armors:
     drawingRoutine: 0
     damageModifier:
       - 1.0
+      - 0.8
+      - 1.0
+      - 0.8
       - 1.0
       - 1.0
+      - 0.9
+      - 0.9
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.2
-      - 1.6
       - 1.0
   - type: SOLDIER_ARMOR
     spriteSheet: G_SOLDIER.PCK
@@ -3718,14 +3805,14 @@ armors:
     drawingRoutine: 0
     damageModifier:
       - 1.0
+      - 0.8
+      - 1.0
+      - 0.8
       - 1.0
       - 1.0
+      - 0.9
+      - 0.9
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.2
-      - 1.6
       - 1.0
   - type: SNAKEMAN_ARMOR0
     spriteSheet: SNAKEMAN.PCK
@@ -3738,11 +3825,11 @@ armors:
     modifiedWalk: 0
     damageModifier:
       - 1.0
-      - 1.0
+      - 1.2
       - 0.7
-      - 1.0
-      - 1.0
-      - 1.0
+      - 1.1
+      - 0.8
+      - 0.8
       - 1.0
       - 1.2
       - 1.6
@@ -3757,16 +3844,16 @@ armors:
     drawingRoutine: 6
     modifiedWalk: 0
     damageModifier:
-      - 1.0
+      - 0.9
+      - 1.1
+      - 0.6
       - 1.0
       - 0.7
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.2
-      - 1.6
-      - 1.0
+      - 0.7
+      - 0.9
+      - 1.1
+      - 1.5
+      - 0.9
   - type: SNAKEMAN_ARMOR2
     spriteSheet: SNAKEMAN.PCK
     corpseItem: STR_SNAKEMAN_CORPSE
@@ -3779,14 +3866,14 @@ armors:
     damageModifier:
       - 1.0
       - 1.0
-      - 0.7
+      - 0.5
+      - 0.9
+      - 0.6
+      - 0.6
+      - 0.8
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.2
-      - 1.6
-      - 1.0  
+      - 1.4
+      - 0.8
   - type: MUTON_ARMOR0
     spriteSheet: MUTON.PCK
     corpseItem: STR_MUTON_CORPSE
@@ -3797,16 +3884,16 @@ armors:
     drawingRoutine: 0
     drawMethod: 1
     damageModifier:
+      - 0.9
+      - 0.7
+      - 0.9
+      - 0.7
+      - 0.8
       - 1.0
-      - 0.6
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.6
-      - 1.0
+      - 0.9
+      - 0.8
+      - 0.9
+      - 0.9
   - type: MUTON_ARMOR1
     spriteSheet: MUTON.PCK
     corpseItem: STR_MUTON_CORPSE
@@ -3817,16 +3904,16 @@ armors:
     drawingRoutine: 0
     drawMethod: 1
     damageModifier:
-      - 1.0
+      - 0.8
       - 0.6
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.6
-      - 1.0      
+      - 0.8
+      - 0.6
+      - 0.7
+      - 0.9
+      - 0.8
+      - 0.7
+      - 0.8
+      - 0.8
   - type: MUTON_ARMOR2
     spriteSheet: MUTON.PCK
     corpseItem: STR_MUTON_CORPSE
@@ -3837,16 +3924,16 @@ armors:
     drawingRoutine: 0
     drawMethod: 1
     damageModifier:
-      - 1.0
+      - 0.7
+      - 0.5
+      - 0.7
+      - 0.5
       - 0.6
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.6
-      - 1.0       
+      - 0.8
+      - 0.7
+      - 0.6
+      - 0.7
+      - 0.7  
   - type: ETHEREAL_ARMOR0
     spriteSheet: ETHEREAL.PCK
     corpseItem: STR_ETHEREAL_CORPSE
@@ -3856,16 +3943,16 @@ armors:
     underArmor: 35
     drawingRoutine: 4
     damageModifier:
-      - 1.0
-      - 1.0
-      - 0.7
-      - 1.0
-      - 1.0
+      - 0.9
+      - 0.9
+      - 1.1
+      - 0.9
       - 1.0
       - 0.8
+      - 0.9
+      - 0.9
       - 1.0
-      - 1.0
-      - 1.0
+      - 0.9
   - type: ETHEREAL_ARMOR1
     spriteSheet: ETHEREAL.PCK
     corpseItem: STR_ETHEREAL_CORPSE
@@ -3875,16 +3962,16 @@ armors:
     underArmor: 40
     drawingRoutine: 4
     damageModifier:
-      - 1.0
-      - 1.0
-      - 0.7
-      - 1.0
-      - 1.0
-      - 1.0
+      - 0.8
       - 0.8
       - 1.0
-      - 1.0
-      - 1.0
+      - 0.8
+      - 0.9
+      - 0.7
+      - 0.8
+      - 0.8
+      - 0.9
+      - 0.8
   - type: ETHEREAL_ARMOR2
     spriteSheet: ETHEREAL.PCK
     corpseItem: STR_ETHEREAL_CORPSE
@@ -3894,16 +3981,16 @@ armors:
     underArmor: 40
     drawingRoutine: 4
     damageModifier:
-      - 1.0
-      - 1.0
       - 0.7
-      - 1.0
-      - 1.0
-      - 1.0
+      - 0.7
+      - 0.9
+      - 0.7
       - 0.8
-      - 1.0
-      - 1.0
-      - 1.0
+      - 0.6
+      - 0.7
+      - 0.7
+      - 0.8
+      - 0.7
   - type: CHRYSSALID_ARMOR
     spriteSheet: CHRYS.PCK
     corpseItem: STR_CHRYSSALID_CORPSE
@@ -3914,13 +4001,13 @@ armors:
     drawingRoutine: 7
     damageModifier:
       - 1.0
-      - 1.0
-      - 0.8
-      - 1.0
-      - 1.0
-      - 1.0
+      - 0.9
       - 1.0
       - 0.9
+      - 0.7
+      - 1.0
+      - 1.0
+      - 1.0
       - 1.0
       - 1.0
   - type: ZOMBIE_ARMOR
@@ -4337,11 +4424,11 @@ units:
   - type: TANK_CANNON
     race: STR_TANK_CANNON
     stats:
-      tu: 70
+      tu: 100
       stamina: 100
-      health: 90
+      health: 100
       bravery: 110
-      reactions: 20
+      reactions: 30
       firing: 60
       throwing: 0
       strength: 60
@@ -4357,11 +4444,11 @@ units:
   - type: TANK_LASER_CANNON
     race: STR_TANK_LASER_CANNON
     stats:
-      tu: 70
+      tu: 100
       stamina: 100
-      health: 90
+      health: 100
       bravery: 110
-      reactions: 20
+      reactions: 30
       firing: 60
       throwing: 0
       strength: 60
@@ -4377,11 +4464,11 @@ units:
   - type: TANK_ROCKET_LAUNCHER
     race: STR_TANK_ROCKET_LAUNCHER
     stats:
-      tu: 70
+      tu: 100
       stamina: 100
-      health: 90
+      health: 100
       bravery: 110
-      reactions: 20
+      reactions: 30
       firing: 60
       throwing: 0
       strength: 60
@@ -4399,7 +4486,47 @@ units:
     stats:
       tu: 100
       stamina: 100
-      health: 90
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: HOVERTANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+  - type: HOVERTANK_DISRUPTOR
+    race: STR_HOVERTANK_DISRUPTOR
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: HOVERTANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+  - type: HOVERTANK_RAIL
+    race: STR_HOVERTANK_RAIL
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
       bravery: 110
       reactions: 30
       firing: 60
@@ -4419,7 +4546,7 @@ units:
     stats:
       tu: 100
       stamina: 100
-      health: 90
+      health: 100
       bravery: 110
       reactions: 30
       firing: 60
@@ -4960,14 +5087,14 @@ alienRaces:
       - REAPER
   - id: STR_MIXED
     members:
-      - ETHEREAL_SOLDIER
-      - ETHEREAL_LEADER
       - ETHEREAL_COMMANDER
+      - ETHERIAL_LEADER
+      - SNAKEMAN_SOLDIER
       - CHRYSSALID
-      - SILACOID
-      - CELATID
-      - SECTOPOD
       - FLOATER_SOLDIER
+      - MUTON_SOLDIER
+      - REAPER
+      - SECTOPOD
 alienDeployments:
   - type: STR_SMALL_SCOUT
     data:
@@ -6629,6 +6756,18 @@ research:
     cost: 660
     dependencies:
       - STR_PLASMA_CANNON_DEP2
+  - name: STR_RAIL_CANNON
+    cost: 660
+    dependencies:
+      - STR_RAIL_CANNON_DEP
+  - name: STR_RAIL_SLUG
+    cost: 660
+    dependencies:
+      - STR_RAIL_SLUG_DEP
+  - name: STR_DISRUPTOR_CANNON
+    cost: 660
+    dependencies:
+      - STR_DISRUPTOR_CANNON_DEP
   - name: STR_PLASMA_DEFENSE
     cost: 620
     dependencies:
@@ -6866,6 +7005,27 @@ research:
       - STR_PLASMA_RIFLE_CLIP
     unlocks:
       - STR_PLASMA_CANNON
+  - name: STR_DISRUPTOR_CANNON_DEP
+    cost: 0
+    dependencies:
+      - STR_DISRUPTOR_RIFLE
+      - STR_DISRUPTOR_PISTOL
+    unlocks:
+      - STR_DISRUPTOR_CANNON
+  - name: STR_RAIL_CANNON_DEP
+    cost: 0
+    dependencies:
+      - STR_RAIL_GUN
+      - STR_RAIL_GUN_CLIP
+    unlocks:
+      - STR_RAIL_CANNON
+  - name: STR_RAIL_SLUG_DEP
+    cost: 0
+    dependencies:
+      - STR_RAIL_GUN
+      - STR_RAIL_GUN_CLIP
+    unlocks:
+      - STR_RAIL_SLUG
 manufacture:
   - name: STR_FUSION_BALL_LAUNCHER
     category: STR_CRAFT_WEAPON
@@ -6883,6 +7043,33 @@ manufacture:
     space: 6
     time: 300
     cost: 182000
+  - name: STR_DISRUPTOR_CANNON
+    category: STR_CRAFT_WEAPON
+    requires:
+      - STR_DISRUPTOR_CANNON
+    space: 6
+    time: 400
+    cost: 200000
+    requiredItems:
+      STR_ELERIUM_115: 10
+  - name: STR_RAIL_CANNON
+    category: STR_CRAFT_WEAPON
+    requires:
+      - STR_RAIL_CANNON
+    space: 6
+    time: 600
+    cost: 300000
+    requiredItems:
+      STR_ELERIUM_115: 10
+  - name: STR_RAIL_SLUG
+    category: STR_CRAFT_AMMUNITION
+    requires:
+      - STR_RAIL_SLUG
+    space: 6
+    time: 300
+    cost: 28000
+    requiredItems:
+      STR_ELERIUM_115: 10
   - name: STR_PLASMA_BEAM
     category: STR_CRAFT_WEAPON
     requires:
@@ -6919,6 +7106,39 @@ manufacture:
     requiredItems:
       STR_ALIEN_ALLOYS: 5
       STR_ELERIUM_115: 30
+  - name: STR_HOVERTANK_DISRUPTOR
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_DISRUPTOR_CANNON
+      - STR_NEW_FIGHTER_CRAFT
+    space: 30
+    time: 1200
+    cost: 900000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 5
+      STR_ELERIUM_115: 20
+  - name: STR_HOVERTANK_RAIL
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_RAIL_CANNON
+      - STR_RAIL_SLUG
+      - STR_NEW_FIGHTER_CRAFT
+    space: 30
+    time: 1200
+    cost: 1200000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 5
+      STR_ELERIUM_115: 40
+  - name: STR_HWP_RAIL_SLUG
+    category: STR_HWP_CANNON_SHELLS
+    requires:
+      - STR_HWP_RAIL_SLUG
+      - STR_NEW_FIGHTER_CRAFT
+    space: 25
+    time: 400
+    cost: 15000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 8
   - name: STR_HOVERTANK_LAUNCHER
     category: STR_HEAVY_WEAPONS_PLATFORM
     requires:
