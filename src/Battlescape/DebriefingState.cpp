@@ -621,6 +621,9 @@ void DebriefingState::recoverItems(std::vector<BattleItem*> *from, Base *base)
 			// put items back in the base
 			if ((*it)->getRules()->isRecoverable() && !(*it)->getRules()->isFixed())
 			{
+				if((*it)->getRules()->getClipSize() == -1)	
+					base->getItems()->addItem((*it)->getRules()->getType(), 1);
+				else
 				switch ((*it)->getRules()->getBattleType())
 				{
 					case BT_AMMO:
