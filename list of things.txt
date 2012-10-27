@@ -6,7 +6,6 @@ ufopedia entries for new weapons
 use weapon mount on craft in missions?
 
 code:
-fix weapon placements on snakeman, also walking noises.
 mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
 are melee units attacking diagonally? they're REACTING diagonally but this is by no means a definitive answer.
 make terror more likely (1/4 UFOs will instead spawn as terror sites?)
@@ -24,6 +23,7 @@ tanks, cannons, balance.
 
 
 done:
+snakemen slither!
 hovertanks and laser tanks and guardian fighters, oh my!
 added Guardian class interceptor (costs more, is better, funky new sprite(when i can touch dogfight code)
 tweaked lightning to be actually good
