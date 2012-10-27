@@ -863,6 +863,7 @@ items:
     tuAimed: 80
     battleType: 1
     fixedWeapon: true
+    turretType: 0
     invWidth: 2
     invHeight: 3
     armor: 20
@@ -902,6 +903,7 @@ items:
     tuAimed: 75
     battleType: 1
     fixedWeapon: true
+    turretType: 1
     invWidth: 2
     invHeight: 3
     armor: 20
@@ -942,6 +944,7 @@ items:
     tuAimed: 75
     battleType: 1
     fixedWeapon: true
+    turretType: 2
     clipSize: -1
     invWidth: 2
     invHeight: 3
@@ -966,6 +969,7 @@ items:
     tuAimed: 60
     battleType: 1
     fixedWeapon: true
+    turretType: 3
     clipSize: -1
     invWidth: 2
     invHeight: 3
@@ -986,6 +990,7 @@ items:
     tuAimed: 80
     battleType: 1
     fixedWeapon: true
+    turretType: 4
     waypoint: true
     invWidth: 2
     invHeight: 3
@@ -3199,6 +3204,9 @@ terrains:
       - name: MBASE09
         width: 20
         length: 20
+      - name: MBASE10
+        width: 40
+        length: 40
       - name: MBASE14
         width: 10
         length: 10
@@ -3212,6 +3220,64 @@ terrains:
         width: 10
         length: 10
       - name: MBASE18
+        width: 10
+        length: 10        
+  - name: COMMERCIAL
+    mapDataSets:
+      - BLANKS
+      - COMROADS
+      - COMBITS
+      - COMMERCE
+      - COMFRN
+    mapBlocks:
+      - name: COMRC00
+        width: 10
+        length: 10
+        type: 2
+      - name: COMRC01
+        width: 10
+        length: 10
+        type: 3
+      - name: COMRC02
+        width: 10
+        length: 10
+        type: 4
+      - name: COMRC03
+        width: 10
+        length: 10
+        type: 1
+      - name: COMRC04
+        width: 10
+        length: 10
+        type: 1
+      - name: COMRC05
+        width: 20
+        length: 20
+      - name: COMRC06
+        width: 20
+        length: 20
+      - name: COMRC07
+        width: 20
+        length: 20
+      - name: COMRC08
+        width: 20
+        length: 20
+      - name: COMRC09
+        width: 20
+        length: 20
+      - name: COMRC14
+        width: 10
+        length: 10
+      - name: COMRC15
+        width: 10
+        length: 10
+      - name: COMRC16
+        width: 10
+        length: 10
+      - name: COMRC17
+        width: 10
+        length: 10
+      - name: COMRC18
         width: 10
         length: 10        
   - name: XBASE

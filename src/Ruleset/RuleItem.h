@@ -68,6 +68,7 @@ private:
 	bool _flamerRules;
 	bool _grenadeRules;
 	int _projectiles;
+	int _turretType;
 public:
 	/// Creates a blank item ruleset.
 	RuleItem(const std::string &type);
@@ -176,6 +177,7 @@ public:
 	bool isGrenade() const;
 	int getWeaponRange() const;
 	int getProjectiles() const;
+	int getTurretType() const;
 };
 
 }

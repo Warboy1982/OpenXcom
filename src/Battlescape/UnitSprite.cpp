@@ -533,7 +533,7 @@ void UnitSprite::drawRoutine2()
 	}
 
 	Surface *s = 0;
-	int turret = _unit->getTurretType();
+	int turret = _unit->getMainHandWeapon()->getRules()->getTurretType();
 
 	// draw the animated propulsion below the hwp
 	if (_part > 0 && hoverTank != 0)

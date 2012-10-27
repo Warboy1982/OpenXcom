@@ -286,7 +286,6 @@ void BattlescapeGenerator::run()
 				Unit *rule = _game->getRuleset()->getUnit(vehicle.substr(4));
 				unit = addXCOMUnit(new BattleUnit(rule, FACTION_PLAYER, _unitSequence++, _game->getRuleset()->getArmor(rule->getArmor())));
 				addItem(_game->getRuleset()->getItem(vehicle), unit);
-				unit->setTurretType(0);
 				if((*i)->getRules()->getClipSize() != -1)
 				{
 					std::string ammo = (*i)->getRules()->getCompatibleAmmo()->front();
