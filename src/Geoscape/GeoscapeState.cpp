@@ -322,6 +322,7 @@ void GeoscapeState::blit()
  */
 void GeoscapeState::handle(Action *action)
 {
+	_minimizedDogfights = minimizedDogfightsCount();
 	if(_dogfights.size() == _minimizedDogfights)
 	{
 		State::handle(action);
@@ -349,7 +350,6 @@ void GeoscapeState::handle(Action *action)
 		{
 			(*it)->handle(action);
 		}
-		_minimizedDogfights = minimizedDogfightsCount();
 	}
 }
 
@@ -738,10 +738,24 @@ void GeoscapeState::time30Minutes()
 		u->setDestination(w);
 		u->setSpeed(RNG::generate(u->getRules()->getMaxSpeed() / 4, u->getRules()->getMaxSpeed() / 2));
 		int race = RNG::generate(1, 2);
+		if(_game->getSavedGame()->getTime()->getTotalDays() > 45)
+			race += RNG::generate(0, 1);
+		if(_game->getSavedGame()->getTime()->getTotalDays() > 90)
+			race += RNG::generate(0, 1);
+		if(_game->getSavedGame()->getTime()->getTotalDays() > 135)
+			race += RNG::generate(0, 2);
 		if (race == 1)
 			u->setAlienRace("STR_SECTOID");
-		else
+		else if (race == 2)
 			u->setAlienRace("STR_FLOATER");
+		else if (race == 3)
+			u->setAlienRace("STR_SNAKEMAN");
+		else if (race == 4)
+			u->setAlienRace("STR_MUTON");
+		else if (race == 5)
+			u->setAlienRace("STR_ETHERIAL");
+		else
+			u->setAlienRace("STR_MIXED");
 		_game->getSavedGame()->getUfos()->push_back(u);
 	}
 
@@ -927,7 +941,7 @@ void GeoscapeState::time1Day()
 {
 	// Spawn terror sites
 	int chance = RNG::generate(1, 20);
-	if (chance <= 2)
+	if (chance <= 4)
 	{
 		// Pick a city
 		RuleRegion* region = 0;
@@ -945,14 +959,27 @@ void GeoscapeState::time1Day()
 		t->setId(_game->getSavedGame()->getId("STR_TERROR_SITE"));
 		t->setHoursActive(24 + RNG::generate(0, 24));
 		int race = RNG::generate(1, 2);
+		if(_game->getSavedGame()->getTime()->getTotalDays() > 45)
+			race += RNG::generate(0, 1);
+		if(_game->getSavedGame()->getTime()->getTotalDays() > 90)
+			race += RNG::generate(0, 1);
+		if(_game->getSavedGame()->getTime()->getTotalDays() > 135)
+			race += RNG::generate(0, 2);
 		if (race == 1)
 			t->setAlienRace("STR_SECTOID");
-		else
+		else if (race == 2)
 			t->setAlienRace("STR_FLOATER");
+		else if (race == 3)
+			t->setAlienRace("STR_SNAKEMAN");
+		else if (race == 4)
+			t->setAlienRace("STR_MUTON");
+		else if (race == 5)
+			t->setAlienRace("STR_ETHERIAL");
+		else
+			t->setAlienRace("STR_MIXED");
 		_game->getSavedGame()->getTerrorSites()->push_back(t);
 		popup(new AlienTerrorState(_game, city, this));
 	}
-
 	for (std::vector<Base*>::iterator i = _game->getSavedGame()->getBases()->begin(); i != _game->getSavedGame()->getBases()->end(); ++i)
 	{
 		// Handle facility construction
