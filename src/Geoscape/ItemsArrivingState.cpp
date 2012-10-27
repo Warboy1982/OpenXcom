@@ -119,7 +119,7 @@ ItemsArrivingState::ItemsArrivingState(Game *game, GeoscapeState *state) : State
 						for (std::vector<CraftWeapon*>::iterator w = (*c)->getWeapons()->begin(); w != (*c)->getWeapons()->end(); ++w)
 						{
 						
-							if ((*w)->getAmmo() < (*w)->getRules()->getAmmoMax())
+							if ((*w) && (*w)->getAmmo() < (*w)->getRules()->getAmmoMax())
 							{
 								(*w)->setRearming(true);
 								(*c)->setStatus("STR_REARMING");
