@@ -53,7 +53,7 @@ private:
 	std::vector<Craft*> _crafts;
 	std::vector<Transfer*> _transfers;
 	ItemContainer *_items;
-	int _scientists, _engineers;
+	int _scientists, _engineers, _doctors;
 	std::vector<ResearchProject *> _research;
 	std::vector<Production *> _productions;
 public:
@@ -85,6 +85,10 @@ public:
 	int getScientists() const;
 	/// Sets the base's scientists.
 	void setScientists(int scientists);
+	/// Gets the base's doctors.
+	int getDoctors() const;
+	/// Sets the base's doctors.
+	void setDoctors(int doctors);
 	/// Gets the base's engineers.
 	int getEngineers() const;
 	/// Sets the base's engineers.
@@ -101,6 +105,10 @@ public:
 	int getAvailableScientists() const;
 	/// Gets the base's total scientists.
 	int getTotalScientists() const;
+	/// Gets the base's available doctors.
+	int getAvailableDoctors() const;
+	/// Gets the base's total doctors.
+	int getTotalDoctors() const;
 	/// Gets the base's available engineers.
 	int getAvailableEngineers() const;
 	/// Gets the base's total engineers.

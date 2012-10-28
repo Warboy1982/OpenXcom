@@ -493,6 +493,14 @@ facilities:
     monthlyCost: 30000
     labs: 50
     mapName: XBASE_02
+  - type: STR_MEDICAL_BAY
+    spriteShape: 1
+    spriteFacility: 19
+    buildCost: 800000
+    buildTime: 30
+    monthlyCost: 50000
+    meds: 50
+    mapName: XBASE_02
   - type: STR_WORKSHOP
     spriteShape: 1
     spriteFacility: 20
@@ -501,6 +509,14 @@ facilities:
     monthlyCost: 35000
     workshops: 50
     mapName: XBASE_03
+  - type: STR_PSIONIC_LABORATORY
+    spriteShape: 1
+    spriteFacility: 31
+    buildCost: 650000
+    buildTime: 30
+    monthlyCost: 16000
+    trainingrooms: 5
+    mapName: XBASE_14
   - type: STR_SMALL_RADAR_SYSTEM
     spriteShape: 2
     spriteFacility: 21
@@ -543,6 +559,15 @@ facilities:
     buildTime: 18
     monthlyCost: 15000
     aliens: 10
+    mapName: XBASE_08
+  - type: STR_CLONING_LAB
+    requires:
+      - STR_CLONING LAB
+    spriteShape: 1
+    spriteFacility: 25
+    buildCost: 1600000
+    buildTime: 45
+    monthlyCost: 30000
     mapName: XBASE_08
   - type: STR_LASER_DEFENSES
     requires:
@@ -3729,14 +3754,14 @@ armors:
     drawingRoutine: 4
     damageModifier:
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
       - 1.0
   - type: CIVF_ARMOR
     spriteSheet: CIVF.PCK
@@ -3748,14 +3773,14 @@ armors:
     drawingRoutine: 4
     damageModifier:
       - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
       - 1.0
   - type: COPM_ARMOR
     spriteSheet: POLICEM.PCK
@@ -7026,6 +7051,15 @@ research:
       - STR_RAIL_GUN_CLIP
     unlocks:
       - STR_RAIL_SLUG
+  - name: STR_CLONING_LAB
+    cost: 420
+    dependencies:
+      - STR_ALIEN_REPRODUCTION
+    unlocks:
+      - STR_CLONING_LAB
+  - name: STR_ALIEN_REPRODUCTION
+    cost: 192
+    needItem: true
 manufacture:
   - name: STR_FUSION_BALL_LAUNCHER
     category: STR_CRAFT_WEAPON
@@ -8222,6 +8256,7 @@ startingBase:
       STR_STINGRAY_MISSILES: 25
     scientists: 10
     engineers: 10
+    doctors: 0
     transfers:
       []
     research:
@@ -8231,4 +8266,5 @@ startingBase:
 costSoldier: 20000
 costEngineer: 25000
 costScientist: 30000
+costDoctor: 30000
 timePersonnel: 72

@@ -52,8 +52,8 @@ MonthlyCostsState::MonthlyCostsState(Game *game, Base *base) : State(game), _bas
 	_txtRental = new Text(150, 9, 10, 48);
 	_txtSalaries = new Text(150, 9, 10, 80);
 	_txtIncome = new Text(150, 9, 10, 136);
-	_lstCrafts = new TextList(300, 20, 10, 56);
-	_lstSalaries = new TextList(300, 30, 10, 88);
+	_lstCrafts = new TextList(300, 25, 10, 56);
+	_lstSalaries = new TextList(300, 33, 10, 88);
 	_lstMaintenance = new TextList(300, 9, 10, 120);
 	_lstTotal = new TextList(100, 9, 205, 136);
 
@@ -136,6 +136,9 @@ MonthlyCostsState::MonthlyCostsState(Game *game, Base *base) : State(game), _bas
 	std::wstringstream ss6;
 	ss6 << _base->getTotalScientists();
 	_lstSalaries->addRow(4, _game->getLanguage()->getString("STR_SCIENTISTS").c_str(), Text::formatFunding(_game->getRuleset()->getScientistCost()).c_str(), ss6.str().c_str(), Text::formatFunding(_base->getTotalScientists() * _game->getRuleset()->getScientistCost()).c_str());
+	std::wstringstream ss7;
+	ss7 << _base->getTotalDoctors();
+	_lstSalaries->addRow(4, _game->getLanguage()->getString("STR_DOCTORS").c_str(), Text::formatFunding(_game->getRuleset()->getScientistCost()).c_str(), ss7.str().c_str(), Text::formatFunding(_base->getTotalScientists() * _game->getRuleset()->getScientistCost()).c_str());
 
 	_lstMaintenance->setColor(Palette::blockOffset(13)+10);
 	_lstMaintenance->setColumns(2, 240, 60);

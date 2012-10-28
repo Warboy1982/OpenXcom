@@ -48,9 +48,9 @@ private:
 	TextButton *_btnOk, *_btnTransfers, *_btnStores, *_btnMonthlyCosts;
 	TextEdit *_edtBase;
 
-	Text *_txtPersonnel, *_txtSoldiers, *_txtEngineers, *_txtScientists;
-	Text *_numSoldiers, *_numEngineers, *_numScientists;
-	Bar *_barSoldiers, *_barEngineers, *_barScientists;
+	Text *_txtPersonnel, *_txtSoldiers, *_txtEngineers, *_txtScientists, *_txtDoctors;
+	Text *_numSoldiers, *_numEngineers, *_numScientists, *_numDoctors;
+	Bar *_barSoldiers, *_barEngineers, *_barScientists, *_barDoctors;
 
 	Text *_txtSpace, *_txtQuarters, *_txtStores, *_txtLaboratories, *_txtWorkshops, *_txtHangars;
 	Text *_numQuarters, *_numStores, *_numLaboratories, *_numWorkshops, *_numHangars;

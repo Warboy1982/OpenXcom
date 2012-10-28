@@ -54,7 +54,7 @@ namespace OpenXcom
 /**
  * Creates a ruleset with blank sets of rules.
  */
-Ruleset::Ruleset() : _costSoldier(0), _costEngineer(0), _costScientist(0), _timePersonnel(0)
+Ruleset::Ruleset() : _costSoldier(0), _costEngineer(0), _costScientist(0), _costDoctor(0), _timePersonnel(0)
 {
 	// Add soldier names
 	std::vector<std::string> names = CrossPlatform::getFolderContents(Options::getDataFolder() + "SoldierName/", "nam");
@@ -538,6 +538,10 @@ void Ruleset::load(const std::string &filename)
 		{
 			i.second() >> _costScientist;
 		}
+		else if (key == "costDoctor")
+		{
+			i.second() >> _costDoctor;
+		}
 		else if (key == "timePersonnel")
 		{
 			i.second() >> _timePersonnel;
@@ -687,6 +691,7 @@ void Ruleset::save(const std::string &filename) const
 	out << YAML::Key << "costSoldier" << YAML::Value << _costSoldier;
 	out << YAML::Key << "costEngineer" << YAML::Value << _costEngineer;
 	out << YAML::Key << "costScientist" << YAML::Value << _costScientist;
+	out << YAML::Key << "costDoctor" << YAML::Value << _costDoctor;
 	out << YAML::Key << "timePersonnel" << YAML::Value << _timePersonnel;
 	out << YAML::EndMap;
 	sav << out.c_str();
@@ -1044,6 +1049,16 @@ int Ruleset::getEngineerCost() const
 int Ruleset::getScientistCost() const
 {
 	return _costScientist;
+}
+
+/**
+ * Returns the cost of an individual doctor
+ * for purchase/maintenance.
+ * @return Cost.
+ */
+int Ruleset::getDoctorCost() const
+{
+	return _costDoctor;
 }
 
 /**

@@ -45,7 +45,7 @@ namespace OpenXcom
  * Initializes an empty base.
  * @param rule Pointer to ruleset.
  */
-Base::Base(const Ruleset *rule) : Target(), _rule(rule), _name(L""), _facilities(), _soldiers(), _crafts(), _scientists(0), _engineers(0)
+Base::Base(const Ruleset *rule) : Target(), _rule(rule), _name(L""), _facilities(), _soldiers(), _crafts(), _scientists(0), _engineers(0), _doctors(0)
 {
 	_items = new ItemContainer();
 }
@@ -136,6 +136,7 @@ void Base::load(const YAML::Node &node, SavedGame *save)
 
 	_items->load(node["items"]);
 	node["scientists"] >> _scientists;
+	node["doctors"] >> _doctors;
 	node["engineers"] >> _engineers;
 
 	for (YAML::Iterator i = node["transfers"].begin(); i != node["transfers"].end(); ++i)
@@ -198,6 +199,7 @@ void Base::save(YAML::Emitter &out) const
 	out << YAML::Key << "items" << YAML::Value;
 	_items->save(out);
 	out << YAML::Key << "scientists" << YAML::Value << _scientists;
+	out << YAML::Key << "doctors" << YAML::Value << _doctors;
 	out << YAML::Key << "engineers" << YAML::Value << _engineers;
 	out << YAML::Key << "transfers" << YAML::Value;
 	out << YAML::BeginSeq;
@@ -320,6 +322,24 @@ void Base::setScientists(int scientists)
 	 _scientists = scientists;
 }
 
+
+/**
+ * Returns the amount of scientists currently in the base.
+ * @return Number of scientists.
+ */
+int Base::getDoctors() const
+{
+	return _doctors;
+}
+
+/**
+ * Changes the amount of scientists currently in the base.
+ * @param scientists Number of scientists.
+ */
+void Base::setDoctors(int doctors)
+{
+	 _doctors = doctors;
+}
 /**
  * Returns the amount of engineers currently in the base.
  * @return Number of engineers.
@@ -464,6 +484,34 @@ int Base::getTotalScientists() const
 }
 
 /**
+ * Returns the amount of doctors contained
+ * in the base without any assignments.
+ * @return Number of doctors.
+ */
+int Base::getAvailableDoctors() const
+{
+	return getDoctors();
+}
+
+/**
+ * Returns the amount of doctors contained
+ * in the base.
+ * @return Number of doctors.
+ */
+int Base::getTotalDoctors() const
+{
+	int total = _doctors;
+	for (std::vector<Transfer*>::const_iterator i = _transfers.begin(); i != _transfers.end(); ++i)
+	{
+		if ((*i)->getType() == TRANSFER_DOCTOR)
+		{
+			total += (*i)->getQuantity();
+		}
+	}
+	return total;
+}
+
+/**
  * Returns the amount of engineers contained
  * in the base without any assignments.
  * @return Number of engineers.
@@ -502,7 +550,7 @@ int Base::getTotalEngineers() const
  */
 int Base::getUsedQuarters() const
 {
-	return getTotalSoldiers() + getTotalScientists() + getTotalEngineers();
+	return getTotalSoldiers() + getTotalScientists() + getTotalEngineers() + getTotalDoctors();
 }
 
 /**
@@ -827,6 +875,7 @@ int Base::getPersonnelMaintenance() const
 	total += _soldiers.size() * _rule->getSoldierCost();
 	total += _engineers * _rule->getEngineerCost();
 	total += _scientists * _rule->getScientistCost();
+	total += _doctors * _rule->getDoctorCost();
 	return total;
 }
 

@@ -25,7 +25,7 @@
 namespace OpenXcom
 {
 
-enum TransferType { TRANSFER_SOLDIER, TRANSFER_CRAFT, TRANSFER_ITEM, TRANSFER_SCIENTIST, TRANSFER_ENGINEER };
+enum TransferType { TRANSFER_SOLDIER, TRANSFER_CRAFT, TRANSFER_ITEM, TRANSFER_SCIENTIST, TRANSFER_ENGINEER, TRANSFER_DOCTOR };
 
 class Soldier;
 class Craft;
@@ -45,7 +45,7 @@ private:
 	Soldier *_soldier;
 	Craft *_craft;
 	std::string _itemId;
-	int _itemQty, _scientists, _engineers;
+	int _itemQty, _scientists, _engineers, _doctors;
 	bool _delivered;
 public:
 	/// Creates a new transfer.
@@ -66,6 +66,8 @@ public:
 	void setItems(const std::string &id, int qty = 1);
 	/// Sets the scientists of the transfer.
 	void setScientists(int scientists);
+	/// Sets the doctors of the transfer.
+	void setDoctors(int doctors);
 	/// Sets the engineers of the transfer.
 	void setEngineers(int engineers);
 	/// Gets the name of the transfer.

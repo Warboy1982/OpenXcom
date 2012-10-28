@@ -1,4 +1,8 @@
 todo:
+Cult of Sirius! (rank 8 alien, human cultist, 1 in 6 chance for 3-5 humans)
+cultist bases pop up - new mission type: purge - destroy the cultists
+cultist attacks on your base.
+make a new map type for ground-based assaults, with a 40x40 tile to represent the base compound on a 60x60 map
 Training Room for xcom agents using similar rules to X-com apocalypse
 medical bay - decreases convalescence time by a percentage based on the number of staff (caps at... 66?)
 medical staff, basically scientists that work in the medical bay and add to the modifier
@@ -7,19 +11,18 @@ research of reproduction leads to new base facility - cloning facility - allows 
 New ufo layouts for variety
 Inventory screens for all units in game
 make aliens pick up weapons if any nearby and none in hand
-
+spawn 10-20 engineers and scientists on base defence missions, faction_neutral,
 ruleset:
 ufopedia entries for new weapons
 use weapon mount on craft in missions?
-
-code:
 mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
-make terror more likely (1/4 UFOs will instead spawn as terror sites?)
 make funding nations much harder to please, make them drop out more often, and when they sign a pact, start generating anti-infiltration missions somewhere in their country (use alien base as a template for how to generate a hidden mission) at a rate of about 1.5 per month, and start generating military defence missions every few weeks or so until all anti-infiltration missions are complete, and set the funding nation to "happy" 
 sattelite defense network? - extra base with free planet wide hyper-wave decode, quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
 
 
 done:
+medical bay and doctors added
+cloning facility added
 third map type for terror missions: now has commercial, residential and military base.
 researchable disruptor and gauss cannons for hovertanks and crafts
 complete armour rework
