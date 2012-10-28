@@ -389,6 +389,7 @@ void GeoscapeState::think()
 	_zoomOutEffectTimer->think(this, 0);
 	_dogfightStartTimer->think(this, 0);
 
+	
 	if(_popups.empty() && _dogfights.empty() && (!_zoomInEffectTimer->isRunning() || _zoomInEffectDone) && (!_zoomOutEffectTimer->isRunning() || _zoomOutEffectDone))
 	{
 		// Handle timers
@@ -399,6 +400,14 @@ void GeoscapeState::think()
 		if(!_dogfights.empty())
 		{
 			handleDogfights();
+			_battleMusic = true;
+		}
+		else if(_battleMusic)
+		{
+			std::stringstream ss;
+			ss << "GMGEO" << RNG::generate(1, 2);
+			_game->getResourcePack()->getMusic(ss.str())->play();
+			_battleMusic = false;
 		}
 		if(!_popups.empty())
 		{

@@ -1,7 +1,14 @@
 todo:
+Training Room for xcom agents using similar rules to X-com apocalypse
+medical bay - decreases convalescence time by a percentage based on the number of staff (caps at... 66?)
+medical staff, basically scientists that work in the medical bay and add to the modifier
+Race specific items and Maps EG: Egg sacks for snakeman, clone tanks for sectiods - recover as alien reproduction
+research of reproduction leads to new base facility - cloning facility - allows for dead soldiers to be revived with their stats reduced slightly - option to splice with alien DNA to improve psychic defence by x amount at the cost of... strength? health? stamina? all of the above?
+New ufo layouts for variety
+Inventory screens for all units in game
+make aliens pick up weapons if any nearby and none in hand
+
 ruleset:
-disruptor/gauss vehicle weapons, and tank variants.
-balancing, check all weapon damage types, play with armour values
 ufopedia entries for new weapons
 use weapon mount on craft in missions?
 
@@ -12,11 +19,11 @@ make funding nations much harder to please, make them drop out more often, and w
 sattelite defense network? - extra base with free planet wide hyper-wave decode, quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
 
 
-to release next version:
-tanks, cannons, balance.
-
-
 done:
+third map type for terror missions: now has commercial, residential and military base.
+researchable disruptor and gauss cannons for hovertanks and crafts
+complete armour rework
+complete weapon damage workover
 hovertank turret placement fixed.
 snakemen slither!
 hovertanks and laser tanks and guardian fighters, oh my!

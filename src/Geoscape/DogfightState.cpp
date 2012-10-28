@@ -368,7 +368,7 @@ DogfightState::DogfightState(Game *game, Globe *globe, Craft *craft, Ufo *ufo) :
 
 	// Draw correct number on the minimized dogfight icon.
 	std::wstringstream ss1;
-	ss1 << _craft->getInterceptionOrder();
+	ss1 << _craft->getInterceptionOrder()+1;
 	_txtInterceptionNumber->setColor(Palette::blockOffset(5));
 	_txtInterceptionNumber->setText(ss1.str());
 	_txtInterceptionNumber->setVisible(false);
@@ -545,6 +545,19 @@ DogfightState::~DogfightState()
 		_projectiles.pop_back();
 	}
 	_craft->setInDogfight(false);
+	if(_destroyUfo)
+	{
+		// Clear UFO
+		for (std::vector<Ufo*>::iterator i = _game->getSavedGame()->getUfos()->begin(); i != _game->getSavedGame()->getUfos()->end(); ++i)
+		{
+			if (*i == _ufo)
+			{
+				delete *i;
+				_game->getSavedGame()->getUfos()->erase(i);
+				break;
+			}
+		}
+	}
 }
 
 /**
@@ -1654,7 +1667,7 @@ Ufo* DogfightState::getUfo() const
 void DogfightState::endDogfight()
 {
 	_craft->setInDogfight(false);
-	_endDogfight = true;
+	_endDogfight = true;	
 }
 
 /**
