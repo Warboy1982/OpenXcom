@@ -509,13 +509,13 @@ facilities:
     monthlyCost: 35000
     workshops: 50
     mapName: XBASE_03
-  - type: STR_PSIONIC_LABORATORY
+  - type: STR_TRAINING_FACILITY
     spriteShape: 1
     spriteFacility: 31
     buildCost: 650000
     buildTime: 30
     monthlyCost: 16000
-    trainingrooms: 5
+    trainingrooms: 50
     mapName: XBASE_14
   - type: STR_SMALL_RADAR_SYSTEM
     spriteShape: 2

@@ -35,7 +35,7 @@ namespace OpenXcom
  * @param names List of name pools for soldier generation.
  * @param id Pointer to unique soldier id for soldier generation.
  */
-Soldier::Soldier(RuleSoldier *rules, Armor *armor, const std::vector<SoldierNamePool*> *names, int id) : _name(L""), _id(0), _rules(rules), _initialStats(), _currentStats(), _rank(RANK_ROOKIE), _craft(0), _gender(GENDER_MALE), _look(LOOK_BLONDE), _missions(0), _kills(0), _recovery(0), _recentlyPromoted(false), _armor(armor)
+Soldier::Soldier(RuleSoldier *rules, Armor *armor, const std::vector<SoldierNamePool*> *names, int id) : _name(L""), _id(0), _rules(rules), _initialStats(), _currentStats(), _rank(RANK_ROOKIE), _craft(0), _gender(GENDER_MALE), _look(LOOK_BLONDE), _missions(0), _kills(0), _recovery(0), _recentlyPromoted(false), _armor(armor), _factor(0)
 {
 	if (names != 0)
 	{
@@ -385,7 +385,10 @@ void Soldier::setArmor(Armor *armor)
  */
 int Soldier::getWoundRecovery() const
 {
-	return _recovery;
+	if(_factor)
+		return _recovery/_factor;
+	else
+		return _recovery;
 }
 
 /**
@@ -406,9 +409,14 @@ void Soldier::setWoundRecovery(int recovery)
 /**
  * Heals soldier wounds.
  */
-void Soldier::heal()
+void Soldier::heal(int factor)
 {
-	_recovery--;
+	_factor = factor;
+	_recovery -= 1 + factor;
+	if(_recovery <= 0)
+	{
+		_recovery = 0;
+		_factor = 0;
+	}
 }
-
 }

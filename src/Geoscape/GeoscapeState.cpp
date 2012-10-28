@@ -1036,7 +1036,10 @@ void GeoscapeState::time1Day()
 		{
 			if ((*j)->getWoundRecovery() > 0)
 			{
-				(*j)->heal();
+				int amount = (*i)->getDoctors()+1/20;
+				if(amount > 3)
+					amount = 3;
+				(*j)->heal(amount);
 			}
 		}
 	}

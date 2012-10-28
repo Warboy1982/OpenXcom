@@ -53,7 +53,7 @@ private:
 	Craft *_craft;
 	SoldierGender _gender;
 	SoldierLook _look;
-	int _missions, _kills, _recovery;
+	int _missions, _kills, _recovery, _factor;
 	bool _recentlyPromoted;
 	Armor *_armor;
 public:
@@ -114,7 +114,7 @@ public:
 	/// Sets the soldier's wound recovery time.
 	void setWoundRecovery(int recovery);
 	/// Heals wound recoveries.
-	void heal();
+	void heal(int factor);
 };
 
 }
