@@ -24,7 +24,6 @@
 #include "../Engine/Game.h"
 #include "../Resource/ResourcePack.h"
 #include "../Engine/Language.h"
-#include "../Engine/Font.h"
 #include "../Engine/Palette.h"
 #include "../Interface/TextButton.h"
 #include "../Interface/Window.h"
@@ -535,10 +534,12 @@ void TransferItemsState::increase()
 	}
 	if((_dOffset)&&_sel == _soldiers.size()+_crafts.size()+_sOffset)
 	{
-		if(_baseTo->getHospitals()-_baseTo->getDoctors() <= 0);
+		if(_baseTo->getHospitals()-_baseTo->getDoctors() <= 0)
+		{
 		_timerInc->stop();
 		_game->pushState(new ErrorMessageState(_game, "STR_NO_FREE_HOSPITALS", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
 		return;
+		}
 	}
 	if (_sel >= _soldiers.size() && _sel < _soldiers.size() + _crafts.size())
 	{

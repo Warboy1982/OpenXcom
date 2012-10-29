@@ -55,7 +55,6 @@
 #include "GraphsState.h"
 #include "FundingState.h"
 #include "MonthlyReportState.h"
-#include "PsiTrainingState.h"
 #include "ProductionCompleteState.h"
 #include "UfoDetectedState.h"
 #include "GeoscapeCraftState.h"
@@ -81,6 +80,7 @@
 #include "../Ruleset/City.h"
 #include "AlienTerrorState.h"
 #include <ctime>
+#include "PsiTrainingState.h"
 
 namespace OpenXcom
 {

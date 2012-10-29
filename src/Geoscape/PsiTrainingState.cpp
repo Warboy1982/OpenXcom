@@ -77,49 +77,49 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game)
 				add(_btnBase1);
 				break;
 			case 2:
-				_btnBase2 = new TextButton(120, 16, 100, 46);
+				_btnBase2 = new TextButton(120, 16, 100, 44);
 				_btnBase2->setColor(Palette::blockOffset(15)+6);
 				_btnBase2->setText((*b)->getName());
 				_btnBase2->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
 				add(_btnBase2);
 				break;
 			case 3:
-				_btnBase3 = new TextButton(120, 16, 100, 66);
+				_btnBase3 = new TextButton(120, 16, 100, 62);
 				_btnBase3->setColor(Palette::blockOffset(15)+6);
 				_btnBase3->setText((*b)->getName());
 				_btnBase3->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
 				add(_btnBase3);
 				break;
 			case 4:
-				_btnBase4 = new TextButton(80, 18, 120, 86);
+				_btnBase4 = new TextButton(120, 16, 100, 80);
 				_btnBase4->setColor(Palette::blockOffset(15)+6);
 				_btnBase4->setText((*b)->getName());
 				_btnBase4->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
 				add(_btnBase4);
 				break;
 			case 5:
-				_btnBase5 = new TextButton(80, 18, 120, 106);
+				_btnBase5 = new TextButton(120, 16, 100, 98);
 				_btnBase5->setColor(Palette::blockOffset(15)+6);
 				_btnBase5->setText((*b)->getName());
 				_btnBase5->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
 				add(_btnBase5);
 				break;
 			case 6:
-				_btnBase6 = new TextButton(80, 18, 120, 126);
+				_btnBase6 = new TextButton(120, 16, 100, 116);
 				_btnBase6->setColor(Palette::blockOffset(15)+6);
 				_btnBase6->setText((*b)->getName());
 				_btnBase6->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
 				add(_btnBase6);
 				break;
 			case 7:
-				_btnBase7 = new TextButton(80, 18, 120, 146);
+				_btnBase7 = new TextButton(120, 16, 100, 134);
 				_btnBase7->setColor(Palette::blockOffset(15)+6);
 				_btnBase7->setText((*b)->getName());
 				_btnBase7->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
 				add(_btnBase7);
 				break;
 			case 8:
-				_btnBase8 = new TextButton(80, 18, 120, 166);
+				_btnBase8 = new TextButton(120, 16, 100, 152);
 				_btnBase8->setColor(Palette::blockOffset(15)+6);
 				_btnBase8->setText((*b)->getName());
 				_btnBase8->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);

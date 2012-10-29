@@ -77,9 +77,6 @@
     <ClCompile Include="Engine\Timer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Font.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Game.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -346,12 +343,6 @@
     </ClCompile>
     <ClCompile Include="Ruleset\SoldierNamePool.cpp">
       <Filter>Ruleset</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu\LoadGameState.cpp">
-      <Filter>Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu\SaveGameState.cpp">
-      <Filter>Menu</Filter>
     </ClCompile>
     <ClCompile Include="Menu\NoteState.cpp">
       <Filter>Menu</Filter>
@@ -651,6 +642,18 @@
     <ClCompile Include="Geoscape\PsiTrainingState.cpp">
       <Filter>Geoscape</Filter>
     </ClCompile>
+    <ClCompile Include="Menu\LoadState.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\SaveState.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\SavedGameState.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Font.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basescape\ManufactureState.h">
@@ -732,9 +735,6 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Timer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Font.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Game.h">
@@ -1000,12 +1000,6 @@
     </ClInclude>
     <ClInclude Include="Ruleset\SoldierNamePool.h">
       <Filter>Ruleset</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu\LoadGameState.h">
-      <Filter>Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu\SaveGameState.h">
-      <Filter>Menu</Filter>
     </ClInclude>
     <ClInclude Include="Menu\NoteState.h">
       <Filter>Menu</Filter>
@@ -1302,6 +1296,18 @@
     </ClInclude>
     <ClInclude Include="Geoscape\PsiTrainingState.h">
       <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\LoadState.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\SaveState.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\SavedGameState.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Font.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

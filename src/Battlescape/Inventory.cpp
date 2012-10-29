@@ -23,7 +23,6 @@
 #include "../Engine/Palette.h"
 #include "../Engine/Game.h"
 #include "../Interface/Text.h"
-#include "../Engine/Font.h"
 #include "../Engine/Language.h"
 #include "../Resource/ResourcePack.h"
 #include "../Savegame/SavedGame.h"
@@ -37,6 +36,7 @@
 #include "../Engine/Sound.h"
 #include "WarningMessage.h"
 #include "../Savegame/Tile.h"
+#include "../Engine/Font.h"
 
 namespace OpenXcom
 {

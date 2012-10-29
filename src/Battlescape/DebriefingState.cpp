@@ -22,7 +22,6 @@
 #include "../Engine/Game.h"
 #include "../Resource/ResourcePack.h"
 #include "../Engine/Language.h"
-#include "../Engine/Font.h"
 #include "../Engine/Palette.h"
 #include "../Interface/TextButton.h"
 #include "../Interface/Window.h"
@@ -621,9 +620,6 @@ void DebriefingState::recoverItems(std::vector<BattleItem*> *from, Base *base)
 			// put items back in the base
 			if ((*it)->getRules()->isRecoverable() && !(*it)->getRules()->isFixed())
 			{
-				if((*it)->getRules()->getClipSize() == -1)	
-					base->getItems()->addItem((*it)->getRules()->getType(), 1);
-				else
 				switch ((*it)->getRules()->getBattleType())
 				{
 					case BT_AMMO:
@@ -635,7 +631,7 @@ void DebriefingState::recoverItems(std::vector<BattleItem*> *from, Base *base)
 						// It's a weapon, count any rounds left in the clip.
 						{
 							BattleItem *clip = (*it)->getAmmoItem();
-							if (clip)
+							if (clip && (*it)->getRules()->getClipSize() > 0)
 							{
 								rounds[clip->getRules()] += clip->getAmmoQuantity();
 							}

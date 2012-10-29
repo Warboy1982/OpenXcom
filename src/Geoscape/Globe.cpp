@@ -34,7 +34,6 @@
 #include "../Savegame/Country.h"
 #include "../Ruleset/RuleCountry.h"
 #include "../Interface/Text.h"
-#include "../Engine/Font.h"
 #include "../Engine/Language.h"
 #include "../Engine/Exception.h"
 #include "../Ruleset/RuleRegion.h"
