@@ -1,13 +1,15 @@
-    BASESCAPE:
+    GEOSCAPE:
 ufo firing rate decreases by 3 seconds per difficulty level
 funding nation withdrawal trigger should be higher on higher levels
 make funding nations much harder to please, make them drop out more often, and when they sign a pact, start 
     generating anti-infiltration missions somewhere in their country (use alien base as a template for how to 
     generate a hidden mission) at a rate of about 1.5 per month, and start generating military defence missions 
     every few weeks or so until all anti-infiltration missions are complete, and set the funding nation to "happy" 
+make funding nations do something
 
     
     UNITS:
+add sailors for port terror missions. give them all knives and surly dispositions.
 Cult of Sirius! (rank 8 alien, human cultist, 1 in 6 chance for 3-5 humans)
 Inventory screens for all units in game
 make aliens pick up weapons if any nearby and none in hand
@@ -21,6 +23,7 @@ soldiers need a new information section for days dead, and only actually REMOVE 
     
     
     BASE:
+make wounded soldiers transferrable (at double the usual time, with no healing en-route) because medical bases
 looks like no mechanic exists for psi training? fix. make a method for firearms training while you're at it.
 Training Room for xcom agents using similar rules to X-com apocalypse
 sattelite defense network? - extra base with free planet wide hyper-wave decode, 
@@ -39,6 +42,8 @@ convert captured aliens to fight for you using BRAINWASHING FACILITY
     - cannot convert terror units, chryssalids would go badly.
     
     MAPS:
+add expanded terror sites
+add port terror site
 pester luke for more rotated ships.
 mission types: STR_ANTI_INFILTRATION, STR_MILITARY_DEFENCE STR_PURGE, STR_CULTIST_DEFENCE, STR_CULTIST_BASE
 make a new map type for ground-based assaults, with a 40x40 tile to represent the base compound on a 60x60 map

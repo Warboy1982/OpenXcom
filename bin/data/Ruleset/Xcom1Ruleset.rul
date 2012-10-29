@@ -3680,6 +3680,7 @@ armors:
     underArmor: 12
     drawingRoutine: 1
     movementType: 1
+    modifiedWalk: 15
     damageModifier:
       - 1.0
       - 0.8
@@ -3700,6 +3701,7 @@ armors:
     underArmor: 12
     drawingRoutine: 1
     movementType: 1
+    modifiedWalk: 15
     damageModifier:
       - 1.0
       - 0.7
@@ -3720,6 +3722,7 @@ armors:
     underArmor: 16
     drawingRoutine: 1
     movementType: 1
+    modifiedWalk: 15
     damageModifier:
       - 1.0
       - 0.6
@@ -3760,6 +3763,7 @@ armors:
     rearArmor: 28
     underArmor: 4
     drawingRoutine: 5
+    modifiedWalk: 38
     size: 2
     damageModifier:
       - 1.0
@@ -3781,6 +3785,7 @@ armors:
     underArmor: 90
     drawingRoutine: 5
     size: 2
+    modifiedWalk: 23
     damageModifier:
       - 1.0
       - 1.0
@@ -4056,6 +4061,7 @@ armors:
     rearArmor: 35
     underArmor: 35
     drawingRoutine: 4
+    modifiedWalk: 15
     damageModifier:
       - 0.9
       - 0.9
@@ -4075,6 +4081,7 @@ armors:
     rearArmor: 40
     underArmor: 40
     drawingRoutine: 4
+    modifiedWalk: 15
     damageModifier:
       - 0.8
       - 0.8
@@ -4094,6 +4101,7 @@ armors:
     rearArmor: 40
     underArmor: 40
     drawingRoutine: 4
+    modifiedWalk: 15
     damageModifier:
       - 0.7
       - 0.7

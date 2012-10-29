@@ -419,4 +419,40 @@ void Soldier::heal(int factor)
 		_factor = 0;
 	}
 }
+
+/**
+ * Trains a soldier's Physical abilities
+ */
+void Soldier::trainPhys()
+{
+	if(_currentStats.firing < 100 && RNG::generate(0, 100) > _currentStats.firing)
+		_currentStats.firing++;	
+	if(_currentStats.health < 100 && RNG::generate(0, 100) > _currentStats.health)
+		_currentStats.health++;
+	if(_currentStats.melee < 100 && RNG::generate(0, 100) > _currentStats.melee)
+		_currentStats.melee++;
+	if(_currentStats.throwing < 100 && RNG::generate(0, 100) > _currentStats.throwing)
+		_currentStats.throwing++;
+	if(_currentStats.strength < 100 && RNG::generate(0, 100) > _currentStats.strength)
+		_currentStats.strength++;
+	if(_currentStats.tu < 100 && RNG::generate(0, 100) > _currentStats.tu)
+		_currentStats.tu++;
+	if(_currentStats.stamina < 100 && RNG::generate(0, 100) > _currentStats.stamina)
+		_currentStats.stamina++;
+}
+
+/**
+ * Trains a soldier's Psychic abilities
+ */
+void Soldier::trainPsi()
+{
+	if(_currentStats.psiSkill <= 16)
+		_currentStats.psiSkill += RNG::generate(16, 24);
+	else if(_currentStats.psiSkill <= 16)
+		_currentStats.psiSkill += RNG::generate(5, 12);
+	else if(_currentStats.psiSkill < 100)
+		_currentStats.psiSkill += RNG::generate(1, 3);
+	if(_currentStats.psiSkill > 100)
+		_currentStats.psiSkill = 100;
+}
 }

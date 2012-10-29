@@ -468,9 +468,7 @@ void XcomResourcePack::loadBattlescapeResources()
 							"XCOM_4.PCK",
 							"POLICEM.PCK",
 							"POLICEF.PCK",
-							"G_SOLDIER.PCK"
-
-					 };
+							"G_SOLDIER.PCK"};
 
 	for (int i = 0; i < 25; ++i)
 	{

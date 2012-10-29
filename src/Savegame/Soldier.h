@@ -115,6 +115,10 @@ public:
 	void setWoundRecovery(int recovery);
 	/// Heals wound recoveries.
 	void heal(int factor);
+	/// Trains a soldier's physical stats
+	void trainPhys();
+	/// Trains a soldier's psychic stats
+	void trainPsi();
 };
 
 }
