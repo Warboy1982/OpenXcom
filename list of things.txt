@@ -1,9 +1,9 @@
 todo:
-new tank type - sectopod - recolour of original sprites?
-list them as: 
-    Reconditioned Sectopod - requires 2 corpses, equipped with disruptor
-    Disruptor Sectopod - requires disruptor cannon, elerium and a mess of alloys
-    Railgun Sectopod - requires rail cannon, elerium and a mess of alloys
+looks like no mechanic exists for psi training? fix. make a method for firearms training while you're at it.
+soldiers need a new information section for days dead, and only actually REMOVE them from the game after this 
+    counter reaches... 2 days? after which decomposition kicks in and the scientists "clean out the fridge"
+soldier revival will show up as a research project with an additional sub-menu that lists all "dead" soldiers
+    less than 2 days old.
 grenade likelihood should be affected by difficulty
 alien stats should be affected by difficulty
 number of aliens on veteran and genius should be the average of beginner/experienced and superhuman
@@ -15,14 +15,18 @@ don't impose a limit on the number of live aliens you can HAVE, but check... eve
     live aliens exceeds the capacity of the containment facility, and if so, start a "containment breach" mission - 
     arm terrorists, keep the rest unarmed, but make sure the AI prioritizes making them pick up a weapon ASAP - 
     putting general stores near alien containment is a BAD IDEA, keeping live chryssalids is just asking for trouble.
-convert captured aliens to fight for you using BRAINWASHING FACILITY (the mere existance of such a facility reduces funding nation's disposition?) - cannot convert terror units, chryssalids would go badly.
+convert captured aliens to fight for you using BRAINWASHING FACILITY 
+    (the mere existance of such a facility reduces funding nation's disposition?) 
+    - cannot convert terror units, chryssalids would go badly.
 Cult of Sirius! (rank 8 alien, human cultist, 1 in 6 chance for 3-5 humans)
 cultist bases pop up - new mission type: purge - destroy the cultists
 cultist attacks on your base.
 make a new map type for ground-based assaults, with a 40x40 tile to represent the base compound on a 60x60 map
 Training Room for xcom agents using similar rules to X-com apocalypse
 Race specific items and Maps EG: Egg sacks for snakeman, clone tanks for sectiods - recover as alien reproduction
-research of reproduction leads to new base facility - cloning facility - allows for dead soldiers to be revived with their stats reduced slightly - option to splice with alien DNA to improve psychic defence by x amount at the cost of... strength? health? stamina? all of the above?
+research of reproduction leads to new base facility - cloning facility 
+    - allows for dead soldiers to be revived with their stats reduced slightly - option to splice with 
+    alien DNA to improve psychic defence by x amount at the cost of... strength? health? stamina? all of the above?
 New ufo layouts for variety
 Inventory screens for all units in game
 make aliens pick up weapons if any nearby and none in hand
@@ -30,14 +34,20 @@ spawn 10-20 engineers and scientists on base defence missions, faction_neutral,
 ufopedia entries for new weapons
 use weapon mount on craft in missions?
 mission types: STR_ANTI_INFILTRATION, STR_MILITARY_DEFENCE STR_PURGE, STR_CULTIST_DEFENCE, STR_CULTIST_BASE
-make funding nations much harder to please, make them drop out more often, and when they sign a pact, start generating anti-infiltration missions somewhere in their country (use alien base as a template for how to generate a hidden mission) at a rate of about 1.5 per month, and start generating military defence missions every few weeks or so until all anti-infiltration missions are complete, and set the funding nation to "happy" 
-sattelite defense network? - extra base with free planet wide hyper-wave decode, quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
-make lightning into fast-response unit
-make tank shells explosive
+make funding nations much harder to please, make them drop out more often, and when they sign a pact, start 
+    generating anti-infiltration missions somewhere in their country (use alien base as a template for how to 
+    generate a hidden mission) at a rate of about 1.5 per month, and start generating military defence missions 
+    every few weeks or so until all anti-infiltration missions are complete, and set the funding nation to "happy" 
+sattelite defense network? - extra base with free planet wide hyper-wave decode, 
+    quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
+make lightning into fast-response unit - when you absolutely positively GOTTA get there right now
+make it so sometimes, you GOTTA get there right now
 
 
 
 done:
+tank shells explode.
+new tank type - sectopods! - need to research to construct, recolour of original sprites? (thinking give em a blue visor)
 medical bay and doctors added - decreases convalescence time of wounded units based on the number of doctors on hand (current formula is 15 doctors = double heal rate, 40 doctors = triple, 60+ doctors (requires 2 hospitals) = quadruple)
 cloning facility added
 third map type for terror missions: now has commercial, residential and military base.

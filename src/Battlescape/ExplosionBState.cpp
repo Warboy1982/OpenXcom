@@ -87,6 +87,14 @@ void ExplosionBState::init()
 			 else
 				 _parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(5)->play();
 		}
+		else if (_item->getRules()->getType()== "STR_HWP_CANNON_SHELLS")
+		{
+			_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED);
+			Explosion *explosion = new Explosion(_center, RNG::generate(0,6), true);
+			// add the explosion on the map
+			_parent->getMap()->getExplosions()->insert(explosion);
+		   _parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(12)->play();
+		}
 		else
 		{
 			_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED/2);
@@ -141,23 +149,13 @@ void ExplosionBState::think()
 					{
 						save->getTileEngine()->explode(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), _item->getRules()->getExplosionRadius(), _unit);
 					}
+					else if (_item->getRules()->getType()== "STR_HWP_CANNON_SHELLS")
+					{
+						save->getTileEngine()->explode(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), 1, _unit);
+					}
 					else
 					{
-						if(_item->getRules()->isFlamer())
-						{
-//						save->getTileEngine()->explode(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), _item->getRules()->getExplosionRadius(), _unit);
-							Tile *burntile = save->getTile(Position(_center.x/16,_center.y/16,_center.z/24 ));
-							if (burntile->getFire() == 0)
-							{
-								burntile->ignite();
-							}
-							if (burntile->getUnit())
-							{
-								burntile->getUnit()->damage(Position(0, 0, 0), RNG::generate(0, _item->getRules()->getPower()/3), DT_IN); // immediate IN damage
-								burntile->getUnit()->setFire(RNG::generate(1, 5)); // catch fire and burn for 1-5 rounds
-							}
-						}
-						else
+						if(!_item->getRules()->isFlamer())
 						{
 						save->getTileEngine()->hit(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), _unit);
 						}

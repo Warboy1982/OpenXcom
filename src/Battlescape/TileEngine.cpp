@@ -656,7 +656,7 @@ void TileEngine::explode(const Position &center, int power, ItemDamageType type,
 
 				if (power_ > 0)
 				{
-					if (type == DT_HE)
+					if (type == DT_HE || type == DT_AP)
 					{
 						// explosives do 1/2 damage to terrain and 1/2 up to 3/2 random damage to units
 						dest->setExplosive(power_ / 2);
@@ -665,7 +665,7 @@ void TileEngine::explode(const Position &center, int power, ItemDamageType type,
 					ret = tilesAffected.insert(dest); // check if we had this tile already
 					if (ret.second)
 					{
-						if (type == DT_HE || type == DT_STUN)
+						if (type == DT_HE || type == DT_STUN || type == DT_AP)
 						{
 							// power 50 - 150%
 							if (dest->getUnit())
@@ -733,7 +733,7 @@ void TileEngine::explode(const Position &center, int power, ItemDamageType type,
 		}
 	}
 	// now detonate the tiles affected with HE
-	if (type == DT_HE)
+	if (type == DT_HE || type == DT_AP)
 	{
 		for (std::set<Tile*>::iterator i = tilesAffected.begin(); i != tilesAffected.end(); ++i)
 		{

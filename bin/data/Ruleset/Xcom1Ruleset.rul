@@ -937,8 +937,8 @@ items:
     weight: 1
     bigSprite: 12
     floorSprite: 12
-    hitSound: 13
-    hitAnimation: 26
+    hitSound: 0
+    hitAnimation: 0
     power: 110
     damageType: 1
     clipSize: 30
@@ -1036,67 +1036,6 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
-  - type: STR_HOVERTANK_DISRUPTOR
-    size: 6
-    costSell: 780000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 5
-    fireSound: 11
-    hitSound: 19
-    hitAnimation: 36
-    power: 130
-    damageType: 4
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 25
-    tuAimed: 50
-    battleType: 1
-    fixedWeapon: true
-    turretType: 2
-    clipSize: -1
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_HOVERTANK_RAIL
-    size: 6
-    costSell: 1043000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 10
-    fireSound: 53
-    compatibleAmmo:
-      - STR_HWP_RAIL_SLUG
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 33
-    tuAimed: 66
-    battleType: 1
-    fixedWeapon: true
-    turretType: 4
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_HWP_RAIL_SLUG
-    size: 3
-    costSell: 31500
-    weight: 3
-    bigSprite: 0
-    floorSprite: 0
-    hitSound: 19
-    hitAnimation: 56
-    power: 140
-    damageType: 1
-    clipSize: 25
-    battleType: 2
-    recoveryPoints: 2
-    armor: 5
   - type: STR_HOVERTANK_LAUNCHER
     size: 6
     costSell: 1043000
@@ -1133,6 +1072,67 @@ items:
     invWidth: 1
     invHeight: 1
     armor: 20
+  - type: STR_SECTOPOD_DISRUPTOR
+    size: 6
+    costSell: 780000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 130
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_RAIL
+    size: 6
+    costSell: 1043000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 10
+    fireSound: 53
+    compatibleAmmo:
+      - STR_HWP_RAIL_SLUG
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 4
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HWP_RAIL_SLUG
+    size: 3
+    costSell: 31500
+    weight: 3
+    bigSprite: 0
+    floorSprite: 0
+    hitSound: 19
+    hitAnimation: 56
+    power: 140
+    damageType: 1
+    clipSize: 25
+    battleType: 2
+    recoveryPoints: 2
+    armor: 5
   - type: STR_COMBAT_KNIFE
     size: 0.1
     costBuy: 100
@@ -4527,8 +4527,8 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
-  - type: HOVERTANK_DISRUPTOR
-    race: STR_HOVERTANK_DISRUPTOR
+  - type: SECTOPOD_DISRUPTOR
+    race: STR_SECTOPOD_DISRUPTOR
     stats:
       tu: 100
       stamina: 100
@@ -4541,14 +4541,14 @@ units:
       psiStrength: 100
       psiSkill: 0
       melee: 0
-    armor: HOVERTANK_ARMOR
+    armor: SECTOPOD_ARMOR
     standHeight: 15
     kneelHeight: 15
     loftemps: 4
     value: 20
     deathSound: 23
-  - type: HOVERTANK_RAIL
-    race: STR_HOVERTANK_RAIL
+  - type: SECTOPOD_RAIL
+    race: STR_SECTOPOD_RAIL
     stats:
       tu: 100
       stamina: 100
@@ -4561,7 +4561,7 @@ units:
       psiStrength: 100
       psiSkill: 0
       melee: 0
-    armor: HOVERTANK_ARMOR
+    armor: SECTOPOD_ARMOR
     standHeight: 15
     kneelHeight: 15
     loftemps: 4
@@ -6903,6 +6903,10 @@ research:
   - name: STR_SECTOPOD_CORPSE
     cost: 180
     needItem: true
+  - name: STR_SECTOPOD_CONSTRUCTION
+    cost: 600
+    dependencies:
+      - STR_SECTOPOD_CORPSE
   - name: STR_MUTON_CORPSE
     cost: 180
     needItem: true
@@ -7141,34 +7145,34 @@ manufacture:
     requiredItems:
       STR_ALIEN_ALLOYS: 5
       STR_ELERIUM_115: 30
-  - name: STR_HOVERTANK_DISRUPTOR
+  - name: STR_SECTOPOD_DISRUPTOR
     category: STR_HEAVY_WEAPONS_PLATFORM
     requires:
       - STR_DISRUPTOR_CANNON
-      - STR_NEW_FIGHTER_CRAFT
+      - STR_SECTOPOD_CONSTRUCTION
     space: 30
     time: 1200
     cost: 900000
     requiredItems:
-      STR_ALIEN_ALLOYS: 5
+      STR_ALIEN_ALLOYS: 10
       STR_ELERIUM_115: 20
-  - name: STR_HOVERTANK_RAIL
+  - name: STR_SECTOPOD_RAIL
     category: STR_HEAVY_WEAPONS_PLATFORM
     requires:
       - STR_RAIL_CANNON
       - STR_RAIL_SLUG
-      - STR_NEW_FIGHTER_CRAFT
+      - STR_SECTOPOD_CONSTRUCTION
     space: 30
     time: 1200
     cost: 1200000
     requiredItems:
-      STR_ALIEN_ALLOYS: 5
-      STR_ELERIUM_115: 40
+      STR_ALIEN_ALLOYS: 10
+      STR_ELERIUM_115: 20
   - name: STR_HWP_RAIL_SLUG
     category: STR_HWP_CANNON_SHELLS
     requires:
-      - STR_HWP_RAIL_SLUG
-      - STR_NEW_FIGHTER_CRAFT
+      - STR_RAIL_SLUG
+      - STR_SECTOPOD_CONSTRUCTION
     space: 25
     time: 400
     cost: 15000

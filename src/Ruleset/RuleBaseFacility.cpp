@@ -399,7 +399,7 @@ int RuleBaseFacility::getPsiLaboratories() const
  * for dead soldier revival projects.
  * @return Laboratory space.
  */
-int RuleBaseFacility::getLaboratories() const
+int RuleBaseFacility::getCloneLabs() const
 {
 	return _cloneLabs;
 }
