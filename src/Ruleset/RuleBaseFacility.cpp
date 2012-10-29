@@ -26,7 +26,7 @@ namespace OpenXcom
  * type of base facility.
  * @param type String defining the type.
  */
-RuleBaseFacility::RuleBaseFacility(const std::string &type) : _type(type), _requires(), _spriteShape(-1), _spriteFacility(-1), _lift(false), _hyper(false), _mind(false), _grav(false), _size(1), _buildCost(0), _buildTime(0), _monthlyCost(0), _storage(0), _personnel(0), _aliens(0), _crafts(0), _labs(0), _workshops(0), _psiLabs(0), _radarRange(0), _radarChance(0), _defense(0), _hitRatio(0)
+RuleBaseFacility::RuleBaseFacility(const std::string &type) : _type(type), _requires(), _spriteShape(-1), _spriteFacility(-1), _lift(false), _hyper(false), _mind(false), _grav(false), _size(1), _buildCost(0), _buildTime(0), _monthlyCost(0), _storage(0), _personnel(0), _aliens(0), _crafts(0), _labs(0), _workshops(0), _psiLabs(0), _radarRange(0), _radarChance(0), _defense(0), _hitRatio(0), _meds(0)
 {
 }
 
@@ -115,6 +115,10 @@ void RuleBaseFacility::load(const YAML::Node &node)
 		{
 			i.second() >> _labs;
 		}
+		else if (key == "meds")
+		{
+			i.second() >> _meds;
+		}
 		else if (key == "workshops")
 		{
 			i.second() >> _workshops;
@@ -170,6 +174,7 @@ void RuleBaseFacility::save(YAML::Emitter &out) const
 	out << YAML::Key << "aliens" << YAML::Value << _aliens;
 	out << YAML::Key << "crafts" << YAML::Value << _crafts;
 	out << YAML::Key << "labs" << YAML::Value << _labs;
+	out << YAML::Key << "meds" << YAML::Value << _meds;
 	out << YAML::Key << "workshops" << YAML::Value << _workshops;
 	out << YAML::Key << "psiLabs" << YAML::Value << _psiLabs;
 	out << YAML::Key << "radarRange" << YAML::Value << _radarRange;
@@ -348,6 +353,15 @@ int RuleBaseFacility::getCrafts() const
 int RuleBaseFacility::getLaboratories() const
 {
 	return _labs;
+}
+
+/**
+ * Returns the amount of hospital space this facility provides
+ * @return Hospital space.
+ */
+int RuleBaseFacility::getHospitals() const
+{
+	return _meds;
 }
 
 /**

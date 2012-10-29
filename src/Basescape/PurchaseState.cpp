@@ -309,21 +309,24 @@ void PurchaseState::lstItemsLeftArrowClick(Action *action)
 	{
 		int maxByMoney = (_game->getSavedGame()->getFunds() - _total) / getPrice();
 		int canBeBought = 0;
-		if (_sel <= 2)
+		if (_sel <= 3)
 		{
 			// Personnel count
 			int maxByQuarters = _base->getAvailableQuarters() - _base->getUsedQuarters() - _pQty;
 			canBeBought = std::min(maxByMoney, maxByQuarters);
+			// in case of doctor
+			if (_sel == 2)
+				canBeBought = std::min(std::min(maxByMoney, maxByQuarters),_base->getHospitals());
 			if (0 < canBeBought) _pQty += canBeBought;
 		}
-		else if (_sel >= 3 && _sel < 3 + _crafts.size())
+		else if (_sel >= 4 && _sel < 4 + _crafts.size())
 		{
 			// Craft count
 			int maxByHangars = _base->getAvailableHangars() - _base->getUsedHangars() - _cQty;
 			canBeBought = std::min(maxByMoney, maxByHangars);
 			if (0 < canBeBought) _cQty += canBeBought;
 		}
-		else if (_sel >= 3 + _crafts.size())
+		else if (_sel >= 4 + _crafts.size())
 		{
 			// Item count
 			float storesNeededPerItem = _game->getRuleset()->getItem(_items[_sel - 3 - _crafts.size()])->getSize();
@@ -381,19 +384,19 @@ void PurchaseState::lstItemsRightArrowClick(Action *action)
 		if (_qtys[_sel] > 0)
 		{
 			// Personnel count
-			if (_sel <= 2)
+			if (_sel <= 3)
 			{
 				_pQty -= _qtys[_sel];
 			}
 			// Craft count
-			else if (_sel >= 3 && _sel < 3 + _crafts.size())
+			else if (_sel >= 4 && _sel < 4 + _crafts.size())
 			{
 				_cQty -= _qtys[_sel];
 			}
 			// Item count
 			else
 			{
-				_iQty -= _game->getRuleset()->getItem(_items[_sel - 3 - _crafts.size()])->getSize() * ((float)(_qtys[_sel]));
+				_iQty -= _game->getRuleset()->getItem(_items[_sel - 4 - _crafts.size()])->getSize() * ((float)(_qtys[_sel]));
 			}
 			_total -= getPrice() * _qtys[_sel];
 			std::wstring s = _game->getLanguage()->getString("STR_COST_OF_PURCHASES");
@@ -453,6 +456,11 @@ void PurchaseState::increase()
 	{
 		_timerInc->stop();
 		_game->pushState(new ErrorMessageState(_game, "STR_NOT_ENOUGH_MONEY", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
+	}
+	else if (_sel == 2 && _pQty + 1 > _base->getHospitals())
+	{
+		_timerInc->stop();
+		_game->pushState(new ErrorMessageState(_game, "STR_NOT_ENOUGH_HOSPITAL_SPACE", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
 	}
 	else if (_sel <= 3 && _pQty + 1 > _base->getAvailableQuarters() - _base->getUsedQuarters())
 	{

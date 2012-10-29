@@ -825,7 +825,7 @@ craftWeapons:
   - type: STR_RAIL_CANNON_UC
     sprite: 3
     sound: 7
-    damage: 140
+    damage: 180
     range: 60
     accuracy: 80
     reloadCautious: 12

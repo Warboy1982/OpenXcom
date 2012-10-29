@@ -737,6 +737,22 @@ int Base::getFreeLaboratories () const
 }
 
 /**
+ * Return hospital space
+ * @return hospital space
+*/
+int Base::getHospitals () const
+{
+	int total = 0;
+	for (std::vector<BaseFacility*>::const_iterator i = _facilities.begin(); i != _facilities.end(); ++i)
+	{
+		if ((*i)->getBuildTime() == 0)
+		{
+			total += (*i)->getRules()->getHospitals();
+		}
+	}
+	return total;
+}
+/**
  * Return workshop space not used by a Production
  * @return workshop space not used by a Production
 */

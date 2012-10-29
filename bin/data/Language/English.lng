@@ -2189,3 +2189,7 @@ STR_TRAINING
 TRAINING
 STR_IN_TRAINING
 In Training
+STR_NOT_ENOUGH_HOSPITAL_SPACE
+NOT ENOUGH HOSPITAL SPACE!{SMALLLINE}Build new Medical Bay or transfer personnel to other bases.
+STR_NO_FREE_HOSPITALS
+NO FREE HOSPITALS!{SMALLLINE}The destination base does not have enough space in hospitals.

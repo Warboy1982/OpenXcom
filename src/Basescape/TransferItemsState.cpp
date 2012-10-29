@@ -361,6 +361,8 @@ void TransferItemsState::lstItemsLeftArrowClick(Action *action)
 			int freeQuarters = _baseTo->getAvailableQuarters() - _baseTo->getUsedQuarters() - _pQty;
 			int toBeAdded = getQuantity() - _qtys[_sel];
 			int canBeAdded = std::min(freeQuarters, toBeAdded);
+			if((_dOffset)&&_sel == _soldiers.size()+_crafts.size()+_sOffset)
+				canBeAdded = std::min(std::min(freeQuarters, toBeAdded),_baseTo->getHospitals());
 			if (0 < canBeAdded)
 			{
 				_pQty += canBeAdded;
@@ -529,6 +531,13 @@ void TransferItemsState::increase()
 	{
 		_timerInc->stop();
 		_game->pushState(new ErrorMessageState(_game, "STR_NO_FREE_ACCOMODATION", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
+		return;
+	}
+	if((_dOffset)&&_sel == _soldiers.size()+_crafts.size()+_sOffset)
+	{
+		if(_baseTo->getHospitals()-_baseTo->getDoctors() <= 0);
+		_timerInc->stop();
+		_game->pushState(new ErrorMessageState(_game, "STR_NO_FREE_HOSPITALS", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
 		return;
 	}
 	if (_sel >= _soldiers.size() && _sel < _soldiers.size() + _crafts.size())

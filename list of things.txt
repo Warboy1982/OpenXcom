@@ -4,8 +4,6 @@ cultist bases pop up - new mission type: purge - destroy the cultists
 cultist attacks on your base.
 make a new map type for ground-based assaults, with a 40x40 tile to represent the base compound on a 60x60 map
 Training Room for xcom agents using similar rules to X-com apocalypse
-medical bay - decreases convalescence time by a percentage based on the number of staff (caps at... 66?)
-medical staff, basically scientists that work in the medical bay and add to the modifier
 Race specific items and Maps EG: Egg sacks for snakeman, clone tanks for sectiods - recover as alien reproduction
 research of reproduction leads to new base facility - cloning facility - allows for dead soldiers to be revived with their stats reduced slightly - option to splice with alien DNA to improve psychic defence by x amount at the cost of... strength? health? stamina? all of the above?
 New ufo layouts for variety
@@ -18,10 +16,13 @@ use weapon mount on craft in missions?
 mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
 make funding nations much harder to please, make them drop out more often, and when they sign a pact, start generating anti-infiltration missions somewhere in their country (use alien base as a template for how to generate a hidden mission) at a rate of about 1.5 per month, and start generating military defence missions every few weeks or so until all anti-infiltration missions are complete, and set the funding nation to "happy" 
 sattelite defense network? - extra base with free planet wide hyper-wave decode, quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
+make lightning into fast-response unit
+make tank shells explosive
+
 
 
 done:
-medical bay and doctors added
+medical bay and doctors added - decreases convalescence time of wounded units based on the number of doctors on hand (current formula is 15 doctors = double heal rate, 40 doctors = triple, 60+ doctors (requires 2 hospitals) = quadruple)
 cloning facility added
 third map type for terror missions: now has commercial, residential and military base.
 researchable disruptor and gauss cannons for hovertanks and crafts
@@ -31,7 +32,7 @@ hovertank turret placement fixed.
 snakemen slither!
 hovertanks and laser tanks and guardian fighters, oh my!
 added Guardian class interceptor (costs more, is better, funky new sprite(when i can touch dogfight code)
-tweaked lightning to be actually good
+tweaked firestorm to be actually good
 set avenger to have one weapon slot only, hybrid transports don't get to be effective fighter craft too, sorry.
 all missing alien races re-implemented, including Chryssalids, and their evil powers.
 terror missions at military bases (new map type) with military personnel (new unit type) with flashbangs and all mundane weapon types available

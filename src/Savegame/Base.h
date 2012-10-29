@@ -135,6 +135,9 @@ public:
 	int getAvailableHangars() const;
 	/// Get the number of available space lab (not used by a ResearchProject)
 	int getFreeLaboratories () const;
+	/// Get the number of hospitals
+	int getHospitals () const;
+	/// Gets the base's engineers.
 	/// Get the number of available space lab (not used by a Production)
 	int getFreeWorkshops () const;
 
