@@ -572,6 +572,24 @@ int Base::getAvailableQuarters() const
 }
 
 /**
+ * Returns the total amount of Psi Lab Space
+ * available in the base.
+ * @return Psi Lab space.
+ */
+int Base::getAvailablePsiLabs() const
+{
+	int total = 0;
+	for (std::vector<BaseFacility*>::const_iterator i = _facilities.begin(); i != _facilities.end(); ++i)
+	{
+		if ((*i)->getBuildTime() == 0)
+		{
+			total += (*i)->getRules()->getPsiLaboratories();
+		}
+	}
+	return total;
+}
+
+/**
  * Returns the amount of stores used up
  * by equipment in the base.
  * @return Storage space.

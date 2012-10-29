@@ -937,8 +937,8 @@ items:
     weight: 1
     bigSprite: 12
     floorSprite: 12
-    hitSound: 0
-    hitAnimation: 0
+    hitSound: 13
+    hitAnimation: 26
     power: 110
     damageType: 1
     clipSize: 30
@@ -2570,10 +2570,29 @@ ufos:
         - U_EXT02
         - U_WALL02
         - U_BITS
+        - UFOL83
       mapBlocks:
         - name: UFO_110
           width: 10
           length: 10
+        - name: ox_UFO1
+          width: 20
+          length: 20
+        - name: ox_UFO1b
+          width: 20
+          length: 20
+        - name: ox_UFO1c
+          width: 20
+          length: 20
+        - name: ox_UFO1d
+          width: 20
+          length: 20
+        - name: ox_UFO1e
+          width: 20
+          length: 20
+        - name: ox_UFO1f
+          width: 20
+          length: 20
   - type: STR_LARGE_SCOUT
     size: STR_SMALL
     sprite: 2
@@ -2592,8 +2611,46 @@ ufos:
         - U_EXT02
         - U_WALL02
         - U_BITS
+        - UFOL83
+      mapBlocks:
       mapBlocks:
         - name: UFO_120
+          width: 20
+          length: 20
+        - name: ox_UFO2a
+          width: 20
+          length: 20
+        - name: ox_UFO2b
+          width: 20
+          length: 20
+        - name: ox_UFO2c
+          width: 20
+          length: 20
+        - name: ox_UFO2d
+          width: 20
+          length: 20
+        - name: ox_UFO2e
+          width: 20
+          length: 20
+        - name: ox_UFO2f
+          width: 20
+          length: 20
+        - name: ox_UFO2g
+          width: 20
+          length: 20
+        - name: ox_UFO2h
+          width: 20
+          length: 20
+        - name: ox_UFO2i
+          width: 20
+          length: 20
+        - name: ox_UFO2j
+          width: 20
+          length: 20
+        - name: ox_UFO2k
+          width: 20
+          length: 20
+        - name: ox_UFO2l
           width: 20
           length: 20
   - type: STR_ABDUCTOR
@@ -2638,8 +2695,39 @@ ufos:
         - U_WALL02
         - U_DISEC2
         - U_BITS
+        - UFOL83
       mapBlocks:
         - name: UFO_130
+          width: 20
+          length: 20
+        - name: ox_UFO3a
+          width: 20
+          length: 20
+        - name: ox_UFO3b
+          width: 20
+          length: 20
+        - name: ox_UFO3c
+          width: 20
+          length: 20
+        - name: ox_UFO3d
+          width: 20
+          length: 20
+        - name: ox_UFO3e
+          width: 20
+          length: 20
+        - name: ox_UFO3f
+          width: 20
+          length: 20
+        - name: ox_UFO3g
+          width: 20
+          length: 20
+        - name: ox_UFO3h
+          width: 20
+          length: 20
+        - name: ox_UFO3i
+          width: 20
+          length: 20
+        - name: ox_UFO3k
           width: 20
           length: 20
   - type: STR_SUPPLY_SHIP

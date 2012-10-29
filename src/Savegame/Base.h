@@ -34,7 +34,6 @@ class Craft;
 class ItemContainer;
 class Transfer;
 class Language;
-class Ruleset;
 class SavedGame;
 class ResearchProject;
 class Production;
@@ -125,6 +124,12 @@ public:
 	int getUsedLaboratories() const;
 	/// Gets the base's available laboratory space.
 	int getAvailableLaboratories() const;
+	/// Gets the base's used psi lab space.
+	int getUsedPsiLabs() const;
+	/// Gets the base's total available psi lab space.
+	int getAvailablePsiLabs() const;
+	/// Gets the base's free available psi lab space.
+	int getFreePsiLabs () const;
 	/// Gets the base's used workshop space.
 	int getUsedWorkshops() const;
 	/// Gets the base's available workshop space.
@@ -137,7 +142,6 @@ public:
 	int getFreeLaboratories () const;
 	/// Get the number of hospitals
 	int getHospitals () const;
-	/// Gets the base's engineers.
 	/// Get the number of available space lab (not used by a Production)
 	int getFreeWorkshops () const;
 

@@ -48,6 +48,7 @@ MonthlyReportState::MonthlyReportState(Game *game) : State(game)
 	_txtDesc = new Text(300, 140, 16, 40);
 
 	// Set palette
+	_game->setPalette(_game->getResourcePack()->getPalette("PALETTES.DAT_0")->getColors());
 	_game->setPalette(_game->getResourcePack()->getPalette("BACKPALS.DAT")->getColors(Palette::blockOffset(3)), Palette::backPos, 16);
 
 	add(_window);
@@ -62,7 +63,7 @@ MonthlyReportState::MonthlyReportState(Game *game) : State(game)
 	_window->setColor(Palette::blockOffset(15)-1);
 	_window->setBackground(_game->getResourcePack()->getSurface("BACK13.SCR"));
 
-	_btnOk->setColor(Palette::blockOffset(8)+13);
+	_btnOk->setColor(Palette::blockOffset(8)+10);
 	_btnOk->setText(_game->getLanguage()->getString("STR_OK"));
 	_btnOk->onMouseClick((ActionHandler)&MonthlyReportState::btnOkClick);
 
@@ -132,6 +133,7 @@ MonthlyReportState::~MonthlyReportState()
  */
 void MonthlyReportState::init()
 {
+	_game->setPalette(_game->getResourcePack()->getPalette("PALETTES.DAT_0")->getColors());
 	_game->setPalette(_game->getResourcePack()->getPalette("BACKPALS.DAT")->getColors(Palette::blockOffset(3)), Palette::backPos, 16);
 }
 

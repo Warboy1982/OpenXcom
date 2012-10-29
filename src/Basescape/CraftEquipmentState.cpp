@@ -338,7 +338,7 @@ void CraftEquipmentState::lstEquipmentRightArrowClick(Action *action)
 						int vehiclesCount = std::min(std::min(bqty, room), baqty);
 						if (vehiclesCount > 0)
 						{
-							int newAmmoPerVehicle = std::min(baqty / vehiclesCount, ammo->getClipSize());;
+							int newAmmoPerVehicle = std::min(baqty / vehiclesCount, ammo->getClipSize());
 							int remainder = baqty - (vehiclesCount * newAmmoPerVehicle);
 							if (ammo->getClipSize() == newAmmoPerVehicle) remainder = 0;
 							int newAmmo;

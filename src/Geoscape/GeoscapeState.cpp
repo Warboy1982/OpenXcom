@@ -55,6 +55,7 @@
 #include "GraphsState.h"
 #include "FundingState.h"
 #include "MonthlyReportState.h"
+#include "PsiTrainingState.h"
 #include "ProductionCompleteState.h"
 #include "UfoDetectedState.h"
 #include "GeoscapeCraftState.h"
@@ -1055,6 +1056,16 @@ void GeoscapeState::time1Month()
 	timerReset();
 	_game->getSavedGame()->monthlyFunding();
 	popup(new MonthlyReportState(_game));
+	bool _Psi = false;
+	for(std::vector<Base*>::const_iterator b = _game->getSavedGame()->getBases()->begin(); b != _game->getSavedGame()->getBases()->end(); ++b)
+	{
+		if((*b)->getAvailablePsiLabs() > 0)
+			_Psi = true;
+	}
+	if(_Psi)
+	{
+		popup(new PsiTrainingState(_game));
+	}
 }
 
 /**

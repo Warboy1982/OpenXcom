@@ -648,6 +648,9 @@
     <ClCompile Include="Battlescape\PathfindingOpenSet.cpp">
       <Filter>Battlescape</Filter>
     </ClCompile>
+    <ClCompile Include="Geoscape\PsiTrainingState.cpp">
+      <Filter>Geoscape</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basescape\ManufactureState.h">
@@ -1296,6 +1299,9 @@
     </ClInclude>
     <ClInclude Include="Battlescape\PathfindingOpenSet.h">
       <Filter>Battlescape</Filter>
+    </ClInclude>
+    <ClInclude Include="Geoscape\PsiTrainingState.h">
+      <Filter>Geoscape</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
