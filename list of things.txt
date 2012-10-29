@@ -1,4 +1,21 @@
 todo:
+new tank type - sectopod - recolour of original sprites?
+list them as: 
+    Reconditioned Sectopod - requires 2 corpses, equipped with disruptor
+    Disruptor Sectopod - requires disruptor cannon, elerium and a mess of alloys
+    Railgun Sectopod - requires rail cannon, elerium and a mess of alloys
+grenade likelihood should be affected by difficulty
+alien stats should be affected by difficulty
+number of aliens on veteran and genius should be the average of beginner/experienced and superhuman
+ufo firing rate decreases by 3 seconds per difficulty level
+funding nation withdrawal trigger should be higher on higher levels
+aliens will "remember" where you are for an extra turn per difficulty level
+aliens get a "free peek" on turn 20 (screw you, yes they do.)
+don't impose a limit on the number of live aliens you can HAVE, but check... every hour? to see if the number of
+    live aliens exceeds the capacity of the containment facility, and if so, start a "containment breach" mission - 
+    arm terrorists, keep the rest unarmed, but make sure the AI prioritizes making them pick up a weapon ASAP - 
+    putting general stores near alien containment is a BAD IDEA, keeping live chryssalids is just asking for trouble.
+convert captured aliens to fight for you using BRAINWASHING FACILITY (the mere existance of such a facility reduces funding nation's disposition?) - cannot convert terror units, chryssalids would go badly.
 Cult of Sirius! (rank 8 alien, human cultist, 1 in 6 chance for 3-5 humans)
 cultist bases pop up - new mission type: purge - destroy the cultists
 cultist attacks on your base.
@@ -10,10 +27,9 @@ New ufo layouts for variety
 Inventory screens for all units in game
 make aliens pick up weapons if any nearby and none in hand
 spawn 10-20 engineers and scientists on base defence missions, faction_neutral,
-ruleset:
 ufopedia entries for new weapons
 use weapon mount on craft in missions?
-mission types: STR_ANTI_INFILTRATION STR_MILITARY_DEFENCE
+mission types: STR_ANTI_INFILTRATION, STR_MILITARY_DEFENCE STR_PURGE, STR_CULTIST_DEFENCE, STR_CULTIST_BASE
 make funding nations much harder to please, make them drop out more often, and when they sign a pact, start generating anti-infiltration missions somewhere in their country (use alien base as a template for how to generate a hidden mission) at a rate of about 1.5 per month, and start generating military defence missions every few weeks or so until all anti-infiltration missions are complete, and set the funding nation to "happy" 
 sattelite defense network? - extra base with free planet wide hyper-wave decode, quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
 make lightning into fast-response unit

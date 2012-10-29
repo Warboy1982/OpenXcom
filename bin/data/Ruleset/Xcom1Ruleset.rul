@@ -515,7 +515,7 @@ facilities:
     buildCost: 650000
     buildTime: 30
     monthlyCost: 16000
-    trainingrooms: 50
+    trainingRooms: 50
     mapName: XBASE_14
   - type: STR_SMALL_RADAR_SYSTEM
     spriteShape: 2
@@ -567,6 +567,7 @@ facilities:
     spriteFacility: 25
     buildCost: 1600000
     buildTime: 45
+    clonelabs: 50
     monthlyCost: 30000
     mapName: XBASE_08
   - type: STR_LASER_DEFENSES

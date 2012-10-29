@@ -39,7 +39,7 @@ private:
 	std::vector<std::string> _requires;
 	int _spriteShape, _spriteFacility;
 	bool _lift, _hyper, _mind, _grav;
-	int _size, _buildCost, _buildTime, _monthlyCost, _meds;
+	int _size, _buildCost, _buildTime, _monthlyCost, _meds, _trainingRooms, _cloneLabs;
 	int _storage, _personnel, _aliens, _crafts, _labs, _workshops, _psiLabs;
 	int _radarRange, _radarChance, _defense, _hitRatio;
 	std::string _mapName;
@@ -86,12 +86,16 @@ public:
 	int getCrafts() const;
 	/// Gets the facility's laboratory space.
 	int getLaboratories() const;
+	/// Gets the facility's cloning laboratory space.
+	int getCloneLabs() const;
 	/// Gets the facility's hospital capacity.
 	int getHospitals() const;
 	/// Gets the facility's workshop space.
 	int getWorkshops() const;
 	/// Gets the facility's psi-training capacity.
 	int getPsiLaboratories() const;
+	/// Gets the facility's training capacity.
+	int getTrainingFacilities() const;
 	/// Gets the facility's radar range.
 	int getRadarRange() const;
 	/// Gets the facility's detection chance.
