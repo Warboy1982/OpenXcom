@@ -27,6 +27,8 @@
 #include "../Interface/Text.h"
 #include "../Savegame/SavedGame.h"
 #include "../Savegame/Base.h"
+#include "GeoscapeState.h"
+#include "AllocatePsiTrainingState.h"
 
 namespace OpenXcom
 {
@@ -35,7 +37,7 @@ namespace OpenXcom
  * Initializes all the elements in the Psi Training screen.
  * @param game Pointer to the core game.
  */
-PsiTrainingState::PsiTrainingState(Game *game) : State(game)
+PsiTrainingState::PsiTrainingState(Game *game) : State(game), _base1(0), _base2(0), _base3(0), _base4(0), _base5(0), _base6(0), _base7(0), _base8(0)
 {
 	// Create objects
 	_window = new Window(this, 320, 200, 0, 0);
@@ -72,8 +74,9 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game)
 			case 1:
 				_btnBase1 = new TextButton(120, 16, 100, 26);
 				_btnBase1->setColor(Palette::blockOffset(15)+6);
-				_btnBase1->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_btnBase1->onMouseClick((ActionHandler)&PsiTrainingState::btnBase1Click);
 				_btnBase1->setText((*b)->getName());
+				_base1 = (*b);
 				add(_btnBase1);
 				break;
 			case 2:
@@ -81,6 +84,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game)
 				_btnBase2->setColor(Palette::blockOffset(15)+6);
 				_btnBase2->setText((*b)->getName());
 				_btnBase2->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_base2 = (*b);
 				add(_btnBase2);
 				break;
 			case 3:
@@ -88,6 +92,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game)
 				_btnBase3->setColor(Palette::blockOffset(15)+6);
 				_btnBase3->setText((*b)->getName());
 				_btnBase3->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_base3 = (*b);
 				add(_btnBase3);
 				break;
 			case 4:
@@ -95,6 +100,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game)
 				_btnBase4->setColor(Palette::blockOffset(15)+6);
 				_btnBase4->setText((*b)->getName());
 				_btnBase4->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_base4 = (*b);
 				add(_btnBase4);
 				break;
 			case 5:
@@ -102,6 +108,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game)
 				_btnBase5->setColor(Palette::blockOffset(15)+6);
 				_btnBase5->setText((*b)->getName());
 				_btnBase5->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_base5 = (*b);
 				add(_btnBase5);
 				break;
 			case 6:
@@ -109,6 +116,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game)
 				_btnBase6->setColor(Palette::blockOffset(15)+6);
 				_btnBase6->setText((*b)->getName());
 				_btnBase6->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_base6 = (*b);
 				add(_btnBase6);
 				break;
 			case 7:
@@ -116,6 +124,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game)
 				_btnBase7->setColor(Palette::blockOffset(15)+6);
 				_btnBase7->setText((*b)->getName());
 				_btnBase7->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_base7 = (*b);
 				add(_btnBase7);
 				break;
 			case 8:
@@ -123,6 +132,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game)
 				_btnBase8->setColor(Palette::blockOffset(15)+6);
 				_btnBase8->setText((*b)->getName());
 				_btnBase8->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_base8 = (*b);
 				add(_btnBase8);
 				break;
 			default: break;
@@ -155,4 +165,9 @@ void PsiTrainingState::btnOkClick(Action *action)
 	_game->popState();
 }
 
+void PsiTrainingState::btnBase1Click()
+{	
+	_game->popState();
+	_game->pushState (new AllocatePsiTrainingState(_game, _base1));
+}
 }

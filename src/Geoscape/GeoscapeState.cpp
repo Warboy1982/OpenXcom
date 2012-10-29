@@ -1042,6 +1042,10 @@ void GeoscapeState::time1Day()
 					amount = 3;
 				(*j)->heal(amount);
 			}
+			if ((*j)->isInTraining())
+			{
+				(*j)->trainPhys();
+			}
 		}
 	}
 }
@@ -1060,7 +1064,16 @@ void GeoscapeState::time1Month()
 	for(std::vector<Base*>::const_iterator b = _game->getSavedGame()->getBases()->begin(); b != _game->getSavedGame()->getBases()->end(); ++b)
 	{
 		if((*b)->getAvailablePsiLabs() > 0)
+		{
 			_Psi = true;
+		}
+		for(std::vector<Soldier*>::const_iterator u = (*b)->getSoldiers()->begin(); u != (*b)->getSoldiers()->end(); ++u)
+		{
+			if((*u)->isInPsiTraining())
+			{
+				(*u)->trainPsi();
+			}
+		}
 	}
 	if(_Psi)
 	{

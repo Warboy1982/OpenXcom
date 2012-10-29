@@ -292,6 +292,7 @@
     <ClCompile Include="Engine\Timer.cpp" />
     <ClCompile Include="Geoscape\AbandonGameState.cpp" />
     <ClCompile Include="Geoscape\AlienTerrorState.cpp" />
+    <ClCompile Include="Geoscape\AllocatePsiTrainingState.cpp" />
     <ClCompile Include="Geoscape\BaseNameState.cpp" />
     <ClCompile Include="Geoscape\BuildNewBaseState.cpp" />
     <ClCompile Include="Geoscape\CraftErrorState.cpp" />
@@ -514,6 +515,7 @@
     <ClInclude Include="Engine\Timer.h" />
     <ClInclude Include="Geoscape\AbandonGameState.h" />
     <ClInclude Include="Geoscape\AlienTerrorState.h" />
+    <ClInclude Include="Geoscape\AllocatePsiTrainingState.h" />
     <ClInclude Include="Geoscape\BaseNameState.h" />
     <ClInclude Include="Geoscape\BuildNewBaseState.h" />
     <ClInclude Include="Geoscape\CraftErrorState.h" />
