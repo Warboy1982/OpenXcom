@@ -83,7 +83,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game), _base1(0), _base2(
 				_btnBase2 = new TextButton(120, 16, 100, 44);
 				_btnBase2->setColor(Palette::blockOffset(15)+6);
 				_btnBase2->setText((*b)->getName());
-				_btnBase2->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_btnBase2->onMouseClick((ActionHandler)&PsiTrainingState::btnBase2Click);
 				_base2 = (*b);
 				add(_btnBase2);
 				break;
@@ -91,7 +91,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game), _base1(0), _base2(
 				_btnBase3 = new TextButton(120, 16, 100, 62);
 				_btnBase3->setColor(Palette::blockOffset(15)+6);
 				_btnBase3->setText((*b)->getName());
-				_btnBase3->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_btnBase3->onMouseClick((ActionHandler)&PsiTrainingState::btnBase3Click);
 				_base3 = (*b);
 				add(_btnBase3);
 				break;
@@ -99,7 +99,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game), _base1(0), _base2(
 				_btnBase4 = new TextButton(120, 16, 100, 80);
 				_btnBase4->setColor(Palette::blockOffset(15)+6);
 				_btnBase4->setText((*b)->getName());
-				_btnBase4->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_btnBase4->onMouseClick((ActionHandler)&PsiTrainingState::btnBase4Click);
 				_base4 = (*b);
 				add(_btnBase4);
 				break;
@@ -107,7 +107,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game), _base1(0), _base2(
 				_btnBase5 = new TextButton(120, 16, 100, 98);
 				_btnBase5->setColor(Palette::blockOffset(15)+6);
 				_btnBase5->setText((*b)->getName());
-				_btnBase5->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_btnBase5->onMouseClick((ActionHandler)&PsiTrainingState::btnBase5Click);
 				_base5 = (*b);
 				add(_btnBase5);
 				break;
@@ -115,7 +115,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game), _base1(0), _base2(
 				_btnBase6 = new TextButton(120, 16, 100, 116);
 				_btnBase6->setColor(Palette::blockOffset(15)+6);
 				_btnBase6->setText((*b)->getName());
-				_btnBase6->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_btnBase6->onMouseClick((ActionHandler)&PsiTrainingState::btnBase6Click);
 				_base6 = (*b);
 				add(_btnBase6);
 				break;
@@ -123,7 +123,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game), _base1(0), _base2(
 				_btnBase7 = new TextButton(120, 16, 100, 134);
 				_btnBase7->setColor(Palette::blockOffset(15)+6);
 				_btnBase7->setText((*b)->getName());
-				_btnBase7->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_btnBase7->onMouseClick((ActionHandler)&PsiTrainingState::btnBase7Click);
 				_base7 = (*b);
 				add(_btnBase7);
 				break;
@@ -131,7 +131,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game), _base1(0), _base2(
 				_btnBase8 = new TextButton(120, 16, 100, 152);
 				_btnBase8->setColor(Palette::blockOffset(15)+6);
 				_btnBase8->setText((*b)->getName());
-				_btnBase8->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+				_btnBase8->onMouseClick((ActionHandler)&PsiTrainingState::btnBase8Click);
 				_base8 = (*b);
 				add(_btnBase8);
 				break;
@@ -165,9 +165,44 @@ void PsiTrainingState::btnOkClick(Action *action)
 	_game->popState();
 }
 
-void PsiTrainingState::btnBase1Click()
+void PsiTrainingState::btnBase1Click(Action *action)
 {	
 	_game->popState();
 	_game->pushState (new AllocatePsiTrainingState(_game, _base1));
+}
+void PsiTrainingState::btnBase2Click(Action *action)
+{	
+	_game->popState();
+	_game->pushState (new AllocatePsiTrainingState(_game, _base2));
+}
+void PsiTrainingState::btnBase3Click(Action *action)
+{	
+	_game->popState();
+	_game->pushState (new AllocatePsiTrainingState(_game, _base3));
+}
+void PsiTrainingState::btnBase4Click(Action *action)
+{	
+	_game->popState();
+	_game->pushState (new AllocatePsiTrainingState(_game, _base4));
+}
+void PsiTrainingState::btnBase5Click(Action *action)
+{	
+	_game->popState();
+	_game->pushState (new AllocatePsiTrainingState(_game, _base5));
+}
+void PsiTrainingState::btnBase6Click(Action *action)
+{	
+	_game->popState();
+	_game->pushState (new AllocatePsiTrainingState(_game, _base6));
+}
+void PsiTrainingState::btnBase7Click(Action *action)
+{	
+	_game->popState();
+	_game->pushState (new AllocatePsiTrainingState(_game, _base7));
+}
+void PsiTrainingState::btnBase8Click(Action *action)
+{	
+	_game->popState();
+	_game->pushState (new AllocatePsiTrainingState(_game, _base8));
 }
 }

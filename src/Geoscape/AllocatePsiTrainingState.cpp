@@ -31,6 +31,7 @@
 #include "../Interface/TextList.h"
 #include "GeoscapeState.h"
 #include "../Savegame/Soldier.h"
+#include "../Engine/Action.h"
 
 namespace OpenXcom
 {
@@ -41,12 +42,15 @@ namespace OpenXcom
  */
 AllocatePsiTrainingState::AllocatePsiTrainingState(Game *game, Base *base) : State(game)
 {
+	_base = base;
 	// Create objects
 	_window = new Window(this, 320, 200, 0, 0);
-	_txtTitle = new Text(300, 16, 16, 8);
-	_txtTraining = new Text(32, 16, 34, 180);
+	_txtTitle = new Text(300, 16, 76, 8);
+	_txtName = new Text(64, 16, 18, 28);
+	_txtCraft = new Text(64, 16, 186, 28);
+	_txtTraining = new Text(48, 32, 266, 20);
 	_btnOk = new TextButton(120, 16, 100, 176);
-	_lstSoldiers = new TextList(287, 128, 8, 40);
+	_lstSoldiers = new TextList(287, 128, 16, 37);
 	
 	// Set palette
 	_game->setPalette(_game->getResourcePack()->getPalette("PALETTES.DAT_1")->getColors());
@@ -54,6 +58,8 @@ AllocatePsiTrainingState::AllocatePsiTrainingState(Game *game, Base *base) : Sta
 
 	add(_window);
 	add(_btnOk);
+	add(_txtCraft);
+	add(_txtName);
 	add(_txtTitle);
 	add(_txtTraining);
 	add(_lstSoldiers);
@@ -64,37 +70,40 @@ AllocatePsiTrainingState::AllocatePsiTrainingState(Game *game, Base *base) : Sta
 
 	_btnOk->setColor(Palette::blockOffset(8)+5);
 	_btnOk->setText(_game->getLanguage()->getString("STR_OK"));
-	_btnOk->onMouseClick((ActionHandler)&PsiTrainingState::btnOkClick);
+	_btnOk->onMouseClick((ActionHandler)&AllocatePsiTrainingState::btnOkClick);
 	
 	_txtTitle->setColor(Palette::blockOffset(8)+5);
 	_txtTitle->setBig();
 	_txtTitle->setText(base->getName());
 
-	_txtTraining->setColor(Palette::blockOffset(8)+5);
+	_txtTraining->setColor(Palette::blockOffset(15)+1);
 	_txtTraining->setText(_game->getLanguage()->getString("STR_IN_TRAINING"));
 	
-	_lstSoldiers->setColor(Palette::blockOffset(15)+1);
-	_lstSoldiers->setArrowColor(Palette::blockOffset(13)+10);
-	_lstSoldiers->setArrowColumn(193, ARROW_VERTICAL);
-	_lstSoldiers->setColumns(4, 162, 58, 40, 20);
+	_txtName->setColor(Palette::blockOffset(15)+1);
+	_txtName->setText(_game->getLanguage()->getString("STR_NAME"));
+	
+	_txtCraft->setColor(Palette::blockOffset(15)+1);
+	_txtCraft->setText(_game->getLanguage()->getString("STR_CRAFT"));
+
+	_lstSoldiers->setColor(Palette::blockOffset(13));
+	_lstSoldiers->setArrowColumn(-1, ARROW_VERTICAL);
+	_lstSoldiers->setColumns(3, 168, 80, 40);
 	_lstSoldiers->setSelectable(true);
 	_lstSoldiers->setBackground(_window);
 	_lstSoldiers->setMargin(2);
-	_lstSoldiers->onLeftArrowPress((ActionHandler)&AllocatePsiTrainingState::lstItemsLeftArrowPress);
-	_lstSoldiers->onLeftArrowRelease((ActionHandler)&AllocatePsiTrainingState::lstItemsLeftArrowRelease);
-	_lstSoldiers->onLeftArrowClick((ActionHandler)&AllocatePsiTrainingState::lstItemsLeftArrowClick);
-	_lstSoldiers->onRightArrowPress((ActionHandler)&AllocatePsiTrainingState::lstItemsRightArrowPress);
-	_lstSoldiers->onRightArrowRelease((ActionHandler)&AllocatePsiTrainingState::lstItemsRightArrowRelease);
-	_lstSoldiers->onRightArrowClick((ActionHandler)&AllocatePsiTrainingState::lstItemsRightArrowClick);
+	_lstSoldiers->onMousePress((ActionHandler)&AllocatePsiTrainingState::lstSoldiersPress);
+	_lstSoldiers->onMouseClick((ActionHandler)&AllocatePsiTrainingState::lstSoldiersClick);
+	_lstSoldiers->onMouseRelease((ActionHandler)&AllocatePsiTrainingState::lstSoldiersRelease);
 	for(std::vector<Soldier*>::const_iterator s = base->getSoldiers()->begin(); s != base->getSoldiers()->end(); ++s)
 	{
-		if ((*s)->getWoundRecovery() == 0)
+		_soldiers.push_back(*s);
+		if((*s)->isInPsiTraining())
 		{
-			_soldiers.push_back(*s);
-			std::string _training = "STR_NO";
-			if((*s)->isInPsiTraining())
-				_training = "STR_YES";
-			_lstSoldiers->addRow(4, (*s)->getName().c_str(),"" ,"" ,_training);
+			_lstSoldiers->addRow(3, (*s)->getName().c_str(), (*s)->getCraftString(_game->getLanguage()).c_str(),  _game->getLanguage()->getString("STR_YES").c_str());
+		}
+		else
+		{
+			_lstSoldiers->addRow(3, (*s)->getName().c_str(), (*s)->getCraftString(_game->getLanguage()).c_str(), _game->getLanguage()->getString("STR_NO").c_str());
 		}
 	}
 }
@@ -124,4 +133,32 @@ void AllocatePsiTrainingState::btnOkClick(Action *action)
 	_game->pushState (new PsiTrainingState(_game));
 }
 
+void AllocatePsiTrainingState::lstSoldiersPress(Action *action)
+{
+}
+void AllocatePsiTrainingState::lstSoldiersRelease(Action *action)
+{
+}
+void AllocatePsiTrainingState::lstSoldiersClick(Action *action)
+{
+	_sel = _lstSoldiers->getSelectedRow();
+	if (action->getDetails()->button.button == SDL_BUTTON_LEFT)
+	{
+		if (_base->getSoldiers()->at(_sel)->getWoundRecovery() == 0)
+		{
+			_base->getSoldiers()->at(_sel)->setPsiTraining();
+			if(_base->getSoldiers()->at(_sel)->isInPsiTraining())
+			{
+				if(_base->getUsedPsiLabs() < _base->getAvailablePsiLabs())
+				{
+					_lstSoldiers->setCellText(_sel, 2, _game->getLanguage()->getString("STR_YES").c_str());
+				}
+			}
+			else
+			{
+			_lstSoldiers->setCellText(_sel, 2, _game->getLanguage()->getString("STR_NO").c_str());
+			}
+		}
+	}
+}
 }

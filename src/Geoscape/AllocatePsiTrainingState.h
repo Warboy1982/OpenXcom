@@ -29,6 +29,7 @@ class Window;
 class Text;
 class Base;
 class TextList;
+class Soldier;
 
 /**
  * Report screen shown monthly to display
@@ -39,9 +40,11 @@ class AllocatePsiTrainingState : public State
 private:
 	TextButton *_btnOk;
 	Window *_window;
-	Text *_txtTitle, *_txtTraining;
+	Text *_txtTitle, *_txtTraining, *_txtName, *_txtCraft;
 	TextList *_lstSoldiers;
 	std::vector<Soldier*> _soldiers;
+	unsigned int _sel;
+	Base *_base;
 public:
 	/// Creates the Psi Training state.
 	AllocatePsiTrainingState(Game *game, Base *base);
@@ -52,6 +55,9 @@ public:
 	/// Handler for clicking the OK button.
 	void btnOkClick(Action *action);
 	void btnBase1Click();
+	void lstSoldiersPress(Action *action);
+	void lstSoldiersRelease(Action *action);
+	void lstSoldiersClick(Action *action);
 };
 
 }

@@ -9,6 +9,7 @@ make funding nations do something
 
     
     UNITS:
+scanner tank - no weapons, reveals units through walls with a "deep scan" (costs a lot of TUs) - LCSand
 add sailors for port terror missions. give them all knives and surly dispositions.
 Cult of Sirius! (rank 8 alien, human cultist, 1 in 6 chance for 3-5 humans)
 Inventory screens for all units in game

@@ -590,6 +590,23 @@ int Base::getAvailablePsiLabs() const
 }
 
 /**
+ * Returns the total amount of used Psi Lab Space
+ * available in the base.
+ * @return used Psi Lab space.
+ */
+int Base::getUsedPsiLabs() const
+{
+	int total = 0;
+	for (std::vector<Soldier*>::const_iterator s = _soldiers.begin(); s != _soldiers.end(); ++s)
+	{
+		if ((*s)->isInPsiTraining())
+		{
+			total ++;
+		}
+	}
+	return total;
+}
+/**
  * Returns the amount of stores used up
  * by equipment in the base.
  * @return Storage space.

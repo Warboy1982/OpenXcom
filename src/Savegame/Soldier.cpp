@@ -403,6 +403,10 @@ void Soldier::setWoundRecovery(int recovery)
 	if (_recovery > 0)
 	{
 		_craft = 0;
+		if(_psiTraining)
+			_psiTraining = false;
+		if(_training)
+			_training = false;
 	}
 }
 
