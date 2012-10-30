@@ -1,5 +1,4 @@
     GEOSCAPE:
-ufo firing rate decreases by 3 seconds per difficulty level
 funding nation withdrawal trigger should be higher on higher levels
 make funding nations much harder to please, make them drop out more often, and when they sign a pact, start 
     generating anti-infiltration missions somewhere in their country (use alien base as a template for how to 
@@ -61,6 +60,7 @@ use weapon mount on craft in missions?
 
 
     DONE:
+psi training works, yeehaw.
 New ufo layouts for variety
 tank shells explode.
 new tank type - sectopods! - need to research to construct, recolour of original sprites? (thinking give em a blue visor)

@@ -82,6 +82,9 @@ countries:
 regions:
   - type: STR_NORTH_AMERICA
     cost: 800000
+    memberOf: 
+      - STR_USA
+        STR_CANADA
     lonMin:
       - 3.40339
       - 4.01426
@@ -148,6 +151,7 @@ regions:
       - 1.5708
   - type: STR_SOUTH_AMERICA
     cost: 600000
+    memberOf: STR_BRAZIL
     lonMin:
       - 4.71239
       - 4.79966
@@ -188,6 +192,13 @@ regions:
         lat: -0.18326
   - type: STR_EUROPE
     cost: 1000000
+    memberOf: 
+      - STR_UK 
+      - STR_FRANCE 
+      - STR_GERMANY
+      - STR_ITALY
+      - STR_SPAIN
+      - STR_INDIA   
     lonMin:
       - 5.84685
     lonMax:
@@ -220,6 +231,9 @@ regions:
         lat: -0.829031
   - type: STR_NORTH_AFRICA
     cost: 650000
+    memberOf: 
+      - STR_NIGERIA
+        STR_EGYPT
     lonMin:
       - 5.84685
       - 5.84685
@@ -244,6 +258,7 @@ regions:
         lat: -0.584685
   - type: STR_SOUTHERN_AFRICA
     cost: 550000
+    memberOf: STR_SOUTH_AFRICA
     lonMin:
       - 0.0872665
     lonMax:
@@ -267,6 +282,7 @@ regions:
         lat: 0.0763582
   - type: STR_CENTRAL_ASIA
     cost: 500000
+    memberOf: STR_CHINA
     lonMin:
       - 0.698132
       - 1.0472
@@ -307,6 +323,7 @@ regions:
         lat: -0.394881
   - type: STR_SOUTH_EAST_ASIA
     cost: 750000
+    memberOf: STR_JAPAN
     lonMin:
       - 1.5708
       - 1.8326
@@ -349,6 +366,7 @@ regions:
         lat: -0.388336
   - type: STR_SIBERIA
     cost: 800000
+    memberOf: STR_RUSSIA
     lonMin:
       - 1.0472
     lonMax:
@@ -362,6 +380,7 @@ regions:
         lon: 1.44426
         lat: -0.959931
   - type: STR_AUSTRALASIA
+    memberOf: STR_AUSTRALIA
     cost: 750000
     lonMin:
       - 1.8326
@@ -631,7 +650,7 @@ facilities:
     buildCost: 750000
     buildTime: 24
     monthlyCost: 16000
-    psiLabs: 50
+    psiLabs: 10
     mapName: XBASE_14
   - type: STR_HYPER_WAVE_DECODER
     requires:
