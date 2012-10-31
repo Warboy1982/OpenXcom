@@ -21,7 +21,7 @@
 namespace OpenXcom
 {
 
-RuleResearch::RuleResearch(const std::string & name) : _name(name), _cost(0), _needItem(false)
+RuleResearch::RuleResearch(const std::string & name) : _name(name), _cost(0), _needItem(false), _points(0)
 {
 }
 
@@ -42,6 +42,10 @@ void RuleResearch::load(const YAML::Node &node)
 		else if (key == "cost")
 		{
 			i.second() >> _cost;
+		}
+		else if (key == "points")
+		{
+			i.second() >> _points;
 		}
 		else if (key == "needItem")
 		{
@@ -67,6 +71,7 @@ void RuleResearch::save(YAML::Emitter &out) const
 	out << YAML::BeginMap;
 	out << YAML::Key << "name" << YAML::Value << _name;
 	out << YAML::Key << "cost" << YAML::Value << _cost;
+	out << YAML::Key << "points" << YAML::Value << _points;
 	out << YAML::Key << "needItem" << YAML::Value << _needItem;
 	out << YAML::Key << "dependencies" << YAML::Value << _dependencies;
 	out << YAML::Key << "unlocks" << YAML::Value << _unlocks;
@@ -80,6 +85,15 @@ void RuleResearch::save(YAML::Emitter &out) const
 int RuleResearch::getCost() const
 {
 	return _cost;
+}
+
+/**
+   Get the points gained for this ResearchProject
+   @return points gained for this ResearchProject
+*/
+int RuleResearch::getPoints() const
+{
+	return _points;
 }
 
 /**

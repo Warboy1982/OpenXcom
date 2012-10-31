@@ -69,13 +69,15 @@ private:
 	double lastVisibleLat(double lon) const;
 	/// Checks if a point is inside a polygon.
 	bool insidePolygon(double lon, double lat, Polygon *poly) const;
-	/// Checks if a target is near a point.
-	bool targetNear(Target* target, int x, int y) const;
 	/// Caches a set of polygons.
 	void cache(std::list<Polygon*> *polygons, std::list<Polygon*> *cache);
 	/// Get position of sun relative to given position in polar cords and date.
 	Cord getSunDirection(double lon, double lat) const;
 public:
+	/// Checks if a target is near a point.
+	bool targetNear(Target* target, int x, int y, int radius) const;
+	/// Checks if a target is near a point.
+	bool targetNearPolar(Target* target, float x, float y, int radius) const;
 	/// Creates a new globe at the specified position and size.
 	Globe(Game *game, int cenX, int cenY, int width, int height, int x = 0, int y = 0);
 	/// Cleans up the globe.

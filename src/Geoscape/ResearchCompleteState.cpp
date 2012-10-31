@@ -26,6 +26,9 @@
 #include "../Interface/Text.h"
 #include "../Ruleset/RuleResearch.h"
 #include "../Ufopaedia/Ufopaedia.h"
+#include "../Ruleset/Ruleset.h"
+#include "../Savegame/Country.h"
+#include "../Savegame/SavedGame.h"
 #include <algorithm>
 
 namespace OpenXcom
@@ -38,7 +41,10 @@ namespace OpenXcom
 ResearchCompleteState::ResearchCompleteState(Game * game, const RuleResearch * research) : State (game), _research(research)
 {
 	_screen = false;
-
+	for (std::vector<Country*>::iterator k = game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
+	{
+		(*k)->setActivityXcom(research->getPoints());
+	}
 	// Create objects
 	_window = new Window(this, 224, 140, 48, 30, POPUP_BOTH);
 	_btnOk = new TextButton(80, 16, 64, 146);

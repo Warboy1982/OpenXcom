@@ -25,6 +25,8 @@ namespace OpenXcom
 {
 
 class RuleCountry;
+class Region;
+class Game;
 
 /**
  * Represents a country that funds the player.
@@ -34,6 +36,7 @@ class RuleCountry;
 class Country
 {
 private:
+	Game *_game;
 	RuleCountry *_rules;
 	int _funding, _change;
 	int _activityXcom, _activityAlien;
@@ -54,6 +57,12 @@ public:
 	void setFunding(int funding);
 	/// Gets the country's funding change.
 	int getChange() const;
+	void resetChange();
+	int getSatisfaction();
+	void setActivityXcom(int activity);
+	void setActivityAlien(int activity);
+	int getActivityXcom() const;
+	int getActivityAlien() const;
 };
 
 }

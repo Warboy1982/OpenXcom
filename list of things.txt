@@ -60,6 +60,9 @@ use weapon mount on craft in missions?
 
 
     DONE:
+aliens now get activity points for flying around, or if you ignore a terror mission.
+you now get activity points (with regions and countries) for shooting down UFOs, carrying out missions and completing research
+funky new sprite for guardian implemented :D
 psi training works, yeehaw.
 New ufo layouts for variety
 tank shells explode.
@@ -73,7 +76,7 @@ complete weapon damage workover
 hovertank turret placement fixed.
 snakemen slither!
 hovertanks and laser tanks and guardian fighters, oh my!
-added Guardian class interceptor (costs more, is better, funky new sprite(when i can touch dogfight code)
+added Guardian class interceptor (costs more, is better, funky new sprite)
 tweaked firestorm to be actually good
 set avenger to have one weapon slot only, hybrid transports don't get to be effective fighter craft too, sorry.
 all missing alien races re-implemented, including Chryssalids, and their evil powers.

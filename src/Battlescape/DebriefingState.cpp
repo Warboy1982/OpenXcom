@@ -42,6 +42,10 @@
 #include "../Savegame/TerrorSite.h"
 #include "PromotionsState.h"
 #include "CannotReequipState.h"
+#include "../Geoscape/Globe.h"
+#include "../Savegame/Country.h"
+#include "../Savegame/Region.h"
+#include "../Ruleset/RuleRegion.h"
 
 namespace OpenXcom
 {
@@ -119,7 +123,7 @@ DebriefingState::DebriefingState(Game *game) : State(game)
 	_lstTotal->setColor(Palette::blockOffset(8)+5);
 	_lstTotal->setColumns(2, 244, 64);
 	_lstTotal->setDot(true);
-
+	location = 0;
 	prepareDebriefing();
 
 	int total = 0, statsY = 0, recoveryY = 0;
@@ -182,7 +186,10 @@ DebriefingState::DebriefingState(Game *game) : State(game)
 		rating += _game->getLanguage()->getString("STR_RATING_EXCELLENT");
 	}
 	_txtRating->setText(rating);
-
+	if(location)
+	{
+		location->setActivityXcom(total);
+	}
 	// Set music
 	_game->getResourcePack()->getMusic("GMMARS")->play();
 }
@@ -286,6 +293,14 @@ void DebriefingState::prepareDebriefing()
 		{
 			if ((*j)->isInBattlescape())
 			{
+				// Get area
+				for (std::vector<Region*>::iterator k = _game->getSavedGame()->getRegions()->begin(); k != _game->getSavedGame()->getRegions()->end(); ++k)
+				{
+					if ((*k)->getRules()->insideRegion(craft->getLongitude(), craft->getLatitude()))
+					{
+						location = *k;
+					}
+				}
 				craft = (*j);
 				base = (*i);
 				craftIterator = j;

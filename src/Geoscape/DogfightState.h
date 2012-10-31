@@ -37,6 +37,8 @@ class Globe;
 class Craft;
 class Ufo;
 class CraftWeaponProjectile;
+class Region;
+class Country;
 
 /**
  * Shows a dogfight (interception) between a

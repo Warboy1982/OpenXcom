@@ -756,7 +756,7 @@ void Globe::toggleDetail()
  * @param y Y coordinate of point.
  * @return True if it's near, false otherwise.
  */
-bool Globe::targetNear(Target* target, int x, int y) const
+bool Globe::targetNear(Target* target, int x, int y, int radius) const
 {
 	Sint16 tx, ty;
 	if (pointBack(target->getLongitude(), target->getLatitude()))
@@ -765,9 +765,21 @@ bool Globe::targetNear(Target* target, int x, int y) const
 
 	int dx = x - tx;
 	int dy = y - ty;
-	return (dx * dx + dy * dy <= NEAR_RADIUS);
+	return (dx * dx + dy * dy <= radius);
 }
 
+bool Globe::targetNearPolar(Target* target, float x, float y, int radius) const
+{
+	Sint16 tx, ty, mx, my;
+	if (pointBack(target->getLongitude(), target->getLatitude()))
+		return false;
+	polarToCart(x, y, &mx, &my);
+	polarToCart(target->getLongitude(), target->getLatitude(), &tx, &ty);
+	int dx = mx - tx;
+	int dy = my - ty;
+	int wat = dx * dx + dy * dy;
+	return (dx * dx + dy * dy <= radius);
+}
 /**
  * Returns a list of all the targets currently near a certain
  * cartesian point over the globe.
@@ -786,7 +798,7 @@ std::vector<Target*> Globe::getTargets(int x, int y, bool craft) const
 			if ((*i)->getLongitude() == 0.0 && (*i)->getLatitude() == 0.0)
 				continue;
 
-			if (targetNear((*i), x, y))
+			if (targetNear((*i), x, y, 25))
 			{
 				v.push_back(*i);
 			}
@@ -796,7 +808,7 @@ std::vector<Target*> Globe::getTargets(int x, int y, bool craft) const
 				if ((*j)->getLongitude() == (*i)->getLongitude() && (*j)->getLatitude() == (*i)->getLatitude() && (*j)->getDestination() == 0)
 					continue;
 
-				if (targetNear((*j), x, y))
+				if (targetNear((*j), x, y, 25))
 				{
 					v.push_back(*j);
 				}
@@ -808,21 +820,21 @@ std::vector<Target*> Globe::getTargets(int x, int y, bool craft) const
 		if (!(*i)->getDetected())
 			continue;
 
-		if (targetNear((*i), x, y))
+		if (targetNear((*i), x, y, 25))
 		{
 			v.push_back(*i);
 		}
 	}
 	for (std::vector<Waypoint*>::iterator i = _game->getSavedGame()->getWaypoints()->begin(); i != _game->getSavedGame()->getWaypoints()->end(); ++i)
 	{
-		if (targetNear((*i), x, y))
+		if (targetNear((*i), x, y, 25))
 		{
 			v.push_back(*i);
 		}
 	}
 	for (std::vector<TerrorSite*>::iterator i = _game->getSavedGame()->getTerrorSites()->begin(); i != _game->getSavedGame()->getTerrorSites()->end(); ++i)
 	{
-		if (targetNear((*i), x, y))
+		if (targetNear((*i), x, y, 25))
 		{
 			v.push_back(*i);
 		}

@@ -39,7 +39,7 @@ class RuleResearch
 {
  private:
 	std::string _name;
-	int _cost;
+	int _cost, _points;
 	std::vector<std::string> _dependencies, _unlocks;
 	bool _needItem;
 public:
@@ -50,6 +50,8 @@ public:
 	void save(YAML::Emitter& out) const;
 	/// Get time needed to discover this ResearchProject
 	int getCost() const;
+	/// Get points gained for this ResearchProject
+	int getPoints() const;
 	/// Get the research name
 	const std::string & getName () const;
 	/// Get the research dependencies

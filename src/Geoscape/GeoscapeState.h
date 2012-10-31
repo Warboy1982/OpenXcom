@@ -34,6 +34,7 @@ class Timer;
 class DogfightState;
 class Craft;
 class Ufo;
+class Region;
 
 /**
  * Geoscape screen which shows an overview of

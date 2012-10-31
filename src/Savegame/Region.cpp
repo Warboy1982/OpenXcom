@@ -69,4 +69,23 @@ RuleRegion *const Region::getRules() const
 	return _rules;
 }
 
+void Region::setActivityXcom(int activity)
+{
+	_activityXcom += activity;
+}
+
+void Region::setActivityAlien(int activity)
+{
+	_activityAlien += activity;
+}
+
+int Region::getActivityXcom() const
+{
+	return _activityXcom;
+}
+
+int Region::getActivityAlien() const
+{
+	return _activityAlien;
+}
 }

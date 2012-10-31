@@ -26,7 +26,7 @@ namespace OpenXcom
  * type of country.
  * @param type String defining the type.
  */
-RuleCountry::RuleCountry(const std::string &type) : _type(type), _fundingMin(0), _fundingMax(0), _labelLon(0.0), _labelLat(0.0)
+RuleCountry::RuleCountry(const std::string &type) : _type(type), _fundingMin(0), _fundingMax(0), _labelLon(0.0), _labelLat(0.0), _regions(0)
 {
 }
 
@@ -133,4 +133,12 @@ double RuleCountry::getLabelLatitude() const
 	return _labelLat;
 }
 
+/**
+ * Returns a list of compatible ammo.
+ * @return pointer to a list of compatible ammo.
+ */
+std::vector<std::string> *RuleCountry::getRegions()
+{				
+	return &_regions;
+}
 }

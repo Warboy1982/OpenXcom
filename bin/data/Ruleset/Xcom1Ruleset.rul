@@ -52,6 +52,7 @@ countries:
   - type: STR_BRAZIL
     fundingMin: 300
     fundingMax: 600
+    regions:
     labelLon: 5.32325
     labelLat: 0.0872665
   - type: STR_AUSTRALIA
@@ -82,9 +83,6 @@ countries:
 regions:
   - type: STR_NORTH_AMERICA
     cost: 800000
-    memberOf: 
-      - STR_USA
-        STR_CANADA
     lonMin:
       - 3.40339
       - 4.01426
@@ -151,7 +149,6 @@ regions:
       - 1.5708
   - type: STR_SOUTH_AMERICA
     cost: 600000
-    memberOf: STR_BRAZIL
     lonMin:
       - 4.71239
       - 4.79966
@@ -191,14 +188,7 @@ regions:
         lon: 5.116
         lat: -0.18326
   - type: STR_EUROPE
-    cost: 1000000
-    memberOf: 
-      - STR_UK 
-      - STR_FRANCE 
-      - STR_GERMANY
-      - STR_ITALY
-      - STR_SPAIN
-      - STR_INDIA   
+    cost: 1000000 
     lonMin:
       - 5.84685
     lonMax:
@@ -231,9 +221,6 @@ regions:
         lat: -0.829031
   - type: STR_NORTH_AFRICA
     cost: 650000
-    memberOf: 
-      - STR_NIGERIA
-        STR_EGYPT
     lonMin:
       - 5.84685
       - 5.84685
@@ -258,7 +245,6 @@ regions:
         lat: -0.584685
   - type: STR_SOUTHERN_AFRICA
     cost: 550000
-    memberOf: STR_SOUTH_AFRICA
     lonMin:
       - 0.0872665
     lonMax:
@@ -282,7 +268,6 @@ regions:
         lat: 0.0763582
   - type: STR_CENTRAL_ASIA
     cost: 500000
-    memberOf: STR_CHINA
     lonMin:
       - 0.698132
       - 1.0472
@@ -323,7 +308,6 @@ regions:
         lat: -0.394881
   - type: STR_SOUTH_EAST_ASIA
     cost: 750000
-    memberOf: STR_JAPAN
     lonMin:
       - 1.5708
       - 1.8326
@@ -366,7 +350,6 @@ regions:
         lat: -0.388336
   - type: STR_SIBERIA
     cost: 800000
-    memberOf: STR_RUSSIA
     lonMin:
       - 1.0472
     lonMax:
@@ -380,7 +363,6 @@ regions:
         lon: 1.44426
         lat: -0.959931
   - type: STR_AUSTRALASIA
-    memberOf: STR_AUSTRALIA
     cost: 750000
     lonMin:
       - 1.8326
@@ -534,7 +516,7 @@ facilities:
     buildCost: 650000
     buildTime: 30
     monthlyCost: 16000
-    trainingRooms: 50
+    trainingRooms: 10
     mapName: XBASE_14
   - type: STR_SMALL_RADAR_SYSTEM
     spriteShape: 2
@@ -707,7 +689,7 @@ crafts:
     transferTime: 96
     score: 250
   - type: STR_GUARDIAN
-    sprite: 3
+    sprite: 21
     fuelMax: 1000
     damageMax: 500
     speedMax: 2500
@@ -6796,66 +6778,85 @@ alienDeployments:
 research:
   - name: STR_LASER_WEAPONS
     cost: 50
+    points: 10
   - name: STR_LASER_PISTOL
     cost: 100
+    points: 10
     dependencies:
       - STR_LASER_WEAPONS
   - name: STR_LASER_RIFLE
     cost: 300
+    points: 10
     dependencies:
       - STR_LASER_PISTOL
   - name: STR_LASER_CANNON
     cost: 420
+    points: 10
     dependencies:
       - STR_LASER_RIFLE
   - name: STR_MOTION_SCANNER
     cost: 180
+    points: 20
   - name: STR_MEDI_KIT
     cost: 210
+    points: 20
   - name: STR_ALIEN_ALLOYS
     cost: 400
+    points: 30
     needItem: true
   - name: STR_ALIEN_ENTERTAINMENT
     cost: 150
+    points: 30
     needItem: true
   - name: STR_ALIEN_FOOD
     cost: 150
+    points: 30
     needItem: true
   - name: STR_ALIEN_GRENADE
     cost: 200
+    points: 20
     needItem: true
   - name: STR_ALIEN_ORIGINS
     cost: 300
+    points: 60
     needItem: true
   - name: STR_ALIEN_REPRODUCTION
     cost: 150
+    points: 30
     needItem: true
   - name: STR_ALIEN_SURGERY
     cost: 150
+    points: 30
     needItem: true
   - name: STR_BLASTER_BOMB
     cost: 300
+    points: 10
     needItem: true
   - name: STR_BLASTER_LAUNCHER
     cost: 900
+    points: 10
     needItem: true
   - name: STR_CYDONIA_OR_BUST
     cost: 600
+    points: 60
     dependencies:
       - STR_THE_MARTIAN_SOLUTION
   - name: STR_ELERIUM_115
     cost: 450
+    points: 60
     needItem: true
   - name: STR_EXAMINATION_ROOM
     cost: 150
     needItem: true
   - name: STR_FLYING_SUIT
     cost: 330
+    points: 20
     dependencies:
       - STR_POWER_SUIT
       - STR_UFO_NAVIGATION
   - name: STR_FUSION_DEFENSE
     cost: 800
+    points: 25
     dependencies:
       - STR_BLASTER_LAUNCHER
       - STR_BLASTER_BOMB
@@ -6865,10 +6866,12 @@ research:
       - STR_FUSION_DEFENSE
   - name: STR_GRAV_SHIELD
     cost: 930
+    points: 25
     dependencies:
       - STR_NEW_FIGHTER_TRANSPORTER
   - name: STR_HYPER_WAVE_DECODER
     cost: 670
+    points: 25
     dependencies:
       - STR_FLOATER_NAVIGATOR
       - STR_SNAKEMAN_NAVIGATOR
@@ -6876,88 +6879,112 @@ research:
       - STR_SECTOID_NAVIGATOR
   - name: STR_MIND_PROBE
     cost: 600
+    points: 25
     needItem: true
   - name: STR_MIND_SHIELD
     cost: 360
+    points: 25
     dependencies:
       - STR_PSI_LAB
   - name: STR_NEW_FIGHTER_CRAFT
     cost: 600
+    points: 30
     dependencies:
       - STR_UFO_CONSTRUCTION
   - name: STR_NEW_FIGHTER_TRANSPORTER
     cost: 700
+    points: 30
     dependencies:
       - STR_NEW_FIGHTER_CRAFT
   - name: STR_PERSONAL_ARMOR
     cost: 180
+    points: 20
     dependencies:
       - STR_ALIEN_ALLOYS
   - name: STR_PLASMA_CANNON
     cost: 660
+    points: 25
     dependencies:
       - STR_PLASMA_CANNON_DEP2
   - name: STR_RAIL_CANNON
     cost: 660
+    points: 25
     dependencies:
       - STR_RAIL_CANNON_DEP
   - name: STR_RAIL_SLUG
     cost: 660
+    points: 10
     dependencies:
       - STR_RAIL_SLUG_DEP
   - name: STR_DISRUPTOR_CANNON
     cost: 660
+    points: 25
     dependencies:
       - STR_DISRUPTOR_CANNON_DEP
   - name: STR_PLASMA_DEFENSE
     cost: 620
+    points: 25
     dependencies:
       - STR_PLASMA_CANNON
   - name: STR_PLASMA_BLADE
-    cost: 500
+    cost: 300
+    points: 5
     needItem: true
   - name: STR_PLASMA_PISTOL
     cost: 600
+    points: 20
     needItem: true
   - name: STR_PLASMA_PISTOL_CLIP
     cost: 400
+    points: 5
     needItem: true
   - name: STR_PLASMA_RIFLE
     cost: 700
+    points: 25
     needItem: true
   - name: STR_PLASMA_RIFLE_CLIP
     cost: 400
+    points: 6
     needItem: true
   - name: STR_DISRUPTOR_RIFLE
     cost: 1400
+    points: 25
     needItem: true
   - name: STR_DISRUPTOR_PISTOL
     cost: 900
+    points: 25
     needItem: true
   - name: STR_RAIL_GUN
     cost: 1400
+    points: 25
     needItem: true
   - name: STR_RAIL_GUN_CLIP
     cost: 800
+    points: 7
     needItem: true
   - name: STR_GAUSS_RIFLE
     cost: 900
+    points: 25
     needItem: true
   - name: STR_GAUSS_RIFLE_CLIP
     cost: 600
+    points: 6
     needItem: true
   - name: STR_POWER_SUIT
     cost: 205
+    points: 20
     dependencies:
       - STR_ELERIUM_115
       - STR_UFO_POWER_SOURCE
       - STR_PERSONAL_ARMOR
   - name: STR_PSI_AMP
     cost: 500
+    points: 20
     dependencies:
       - STR_PSI_LAB
   - name: STR_PSI_LAB
     cost: 420
+    points: 25
     dependencies:
       - STR_ETHEREAL_COMMANDER
       - STR_ETHEREAL_ENGINEER
@@ -6969,16 +6996,20 @@ research:
       - STR_SECTOID_COMMANDER
   - name: STR_SMALL_LAUNCHER
     cost: 550
+    points: 30
     needItem: true
   - name: STR_STUN_BOMB
     cost: 180
+    points: 10
     needItem: true
   - name: STR_THE_MARTIAN_SOLUTION
     cost: 500
+    points: 60
     dependencies:
       - STR_ALIEN_ORIGINS
   - name: STR_UFO_CONSTRUCTION
     cost: 450
+    points: 30
     dependencies:
       - STR_ALIEN_ALLOYS
       - STR_ELERIUM_115
@@ -6986,160 +7017,203 @@ research:
       - STR_UFO_NAVIGATION
   - name: STR_UFO_NAVIGATION
     cost: 450
+    points: 30
     needItem: true
   - name: STR_UFO_POWER_SOURCE
     cost: 450
     needItem: true
   - name: STR_ULTIMATE_CRAFT
     cost: 900
+    points: 30
     dependencies:
       - STR_NEW_FIGHTER_TRANSPORTER
   - name: STR_ZOMBIE_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_CELATID_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_ETHEREAL_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_SILACOID_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_REAPER_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_SNAKEMAN_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_SECTOID_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_SECTOPOD_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_SECTOPOD_CONSTRUCTION
     cost: 600
+    points: 50
     dependencies:
       - STR_SECTOPOD_CORPSE
   - name: STR_MUTON_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_FLOATER_CORPSE
     cost: 180
+    points: 50
     needItem: true
   - name: STR_FLOATER_SOLDIER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_FLOATER_NAVIGATOR
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_HYPER_WAVE_DECODER
   - name: STR_FLOATER_MEDIC
     cost: 192
+    points: 50
     needItem: true
   - name: STR_FLOATER_LEADER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_FLOATER_ENGINEER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_FLOATER_COMMANDER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_SNAKEMAN_SOLDIER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_SNAKEMAN_NAVIGATOR
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_HYPER_WAVE_DECODER
   - name: STR_SNAKEMAN_MEDIC
     cost: 192
+    points: 50
     needItem: true
   - name: STR_SNAKEMAN_LEADER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_SNAKEMAN_ENGINEER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_SNAKEMAN_COMMANDER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_MUTON_SOLDIER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_MUTON_NAVIGATOR
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_HYPER_WAVE_DECODER
   - name: STR_MUTON_MEDIC
     cost: 192
+    points: 50
     needItem: true
   - name: STR_MUTON_LEADER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_MUTON_ENGINEER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_MUTON_COMMANDER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_SECTOID_SOLDIER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_SECTOID_NAVIGATOR
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_HYPER_WAVE_DECODER
   - name: STR_SECTOID_MEDIC
     cost: 192
+    points: 50
     needItem: true
   - name: STR_SECTOID_LEADER
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_PSI_LAB
   - name: STR_SECTOID_ENGINEER
     cost: 192
+    points: 50
     needItem: true
   - name: STR_SECTOID_COMMANDER
     cost: 190
+    points: 50
     needItem: true
     unlocks:
       - STR_PSI_LAB
   - name: STR_ETHEREAL_SOLDIER
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_PSI_LAB
   - name: STR_ETHEREAL_NAVIGATOR
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_HYPER_WAVE_DECODER
       - STR_PSI_LAB
   - name: STR_ETHEREAL_MEDIC
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_PSI_LAB
   - name: STR_ETHEREAL_LEADER
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_PSI_LAB
   - name: STR_ETHEREAL_ENGINEER
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_PSI_LAB
   - name: STR_ETHEREAL_COMMANDER
     cost: 192
+    points: 50
     needItem: true
     unlocks:
       - STR_PSI_LAB

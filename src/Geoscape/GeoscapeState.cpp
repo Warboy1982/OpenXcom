@@ -76,7 +76,10 @@
 #include "../Ruleset/RuleManufacture.h"
 #include "../Savegame/ItemContainer.h"
 #include "../Savegame/TerrorSite.h"
+#include "../Savegame/Region.h"
 #include "../Ruleset/RuleRegion.h"
+#include "../Savegame/Country.h"
+#include "../Ruleset/RuleCountry.h"
 #include "../Ruleset/City.h"
 #include "AlienTerrorState.h"
 #include <ctime>
@@ -810,6 +813,24 @@ void GeoscapeState::time30Minutes()
 	{
 		if ((*u)->isCrashed())
 			continue;
+		// Get area
+		for (std::vector<Region*>::iterator k = _game->getSavedGame()->getRegions()->begin(); k != _game->getSavedGame()->getRegions()->end(); ++k)
+		{
+			if ((*k)->getRules()->insideRegion((*u)->getLongitude(), (*u)->getLatitude()))
+			{
+				//one point per UFO in-flight per half hour
+				(*k)->setActivityAlien(1);
+			}
+		}
+		// Get country
+		for (std::vector<Country*>::iterator k = _game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
+		{
+			if (_globe->targetNearPolar((*u), (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 80000))
+			{
+				//one point per UFO in-flight per half hour
+				(*k)->setActivityAlien(1);
+			}
+		}
 		if (!(*u)->getDetected())
 		{
 			bool detected = false;
@@ -902,6 +923,15 @@ void GeoscapeState::time1Hour()
 	{
 		if ((*i)->getHoursActive() > 0)
 		{
+			// Get area
+			for (std::vector<Region*>::iterator k = _game->getSavedGame()->getRegions()->begin(); k != _game->getSavedGame()->getRegions()->end(); ++k)
+			{
+				if ((*k)->getRules()->insideRegion((*i)->getLongitude(), (*i)->getLatitude()))
+				{
+					//you really shouldn't ignore terror sites.
+					(*k)->setActivityAlien(1000);
+				}
+			}
 			(*i)->setHoursActive((*i)->getHoursActive() - 1);
 		}
 	}

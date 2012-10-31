@@ -24,7 +24,8 @@
 
 namespace OpenXcom
 {
-
+	
+class Region;
 /**
  * Represents a specific funding country.
  * Contains constant info like its location in the
@@ -36,6 +37,7 @@ private:
 	std::string _type;
 	int _fundingMin, _fundingMax;
 	double _labelLon, _labelLat;
+	std::vector<std::string> _regions;
 public:
 	/// Creates a blank country ruleset.
 	RuleCountry(const std::string &type);
@@ -55,6 +57,7 @@ public:
 	double getLabelLongitude() const;
 	/// Gets the country's label Y position.
 	double getLabelLatitude() const;
+	std::vector<std::string> *getRegions();
 };
 
 }

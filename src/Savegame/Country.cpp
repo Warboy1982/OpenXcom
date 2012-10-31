@@ -19,6 +19,11 @@
 #include "Country.h"
 #include "../Ruleset/RuleCountry.h"
 #include "../Engine/RNG.h"
+#include "../Engine/Game.h"
+#include "Region.h"
+#include "../Ruleset/Ruleset.h"
+#include "../Ruleset/RuleRegion.h"
+#include "SavedGame.h"
 
 namespace OpenXcom
 {
@@ -94,6 +99,7 @@ int Country::getFunding() const
  */
 void Country::setFunding(int funding)
 {
+	_change += funding;
 	_funding = funding;
 }
 
@@ -106,4 +112,47 @@ int Country::getChange() const
 	return _change;
 }
 
+/**
+ * Resets the country's funding change since last month.
+ */
+void Country::resetChange()
+{
+	_change = 0;
+}
+/*
+ * Keith Richards would be so proud
+ */
+int Country::getSatisfaction()
+{
+	for (std::vector<std::string>::iterator i = getRules()->getRegions()->begin(); i != getRules()->getRegions()->end(); ++i)
+	{
+		for (std::vector<Region*>::iterator r = _game->getSavedGame()->getRegions()->begin(); r != _game->getSavedGame()->getRegions()->end(); ++r)
+		{
+			_activityXcom += (*r)->getActivityXcom();
+			_activityAlien += (*r)->getActivityAlien();
+		}
+	}
+
+	return _activityXcom - _activityAlien;
+}
+
+void Country::setActivityXcom(int activity)
+{
+	_activityXcom += activity;
+}
+
+void Country::setActivityAlien(int activity)
+{
+	_activityAlien += activity;
+}
+
+int Country::getActivityXcom() const
+{
+	return _activityXcom;
+}
+
+int Country::getActivityAlien() const
+{
+	return _activityAlien;
+}
 }

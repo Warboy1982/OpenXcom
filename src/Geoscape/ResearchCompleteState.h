@@ -28,6 +28,7 @@ class TextButton;
 class Text;
 class Base;
 class RuleResearch;
+class Country;
 
 /**
  * Window which inform the player that a research project is finished.

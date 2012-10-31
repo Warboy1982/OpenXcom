@@ -43,6 +43,10 @@
 #include "../Engine/Sound.h"
 #include "../Savegame/Base.h"
 #include "../Savegame/CraftWeaponProjectile.h"
+#include "../Savegame/Region.h"
+#include "../Ruleset/RuleRegion.h"
+#include "../Savegame/Country.h"
+#include "../Ruleset/RuleCountry.h"
 #include <cstdlib>
 
 namespace OpenXcom
@@ -953,6 +957,22 @@ void DogfightState::move()
 	// End dogfight if craft is destroyed.
 	if(!_end && _craft->isDestroyed())
 	{
+			// Get country
+			for (std::vector<Country*>::iterator k = _game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
+			{
+				if (_globe->targetNearPolar(_craft, (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 80000))
+				{
+					(*k)->setActivityXcom(_craft->getRules()->getScore());
+				}
+			}
+			// Get region
+			for (std::vector<Region*>::iterator k = _game->getSavedGame()->getRegions()->begin(); k != _game->getSavedGame()->getRegions()->end(); ++k)
+			{
+				if ((*k)->getRules()->insideRegion(_craft->getLongitude(), _craft->getLatitude()))
+				{
+					(*k)->setActivityXcom(_craft->getRules()->getScore());
+				}
+			}
 		setStatus("STR_INTERCEPTOR_DESTROYED");
 		_timeout += 30;
 		_game->getResourcePack()->getSoundSet("GEO.CAT")->getSound(13)->play();
@@ -973,6 +993,22 @@ void DogfightState::move()
 				setStatus("STR_UFO_DESTROYED");
 				_game->getResourcePack()->getSoundSet("GEO.CAT")->getSound(10)->play(); //11
 			}
+			// Get country
+			for (std::vector<Country*>::iterator k = _game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
+			{
+				if (_globe->targetNearPolar(_ufo, (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 80000))
+				{
+					(*k)->setActivityXcom(_ufo->getRules()->getScore()*2);
+				}
+			}
+			// Get region
+			for (std::vector<Region*>::iterator k = _game->getSavedGame()->getRegions()->begin(); k != _game->getSavedGame()->getRegions()->end(); ++k)
+			{
+				if ((*k)->getRules()->insideRegion(_ufo->getLongitude(), _craft->getLatitude()))
+				{
+					(*k)->setActivityXcom(_ufo->getRules()->getScore()*2);
+				}
+			}
 			_destroyUfo = true;
 		}
 		else
@@ -981,6 +1017,23 @@ void DogfightState::move()
 			{
 				setStatus("STR_UFO_CRASH_LANDS");
 				_game->getResourcePack()->getSoundSet("GEO.CAT")->getSound(10)->play(); //10
+			}
+			
+			// Get country
+			for (std::vector<Country*>::iterator k = _game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
+			{
+				if (_globe->targetNearPolar(_ufo, (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 80000))
+				{
+					(*k)->setActivityXcom(_ufo->getRules()->getScore());
+				}
+			}
+			// Get region
+			for (std::vector<Region*>::iterator k = _game->getSavedGame()->getRegions()->begin(); k != _game->getSavedGame()->getRegions()->end(); ++k)
+			{
+				if ((*k)->getRules()->insideRegion(_ufo->getLongitude(), _craft->getLatitude()))
+				{
+					(*k)->setActivityXcom(_ufo->getRules()->getScore());
+				}
 			}
 			if (!_globe->insideLand(_ufo->getLongitude(), _ufo->getLatitude()))
 			{
