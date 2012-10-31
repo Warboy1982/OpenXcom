@@ -663,6 +663,9 @@
     <ClCompile Include="Geoscape\TrainingState.cpp">
       <Filter>Geoscape</Filter>
     </ClCompile>
+    <ClCompile Include="Battlescape\NoContainmentState.cpp">
+      <Filter>Battlescape</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basescape\ManufactureState.h">
@@ -1329,6 +1332,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Logger.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Battlescape\NoContainmentState.h">
+      <Filter>Battlescape</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

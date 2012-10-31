@@ -178,6 +178,7 @@ public:
 	void removeProduction (Production * p);
 	/// Get the list of Base Production's
 	const std::vector<Production *> & getProductions () const;
+	int getAvailableAliens() const;
 };
 
 }

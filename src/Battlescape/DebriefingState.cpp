@@ -41,6 +41,7 @@
 #include "../Savegame/Vehicle.h"
 #include "../Savegame/TerrorSite.h"
 #include "PromotionsState.h"
+#include "NoContainmentState.h"
 #include "CannotReequipState.h"
 #include "../Geoscape/Globe.h"
 #include "../Savegame/Country.h"
@@ -124,6 +125,7 @@ DebriefingState::DebriefingState(Game *game) : State(game)
 	_lstTotal->setColumns(2, 244, 64);
 	_lstTotal->setDot(true);
 	location = 0;
+	noContainment = false;
 	prepareDebriefing();
 
 	int total = 0, statsY = 0, recoveryY = 0;
@@ -220,6 +222,10 @@ void DebriefingState::btnOkClick(Action *action)
 	if (!_missingItems.empty())
 	{
 		_game->pushState(new CannotReequipState(_game, _missingItems));
+	}
+	if (noContainment)
+	{	
+		_game->pushState (new NoContainmentState(_game));
 	}
 }
 
@@ -399,6 +405,17 @@ void DebriefingState::prepareDebriefing()
 			if (faction == FACTION_HOSTILE && (!aborted || (*j)->isInExitArea()))
 			{
 				addStat("STR_LIVE_ALIENS_RECOVERED", 1, value*2);
+				// silly vanilla behaviour - no limit to alien containment.
+				if(base->getAvailableAliens())
+				{
+				std::stringstream ss;
+				ss << "STR_" << (*j)->getType();
+				base->getItems()->addItem(ss.str(), 1);
+				}
+				else
+				{
+					noContainment = true;
+				}
 			}
 		}
 		else

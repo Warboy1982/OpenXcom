@@ -123,3 +123,50 @@ STR_SECTOPOD_DISRUPTOR
 Sectopod/Disruptor
 STR_SECTOPOD_RAIL
 Sectopod/Railgun
+STR_SECTOID_SOLDIER
+Sectoid Soldier
+STR_SECTOID_ENGINEER
+Sectoid Engineer
+STR_SECTOID_MEDIC
+Sectoid Medic
+STR_SECTOID_NAVIGATOR
+Sectoid Navigator
+STR_SECTOID_LEADER
+Sectoid Leader
+STR_SECTOID_COMMANDER
+Sectoid Commander
+STR_FLOATER_SOLDIER
+Floater Soldier
+STR_FLOATER_ENGINEER
+Floater Engineer
+STR_FLOATER_MEDIC
+Floater Medic
+STR_FLOATER_NAVIGATOR
+Floater Navigator
+STR_FLOATER_LEADER
+Floater Leader
+STR_FLOATER_COMMANDER
+Floater Commander
+STR_SNAKEMAN_SOLDIER
+Snakeman Soldier
+STR_SNAKEMAN_ENGINEER
+Snakeman Engineer
+STR_SNAKEMAN_NAVIGATOR
+Snakeman Navigator
+STR_SNAKEMAN_LEADER
+Snakeman Leader
+STR_SNAKEMAN_COMMANDER
+Snakeman Commander
+STR_MUTON_SOLDIER
+Muton Soldier
+STR_MUTON_NAVIGATOR
+Muton Navigator
+STR_MUTON_ENGINEER
+Muton Engineer
+STR_ETHEREAL_SOLDIER
+Ethereal Soldier
+STR_ETHEREAL_LEADER
+Ethereal Leader
+STR_ETHEREAL_COMMANDER
+Ethereal Commander
+

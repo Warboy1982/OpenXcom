@@ -25,6 +25,7 @@ soldiers need a new information section for days dead, and only actually REMOVE 
     
     
     BASE:
+alien containment.
 make wounded soldiers transferrable at double the usual time, with no healing en-route
 sattelite defense network? - extra base with free planet wide hyper-wave decode, 
     quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
