@@ -496,11 +496,11 @@ facilities:
     mapName: XBASE_02
   - type: STR_MEDICAL_BAY
     spriteShape: 1
-    spriteFacility: 19
+    spriteFacility: 55
     buildCost: 800000
     buildTime: 30
     monthlyCost: 50000
-    meds: 50
+    meds: 30
     mapName: XBASE_02
   - type: STR_WORKSHOP
     spriteShape: 1
@@ -512,7 +512,7 @@ facilities:
     mapName: XBASE_03
   - type: STR_TRAINING_FACILITY
     spriteShape: 1
-    spriteFacility: 31
+    spriteFacility: 56
     buildCost: 650000
     buildTime: 30
     monthlyCost: 16000
@@ -565,10 +565,10 @@ facilities:
     requires:
       - STR_CLONING LAB
     spriteShape: 1
-    spriteFacility: 25
+    spriteFacility: 57
     buildCost: 1600000
     buildTime: 45
-    clonelabs: 50
+    clonelabs: 2
     monthlyCost: 30000
     mapName: XBASE_08
   - type: STR_LASER_DEFENSES
@@ -3798,6 +3798,27 @@ armors:
       - 1.0
       - 1.0
       - 1.0
+  - type: SECTOPOD_ARMOR2
+    spriteSheet: TANK2.PCK
+    corpseItem: SECTOPOD_CORPSE_
+    frontArmor: 145
+    sideArmor: 130
+    rearArmor: 100
+    underArmor: 90
+    drawingRoutine: 10
+    size: 2
+    modifiedWalk: 23
+    damageModifier:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 0.8
+      - 1.5
+      - 0.8
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
   - type: TANK_ARMOR
     spriteSheet: TANKS.PCK
     corpseItem: TANK_CORPSE_
@@ -4638,7 +4659,7 @@ units:
       psiStrength: 100
       psiSkill: 0
       melee: 0
-    armor: SECTOPOD_ARMOR
+    armor: SECTOPOD_ARMOR2
     standHeight: 15
     kneelHeight: 15
     loftemps: 4
@@ -4658,7 +4679,7 @@ units:
       psiStrength: 100
       psiSkill: 0
       melee: 0
-    armor: SECTOPOD_ARMOR
+    armor: SECTOPOD_ARMOR2
     standHeight: 15
     kneelHeight: 15
     loftemps: 4

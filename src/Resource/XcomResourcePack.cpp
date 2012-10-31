@@ -468,9 +468,10 @@ void XcomResourcePack::loadBattlescapeResources()
 							"XCOM_4.PCK",
 							"POLICEM.PCK",
 							"POLICEF.PCK",
-							"G_SOLDIER.PCK"};
+							"G_SOLDIER.PCK",
+							"TANK2.PCK"};
 
-	for (int i = 0; i < 25; ++i)
+	for (int i = 0; i < 26; ++i)
 	{
 		std::stringstream s;
 		s << "UNITS/" << usets[i];

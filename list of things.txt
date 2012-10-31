@@ -8,6 +8,11 @@ make funding nations do something
 
     
     UNITS:
+Battle mech - legs of a sectopod, body of a tank, dual weapons, mayhem.
+make all weapons available for all tank types 
+    battlemechs will get a free dumb-fire rocket launcher
+    ground tanks will get sonic detector arrays (motion scanner) and better armour
+    hovertanks will get.... screwed because they can already fly.
 scanner tank - no weapons, reveals units through walls with a "deep scan" (costs a lot of TUs) - LCSand
 add sailors for port terror missions. give them all knives and surly dispositions.
 Cult of Sirius! (rank 8 alien, human cultist, 1 in 6 chance for 3-5 humans)
@@ -28,13 +33,6 @@ research of reproduction leads to new base facility - cloning facility
     alien DNA to improve psychic defence by x amount at the cost of... strength? health? stamina? all of the above?
     soldier revival will show up as a research project with an additional sub-menu that lists all "dead" soldiers
     less than 2 days old.
-don't impose a limit on the number of live aliens you can HAVE, but check... every hour? to see if the number of
-    live aliens exceeds the capacity of the containment facility, and if so, start a "containment breach" mission - 
-    arm terrorists, keep the rest unarmed, but make sure the AI prioritizes making them pick up a weapon ASAP - 
-    putting general stores near alien containment is a BAD IDEA, keeping live chryssalids is just asking for trouble.
-convert captured aliens to fight for you using BRAINWASHING FACILITY 
-    (the mere existance of such a facility reduces funding nation's disposition?) 
-    - cannot convert terror units, chryssalids would go badly.
     
     MAPS:
 add expanded terror sites
@@ -55,6 +53,7 @@ use weapon mount on craft in missions?
 
 
     DONE:
+all new facilities now have new graphics, now they need new maps.
 looks like no mechanic exists for psi training? fixed.
 Training Room for xcom agents using similar rules to X-com apocalypse - not similar, exactly the damn same.
 number of aliens on veteran and genius should be the average of beginner/experienced and superhuman
