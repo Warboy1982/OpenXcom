@@ -623,8 +623,9 @@ int Tile::getAnimationOffset() const
  * Add an item on the tile.
  * @param item
  */
-void Tile::addItem(BattleItem *item)
+void Tile::addItem(BattleItem *item, RuleInventory *ground)
 {
+	item->setSlot(ground);
 	_inventory.push_back(item);
 	item->setTile(this);
 }

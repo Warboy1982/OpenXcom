@@ -76,8 +76,6 @@ public:
 	int getSize() const;
 	/// Gets damage modifier.
 	float getDamageModifier(ItemDamageType dt);
-	/// Use alternate walk sounds?
-	int getModifiedWalk() const;
 	/// use alternate render method?
 	int getDrawMethod() const;
 };

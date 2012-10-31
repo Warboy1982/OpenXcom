@@ -53,6 +53,7 @@ BattleUnit::BattleUnit(Soldier *soldier, UnitFaction faction) : _faction(faction
 	_kneelHeight = soldier->getRules()->getKneelHeight();
 	_loftemps = soldier->getRules()->getLoftemps();
 	_deathSound = 0; // this one is hardcoded
+	_moveSound = -1; // this one is hardcoded
 	_intelligence = 2;
 	_aggression = 1;
 	_specab = SPECAB_NONE;
@@ -106,6 +107,7 @@ BattleUnit::BattleUnit(Unit *unit, UnitFaction faction, int id, Armor *armor) : 
 	_kneelHeight = unit->getKneelHeight();
 	_loftemps = unit->getLoftemps();
 	_deathSound = unit->getDeathSound();
+	_moveSound = unit->getMoveSound();
 	_intelligence = unit->getIntelligence();
 	_aggression = unit->getAggression();
 	_specab = (SpecialAbility) unit->getSpecialAbility();
@@ -1866,6 +1868,14 @@ int BattleUnit::getValue() const
 int BattleUnit::getDeathSound() const
 {
 	return _deathSound;
+}
+/*
+ * Get the unit's move sound.
+ * @return id.
+ */
+int BattleUnit::getMoveSound() const
+{
+	return _moveSound;
 }
 
 /**

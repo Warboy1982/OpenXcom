@@ -98,10 +98,6 @@ void Armor::load(const YAML::Node &node)
 			i.second() >> a;
 			_movementType = (MovementType)a;
 		}
-		else if (key == "modifiedWalk")
-		{
-			i.second() >> _modifiedWalk;
-		}
 		else if (key == "drawMethod")
 		{
 			i.second() >> _drawMethod;
@@ -141,7 +137,6 @@ void Armor::save(YAML::Emitter &out) const
 	out << YAML::Key << "underArmor" << YAML::Value << _underArmor;
 	out << YAML::Key << "drawingRoutine" << YAML::Value << _drawingRoutine;
 	out << YAML::Key << "movementType" << YAML::Value << _movementType;
-	out << YAML::Key << "modifiedWalk" << YAML::Value << _modifiedWalk;
 	out << YAML::Key << "drawMethod" << YAML::Value << _drawMethod;
 	out << YAML::Key << "size" << YAML::Value << _size;
 	out << YAML::Key << "damageModifier" << YAML::Value << YAML::BeginSeq;
@@ -268,11 +263,6 @@ int Armor::getSize() const
 float Armor::getDamageModifier(ItemDamageType dt)
 {
 	return _damageModifier[(int)dt];
-}
-
-int Armor::getModifiedWalk() const
-{
-	return _modifiedWalk;
 }
 
 int Armor::getDrawMethod() const

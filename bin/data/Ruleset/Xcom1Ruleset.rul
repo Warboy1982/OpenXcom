@@ -3681,7 +3681,6 @@ armors:
     underArmor: 12
     drawingRoutine: 1
     movementType: 1
-    modifiedWalk: 15
     damageModifier:
       - 1.0
       - 0.8
@@ -3702,7 +3701,6 @@ armors:
     underArmor: 12
     drawingRoutine: 1
     movementType: 1
-    modifiedWalk: 15
     damageModifier:
       - 1.0
       - 0.7
@@ -3723,7 +3721,6 @@ armors:
     underArmor: 16
     drawingRoutine: 1
     movementType: 1
-    modifiedWalk: 15
     damageModifier:
       - 1.0
       - 0.6
@@ -3764,7 +3761,6 @@ armors:
     rearArmor: 28
     underArmor: 4
     drawingRoutine: 5
-    modifiedWalk: 38
     size: 2
     damageModifier:
       - 1.0
@@ -3786,7 +3782,6 @@ armors:
     underArmor: 90
     drawingRoutine: 5
     size: 2
-    modifiedWalk: 23
     damageModifier:
       - 1.0
       - 1.0
@@ -3963,7 +3958,6 @@ armors:
     rearArmor: 16
     underArmor: 12
     drawingRoutine: 6
-    modifiedWalk: 0
     damageModifier:
       - 1.0
       - 1.2
@@ -3983,7 +3977,6 @@ armors:
     rearArmor: 22
     underArmor: 20
     drawingRoutine: 6
-    modifiedWalk: 0
     damageModifier:
       - 0.9
       - 1.1
@@ -4003,7 +3996,6 @@ armors:
     rearArmor: 22
     underArmor: 20
     drawingRoutine: 6
-    modifiedWalk: 0
     damageModifier:
       - 1.0
       - 1.0
@@ -4083,7 +4075,6 @@ armors:
     rearArmor: 35
     underArmor: 35
     drawingRoutine: 4
-    modifiedWalk: 15
     damageModifier:
       - 0.9
       - 0.9
@@ -4103,7 +4094,6 @@ armors:
     rearArmor: 40
     underArmor: 40
     drawingRoutine: 4
-    modifiedWalk: 15
     damageModifier:
       - 0.8
       - 0.8
@@ -4123,7 +4113,6 @@ armors:
     rearArmor: 40
     underArmor: 40
     drawingRoutine: 4
-    modifiedWalk: 15
     damageModifier:
       - 0.7
       - 0.7
@@ -4181,7 +4170,6 @@ armors:
     rearArmor: 50
     underArmor: 10
     drawingRoutine: 8
-    modifiedWalk: 47
     damageModifier:
       - 1.0
       - 1.0
@@ -4201,7 +4189,6 @@ armors:
     rearArmor: 50
     underArmor: 10
     drawingRoutine: 9
-    modifiedWalk: 16
     damageModifier:
       - 1.0
       - 1.0
@@ -4402,6 +4389,7 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
+    movesound: 40
     intelligence: 5
     aggression: 1
     specab: 1
@@ -4426,6 +4414,7 @@ units:
     loftemps: 3
     value: 12
     deathSound: 10
+    movesound: 15
     intelligence: 4
     aggression: 2
   - type: FLOATER_ENGINEER
@@ -4449,6 +4438,7 @@ units:
     loftemps: 3
     value: 12
     deathSound: 10
+    movesound: 15
     intelligence: 7
     aggression: 2
   - type: FLOATER_NAVIGATOR
@@ -4472,6 +4462,7 @@ units:
     loftemps: 3
     value: 12
     deathSound: 10
+    movesound: 15
     intelligence: 5
     aggression: 2
   - type: FLOATER_MEDIC
@@ -4495,6 +4486,7 @@ units:
     loftemps: 3
     value: 16
     deathSound: 10
+    movesound: 15
     intelligence: 6
     aggression: 1
   - type: FLOATER_LEADER
@@ -4518,6 +4510,7 @@ units:
     loftemps: 3
     value: 25
     deathSound: 10
+    movesound: 15
     intelligence: 8
     aggression: 0
   - type: FLOATER_COMMANDER
@@ -4541,6 +4534,7 @@ units:
     loftemps: 3
     value: 35
     deathSound: 10
+    movesound: 15
     intelligence: 8
     aggression: 0
   - type: REAPER
@@ -4562,7 +4556,8 @@ units:
     kneelHeight: 16
     loftemps: 4
     value: 25
-    deathSound: 48
+    deathSound: 23
+    movesound: 23
     intelligence: 2
     aggression: 2
   - type: TANK_CANNON
@@ -4585,6 +4580,7 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
+    movesound: 14
   - type: TANK_LASER_CANNON
     race: STR_TANK_LASER_CANNON
     stats:
@@ -4605,6 +4601,7 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
+    movesound: 14
   - type: TANK_ROCKET_LAUNCHER
     race: STR_TANK_ROCKET_LAUNCHER
     stats:
@@ -4625,6 +4622,7 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
+    movesound: 14
   - type: HOVERTANK_PLASMA
     race: STR_HOVERTANK_PLASMA
     stats:
@@ -4645,6 +4643,7 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
+    movesound: 40
   - type: SECTOPOD_DISRUPTOR
     race: STR_SECTOPOD_DISRUPTOR
     stats:
@@ -4665,6 +4664,7 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
+    movesound: 23
   - type: SECTOPOD_RAIL
     race: STR_SECTOPOD_RAIL
     stats:
@@ -4685,6 +4685,7 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
+    movesound: 23
   - type: HOVERTANK_LAUNCHER
     race: STR_HOVERTANK_LAUNCHER
     stats:
@@ -4705,6 +4706,7 @@ units:
     loftemps: 4
     value: 20
     deathSound: 23
+    movesound: 40
   - type: MALE_CIVILIAN
     race: STR_CIVILIAN
     stats:
@@ -4831,6 +4833,7 @@ units:
     deathSound: 8
     intelligence: 2
     aggression: 2
+    movesound: 0
   - type: SNAKEMAN_NAVIGATOR
     race: STR_SNAKEMAN
     rank: STR_LIVE_NAVIGATOR
@@ -4854,6 +4857,7 @@ units:
     deathSound: 8
     intelligence: 3
     aggression: 2
+    movesound: 0
   - type: SNAKEMAN_ENGINEER
     race: STR_SNAKEMAN
     rank: STR_LIVE_ENGINEER
@@ -4877,6 +4881,7 @@ units:
     deathSound: 8
     intelligence: 4
     aggression: 2
+    movesound: 0
   - type: SNAKEMAN_LEADER
     race: STR_SNAKEMAN
     rank: STR_LIVE_LEADER
@@ -4900,6 +4905,7 @@ units:
     deathSound: 8
     intelligence: 5
     aggression: 2  
+    movesound: 0
   - type: SNAKEMAN_COMMANDER
     race: STR_SNAKEMAN
     rank: STR_LIVE_COMMANDER
@@ -4923,6 +4929,7 @@ units:
     deathSound: 8
     intelligence: 6
     aggression: 2 
+    movesound: 0
   - type: MUTON_SOLDIER
     race: STR_MUTON
     rank: STR_LIVE_SOLDIER
@@ -5013,6 +5020,7 @@ units:
     loftemps: 3
     value: 20
     deathSound: 9
+    movesound: 15
     intelligence: 6
     aggression: 1     
   - type: ETHEREAL_LEADER
@@ -5036,6 +5044,7 @@ units:
     loftemps: 3
     value: 30
     deathSound: 9
+    movesound: 15
     intelligence: 7
     aggression: 1    
   - type: ETHEREAL_COMMANDER
@@ -5059,6 +5068,7 @@ units:
     loftemps: 3
     value: 40
     deathSound: 9
+    movesound: 15
     intelligence: 8
     aggression: 1 
   - type: CHRYSSALID
@@ -5105,6 +5115,7 @@ units:
     loftemps: 2
     value: 20
     deathSound: 51
+    movesound: 47
     intelligence: 3
     aggression: 2
   - type: CELATID
@@ -5128,6 +5139,7 @@ units:
     loftemps: 2
     value: 20
     deathSound: 51
+    movesound: 16
     intelligence: 3
     aggression: 2
   - type: SECTOPOD
@@ -5151,6 +5163,7 @@ units:
     loftemps: 2
     value: 30
     deathSound: 23
+    movesound: 23
     specab: 1
     intelligence: 4
     aggression: 1

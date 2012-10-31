@@ -327,7 +327,8 @@ void BattlescapeGenerator::run()
 			{
 				for (int count=0; count < i->second; count++)
 				{
-					_craftInventoryTile->addItem(new BattleItem(_game->getRuleset()->getItem(i->first), _save->getCurrentItemId()));
+					_craftInventoryTile->addItem(new BattleItem(_game->getRuleset()->getItem(i->first), _save->getCurrentItemId()),
+						_game->getRuleset()->getInventory("STR_GROUND"));
 				}
 			}
 		}
@@ -342,7 +343,8 @@ void BattlescapeGenerator::run()
 				{
 					for (int count=0; count < i->second; count++)
 					{
-						_craftInventoryTile->addItem(new BattleItem(_game->getRuleset()->getItem(i->first), _save->getCurrentItemId()));
+				        _craftInventoryTile->addItem(new BattleItem(_game->getRuleset()->getItem(i->first), _save->getCurrentItemId()),
+					        _game->getRuleset()->getInventory("STR_GROUND"));
 					}
 					_base->getItems()->removeItem(i->first, i->second);
 				}
@@ -356,7 +358,8 @@ void BattlescapeGenerator::run()
 				{
 					for (int count=0; count < i->second; count++)
 					{
-						_craftInventoryTile->addItem(new BattleItem(_game->getRuleset()->getItem(i->first), _save->getCurrentItemId()));
+						_craftInventoryTile->addItem(new BattleItem(_game->getRuleset()->getItem(i->first), _save->getCurrentItemId()),
+							_game->getRuleset()->getInventory("STR_GROUND"));
 					}
 				}
 			}
@@ -622,16 +625,12 @@ BattleUnit *BattlescapeGenerator::addCivilian(Unit *rules)
  */
 BattleItem* BattlescapeGenerator::addItem(BattleItem *item)
 {
-	bool placed = false, loaded = false;
+	bool loaded = false;
 	RuleInventory *righthand = _game->getRuleset()->getInventory("STR_RIGHT_HAND");
 
 	switch (item->getRules()->getBattleType())
 	{
 	case BT_AMMO:
-		if (item->getSlot() == righthand)
-		{
-			placed = true;
-		}
 		break;
 	case BT_GRENADE:
 	case BT_PROXIMITYGRENADE:
@@ -645,7 +644,6 @@ BattleItem* BattlescapeGenerator::addItem(BattleItem *item)
 			{
 				item->moveToOwner((*i));
 				item->setSlot(_game->getRuleset()->getInventory("STR_BELT"));
-				placed = true;
 				break;
 			}
 		}
@@ -678,8 +676,7 @@ BattleItem* BattlescapeGenerator::addItem(BattleItem *item)
 						if(!(*i)->getItem("STR_LEFT_HAND")->getRules()->isTwoHanded() && !item->getRules()->isTwoHanded())
 						{
 						item->moveToOwner((*i));
-						item->setSlot(_game->getRuleset()->getInventory("STR_RIGHT_HAND"));
-						placed = true;
+						item->setSlot(righthand);
 						}
 					}
 					else
@@ -687,8 +684,7 @@ BattleItem* BattlescapeGenerator::addItem(BattleItem *item)
 						if(item->getRules()->getWeight() > 10 && (*i)->getStats()->strength < 35 )
 							continue;
 						item->moveToOwner((*i));
-						item->setSlot(_game->getRuleset()->getInventory("STR_RIGHT_HAND"));
-						placed = true;
+						item->setSlot(righthand);
 					}
 				}
 			}
@@ -704,14 +700,12 @@ BattleItem* BattlescapeGenerator::addItem(BattleItem *item)
 					{
 						item->moveToOwner((*i));
 						item->setSlot(_game->getRuleset()->getInventory("STR_LEFT_HAND"));
-						placed = true;
 					}
 				}
 				else
 				{
 					item->moveToOwner((*i));
 					item->setSlot(_game->getRuleset()->getInventory("STR_LEFT_HAND"));
-					placed = true;
 				}
 		}
 		break;
@@ -727,25 +721,17 @@ BattleItem* BattlescapeGenerator::addItem(BattleItem *item)
 				item->setSlot(_game->getRuleset()->getInventory("STR_BELT"));
 				item->setSlotX(3);
 				item->setSlotY(0);
-				placed = true;
 				break;
 			}
 		}
 		break;
 	default:
-		placed = false;
 		break;
 	}
 
 	_save->getItems()->push_back(item);
 	item->setXCOMProperty(true);
-
-	// if we did not auto equip the item, place it on the ground
-	if (!placed)
-	{
-		item->setSlot(_game->getRuleset()->getInventory("STR_GROUND"));
-	}
-
+	
 	return item;
 }
 
@@ -823,7 +809,7 @@ BattleItem* BattlescapeGenerator::addItem(RuleItem *item, BattleUnit *unit)
 	default: break;
 	}
 
-	// if we did not auto equip the item, place it on the ground
+	// if we could not equip the item, delete it
 	if (!placed)
 	{
 		delete bi;
@@ -1444,12 +1430,12 @@ void BattlescapeGenerator::fuelPowerSources()
 	RuleItem *elerium = _game->getRuleset()->getItem("STR_ELERIUM_115");
 	for (int i = 0; i < _save->getWidth() * _save->getLength() * _save->getHeight(); ++i)
 	{
-		if (_save->getTiles()[i]->getMapData(MapData::O_OBJECT) && _save->getTiles()[i]->getMapData(MapData::O_OBJECT)->getSpecialType() == UFO_POWER_SOURCE)
+		if (_save->getTiles()[i]->getMapData(MapData::O_OBJECT)
+			&& _save->getTiles()[i]->getMapData(MapData::O_OBJECT)->getSpecialType() == UFO_POWER_SOURCE)
 		{
-			item = new BattleItem(elerium, _save->getCurrentItemId());
-			_save->getTiles()[i]->addItem(item);
-			_save->getItems()->push_back(item);
-			item->setSlot(ground);
+			BattleItem *elerium = new BattleItem(_game->getRuleset()->getItem("STR_ELERIUM_115"), _save->getCurrentItemId());
+			_save->getItems()->push_back(elerium);
+			_save->getTiles()[i]->addItem(elerium, _game->getRuleset()->getInventory("STR_GROUND"));
 		}
 	}
 }
@@ -1462,7 +1448,8 @@ void BattlescapeGenerator::explodePowerSources()
 {
 	for (int i = 0; i < _save->getWidth() * _save->getLength() * _save->getHeight(); ++i)
 	{
-		if (_save->getTiles()[i]->getMapData(MapData::O_OBJECT) && _save->getTiles()[i]->getMapData(MapData::O_OBJECT)->getSpecialType() == UFO_POWER_SOURCE && RNG::generate(0,100) < 75)
+		if (_save->getTiles()[i]->getMapData(MapData::O_OBJECT)
+			&& _save->getTiles()[i]->getMapData(MapData::O_OBJECT)->getSpecialType() == UFO_POWER_SOURCE && RNG::generate(0,100) < 75)
 		{
 			Position pos;
 			pos.x = _save->getTiles()[i]->getPosition().x*16;
