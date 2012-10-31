@@ -122,7 +122,7 @@ void ConfirmLandingState::btnYesClick(Action *action)
 	TerrorSite* t = dynamic_cast<TerrorSite*>(_craft->getDestination());
 	if (u != 0)
 	{
-		SavedBattleGame *bgame = new SavedBattleGame();
+		SavedBattleGame *bgame = new SavedBattleGame(_game->getSavedGame());
 		_game->getSavedGame()->setBattleGame(bgame);
 		bgame->setMissionType("STR_UFO_CRASH_RECOVERY");
 		BattlescapeGenerator bgen = BattlescapeGenerator(_game);
@@ -144,7 +144,7 @@ void ConfirmLandingState::btnYesClick(Action *action)
 	}
 	else if (t != 0)
 	{
-		SavedBattleGame *bgame = new SavedBattleGame();
+		SavedBattleGame *bgame = new SavedBattleGame(_game->getSavedGame());
 		_game->getSavedGame()->setBattleGame(bgame);
 		bgame->setMissionType("STR_TERROR_MISSION");
 		BattlescapeGenerator bgen = BattlescapeGenerator(_game);

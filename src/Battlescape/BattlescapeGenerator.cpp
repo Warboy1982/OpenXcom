@@ -499,7 +499,9 @@ void BattlescapeGenerator::deployAliens(AlienRace *race, AlienDeployment *deploy
 		std::string alienName = race->getMember((*d).alienRank);
 
 		int quantity = (*d).lowQty + RNG::generate(0, (*d).dQty);
-		if( _game->getSavedGame()->getDifficulty() > 3 )
+		if( _game->getSavedGame()->getDifficulty() > 1 )
+			quantity = (*d).lowQty+(((*d).highQty-(*d).lowQty)/2) + RNG::generate(0, (*d).dQty);
+		else if( _game->getSavedGame()->getDifficulty() > 3 )
 			quantity = (*d).highQty + RNG::generate(0, (*d).dQty);
 		for (int i = 0; i < quantity; i++)
 		{
@@ -525,7 +527,7 @@ void BattlescapeGenerator::deployAliens(AlienRace *race, AlienDeployment *deploy
 				}
 			}
 			// terrorist alien's equipment is a special case - they are fitted with a weapon which is the alien's name with suffix _WEAPON
-			if ((*d).alienRank == AR_TERRORIST)
+			if ((*d).alienRank == AR_TERRORIST||(*d).alienRank == AR_TERRORIST2)
 			{
 				std::stringstream terroristWeapon;
 				terroristWeapon << alienName;

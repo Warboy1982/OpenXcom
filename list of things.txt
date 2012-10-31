@@ -13,19 +13,14 @@ add sailors for port terror missions. give them all knives and surly disposition
 Cult of Sirius! (rank 8 alien, human cultist, 1 in 6 chance for 3-5 humans)
 Inventory screens for all units in game
 make aliens pick up weapons if any nearby and none in hand
-grenade likelihood should be affected by difficulty
-aliens will "remember" where you are for an extra turn per difficulty level
 aliens get a "free peek" on turn 20 (screw you, yes they do.)
 alien stats should be affected by difficulty
-number of aliens on veteran and genius should be the average of beginner/experienced and superhuman
 soldiers need a new information section for days dead, and only actually REMOVE them from the game after this 
     counter reaches... 2 days? after which decomposition kicks in and the scientists "clean out the fridge"
     
     
     BASE:
-make wounded soldiers transferrable (at double the usual time, with no healing en-route) because medical bases
-looks like no mechanic exists for psi training? fix. make a method for firearms training while you're at it.
-Training Room for xcom agents using similar rules to X-com apocalypse
+make wounded soldiers transferrable at double the usual time, with no healing en-route
 sattelite defense network? - extra base with free planet wide hyper-wave decode, 
     quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
 research of reproduction leads to new base facility - cloning facility 
@@ -60,9 +55,14 @@ use weapon mount on craft in missions?
 
 
     DONE:
+looks like no mechanic exists for psi training? fixed.
+Training Room for xcom agents using similar rules to X-com apocalypse - not similar, exactly the damn same.
+number of aliens on veteran and genius should be the average of beginner/experienced and superhuman
+grenade likelihood is affected by difficulty
+aliens will "remember" where you are for an extra turn per difficulty level
 aliens now get activity points for flying around, or if you ignore a terror mission.
 you now get activity points (with regions and countries) for shooting down UFOs, carrying out missions and completing research
-funky new sprite for guardian implemented :D
+funky new sprite for sentinel implemented :D
 psi training works, yeehaw.
 New ufo layouts for variety
 tank shells explode.
@@ -75,8 +75,8 @@ complete armour rework
 complete weapon damage workover
 hovertank turret placement fixed.
 snakemen slither!
-hovertanks and laser tanks and guardian fighters, oh my!
-added Guardian class interceptor (costs more, is better, funky new sprite)
+hovertanks and laser tanks and sentinel fighters, oh my!
+added sentinel class interceptor (costs more, is better, funky new sprite)
 tweaked firestorm to be actually good
 set avenger to have one weapon slot only, hybrid transports don't get to be effective fighter craft too, sorry.
 all missing alien races re-implemented, including Chryssalids, and their evil powers.

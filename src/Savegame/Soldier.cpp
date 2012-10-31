@@ -106,6 +106,8 @@ void Soldier::load(const YAML::Node &node, const Ruleset *rule)
 	node["missions"] >> _missions;
 	node["kills"] >> _kills;
 	node["recovery"] >> _recovery;
+	node["training"] >> _training;
+	node["psiTraining"] >> _psiTraining;
 	std::string armor;
 	node["armor"] >> armor;
 	_armor = rule->getArmor(armor);
@@ -133,6 +135,8 @@ void Soldier::save(YAML::Emitter &out) const
 	out << YAML::Key << "missions" << YAML::Value << _missions;
 	out << YAML::Key << "kills" << YAML::Value << _kills;
 	out << YAML::Key << "recovery" << YAML::Value << _recovery;
+	out << YAML::Key << "training" << YAML::Value << _training;
+	out << YAML::Key << "psiTraining" << YAML::Value << _psiTraining;
 	out << YAML::Key << "armor" << YAML::Value << _armor->getType();
 	out << YAML::EndMap;
 }

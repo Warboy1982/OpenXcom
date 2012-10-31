@@ -549,19 +549,6 @@ DogfightState::~DogfightState()
 		_projectiles.pop_back();
 	}
 	_craft->setInDogfight(false);
-	if(_destroyUfo)
-	{
-		// Clear UFO
-		for (std::vector<Ufo*>::iterator i = _game->getSavedGame()->getUfos()->begin(); i != _game->getSavedGame()->getUfos()->end(); ++i)
-		{
-			if (*i == _ufo)
-			{
-				delete *i;
-				_game->getSavedGame()->getUfos()->erase(i);
-				break;
-			}
-		}
-	}
 }
 
 /**

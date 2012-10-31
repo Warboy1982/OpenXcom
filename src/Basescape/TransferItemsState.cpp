@@ -243,6 +243,8 @@ void TransferItemsState::completeTransfer()
 						Transfer *t = new Transfer(time);
 						if((*s)->isInPsiTraining())
 							(*s)->setPsiTraining();
+						if((*s)->isInTraining())
+							(*s)->setTraining();
 						t->setSoldier(*s);
 						_baseTo->getTransfers()->push_back(t);
 						_baseFrom->getSoldiers()->erase(s);

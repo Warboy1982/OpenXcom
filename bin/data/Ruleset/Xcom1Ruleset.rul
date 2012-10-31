@@ -688,7 +688,7 @@ crafts:
     refuelRate: 50
     transferTime: 96
     score: 250
-  - type: STR_GUARDIAN
+  - type: STR_SENTINEL
     sprite: 21
     fuelMax: 1000
     damageMax: 500
@@ -7822,30 +7822,11 @@ ufopaedia:
   - id: STR_RIFLE_CLIP
     type_id: 4
     section: STR_NOT_AVAILABLE
-  - id: STR_HEAVY_CANNON
-    type_id: 4
-    section: STR_WEAPONS_AND_EQUIPMENT
-    text: STR_HEAVY_CANNON_UFOPEDIA
-  - id: STR_HC_AP_AMMO
-    type_id: 4
-    section: STR_NOT_AVAILABLE
-  - id: STR_HC_HE_AMMO
-    type_id: 4
-    section: STR_NOT_AVAILABLE
-  - id: STR_HC_I_AMMO
-    type_id: 4
-    section: STR_NOT_AVAILABLE
   - id: STR_AUTO_CANNON
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_AUTO_CANNON_UFOPEDIA
   - id: STR_AC_AP_AMMO
-    type_id: 4
-    section: STR_NOT_AVAILABLE
-  - id: STR_AC_HE_AMMO
-    type_id: 4
-    section: STR_NOT_AVAILABLE
-  - id: STR_AC_I_AMMO
     type_id: 4
     section: STR_NOT_AVAILABLE
   - id: STR_ROCKET_LAUNCHER
@@ -7873,10 +7854,6 @@ ufopaedia:
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_LASER_RIFLE_UFOPEDIA
-  - id: STR_HEAVY_LASER
-    type_id: 4
-    section: STR_WEAPONS_AND_EQUIPMENT
-    text: STR_HEAVY_LASER_UFOPEDIA
   - id: STR_GRENADE
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
@@ -7913,14 +7890,6 @@ ufopaedia:
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_ELECTRO_FLARE_UFOPEDIA
-  - id: STR_HEAVY_PLASMA
-    type_id: 4
-    section: STR_ALIEN_ARTIFACTS
-    text: STR_PLASMA_RIFLE_UFOPEDIA
-  - id: STR_HEAVY_PLASMA_CLIP
-    type_id: 4
-    section: STR_ALIEN_ARTIFACTS
-    text: STR_HEAVY_PLASMA_CLIP_UFOPEDIA
   - id: STR_PLASMA_RIFLE
     type_id: 4
     section: STR_ALIEN_ARTIFACTS

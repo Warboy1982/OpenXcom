@@ -287,7 +287,7 @@ void NewBattleState::btnOkClick(Action *action)
 {
 	_music = false;
 
-	SavedBattleGame *bgame = new SavedBattleGame();
+	SavedBattleGame *bgame = new SavedBattleGame(_game->getSavedGame());
 	_game->getSavedGame()->setBattleGame(bgame);
 	bgame->setMissionType(_missionTypes[_selMission]);
 	BattlescapeGenerator bgen = BattlescapeGenerator(_game);

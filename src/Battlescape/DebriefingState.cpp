@@ -296,7 +296,7 @@ void DebriefingState::prepareDebriefing()
 				// Get area
 				for (std::vector<Region*>::iterator k = _game->getSavedGame()->getRegions()->begin(); k != _game->getSavedGame()->getRegions()->end(); ++k)
 				{
-					if ((*k)->getRules()->insideRegion(craft->getLongitude(), craft->getLatitude()))
+					if ((*k)->getRules()->insideRegion((*j)->getLongitude(), (*j)->getLatitude()))
 					{
 						location = *k;
 					}

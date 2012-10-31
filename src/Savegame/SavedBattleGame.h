@@ -65,7 +65,7 @@ private:
 	Pathfinding *_pathfinding;
 	TileEngine *_tileEngine;
 	std::string _missionType;
-	int _globalShade;
+	int _globalShade, _difficulty;
 	UnitFaction _side;
 	int _turn;
 	bool _debugMode;
@@ -77,7 +77,7 @@ private:
 	int _scrollButtonPixelTolerancy;  // this is a cache for Options::getInt("battleScrollButtonPixelTolerancy")
 public:
 	/// Creates a new battle save, based on current generic save.
-	SavedBattleGame();
+	SavedBattleGame(SavedGame* savedGame);
 	/// Cleans up the saved game.
 	~SavedBattleGame();
 	/// Loads a saved battle game from YAML.
@@ -177,6 +177,7 @@ public:
 	/// get ScrollButtonPixelTolerancy
 	int getScrollButtonPixelTolerancy() const;
 	void addUnit(BattleUnit *unit);
+	int getDifficulty() const;
 };
 
 }

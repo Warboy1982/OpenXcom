@@ -128,8 +128,10 @@ public:
 	int getUsedPsiLabs() const;
 	/// Gets the base's total available psi lab space.
 	int getAvailablePsiLabs() const;
-	/// Gets the base's free available psi lab space.
-	int getFreePsiLabs () const;
+	/// Gets the base's used psi lab space.
+	int getUsedTraining() const;
+	/// Gets the base's total available psi lab space.
+	int getAvailableTraining() const;
 	/// Gets the base's used workshop space.
 	int getUsedWorkshops() const;
 	/// Gets the base's available workshop space.

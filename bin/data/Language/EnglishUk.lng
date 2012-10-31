@@ -1558,9 +1558,9 @@ Automated heavy weapons platforms are designed to complement an XCom squad. The 
 STR_TANK_ROCKET_LAUNCHER_UFOPEDIA
 This automated heavy weapons platform is armed with powerful rockets.  This will be devastating for any alien foe. Make sure your stores are kept supplied with HWP rockets.
 STR_TANK_LASER_CANNON_UFOPEDIA
-Laser weapons are a useful addition for HWPs. It combines heavy firepower with no ammunition restrictions.
+{NEWLINE}{NEWLINE}{NEWLINE}{NEWLINE}{NEWLINE}Laser weapons are a useful addition for HWPs. It combines heavy firepower with no ammunition restrictions.
 STR_HOVERTANK_PLASMA_UFOPEDIA
-Alien technology has given the HWP a new lease of life. The added manoeuvrability of air travel and the power of plasma beams is a lethal combination.
+{NEWLINE}{NEWLINE}{NEWLINE}{NEWLINE}{NEWLINE}Alien technology has given the HWP a new lease of life. The added manoeuvrability of air travel and the power of plasma beams is a lethal combination.
 STR_HOVERTANK_LAUNCHER_UFOPEDIA
 This hovertank has a fusion ball launcher that is capable of immense devastation.  Use it with great care.  You will have to manufacture the fusion balls to keep these HWPs fully armed. A fusion ball is an intelligent guided weapon. In order to fire it you select a number of 'way points' with the cursor and then click on the launch icon to fire the fusion ball.
 STR_HEAVY_PLASMA_CLIP_UFOPEDIA
@@ -2159,8 +2159,8 @@ STR_UNABLE_TO_SHOOT_HERE
 Unable to shoot here!
 STR_ZOMBIE
 Zombie
-STR_GUARDIAN
-GUARDIAN
+STR_SENTINEL
+SENTINEL
 STR_HWP_RAIL_SLUG
 Rail Cannon Slug
 STR_RAIL_CANNON

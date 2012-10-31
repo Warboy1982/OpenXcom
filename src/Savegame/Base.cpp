@@ -606,6 +606,42 @@ int Base::getUsedPsiLabs() const
 	}
 	return total;
 }
+
+/**
+ * Returns the total amount of Psi Lab Space
+ * available in the base.
+ * @return Psi Lab space.
+ */
+int Base::getAvailableTraining() const
+{
+	int total = 0;
+	for (std::vector<BaseFacility*>::const_iterator i = _facilities.begin(); i != _facilities.end(); ++i)
+	{
+		if ((*i)->getBuildTime() == 0)
+		{
+			total += (*i)->getRules()->getTrainingFacilities();
+		}
+	}
+	return total;
+}
+
+/**
+ * Returns the total amount of used Psi Lab Space
+ * available in the base.
+ * @return used Psi Lab space.
+ */
+int Base::getUsedTraining() const
+{
+	int total = 0;
+	for (std::vector<Soldier*>::const_iterator s = _soldiers.begin(); s != _soldiers.end(); ++s)
+	{
+		if ((*s)->isInTraining())
+		{
+			total ++;
+		}
+	}
+	return total;
+}
 /**
  * Returns the amount of stores used up
  * by equipment in the base.

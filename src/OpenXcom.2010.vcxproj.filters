@@ -657,6 +657,12 @@
     <ClCompile Include="Geoscape\AllocatePsiTrainingState.cpp">
       <Filter>Geoscape</Filter>
     </ClCompile>
+    <ClCompile Include="Geoscape\AllocateTrainingState.cpp">
+      <Filter>Geoscape</Filter>
+    </ClCompile>
+    <ClCompile Include="Geoscape\TrainingState.cpp">
+      <Filter>Geoscape</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basescape\ManufactureState.h">
@@ -1313,6 +1319,12 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Geoscape\AllocatePsiTrainingState.h">
+      <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Geoscape\AllocateTrainingState.h">
+      <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Geoscape\TrainingState.h">
       <Filter>Geoscape</Filter>
     </ClInclude>
   </ItemGroup>

@@ -286,7 +286,7 @@ void SavedGame::load(const std::string &filename, Ruleset *rule)
 
 	if (const YAML::Node *pName = doc.FindValue("battleGame"))
 	{
-		_battleGame = new SavedBattleGame();
+		_battleGame = new SavedBattleGame(this);
 		_battleGame->load(*pName, rule, this);
 	}
 

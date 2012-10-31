@@ -293,6 +293,7 @@
     <ClCompile Include="Geoscape\AbandonGameState.cpp" />
     <ClCompile Include="Geoscape\AlienTerrorState.cpp" />
     <ClCompile Include="Geoscape\AllocatePsiTrainingState.cpp" />
+    <ClCompile Include="Geoscape\AllocateTrainingState.cpp" />
     <ClCompile Include="Geoscape\BaseNameState.cpp" />
     <ClCompile Include="Geoscape\BuildNewBaseState.cpp" />
     <ClCompile Include="Geoscape\CraftErrorState.cpp" />
@@ -321,6 +322,7 @@
     <ClCompile Include="Geoscape\Polyline.cpp" />
     <ClCompile Include="Geoscape\SelectDestinationState.cpp" />
     <ClCompile Include="Geoscape\TargetInfoState.cpp" />
+    <ClCompile Include="Geoscape\TrainingState.cpp" />
     <ClCompile Include="Geoscape\UfoDetectedState.cpp" />
     <ClCompile Include="Geoscape\UfoLostState.cpp" />
     <ClCompile Include="Interface\ArrowButton.cpp" />
@@ -516,6 +518,7 @@
     <ClInclude Include="Geoscape\AbandonGameState.h" />
     <ClInclude Include="Geoscape\AlienTerrorState.h" />
     <ClInclude Include="Geoscape\AllocatePsiTrainingState.h" />
+    <ClInclude Include="Geoscape\AllocateTrainingState.h" />
     <ClInclude Include="Geoscape\BaseNameState.h" />
     <ClInclude Include="Geoscape\BuildNewBaseState.h" />
     <ClInclude Include="Geoscape\CraftErrorState.h" />
@@ -544,6 +547,7 @@
     <ClInclude Include="Geoscape\ResearchCompleteState.h" />
     <ClInclude Include="Geoscape\SelectDestinationState.h" />
     <ClInclude Include="Geoscape\TargetInfoState.h" />
+    <ClInclude Include="Geoscape\TrainingState.h" />
     <ClInclude Include="Geoscape\UfoDetectedState.h" />
     <ClInclude Include="Geoscape\UfoLostState.h" />
     <ClInclude Include="Interface\ArrowButton.h" />

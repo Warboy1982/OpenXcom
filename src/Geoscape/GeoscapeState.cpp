@@ -84,6 +84,7 @@
 #include "AlienTerrorState.h"
 #include <ctime>
 #include "PsiTrainingState.h"
+#include "TrainingState.h"
 
 namespace OpenXcom
 {
@@ -326,7 +327,6 @@ void GeoscapeState::blit()
  */
 void GeoscapeState::handle(Action *action)
 {
-	_minimizedDogfights = minimizedDogfightsCount();
 	if(_dogfights.size() == _minimizedDogfights)
 	{
 		State::handle(action);
@@ -348,6 +348,7 @@ void GeoscapeState::handle(Action *action)
 			}
 		}
 	}
+	_minimizedDogfights = _dogfights.size();
 	if(!_dogfights.empty())
 	{
 		for(std::vector<DogfightState*>::iterator it = _dogfights.begin(); it != _dogfights.end(); ++it)
@@ -398,22 +399,23 @@ void GeoscapeState::think()
 	{
 		// Handle timers
 		_timer->think(this, 0);
+		if (!_music || _battleMusic)
+		{
+			std::stringstream ss;
+			ss << "GMGEO" << RNG::generate(1, 2);
+			_game->getResourcePack()->getMusic(ss.str())->play();
+			_music = true;
+			_battleMusic = false;
+		}
 	}
 	else
-	{
+	{	
 		if(!_dogfights.empty())
 		{
 			handleDogfights();
 			_battleMusic = true;
 		}
-		else if(_battleMusic)
-		{
-			std::stringstream ss;
-			ss << "GMGEO" << RNG::generate(1, 2);
-			_game->getResourcePack()->getMusic(ss.str())->play();
-			_battleMusic = false;
-		}
-		if(!_popups.empty())
+		else if(!_popups.empty())
 		{
 			// Handle popups
 			_globe->rotateStop();
@@ -520,7 +522,7 @@ void GeoscapeState::timeAdvance()
  * run every game second, like craft movement.
  */
 void GeoscapeState::time5Seconds()
-{
+{ 
 	// Handle UFO logic
 	for (std::vector<Ufo*>::iterator i = _game->getSavedGame()->getUfos()->begin(); i != _game->getSavedGame()->getUfos()->end(); ++i)
 	{
@@ -1108,6 +1110,25 @@ void GeoscapeState::time1Month()
 	if(_Psi)
 	{
 		popup(new PsiTrainingState(_game));
+	}
+	bool _Training = false;
+	for(std::vector<Base*>::const_iterator b = _game->getSavedGame()->getBases()->begin(); b != _game->getSavedGame()->getBases()->end(); ++b)
+	{
+		if((*b)->getAvailableTraining() > 0)
+		{
+			_Training = true;
+		}
+		for(std::vector<Soldier*>::const_iterator u = (*b)->getSoldiers()->begin(); u != (*b)->getSoldiers()->end(); ++u)
+		{
+			if((*u)->isInTraining())
+			{
+				(*u)->trainPhys();
+			}
+		}
+	}
+	if(_Training)
+	{
+		popup(new TrainingState(_game));
 	}
 }
 

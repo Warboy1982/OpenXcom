@@ -138,7 +138,7 @@ void AggroBAIState::think(BattleAction *action)
 	if (_aggroTarget == 0)
 	{
 		_timesNotSeen++;
-		if (_timesNotSeen > _unit->getIntelligence() || aggression == 0)
+		if (_timesNotSeen > _unit->getIntelligence() + _game->getDifficulty() || aggression == 0)
 		{
 			// we lost aggro - going back to patrol state
 			return;
@@ -156,7 +156,7 @@ void AggroBAIState::think(BattleAction *action)
 		// lost health, chances to take cover get bigger
 		if (_unit->getHealth() < _unit->getStats()->health)
 			number += 10;
-
+		number -= _game->getDifficulty()*10;
 		// aggrotarget has no weapon - chances of take cover get smaller
 		if (!_aggroTarget->getMainHandWeapon())
 			number -= 50;
@@ -187,12 +187,12 @@ void AggroBAIState::think(BattleAction *action)
 			// distance must be more than 6 tiles, otherwise it's too dangerous to play with explosives
 			if (_game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()) > 6)
 			{
-				if((_unit->getFaction() == FACTION_NEUTRAL && _aggroTarget->getFaction() == FACTION_HOSTILE) || _unit->getFaction() == FACTION_HOSTILE)
+				if(((_unit->getFaction() == FACTION_NEUTRAL && _aggroTarget->getFaction() == FACTION_HOSTILE) || _unit->getFaction() == FACTION_HOSTILE) && RNG::generate(0, (_game->getDifficulty()/2)+2) >= 2)
 				{
 				// do we have a grenade on our belt?
 				BattleItem *grenade = _unit->getGrenadeFromBelt();
 				// do we have enough TUs to prime and throw the grenade?
-				if (grenade && RNG::generate(0,2) == 0)
+				if (grenade)
 				{
 					action->weapon = grenade;
 					tu += _unit->getActionTUs(BA_PRIME, grenade);
