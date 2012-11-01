@@ -930,6 +930,50 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
+  - type: STR_HOVERTANK_CANNON
+    size: 6
+    costSell: 340000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 4
+    fireSound: 2
+    compatibleAmmo:
+      - STR_HWP_CANNON_SHELLS
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 0
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_CANNON
+    size: 6
+    costSell: 340000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 4
+    fireSound: 2
+    compatibleAmmo:
+      - STR_HWP_CANNON_SHELLS
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 0
+    invWidth: 2
+    invHeight: 3
+    armor: 20
   - type: STR_HWP_CANNON_SHELLS
     size: 0.1
     costBuy: 200
@@ -948,6 +992,52 @@ items:
     invHeight: 1
     armor: 20
   - type: STR_TANK_ROCKET_LAUNCHER
+    size: 6
+    costBuy: 480000
+    costSell: 360000
+    transferTime: 96
+    weight: 1
+    bigSprite: 42
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 0
+    fireSound: 52
+    compatibleAmmo:
+      - STR_HWP_ROCKETS
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HOVERTANK_ROCKET_LAUNCHER
+    size: 6
+    costBuy: 480000
+    costSell: 360000
+    transferTime: 96
+    weight: 1
+    bigSprite: 42
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 0
+    fireSound: 52
+    compatibleAmmo:
+      - STR_HWP_ROCKETS
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_ROCKET_LAUNCHER
     size: 6
     costBuy: 480000
     costSell: 360000
@@ -1012,6 +1102,81 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
+  - type: STR_HOVERTANK_LASER_CANNON
+    size: 6
+    costSell: 594000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 100
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_LASER_CANNON
+    size: 6
+    costSell: 594000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 100
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_TANK_PLASMA
+    size: 6
+    costSell: 980000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 8
+    fireSound: 11
+    hitSound: 19
+    power: 150
+    damageType: 5
+    hitAnimation: 46
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 40
+    tuAimed: 80
+    battleType: 1
+    fixedWeapon: true
+    turretType: 3
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
   - type: STR_HOVERTANK_PLASMA
     size: 6
     costSell: 980000
@@ -1037,7 +1202,74 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
+  - type: STR_SECTOPOD_PLASMA
+    size: 6
+    costSell: 980000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 8
+    fireSound: 11
+    hitSound: 19
+    power: 150
+    damageType: 5
+    hitAnimation: 46
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 40
+    tuAimed: 80
+    battleType: 1
+    fixedWeapon: true
+    turretType: 3
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_TANK_LAUNCHER
+    size: 6
+    costSell: 1043000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 10
+    fireSound: 53
+    compatibleAmmo:
+      - STR_HWP_FUSION_BOMB
+    accuracyAimed: 120
+    tuAimed: 80
+    battleType: 1
+    fixedWeapon: true
+    turretType: 4
+    waypoint: true
+    invWidth: 2
+    invHeight: 3
+    armor: 20
   - type: STR_HOVERTANK_LAUNCHER
+    size: 6
+    costSell: 1043000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 10
+    fireSound: 53
+    compatibleAmmo:
+      - STR_HWP_FUSION_BOMB
+    accuracyAimed: 120
+    tuAimed: 80
+    battleType: 1
+    fixedWeapon: true
+    turretType: 4
+    waypoint: true
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_LAUNCHER
     size: 6
     costSell: 1043000
     transferTime: 96
@@ -1073,6 +1305,56 @@ items:
     invWidth: 1
     invHeight: 1
     armor: 20
+  - type: STR_TANK_DISRUPTOR
+    size: 6
+    costSell: 780000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 130
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HOVERTANK_DISRUPTOR
+    size: 6
+    costSell: 780000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 130
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
   - type: STR_SECTOPOD_DISRUPTOR
     size: 6
     costSell: 780000
@@ -1095,6 +1377,50 @@ items:
     fixedWeapon: true
     turretType: 2
     clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_TANK_RAIL
+    size: 6
+    costSell: 1043000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 10
+    fireSound: 53
+    compatibleAmmo:
+      - STR_HWP_RAIL_SLUG
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 4
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HOVERTANK_RAIL
+    size: 6
+    costSell: 1043000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 10
+    fireSound: 53
+    compatibleAmmo:
+      - STR_HWP_RAIL_SLUG
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 4
     invWidth: 2
     invHeight: 3
     armor: 20
@@ -3887,7 +4213,7 @@ armors:
     sideArmor: 130
     rearArmor: 100
     underArmor: 90
-    drawingRoutine: 10
+    drawingRoutine: 5
     size: 2
     modifiedWalk: 23
     damageModifier:
@@ -4669,6 +4995,48 @@ units:
     value: 20
     deathSound: 23
     movesound: 14
+  - type: HOVERTANK_CANNON
+    race: STR_HOVERTANK_CANNON
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: HOVERTANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 14
+  - type: SECTOPOD_CANNON
+    race: STR_SECTOPOD_CANNON
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: SECTOPOD_ARMOR2
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 14
   - type: TANK_LASER_CANNON
     race: STR_TANK_LASER_CANNON
     stats:
@@ -4684,6 +5052,48 @@ units:
       psiSkill: 0
       melee: 0
     armor: TANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 14
+  - type: HOVERTANK_LASER_CANNON
+    race: STR_HOVERTANK_LASER_CANNON
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: HOVERTANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 14
+  - type: SECTOPOD_LASER_CANNON
+    race: STR_SECTOPOD_LASER_CANNON
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: SECTOPOD_ARMOR2
     standHeight: 15
     kneelHeight: 15
     loftemps: 4
@@ -4711,6 +5121,69 @@ units:
     value: 20
     deathSound: 23
     movesound: 14
+  - type: HOVERTANK_ROCKET_LAUNCHER
+    race: STR_HOVERTANK_ROCKET_LAUNCHER
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: HOVERTANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 14
+  - type: SECTOPOD_ROCKET_LAUNCHER
+    race: STR_SECTOPOD_ROCKET_LAUNCHER
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: SECTOPOD_ARMOR2
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 14
+  - type: TANK_PLASMA
+    race: STR_TANK_PLASMA
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: TANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 40
   - type: HOVERTANK_PLASMA
     race: STR_HOVERTANK_PLASMA
     stats:
@@ -4732,6 +5205,69 @@ units:
     value: 20
     deathSound: 23
     movesound: 40
+  - type: SECTOPOD_PLASMA
+    race: STR_SECTOPOD_PLASMA
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: SECTOPOD_ARMOR2
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 40
+  - type: TANK_DISRUPTOR
+    race: STR_TANK_DISRUPTOR
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: TANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 23
+  - type: HOVERTANK_DISRUPTOR
+    race: STR_HOVERTANK_DISRUPTOR
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: HOVERTANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 23
   - type: SECTOPOD_DISRUPTOR
     race: STR_SECTOPOD_DISRUPTOR
     stats:
@@ -4747,6 +5283,48 @@ units:
       psiSkill: 0
       melee: 0
     armor: SECTOPOD_ARMOR2
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 23
+  - type: TANK_RAIL
+    race: STR_TANK_RAIL
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: TANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 23
+  - type: HOVERTANK_RAIL
+    race: STR_HOVERTANK_RAIL
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: HOVERTANK_ARMOR
     standHeight: 15
     kneelHeight: 15
     loftemps: 4
@@ -4774,6 +5352,27 @@ units:
     value: 20
     deathSound: 23
     movesound: 23
+  - type: TANK_LAUNCHER
+    race: STR_TANK_LAUNCHER
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: TANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 40
   - type: HOVERTANK_LAUNCHER
     race: STR_HOVERTANK_LAUNCHER
     stats:
@@ -4789,6 +5388,27 @@ units:
       psiSkill: 0
       melee: 0
     armor: HOVERTANK_ARMOR
+    standHeight: 15
+    kneelHeight: 15
+    loftemps: 4
+    value: 20
+    deathSound: 23
+    movesound: 40
+  - type: SECTOPOD_LAUNCHER
+    race: STR_SECTOPOD_LAUNCHER
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 30
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: SECTOPOD_ARMOR2
     standHeight: 15
     kneelHeight: 15
     loftemps: 4

@@ -53,7 +53,6 @@ private:
 	void drawRoutine7();
 	void drawRoutine8();
 	void drawRoutine9();
-	void drawRoutine10();
 public:
 	/// Creates a new UnitSprite at the specified position and size.
 	UnitSprite(int width, int height, int x, int y);

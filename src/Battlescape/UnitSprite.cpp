@@ -145,9 +145,6 @@ void UnitSprite::draw()
 	case 9:
 		drawRoutine9();
 		break;
-	case 10:
-		drawRoutine10();
-		break;
 	}
 
 }
@@ -955,57 +952,4 @@ void UnitSprite::drawRoutine9()
 
 	torso->blit(this);
 }
-
-/**
- * Drawing routine for Battle Mechs.
- */
-void UnitSprite::drawRoutine10()
-{
-	if (_unit->isOut())
-	{
-		// unit is drawn as an item
-		return;
-	}
-	const int offX[8] = { -11, -7, 7, 0, -7, 7, 11, 0 }; // turret offsets
-	const int offy[8] = { -7, -5, -11, -11, -11, -5, -7, -1 } ; // turret offsets
-	const int offwalk[8] = { 2, 0, 2, 0, 1, -1, 1, 0 } ; // turret offsets
-
-	Surface *s = 0;
-	int turret = _unit->getMainHandWeapon()->getRules()->getTurretType();
-
-	if (_unit->getStatus() == STATUS_WALKING)
-	{
-		s = _unitSurface->getFrame( 32 + (_unit->getDirection() * 16) + (_part * 4) + (_unit->getWalkingPhase() % 4) );
-	}
-	else
-	{
-		s = _unitSurface->getFrame((_part * 8) + _unit->getDirection());
-	}
-
-	s->blit(this);
-
-	if (turret != -1 &&
-		(_part == 1 && _unit->getDirection() == 0)||
-		(_part == 1 && _unit->getDirection() == 1)||
-		(_part == 3 && _unit->getDirection() == 2)||
-		(_part == 3 && _unit->getDirection() == 3)||
-		(_part == 3 && _unit->getDirection() == 4)||
-		(_part == 2 && _unit->getDirection() == 5)||
-		(_part == 2 && _unit->getDirection() == 6)||
-		(_part == 0 && _unit->getDirection() == 7)
-		)
-	{
-		s = _unitSurface->getFrame(160 + (turret * 8) + _unit->getTurretDirection());
-		int turretOffsetX = offX[_unit->getDirection()];
-		int turretOffsetY = offy[_unit->getDirection()];
-		s->setX(turretOffsetX);
-		s->setY(turretOffsetY);
-		if (_unit->getStatus() == STATUS_WALKING)
-		{
-		s->setY(turretOffsetY + offwalk[_unit->getWalkingPhase()]);
-		}
-		s->blit(this);
-	}
-}
-
 }

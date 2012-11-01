@@ -348,7 +348,7 @@ void GeoscapeState::handle(Action *action)
 			}
 		}
 	}
-	_minimizedDogfights = _dogfights.size();
+	//_minimizedDogfights = _dogfights.size();
 	if(!_dogfights.empty())
 	{
 		for(std::vector<DogfightState*>::iterator it = _dogfights.begin(); it != _dogfights.end(); ++it)
@@ -1379,6 +1379,7 @@ void GeoscapeState::zoomOutEffect()
 	{
 		_zoomOutEffectDone = true;
 		_zoomOutEffectTimer->stop();
+		init();
 	}
 }
 
@@ -1387,6 +1388,7 @@ void GeoscapeState::zoomOutEffect()
  */
 void GeoscapeState::handleDogfights()
 {
+	_minimizedDogfights = minimizedDogfightsCount();
 	// If all dogfights are minimized rotate the golbe, etc.
 	if(_dogfights.size() == _minimizedDogfights)
 	{

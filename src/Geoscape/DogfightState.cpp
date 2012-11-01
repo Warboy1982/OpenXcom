@@ -549,6 +549,7 @@ DogfightState::~DogfightState()
 		_projectiles.pop_back();
 	}
 	_craft->setInDogfight(false);
+
 }
 
 /**
@@ -1024,6 +1025,7 @@ void DogfightState::move()
 			}
 			if (!_globe->insideLand(_ufo->getLongitude(), _ufo->getLatitude()))
 			{
+				_ufo->setHoursCrashed(0); 
 				_destroyUfo = true;
 			}
 			else

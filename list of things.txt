@@ -8,7 +8,7 @@ make funding nations do something
 
     
     UNITS:
-Battle mech - legs of a sectopod, body of a tank, dual weapons, mayhem.
+Battle mech need secondary weapons for more mayhem.
 make all weapons available for all tank types 
     battlemechs will get a free dumb-fire rocket launcher
     ground tanks will get sonic detector arrays (motion scanner) and better armour
@@ -25,7 +25,6 @@ soldiers need a new information section for days dead, and only actually REMOVE 
     
     
     BASE:
-alien containment.
 make wounded soldiers transferrable at double the usual time, with no healing en-route
 sattelite defense network? - extra base with free planet wide hyper-wave decode, 
     quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
@@ -54,6 +53,8 @@ use weapon mount on craft in missions?
 
 
     DONE:
+BATTLE MECHS!
+alien containment.
 all new facilities now have new graphics, now they need new maps.
 looks like no mechanic exists for psi training? fixed.
 Training Room for xcom agents using similar rules to X-com apocalypse - not similar, exactly the damn same.
