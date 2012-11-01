@@ -8130,12 +8130,6 @@ ufopaedia:
     image_id: UP024.SPK
     text: STR_SECTOID_UFOPEDIA
     text_width: 155
-  - id: STR_SECTOID
-    type_id: 7
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UP024.SPK
-    text: STR_SECTOID_UFOPEDIA
-    text_width: 155
   - id: STR_SECTOID_AUTOPSY
     type_id: 7
     section: STR_ALIEN_LIFE_FORMS

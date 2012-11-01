@@ -52,7 +52,7 @@ namespace OpenXcom
  * @param baseFrom Pointer to the source base.
  * @param baseTo Pointer to the destination base.
  */
-TransferItemsState::TransferItemsState(Game *game, Base *baseFrom, Base *baseTo) : State(game), _baseFrom(baseFrom), _baseTo(baseTo), _qtys(), _soldiers(), _crafts(), _items(), _sel(0), _total(0), _sOffset(0), _dOffset(0), _eOffset(0), _pQty(0), _cQty(0), _iQty(0.0f), _distance(0.0)
+TransferItemsState::TransferItemsState(Game *game, Base *baseFrom, Base *baseTo) : State(game), _baseFrom(baseFrom), _baseTo(baseTo), _qtys(), _soldiers(), _crafts(), _items(), _sel(0), _total(0), _sOffset(0), _dOffset(0), _eOffset(0), _pQty(0), _cQty(0), _iQty(0.0f), _distance(0.0), _aOffset(0)
 {
 	// Create objects
 	_window = new Window(this, 320, 200, 0, 0);
@@ -172,6 +172,10 @@ TransferItemsState::TransferItemsState(Game *game, Base *baseFrom, Base *baseTo)
 		int qty = _baseFrom->getItems()->getItem(*i);
 		if (qty > 0)
 		{
+			if(!_game->getRuleset()->getItem(*i)->getAlien())
+			{
+				_aOffset++;
+			}
 			_qtys.push_back(0);
 			_items.push_back(*i);
 			std::wstringstream ss, ss2;
@@ -561,7 +565,16 @@ void TransferItemsState::increase()
 			return;
 		}
 	}
-	if (_sel >= _soldiers.size() + _crafts.size() + _sOffset + _eOffset + _dOffset && _iQty + _game->getRuleset()->getItem(_items[_sel - _soldiers.size() - _crafts.size() - _sOffset - _eOffset - _dOffset])->getSize() > _baseTo->getAvailableStores() - _baseTo->getUsedStores())
+	if (_sel >= _soldiers.size() + _crafts.size() + _sOffset + _eOffset + _dOffset + _aOffset &&
+		_iQty + _game->getRuleset()->getItem(_items[_sel - _soldiers.size() - _crafts.size() - _sOffset - _eOffset - _dOffset - _aOffset])->getSize() > _baseTo->getAvailableAliens())
+	{
+		_timerInc->stop();
+		_game->pushState(new ErrorMessageState(_game, "STR_NO_ALIEN_CONTAINMENT_FOR_TRANSFER", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
+		return;
+	}
+	if (_sel >= _soldiers.size() + _crafts.size() + _sOffset + _eOffset + _dOffset &&
+		_sel < _soldiers.size() + _crafts.size() + _sOffset + _eOffset + _dOffset + _aOffset &&
+		_iQty + _game->getRuleset()->getItem(_items[_sel - _soldiers.size() - _crafts.size() - _sOffset - _eOffset - _dOffset])->getSize() > _baseTo->getAvailableStores() - _baseTo->getUsedStores())
 	{
 		_timerInc->stop();
 		_game->pushState(new ErrorMessageState(_game, "STR_NOT_ENOUGH_STORE_SPACE", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
