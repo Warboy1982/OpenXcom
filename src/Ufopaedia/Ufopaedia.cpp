@@ -143,7 +143,32 @@ namespace OpenXcom
 	 */
 	void Ufopaedia::openArticle(Game *game, std::string &article_id)
 	{
-		// TODO: look if article id is available!
+		if(article_id == "STR_SECTOID_SOLDIER" || article_id == "STR_SECTOID_ENGINEER"|| article_id == "STR_SECTOID_MEDIC"|| article_id == "STR_SECTOID_NAVIGATOR"|| article_id == "STR_SECTOID_LEADER"|| article_id == "STR_SECTOID_COMMANDER")
+		{
+			 article_id = "STR_SECTOID";
+		}
+		else if(article_id == "STR_FLOATER_SOLDIER" || article_id == "STR_FLOATER_ENGINEER"|| article_id == "STR_FLOATER_MEDIC"|| article_id == "STR_FLOATER_NAVIGATOR"|| article_id == "STR_FLOATER_LEADER"|| article_id == "STR_FLOATER_COMMANDER")
+		{
+			 article_id = "STR_FLOATER";
+		}
+		else if(article_id == "STR_SNAKEMAN_SOLDIER" || article_id == "STR_SNAKEMAN_ENGINEER"|| article_id == "STR_SNAKEMAN_NAVIGATOR"|| article_id == "STR_SNAKEMAN_LEADER"|| article_id == "STR_SNAKEMAN_COMMANDER")
+		{
+			article_id = "STR_SNAKEMAN";
+		}
+		else if(article_id == "STR_MUTON_SOLDIER" || article_id == "STR_MUTON_ENGINEER"|| article_id == "STR_MUTON_NAVIGATOR")
+		{
+			article_id = "STR_MUTON";
+		}
+		else if(article_id == "STR_ETHEREAL_SOLDIER" || article_id == "STR_ETHEREAL_LEADER"|| article_id == "STR_ETHEREAL_COMMANDER")
+		{
+			article_id = "STR_ETHEREAL";
+		}
+		_current_index = getArticleIndex(game, article_id);	
+		if(_current_index != -1)
+		{
+		ArticleDefinitionList articles = getAvailableArticles(game);
+		game->pushState(createArticleState(game, articles[_current_index]));
+		}
 	}
 
 	/**

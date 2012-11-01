@@ -43,21 +43,13 @@ NoContainmentState::NoContainmentState(Game *game) : State(game)
 	// Create objects
 	_window = new Window(this, 320, 200, 0, 0);
 	_btnOk = new TextButton(120, 18, 100, 174);
-	_txtTitle = new Text(220, 32, 50, 8);
-	_txtItem = new Text(180, 9, 16, 50);
-	_txtQuantity = new Text(60, 9, 130, 50);
-	_txtCraft = new Text(50, 9, 200, 50);
-	_lstItems = new TextList(288, 112, 8, 58);
+	_txtTitle = new Text(220, 64, 50, 8);
 
 	// Set palette
 	_game->setPalette(_game->getResourcePack()->getPalette("BACKPALS.DAT")->getColors(Palette::blockOffset(0)), Palette::backPos, 16);
 	add(_window);
 	add(_btnOk);
 	add(_txtTitle);
-	add(_txtItem);
-	add(_txtQuantity);
-	add(_txtCraft);
-	add(_lstItems);
 
 	// Set up objects
 	_window->setColor(Palette::blockOffset(15)-1);

@@ -1056,8 +1056,8 @@ void GeoscapeState::time1Day()
 			std::vector<RuleManufacture *> newPossibleManufacture;
 			_game->getSavedGame()->getDependableManufacture (newPossibleManufacture, (*iter)->getRules(), _game->getRuleset(), *i);
 			timerReset();
-			popup(new ResearchCompleteState (_game, research));
 			popup(new NewPossibleResearchState(_game, *i, newPossibleResearch));
+			popup(new ResearchCompleteState (_game, research));
 			if (!newPossibleManufacture.empty())
 			{
 				popup(new NewPossibleManufactureState(_game, *i, newPossibleManufacture));
