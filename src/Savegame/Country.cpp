@@ -124,15 +124,6 @@ void Country::resetChange()
  */
 int Country::getSatisfaction()
 {
-	for (std::vector<std::string>::iterator i = getRules()->getRegions()->begin(); i != getRules()->getRegions()->end(); ++i)
-	{
-		for (std::vector<Region*>::iterator r = _game->getSavedGame()->getRegions()->begin(); r != _game->getSavedGame()->getRegions()->end(); ++r)
-		{
-			_activityXcom += (*r)->getActivityXcom();
-			_activityAlien += (*r)->getActivityAlien();
-		}
-	}
-
 	return _activityXcom - _activityAlien;
 }
 

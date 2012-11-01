@@ -948,7 +948,7 @@ void DogfightState::move()
 			// Get country
 			for (std::vector<Country*>::iterator k = _game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
 			{
-				if (_globe->targetNearPolar(_craft, (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 80000))
+				if (_globe->targetNearPolar(_craft, (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 10000))
 				{
 					(*k)->setActivityXcom(_craft->getRules()->getScore());
 				}
@@ -984,7 +984,7 @@ void DogfightState::move()
 			// Get country
 			for (std::vector<Country*>::iterator k = _game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
 			{
-				if (_globe->targetNearPolar(_ufo, (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 80000))
+				if (_globe->targetNearPolar(_ufo, (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 10000))
 				{
 					(*k)->setActivityXcom(_ufo->getRules()->getScore()*2);
 				}
@@ -1010,7 +1010,7 @@ void DogfightState::move()
 			// Get country
 			for (std::vector<Country*>::iterator k = _game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
 			{
-				if (_globe->targetNearPolar(_ufo, (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 80000))
+				if (_globe->targetNearPolar(_ufo, (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 10000))
 				{
 					(*k)->setActivityXcom(_ufo->getRules()->getScore());
 				}

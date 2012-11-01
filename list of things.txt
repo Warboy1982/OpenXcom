@@ -1,20 +1,27 @@
     GEOSCAPE:
-funding nation withdrawal trigger should be higher on higher levels
 make funding nations much harder to please, make them drop out more often, and when they sign a pact, start 
     generating anti-infiltration missions somewhere in their country (use alien base as a template for how to 
     generate a hidden mission) at a rate of about 1.5 per month, and start generating military defence missions 
     every few weeks or so until all anti-infiltration missions are complete, and set the funding nation to "happy" 
-make funding nations do something
+work on monthly report screen
+    - seperate countries into lists based on how happy they are, and display that information appropriatley
+    - apply funding changes
+    - set up "funding withdrawn" scenario - trigger should be lower on higher levels
+mission types: STR_ANTI_INFILTRATION, STR_MILITARY_DEFENCE STR_PURGE, STR_CULTIST_DEFENCE, STR_CULTIST_BASE
+hope and pray that the state-based AI works as intended, merge it.
+fix ufopedia to only show articles you actually have available.
+see how horribly generating a base assault goes. (friendly and enemy) - enemy base: not bad, make them happen.
 
     
     UNITS:
 Battle mech need secondary weapons for more mayhem.
 make all weapons available for all tank types 
-    battlemechs will get a free dumb-fire rocket launcher
+    battlemechs will get a free autocannon
     ground tanks will get sonic detector arrays (motion scanner) and better armour
     hovertanks will get.... screwed because they can already fly.
-scanner tank - no weapons, reveals units through walls with a "deep scan" (costs a lot of TUs) - LCSand
-add sailors for port terror missions. give them all knives and surly dispositions.
+tank scanner - uses motion scanner algorithm to place "blips" representing movement on the battlescape (passive effect?) 
+    - false positives
+pester luke to finish sailors for port terror missions. give them all knives and surly dispositions.
 Cult of Sirius! (rank 8 alien, human cultist, 1 in 6 chance for 3-5 humans)
 Inventory screens for all units in game
 make aliens pick up weapons if any nearby and none in hand
@@ -38,7 +45,6 @@ research of reproduction leads to new base facility - cloning facility
 add expanded terror sites
 add port terror site
 pester luke for more rotated ships.
-mission types: STR_ANTI_INFILTRATION, STR_MILITARY_DEFENCE STR_PURGE, STR_CULTIST_DEFENCE, STR_CULTIST_BASE
 make a new map type for ground-based assaults, with a 40x40 tile to represent the base compound on a 60x60 map
 spawn 10-20 engineers and scientists on base defence missions, faction_neutral,
 Race specific items and Maps EG: Egg sacks for snakeman, clone tanks for sectiods - recover as alien reproduction
@@ -53,6 +59,8 @@ use weapon mount on craft in missions?
 
 
     DONE:
+funding nations are gathering relevant data
+activity points for research completion
 BATTLE MECHS!
 alien containment.
 all new facilities now have new graphics, now they need new maps.

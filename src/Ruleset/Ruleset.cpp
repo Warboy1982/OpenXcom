@@ -1147,5 +1147,4 @@ std::vector<std::string> Ruleset::getManufactureList () const
 {
 	return _manufactureIndex;
 }
-
 }

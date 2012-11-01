@@ -827,7 +827,7 @@ void GeoscapeState::time30Minutes()
 		// Get country
 		for (std::vector<Country*>::iterator k = _game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
 		{
-			if (_globe->targetNearPolar((*u), (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 80000))
+			if (_globe->targetNearPolar((*u), (*k)->getRules()->getLabelLongitude(), (*k)->getRules()->getLabelLatitude(), 10000))
 			{
 				//one point per UFO in-flight per half hour
 				(*k)->setActivityAlien(1);
@@ -1056,7 +1056,14 @@ void GeoscapeState::time1Day()
 			std::vector<RuleManufacture *> newPossibleManufacture;
 			_game->getSavedGame()->getDependableManufacture (newPossibleManufacture, (*iter)->getRules(), _game->getRuleset(), *i);
 			timerReset();
+			for (std::vector<Country*>::iterator c = _game->getSavedGame()->getCountries()->begin(); c != _game->getSavedGame()->getCountries()->end(); ++c)
+			{
+				(*c)->setActivityXcom((*iter)->getRules()->getPoints());
+			}
+			if (!newPossibleResearch.empty())
+			{
 			popup(new NewPossibleResearchState(_game, *i, newPossibleResearch));
+			}
 			popup(new ResearchCompleteState (_game, research));
 			if (!newPossibleManufacture.empty())
 			{
