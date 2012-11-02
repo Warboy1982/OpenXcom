@@ -9,10 +9,7 @@ Rocket
 STR_LARGE_ROCKET
 Guided Rocket
 STR_HIGH_EXPLOSIVE
-Demolition Charge
-STR_PSIONIC_TRAINING
-         PSIONIC TRAINING
-         
+Demolition Charge         
          
 
 STR_FULLAUTO
@@ -197,4 +194,6 @@ STR_SECTOPOD_PLASMA
 Sectopod/Plasma
 STR_SECTOPOD_LAUNCHER
 Sectopod/Launcher
+STR_MIXED
+Mixed
 

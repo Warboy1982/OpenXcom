@@ -46,7 +46,7 @@ namespace OpenXcom
  * @param base Pointer to base of origin.
  * @param ids List of craft IDs (Leave NULL for no ID).
  */
-Craft::Craft(RuleCraft *rules, Base *base, int id) : MovingTarget(), _rules(rules), _base(base), _id(0), _fuel(0), _damage(0), _weapons(), _status("STR_READY"), _lowFuel(false), _inBattlescape(false), _inDogfight(false)
+Craft::Craft(RuleCraft *rules, Base *base, int id) : MovingTarget(), _rules(rules), _base(base), _id(0), _fuel(0), _damage(0), _weapons(), _status("STR_READY"), _lowFuel(false), _inBattlescape(false), _inDogfight(false), _patrol(false)
 {
 	_items = new ItemContainer();
 	if (id != 0)
@@ -170,6 +170,7 @@ void Craft::load(const YAML::Node &node, const Ruleset *rule, SavedGame *save)
 	node["lowFuel"] >> _lowFuel;
 	node["inBattlescape"] >> _inBattlescape;
 	node["inDogfight"] >> _inDogfight;
+	node["patrol"] >> _patrol;
 	node["interceptionOrder"] >> _interceptionOrder;
 }
 
@@ -213,6 +214,7 @@ void Craft::save(YAML::Emitter &out) const
 	out << YAML::Key << "lowFuel" << YAML::Value << _lowFuel;
 	out << YAML::Key << "inBattlescape" << YAML::Value << _inBattlescape;
 	out << YAML::Key << "inDogfight" << YAML::Value << false;
+	out << YAML::Key << "patrol" << YAML::Value << _patrol;
 	out << YAML::Key << "interceptionOrder" << YAML::Value << _interceptionOrder;
 	out << YAML::EndMap;
 }
@@ -341,6 +343,16 @@ void Craft::setDestination(Target *dest)
 	else
 		setSpeed(_rules->getMaxSpeed());
 	MovingTarget::setDestination(dest);
+}
+
+void Craft::setPatrol(bool patrol)
+{
+	_patrol = patrol;
+}
+
+bool Craft::getPatrol() const
+{
+	return _patrol;
 }
 
 /**

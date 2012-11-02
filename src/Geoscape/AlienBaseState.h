@@ -40,21 +40,16 @@ private:
 	Region *_region;
 	GeoscapeState *_state;
 	AlienBase *_base;
-
-	TextButton *_btnCentre, *_btnCancel;
+	TextButton *_btnOk;
 	Window *_window;
-	Text *_txtTitle, *_txtRegion;
+	Text *_txtTitle;
 public:
 	/// Creates the Ufo Detected state.
 	AlienBaseState(Game *game, AlienBase *base, GeoscapeState *state);
 	/// Cleans up the Ufo Detected state.
 	~AlienBaseState();
-	/// Updates the palette.
-	void init();
-	/// Handler for clicking the Centre on UFO button.
-	void btnCentreClick(Action *action);
-	/// Handler for clicking the Cancel button.
-	void btnCancelClick(Action *action);
+	/// Handler for clicking the OK button.
+	void btnOkClick(Action *action);
 };
 
 }

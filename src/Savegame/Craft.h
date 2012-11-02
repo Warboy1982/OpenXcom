@@ -53,7 +53,7 @@ private:
 	std::string _status;
 	bool _lowFuel;
 	bool _inBattlescape;
-	bool _inDogfight;
+	bool _inDogfight, _patrol;
 public:
 	/// Creates a craft of the specified type.
 	Craft(RuleCraft *rules, Base *base, int id = 0);
@@ -157,6 +157,8 @@ public:
 	void setInterceptionOrder(const int order);
 	/// Gets interception number.
 	int getInterceptionOrder() const;
+	void setPatrol(bool patrol);
+	bool getPatrol() const;
 };
 
 }

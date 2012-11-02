@@ -85,6 +85,8 @@
 #include <ctime>
 #include "PsiTrainingState.h"
 #include "TrainingState.h"
+#include "../Savegame/AlienBase.h"
+#include "AlienBaseState.h"
 
 namespace OpenXcom
 {
@@ -547,6 +549,7 @@ void GeoscapeState::time5Seconds()
 		{
 			if ((*j)->getDestination() != 0)
 			{
+				(*j)->setPatrol(false);
 				Ufo* u = dynamic_cast<Ufo*>((*j)->getDestination());
 				if (u != 0 && !u->getDetected())
 				{
@@ -567,6 +570,7 @@ void GeoscapeState::time5Seconds()
 				Ufo* u = dynamic_cast<Ufo*>((*j)->getDestination());
 				Waypoint *w = dynamic_cast<Waypoint*>((*j)->getDestination());
 				TerrorSite* t = dynamic_cast<TerrorSite*>((*j)->getDestination());
+				AlienBase* b = dynamic_cast<AlienBase*>((*j)->getDestination());
 				if (u != 0)
 				{
 					if (!u->isCrashed())
@@ -620,6 +624,7 @@ void GeoscapeState::time5Seconds()
 				else if (w != 0)
 				{
 					popup(new CraftPatrolState(_game, (*j), _globe));
+					(*j)->setPatrol(true);
 					(*j)->setDestination(0);
 				}
 				else if (t != 0)
@@ -629,6 +634,21 @@ void GeoscapeState::time5Seconds()
 						// look up polygons texture
 						int texture, shade;
 						_globe->getPolygonTextureAndShade(t->getLongitude(), t->getLatitude(), &texture, &shade);
+						_music = false;
+						timerReset();
+						popup(new ConfirmLandingState(_game, *j, texture, shade));
+					}
+					else
+					{
+						(*j)->returnToBase();
+					}
+				}
+				else if (b != 0)
+				{
+					if((*j)->getNumSoldiers() > 0)
+					{
+						int texture, shade;
+						_globe->getPolygonTextureAndShade(b->getLongitude(), b->getLatitude(), &texture, &shade);
 						_music = false;
 						timerReset();
 						popup(new ConfirmLandingState(_game, *j, texture, shade));
@@ -715,6 +735,16 @@ void GeoscapeState::time10Minutes()
 					(*j)->setLowFuel(true);
 					(*j)->returnToBase();
 					popup(new LowFuelState(_game, (*j), this));
+				}
+				if((*j)->getPatrol())
+				{
+					for(std::vector<AlienBase*>::iterator b = _game->getSavedGame()->getAlienBases()->begin(); b != _game->getSavedGame()->getAlienBases()->end(); b++)
+					{
+						if (_globe->targetNearPolar((*b), (*j)->getLongitude(),(*j)->getLatitude(), 500) && RNG::generate(1, 100) < 20)
+						{
+							(*b)->setDiscovered(true);
+						}
+					}
 				}
 			}
 		}
@@ -983,7 +1013,7 @@ void GeoscapeState::time1Day()
 {
 	// Spawn terror sites
 	int chance = RNG::generate(1, 20);
-	if (chance <= 4)
+	if (chance <= 2)
 	{
 		// Pick a city
 		RuleRegion* region = 0;
@@ -1021,6 +1051,52 @@ void GeoscapeState::time1Day()
 			t->setAlienRace("STR_MIXED");
 		_game->getSavedGame()->getTerrorSites()->push_back(t);
 		popup(new AlienTerrorState(_game, city, this));
+	}
+	else if (chance >= 19 && _game->getSavedGame()->getTerrorSites()->size() < 9)
+	{
+		// Pick a city
+		RuleRegion* region = 0;
+		std::vector<std::string> regions = _game->getRuleset()->getRegionsList();
+		do
+		{
+			region = _game->getRuleset()->getRegion(regions[RNG::generate(0, regions.size()-1)]);
+		}
+		while (region->getCities()->empty());
+		City *city = (*region->getCities())[RNG::generate(0, region->getCities()->size()-1)];
+		double lon;
+		double lat;
+		do
+		{
+			lon = city->getLongitude() + (RNG::generate(-1000, 1000)/100);
+			lat = city->getLatitude() + (RNG::generate(-1000, 1000)/100);
+		}
+		while (!_globe->insideLand(lon, lat) && !region->insideRegion(lon, lat));
+		AlienBase *b = new AlienBase();
+		b->setLongitude(lon);
+		b->setLatitude(lat);
+		b->setSupplyTime(0);
+		b->setDiscovered(0);
+		b->setId(_game->getSavedGame()->getId("STR_ALIEN_BASE_"));
+		int race = RNG::generate(1, 2);
+		if(_game->getSavedGame()->getTime()->getTotalDays() > 45)
+			race += RNG::generate(0, 1);
+		if(_game->getSavedGame()->getTime()->getTotalDays() > 90)
+			race += RNG::generate(0, 1);
+		if(_game->getSavedGame()->getTime()->getTotalDays() > 135)
+			race += RNG::generate(0, 2);
+		if (race == 1)
+			b->setAlienRace("STR_SECTOID");
+		else if (race == 2)
+			b->setAlienRace("STR_FLOATER");
+		else if (race == 3)
+			b->setAlienRace("STR_SNAKEMAN");
+		else if (race == 4)
+			b->setAlienRace("STR_MUTON");
+		else if (race == 5)
+			b->setAlienRace("STR_ETHERIAL");
+		else
+			b->setAlienRace("STR_MIXED");
+		_game->getSavedGame()->getAlienBases()->push_back(b);
 	}
 	for (std::vector<Base*>::iterator i = _game->getSavedGame()->getBases()->begin(); i != _game->getSavedGame()->getBases()->end(); ++i)
 	{
@@ -1136,6 +1212,20 @@ void GeoscapeState::time1Month()
 	if(_Training)
 	{
 		popup(new TrainingState(_game));
+	}
+	if(_game->getSavedGame()->getAlienBases()->size())
+	{
+		bool _baseDiscovered = false;
+		for(std::vector<AlienBase*>::const_iterator b = _game->getSavedGame()->getAlienBases()->begin(); b != _game->getSavedGame()->getAlienBases()->end(); ++b)
+		{
+			int number = RNG::generate(1, 100);
+			if(!(*b)->isDiscovered() && number <= 5 && !_baseDiscovered)
+			{
+				(*b)->setDiscovered(true);
+				_baseDiscovered = true;
+				popup(new AlienBaseState(_game, *b, this));
+			}
+		}
 	}
 }
 

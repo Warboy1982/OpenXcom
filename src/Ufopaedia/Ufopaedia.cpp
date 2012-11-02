@@ -145,7 +145,10 @@ namespace OpenXcom
 	 */
 	void Ufopaedia::openArticle(Game *game, std::string &article_id)
 	{
-		if (article_id.substr(article_id.size() - 8, article_id.size()) == "_SOLDIER")
+		
+		if (article_id.substr(article_id.size() - 6, article_id.size()) == "CORPSE")
+			article_id = article_id.substr(0, article_id.size()-6)+"AUTOPSY";
+		else if (article_id.substr(article_id.size() - 8, article_id.size()) == "_SOLDIER")
 			article_id = article_id.substr(0, article_id.size()-8);
 		else if (article_id.substr(article_id.size() - 6, article_id.size()) == "_MEDIC")
 			article_id = article_id.substr(0, article_id.size()-6);

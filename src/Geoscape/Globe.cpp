@@ -769,7 +769,7 @@ bool Globe::targetNear(Target* target, int x, int y, int radius) const
 	return (dx * dx + dy * dy <= radius);
 }
 
-bool Globe::targetNearPolar(Target* target, float x, float y, int radius) const
+bool Globe::targetNearPolar(Target* target, double x, double y, int radius) const
 {
 	Sint16 tx, ty, mx, my;
 	if (pointBack(target->getLongitude(), target->getLatitude()))
@@ -1323,9 +1323,9 @@ void Globe::drawMarkers()
 
 		if ((*i)->isDiscovered())
 		{
-			_mkAlienSite->setX(x - 1);
-			_mkAlienSite->setY(y - 1);
-			_mkAlienSite->blit(_markers);
+			_mkAlienBase->setX(x - 1);
+			_mkAlienBase->setY(y - 1);
+			_mkAlienBase->blit(_markers);
 		}
 	}
 }

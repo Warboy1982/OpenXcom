@@ -77,7 +77,7 @@ public:
 	/// Checks if a target is near a point.
 	bool targetNear(Target* target, int x, int y, int radius) const;
 	/// Checks if a target is near a point.
-	bool targetNearPolar(Target* target, float x, float y, int radius) const;
+	bool targetNearPolar(Target* target, double x, double y, int radius) const;
 	/// Creates a new globe at the specified position and size.
 	Globe(Game *game, int cenX, int cenY, int width, int height, int x = 0, int y = 0);
 	/// Cleans up the globe.

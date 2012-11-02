@@ -62,6 +62,7 @@ PsiTrainingState::PsiTrainingState(Game *game) : State(game), _base1(0), _base2(
 	
 	_txtTitle->setColor(Palette::blockOffset(8)+5);
 	_txtTitle->setBig();
+	_txtTitle->setAlign(ALIGN_CENTER);
 	_txtTitle->setText(_game->getLanguage()->getString("STR_PSIONIC_TRAINING"));
 	int buttons = 0;
 	for(std::vector<Base*>::const_iterator b = _game->getSavedGame()->getBases()->begin(); b != _game->getSavedGame()->getBases()->end(); ++b)

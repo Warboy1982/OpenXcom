@@ -43,52 +43,38 @@ namespace OpenXcom
  */
 AlienBaseState::AlienBaseState(Game *game, AlienBase *base, GeoscapeState *state) : State(game), _base(base), _state(state)
 {
-	_screen = false;
-
+	
 	// Create objects
-	_window = new Window(this, 256, 200, 0, 0, POPUP_BOTH);
-	_btnCentre = new TextButton(200, 16, 28, 140);
-	_btnCancel = new TextButton(200, 16, 28, 160);
-	_txtTitle = new Text(246, 16, 5, 56);
-	_txtRegion = new Text(246, 16, 5, 80);
-
-	// Set palette
-	_game->setPalette(_game->getResourcePack()->getPalette("BACKPALS.DAT")->getColors(Palette::blockOffset(3)), Palette::backPos, 16);
+	_window = new Window(this, 320, 200, 0, 0);
+	_btnOk = new TextButton(50, 12, 135, 180);
+	_txtTitle = new Text(320, 60, 0, 64);
 
 	add(_window);
-	add(_btnCentre);
-	add(_btnCancel);
+	add(_btnOk);
 	add(_txtTitle);
-	add(_txtRegion);
+
+	_game->setPalette(_game->getResourcePack()->getPalette("BACKPALS.DAT")->getColors(Palette::blockOffset(0)), Palette::backPos, 16);
 
 	// Set up objects
-	_window->setColor(Palette::blockOffset(8)+5);
-	_window->setBackground(_game->getResourcePack()->getSurface("BACK03.SCR"));
+	_window->setColor(Palette::blockOffset(15)-1);
+	_window->setBackground(_game->getResourcePack()->getSurface("BACK13.SCR"));
+	
+	_btnOk->setColor(Palette::blockOffset(15)-1);
+	_btnOk->setText(_game->getLanguage()->getString("STR_OK"));
+	_btnOk->onMouseClick((ActionHandler)&AlienBaseState::btnOkClick);
 
-	_btnCentre->setColor(Palette::blockOffset(8)+5);
-	_btnCentre->setText(_game->getLanguage()->getString("STR_CENTER_ON_SITE_TIME_5_SECS"));
-	_btnCentre->onMouseClick((ActionHandler)&AlienBaseState::btnCentreClick);
-
-	_btnCancel->setColor(Palette::blockOffset(8)+5);
-	_btnCancel->setText(_game->getLanguage()->getString("STR_CANCEL_UC"));
-	_btnCancel->onMouseClick((ActionHandler)&AlienBaseState::btnCancelClick);
-
-	_txtTitle->setColor(Palette::blockOffset(8)+5);
-	_txtTitle->setBig();
-	_txtTitle->setAlign(ALIGN_CENTER);
-	_txtTitle->setText(_game->getLanguage()->getString("STR_XCOM_AGENTS_HAVE_LOCATED_AN_ALIEN_BASE_IN"));
-
-	_txtRegion->setColor(Palette::blockOffset(8)+5);
-	_txtRegion->setBig();
-	_txtRegion->setAlign(ALIGN_CENTER);
 	for (std::vector<Region*>::iterator k = _game->getSavedGame()->getRegions()->begin(); k != _game->getSavedGame()->getRegions()->end(); ++k)
 	{
 		if((*k)->getRules()->insideRegion(_base->getLongitude(), _base->getLatitude())) 
 		{
-			_txtRegion->setText(_game->getLanguage()->getString((*k)->getRules()->getType()));
 			_region = *k;
 		}
 	}
+	_txtTitle->setColor(Palette::blockOffset(8)+5);
+	_txtTitle->setAlign(ALIGN_CENTER);
+	_txtTitle->setBig();
+	_txtTitle->setWordWrap(true);
+	_txtTitle->setText(_game->getLanguage()->getString("STR_XCOM_AGENTS_HAVE_LOCATED_AN_ALIEN_BASE_IN") + _game->getLanguage()->getString(_region->getRules()->getType()));
 }
 
 /**
@@ -100,29 +86,10 @@ AlienBaseState::~AlienBaseState()
 }
 
 /**
- * Resets the palette.
- */
-void AlienBaseState::init()
-{
-	_game->setPalette(_game->getResourcePack()->getPalette("BACKPALS.DAT")->getColors(Palette::blockOffset(3)), Palette::backPos, 16);
-}
-
-/**
- * Centers on the base and returns to the previous screen.
- * @param action Pointer to an action.
- */
-void AlienBaseState::btnCentreClick(Action *action)
-{
-	_state->timerReset();
-	_state->getGlobe()->center(_base->getLongitude(), _base->getLatitude());
-	_game->popState();
-}
-
-/**
  * Returns to the previous screen.
  * @param action Pointer to an action.
  */
-void AlienBaseState::btnCancelClick(Action *action)
+void AlienBaseState::btnOkClick(Action *action)
 {
 	_game->popState();
 }
