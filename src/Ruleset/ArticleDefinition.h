@@ -65,6 +65,7 @@ namespace OpenXcom
 		std::string id;
 		std::string title;
 		std::string section;
+		bool needsResearch;
 		int sort_key;
 
 	protected:

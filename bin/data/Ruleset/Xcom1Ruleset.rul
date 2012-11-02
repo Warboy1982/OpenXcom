@@ -8412,6 +8412,7 @@ manufacture:
       STR_UFO_NAVIGATION: 1
 ufopaedia:
   - id: STR_SKYRANGER
+    needsResearch: false
     type_id: 1
     section: STR_XCOM_CRAFT_ARMAMENT
     image_id: UP004.SPK
@@ -8457,6 +8458,7 @@ ufopaedia:
       height: 100
     text: STR_AVENGER_UFOPEDIA
   - id: STR_INTERCEPTOR
+    needsResearch: false
     type_id: 1
     section: STR_XCOM_CRAFT_ARMAMENT
     image_id: UP002.SPK
@@ -8487,16 +8489,19 @@ ufopaedia:
       height: 100
     text: STR_FIRESTORM_UFOPEDIA
   - id: STR_STINGRAY
+    needsResearch: false
     type_id: 2
     section: STR_XCOM_CRAFT_ARMAMENT
     image_id: UP006.SPK
     text: STR_STINGRAY_UFOPEDIA
   - id: STR_AVALANCHE
+    needsResearch: false
     type_id: 2
     section: STR_XCOM_CRAFT_ARMAMENT
     image_id: UP007.SPK
     text: STR_AVALANCHE_UFOPEDIA
   - id: STR_CANNON_UC
+    needsResearch: false
     type_id: 2
     section: STR_XCOM_CRAFT_ARMAMENT
     image_id: UP008.SPK
@@ -8517,11 +8522,13 @@ ufopaedia:
     image_id: UP011.SPK
     text: STR_PLASMA_BEAM_UFOPEDIA
   - id: TANK_CANNON
+    needsResearch: false
     title: STR_TANK_CANNON
     type_id: 3
     section: STR_HEAVY_WEAPONS_PLATFORMS
     text: STR_TANK_CANNON_UFOPEDIA
   - id: TANK_ROCKET_LAUNCHER
+    needsResearch: false
     title: STR_TANK_ROCKET_LAUNCHER
     type_id: 3
     section: STR_HEAVY_WEAPONS_PLATFORMS
@@ -8551,40 +8558,51 @@ ufopaedia:
     type_id: 5
     section: STR_WEAPONS_AND_EQUIPMENT
   - id: STR_PISTOL
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_PISTOL_UFOPEDIA
   - id: STR_PISTOL_CLIP
+    needsResearch: false
     type_id: 4
     section: STR_NOT_AVAILABLE
   - id: STR_RIFLE
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_RIFLE_UFOPEDIA
   - id: STR_RIFLE_CLIP
+    needsResearch: false
     type_id: 4
     section: STR_NOT_AVAILABLE
   - id: STR_AUTO_CANNON
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_AUTO_CANNON_UFOPEDIA
   - id: STR_AC_AP_AMMO
+    needsResearch: false
     type_id: 4
     section: STR_NOT_AVAILABLE
   - id: STR_ROCKET_LAUNCHER
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_ROCKET_LAUNCHER_UFOPEDIA
   - id: STR_SMALL_ROCKET
+    needsResearch: false
     type_id: 4
     section: STR_NOT_AVAILABLE
   - id: STR_LARGE_ROCKET
+    needsResearch: false
     type_id: 4
     section: STR_NOT_AVAILABLE
   - id: STR_INCENDIARY_ROCKET
+    needsResearch: false
     type_id: 4
     section: STR_NOT_AVAILABLE
   - id: STR_ROCKET_LAUNCHER
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_ROCKET_LAUNCHER_UFOPEDIA
@@ -8597,18 +8615,22 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_LASER_RIFLE_UFOPEDIA
   - id: STR_GRENADE
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_GRENADE_UFOPEDIA
   - id: STR_SMOKE_GRENADE
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_SMOKE_GRENADE_UFOPEDIA
   - id: STR_PROXIMITY_GRENADE
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_PROXIMITY_GRENADE_UFOPEDIA
   - id: STR_HIGH_EXPLOSIVE
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_HIGH_EXPLOSIVE_UFOPEDIA
@@ -8625,10 +8647,12 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_PSI_AMP_UFOPEDIA
   - id: STR_STUN_ROD
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_STUN_ROD_UFOPEDIA
   - id: STR_ELECTRO_FLARE
+    needsResearch: false
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     text: STR_ELECTRO_FLARE_UFOPEDIA
@@ -8677,38 +8701,47 @@ ufopaedia:
     section: STR_ALIEN_ARTIFACTS
     text: STR_MIND_PROBE_UFOPEDIA
   - id: STR_ACCESS_LIFT
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_ACCESS_LIFT_UFOPEDIA
   - id: STR_LIVING_QUARTERS
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_LIVING_QUARTERS_UFOPEDIA
   - id: STR_LABORATORY
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_LABORATORY_UFOPEDIA
   - id: STR_WORKSHOP
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_WORKSHOP_UFOPEDIA
   - id: STR_SMALL_RADAR_SYSTEM
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_SMALL_RADAR_SYSTEM_UFOPEDIA
   - id: STR_LARGE_RADAR_SYSTEM
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_LARGE_RADAR_SYSTEM_UFOPEDIA
   - id: STR_MISSILE_DEFENSES
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_MISSILE_DEFENSES_UFOPEDIA
   - id: STR_GENERAL_STORES
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_GENERAL_STORES_UFOPEDIA
   - id: STR_ALIEN_CONTAINMENT
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_ALIEN_CONTAINMENT_UFOPEDIA
@@ -8741,6 +8774,7 @@ ufopaedia:
     section: STR_BASE_FACILITIES
     text: STR_HYPER_WAVE_DECODER_UFOPEDIA
   - id: STR_HANGAR
+    needsResearch: false
     type_id: 6
     section: STR_BASE_FACILITIES
     text: STR_HANGAR_UFOPEDIA

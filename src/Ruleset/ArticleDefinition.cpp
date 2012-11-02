@@ -26,7 +26,7 @@ namespace OpenXcom
 	 * Constructor
 	 * @param type_id Article type of this instance.
 	 */
-	ArticleDefinition::ArticleDefinition(UfopaediaTypeId type_id) : _type_id(type_id)
+	ArticleDefinition::ArticleDefinition(UfopaediaTypeId type_id) : _type_id(type_id), needsResearch(true)
 	{}
 
 	/**
@@ -69,6 +69,10 @@ namespace OpenXcom
 			{
 				i.second() >> title;
 			}
+			else if (key == "needsResearch")
+			{
+				i.second() >> needsResearch;
+			}
 			else if (key == "section")
 			{
 				i.second() >> section;
@@ -86,6 +90,7 @@ namespace OpenXcom
 		out << YAML::Key << "id" << YAML::Value << id;
 		out << YAML::Key << "type_id" << YAML::Value << _type_id;
 		out << YAML::Key << "title" << YAML::Value << title;
+		out << YAML::Key << "needsResearch" << YAML::Value << needsResearch;
 		out << YAML::Key << "section" << YAML::Value << section;
 	}
 

@@ -10,13 +10,13 @@ work on monthly report screen
 mission types: STR_ANTI_INFILTRATION, STR_MILITARY_DEFENCE STR_PURGE, STR_CULTIST_DEFENCE, STR_CULTIST_BASE
 hope and pray that the state-based AI works as intended, merge it.
 fix ufopedia to only show articles you actually have available.
-see how horribly generating a base assault goes. (friendly and enemy) - enemy base: not bad, make them happen.
+see how horribly generating a base assault goes. 
+    - looks like all the code is in place, but it needs a base to assault, so i'm thinking have a sub menu to choose which saved game to load a base from, with a sub-menu to pick which base from within that save.
 
     
     UNITS:
-fix footstep noises
 Battle mech need secondary weapons for more mayhem.
-make all weapons available for all tank types 
+all weapons available for all tank types - make them manufacturable
     battlemechs will get a free autocannon
     ground tanks will get sonic detector arrays (motion scanner) and better armour
     hovertanks will get.... screwed because they can already fly.

@@ -60,6 +60,8 @@ namespace OpenXcom
 	 */
 	bool Ufopaedia::isArticleAvailable(Game *game, std::string &article_id)
 	{
+		if(article_id.substr(article_id.size()-7, article_id.size()) == "AUTOPSY")
+			article_id = article_id.substr(0, article_id.size()-7) + "CORPSE";
 		return game->getSavedGame()->isResearched(article_id);
 	}
 
@@ -143,26 +145,18 @@ namespace OpenXcom
 	 */
 	void Ufopaedia::openArticle(Game *game, std::string &article_id)
 	{
-		if(article_id == "STR_SECTOID_SOLDIER" || article_id == "STR_SECTOID_ENGINEER"|| article_id == "STR_SECTOID_MEDIC"|| article_id == "STR_SECTOID_NAVIGATOR"|| article_id == "STR_SECTOID_LEADER"|| article_id == "STR_SECTOID_COMMANDER")
-		{
-			 article_id = "STR_SECTOID";
-		}
-		else if(article_id == "STR_FLOATER_SOLDIER" || article_id == "STR_FLOATER_ENGINEER"|| article_id == "STR_FLOATER_MEDIC"|| article_id == "STR_FLOATER_NAVIGATOR"|| article_id == "STR_FLOATER_LEADER"|| article_id == "STR_FLOATER_COMMANDER")
-		{
-			 article_id = "STR_FLOATER";
-		}
-		else if(article_id == "STR_SNAKEMAN_SOLDIER" || article_id == "STR_SNAKEMAN_ENGINEER"|| article_id == "STR_SNAKEMAN_NAVIGATOR"|| article_id == "STR_SNAKEMAN_LEADER"|| article_id == "STR_SNAKEMAN_COMMANDER")
-		{
-			article_id = "STR_SNAKEMAN";
-		}
-		else if(article_id == "STR_MUTON_SOLDIER" || article_id == "STR_MUTON_ENGINEER"|| article_id == "STR_MUTON_NAVIGATOR")
-		{
-			article_id = "STR_MUTON";
-		}
-		else if(article_id == "STR_ETHEREAL_SOLDIER" || article_id == "STR_ETHEREAL_LEADER"|| article_id == "STR_ETHEREAL_COMMANDER")
-		{
-			article_id = "STR_ETHEREAL";
-		}
+		if (article_id.substr(article_id.size() - 8, article_id.size()) == "_SOLDIER")
+			article_id = article_id.substr(0, article_id.size()-8);
+		else if (article_id.substr(article_id.size() - 6, article_id.size()) == "_MEDIC")
+			article_id = article_id.substr(0, article_id.size()-6);
+		else if (article_id.substr(article_id.size() - 9, article_id.size()) == "_ENGINEER")
+			article_id = article_id.substr(0, article_id.size()-9);
+		else if (article_id.substr(article_id.size() - 10, article_id.size()) == "_NAVIGATOR")
+			article_id = article_id.substr(0, article_id.size()-10);
+		else if (article_id.substr(article_id.size() - 7, article_id.size()) == "_LEADER")
+			article_id = article_id.substr(0, article_id.size()-7);
+		else if (article_id.substr(article_id.size() - 10, article_id.size()) == "_COMMANDER")
+			article_id = article_id.substr(0, article_id.size()-10);
 		_current_index = getArticleIndex(game, article_id);	
 		if(_current_index != -1)
 		{
@@ -249,9 +243,36 @@ namespace OpenXcom
 		for (std::vector<std::string>::iterator it=list.begin(); it!=list.end(); ++it)
 		{
 			ArticleDefinition *article = game->getRuleset()->getUfopaediaArticle(*it);
-			if (/*isArticleAvailable(game, *it) && */article->section != UFOPAEDIA_NOT_AVAILABLE)
+			if ((isArticleAvailable(game, *it) || !article->needsResearch) && article->section != UFOPAEDIA_NOT_AVAILABLE)
 			{
 				articles.push_back(article);
+			}
+			if (article->section == UFOPAEDIA_ALIEN_LIFE_FORMS)
+			{
+				if (isArticleAvailable(game, *it + "_SOLDIER"))
+				{
+					articles.push_back(article);
+				}
+				if (isArticleAvailable(game, *it + "_MEDIC"))
+				{
+					articles.push_back(article);
+				}
+				if (isArticleAvailable(game, *it + "_NAVIGATOR"))
+				{
+					articles.push_back(article);
+				}
+				if (isArticleAvailable(game, *it + "_ENGINEER"))
+				{
+					articles.push_back(article);
+				}
+				if (isArticleAvailable(game, *it + "_LEADER"))
+				{
+					articles.push_back(article);
+				}
+				if (isArticleAvailable(game, *it + "_COMMANDER"))
+				{
+					articles.push_back(article);
+				}
 			}
 		}
 		return articles;

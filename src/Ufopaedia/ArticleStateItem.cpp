@@ -183,7 +183,7 @@ namespace OpenXcom
 
 				for (unsigned int i = 0; i < ammo_data->size(); ++i)
 				{
-					/*if (Ufopaedia::isArticleAvailable(_game, (*ammo_data)[i]))*/
+					if (Ufopaedia::isArticleAvailable(_game, (*ammo_data)[i]))
 					{
 						RuleItem *ammo_rule = _game->getRuleset()->getItem((*ammo_data)[i]);
 						setDamageTypeText(_txtAmmoType[i], ammo_rule);
