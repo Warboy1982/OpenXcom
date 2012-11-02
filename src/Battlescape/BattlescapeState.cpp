@@ -542,6 +542,7 @@ void BattlescapeState::btnUnitDownClick(Action *action)
  */
 void BattlescapeState::btnMapUpClick(Action *action)
 {
+	if (playableUnitSelected())
 	_map->getCamera()->up();
 }
 
@@ -551,6 +552,7 @@ void BattlescapeState::btnMapUpClick(Action *action)
  */
 void BattlescapeState::btnMapDownClick(Action *action)
 {
+	if (playableUnitSelected())
 	_map->getCamera()->down();
 }
 
@@ -561,6 +563,7 @@ void BattlescapeState::btnMapDownClick(Action *action)
 void BattlescapeState::btnShowMapClick(Action *action)
 {
 	//MiniMapState
+	if (playableUnitSelected())
 	_game->pushState (new MiniMapState (_game, _map->getCamera(), _save));
 }
 
@@ -570,10 +573,13 @@ void BattlescapeState::btnShowMapClick(Action *action)
  */
 void BattlescapeState::btnKneelClick(Action *action)
 {
-	BattleUnit *bu = _save->getSelectedUnit();
-	if (bu)
+	if (playableUnitSelected())
 	{
-		_battleGame->kneel(bu);
+		BattleUnit *bu = _save->getSelectedUnit();
+		if (bu)
+		{
+			_battleGame->kneel(bu);
+		}
 	}
 }
 
@@ -607,6 +613,7 @@ void BattlescapeState::btnCenterClick(Action *action)
  */
 void BattlescapeState::btnNextSoldierClick(Action *action)
 {
+	if (playableUnitSelected())
 	selectNextPlayerUnit(false);
 }
 
@@ -616,6 +623,7 @@ void BattlescapeState::btnNextSoldierClick(Action *action)
  */
 void BattlescapeState::btnNextStopClick(Action *action)
 {
+	if (playableUnitSelected())
 	selectNextPlayerUnit(true);
 }
 
@@ -625,13 +633,16 @@ void BattlescapeState::btnNextStopClick(Action *action)
  */
 void BattlescapeState::selectNextPlayerUnit(bool checkReselect)
 {
-	if (_battleGame->getCurrentAction()->type != BA_NONE) return;
-	BattleUnit *unit = _save->selectNextPlayerUnit(checkReselect);
-	updateSoldierInfo();
-	if (unit) _map->getCamera()->centerOnPosition(unit->getPosition());
-	_battleGame->cancelCurrentAction();
-	_battleGame->getCurrentAction()->actor = unit;
-	_battleGame->setupCursor();
+	if (playableUnitSelected())
+	{
+		if (_battleGame->getCurrentAction()->type != BA_NONE) return;
+		BattleUnit *unit = _save->selectNextPlayerUnit(checkReselect);
+		updateSoldierInfo();
+		if (unit) _map->getCamera()->centerOnPosition(unit->getPosition());
+		_battleGame->cancelCurrentAction();
+		_battleGame->getCurrentAction()->actor = unit;
+		_battleGame->setupCursor();
+	}
 }
 
 /**
@@ -659,6 +670,7 @@ void BattlescapeState::btnHelpClick(Action *action)
  */
 void BattlescapeState::btnEndTurnClick(Action *action)
 {
+	if (playableUnitSelected())
 	_battleGame->requestEndTurn();
 }
 /**
@@ -667,6 +679,7 @@ void BattlescapeState::btnEndTurnClick(Action *action)
  */
 void BattlescapeState::btnAbortClick(Action *action)
 {
+	if (playableUnitSelected())
 	_game->pushState(new AbortMissionState(_game, _save, this));
 }
 

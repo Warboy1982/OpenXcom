@@ -1052,7 +1052,7 @@ void GeoscapeState::time1Day()
 		_game->getSavedGame()->getTerrorSites()->push_back(t);
 		popup(new AlienTerrorState(_game, city, this));
 	}
-	else if (chance >= 19 && _game->getSavedGame()->getTerrorSites()->size() < 9)
+	else if (chance >= 19 && _game->getSavedGame()->getAlienBases()->size() < 9)
 	{
 		// Pick a city
 		RuleRegion* region = 0;
@@ -1067,15 +1067,17 @@ void GeoscapeState::time1Day()
 		double lat;
 		do
 		{
-			lon = city->getLongitude() + (RNG::generate(-1000, 1000)/100);
-			lat = city->getLatitude() + (RNG::generate(-1000, 1000)/100);
+			double ran = RNG::generate(-100, 100)*.001;
+			double ran2 = RNG::generate(-100, 100)*.001;
+			lon = city->getLongitude() + ran;
+			lat = city->getLatitude() + ran2;
 		}
-		while (!_globe->insideLand(lon, lat) && !region->insideRegion(lon, lat));
+		while(!_globe->insideLand(lon, lat));
 		AlienBase *b = new AlienBase();
 		b->setLongitude(lon);
 		b->setLatitude(lat);
 		b->setSupplyTime(0);
-		b->setDiscovered(0);
+		b->setDiscovered(false);
 		b->setId(_game->getSavedGame()->getId("STR_ALIEN_BASE_"));
 		int race = RNG::generate(1, 2);
 		if(_game->getSavedGame()->getTime()->getTotalDays() > 45)
