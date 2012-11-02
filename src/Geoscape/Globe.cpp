@@ -842,6 +842,8 @@ std::vector<Target*> Globe::getTargets(int x, int y, bool craft) const
 	}
 	for (std::vector<AlienBase*>::iterator i = _game->getSavedGame()->getAlienBases()->begin(); i != _game->getSavedGame()->getAlienBases()->end(); ++i)
 	{
+		if (!(*i)->isDiscovered())
+			continue;
 		if (targetNear((*i), x, y, 25))
 		{
 			v.push_back(*i);
