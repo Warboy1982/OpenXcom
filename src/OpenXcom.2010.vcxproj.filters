@@ -666,6 +666,9 @@
     <ClCompile Include="Battlescape\NoContainmentState.cpp">
       <Filter>Battlescape</Filter>
     </ClCompile>
+    <ClCompile Include="Savegame\AlienBase.cpp">
+      <Filter>Savegame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basescape\ManufactureState.h">
@@ -1335,6 +1338,9 @@
     </ClInclude>
     <ClInclude Include="Battlescape\NoContainmentState.h">
       <Filter>Battlescape</Filter>
+    </ClInclude>
+    <ClInclude Include="Savegame\AlienBase.h">
+      <Filter>Savegame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

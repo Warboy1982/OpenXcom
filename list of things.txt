@@ -14,6 +14,7 @@ see how horribly generating a base assault goes. (friendly and enemy) - enemy ba
 
     
     UNITS:
+fix footstep noises
 Battle mech need secondary weapons for more mayhem.
 make all weapons available for all tank types 
     battlemechs will get a free autocannon

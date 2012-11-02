@@ -930,67 +930,6 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
-  - type: STR_HOVERTANK_CANNON
-    size: 6
-    costSell: 340000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 4
-    fireSound: 2
-    compatibleAmmo:
-      - STR_HWP_CANNON_SHELLS
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 33
-    tuAimed: 66
-    battleType: 1
-    fixedWeapon: true
-    turretType: 0
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_SECTOPOD_CANNON
-    size: 6
-    costSell: 340000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 4
-    fireSound: 2
-    compatibleAmmo:
-      - STR_HWP_CANNON_SHELLS
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 33
-    tuAimed: 66
-    battleType: 1
-    fixedWeapon: true
-    turretType: 0
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_HWP_CANNON_SHELLS
-    size: 0.1
-    costBuy: 200
-    costSell: 100
-    transferTime: 48
-    weight: 1
-    bigSprite: 12
-    floorSprite: 12
-    hitSound: 13
-    hitAnimation: 26
-    power: 110
-    damageType: 1
-    clipSize: 30
-    battleType: 2
-    invWidth: 2
-    invHeight: 1
-    armor: 20
   - type: STR_TANK_ROCKET_LAUNCHER
     size: 6
     costBuy: 480000
@@ -1014,120 +953,7 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
-  - type: STR_HOVERTANK_ROCKET_LAUNCHER
-    size: 6
-    costBuy: 480000
-    costSell: 360000
-    transferTime: 96
-    weight: 1
-    bigSprite: 42
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 0
-    fireSound: 52
-    compatibleAmmo:
-      - STR_HWP_ROCKETS
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 33
-    tuAimed: 66
-    battleType: 1
-    fixedWeapon: true
-    turretType: 1
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_SECTOPOD_ROCKET_LAUNCHER
-    size: 6
-    costBuy: 480000
-    costSell: 360000
-    transferTime: 96
-    weight: 1
-    bigSprite: 42
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 0
-    fireSound: 52
-    compatibleAmmo:
-      - STR_HWP_ROCKETS
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 33
-    tuAimed: 66
-    battleType: 1
-    fixedWeapon: true
-    turretType: 1
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_HWP_ROCKETS
-    size: 0.6
-    costBuy: 3000
-    costSell: 2250
-    transferTime: 48
-    weight: 1
-    bigSprite: 16
-    floorSprite: 16
-    hitSound: 0
-    hitAnimation: 0
-    power: 120
-    damageType: 3
-    clipSize: 8
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    armor: 20
   - type: STR_TANK_LASER_CANNON
-    size: 6
-    costSell: 594000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 5
-    fireSound: 11
-    hitSound: 19
-    hitAnimation: 36
-    power: 100
-    damageType: 4
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 25
-    tuAimed: 50
-    battleType: 1
-    fixedWeapon: true
-    turretType: 2
-    clipSize: -1
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_HOVERTANK_LASER_CANNON
-    size: 6
-    costSell: 594000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 5
-    fireSound: 11
-    hitSound: 19
-    hitAnimation: 36
-    power: 100
-    damageType: 4
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 25
-    tuAimed: 50
-    battleType: 1
-    fixedWeapon: true
-    turretType: 2
-    clipSize: -1
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_SECTOPOD_LASER_CANNON
     size: 6
     costSell: 594000
     transferTime: 96
@@ -1177,56 +1003,6 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
-  - type: STR_HOVERTANK_PLASMA
-    size: 6
-    costSell: 980000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 8
-    fireSound: 11
-    hitSound: 19
-    power: 150
-    damageType: 5
-    hitAnimation: 46
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 40
-    tuAimed: 80
-    battleType: 1
-    fixedWeapon: true
-    turretType: 3
-    clipSize: -1
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_SECTOPOD_PLASMA
-    size: 6
-    costSell: 980000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 8
-    fireSound: 11
-    hitSound: 19
-    power: 150
-    damageType: 5
-    hitAnimation: 46
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 40
-    tuAimed: 80
-    battleType: 1
-    fixedWeapon: true
-    turretType: 3
-    clipSize: -1
-    invWidth: 2
-    invHeight: 3
-    armor: 20
   - type: STR_TANK_LAUNCHER
     size: 6
     costSell: 1043000
@@ -1248,114 +1024,7 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
-  - type: STR_HOVERTANK_LAUNCHER
-    size: 6
-    costSell: 1043000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 10
-    fireSound: 53
-    compatibleAmmo:
-      - STR_HWP_FUSION_BOMB
-    accuracyAimed: 120
-    tuAimed: 80
-    battleType: 1
-    fixedWeapon: true
-    turretType: 4
-    waypoint: true
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_SECTOPOD_LAUNCHER
-    size: 6
-    costSell: 1043000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 10
-    fireSound: 53
-    compatibleAmmo:
-      - STR_HWP_FUSION_BOMB
-    accuracyAimed: 120
-    tuAimed: 80
-    battleType: 1
-    fixedWeapon: true
-    turretType: 4
-    waypoint: true
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_HWP_FUSION_BOMB
-    size: 6
-    costSell: 31500
-    weight: 3
-    bigSprite: 36
-    floorSprite: 35
-    hitSound: 0
-    hitAnimation: 0
-    power: 200
-    damageType: 3
-    clipSize: 8
-    battleType: 2
-    invWidth: 1
-    invHeight: 1
-    armor: 20
   - type: STR_TANK_DISRUPTOR
-    size: 6
-    costSell: 780000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 5
-    fireSound: 11
-    hitSound: 19
-    hitAnimation: 36
-    power: 130
-    damageType: 4
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 25
-    tuAimed: 50
-    battleType: 1
-    fixedWeapon: true
-    turretType: 2
-    clipSize: -1
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_HOVERTANK_DISRUPTOR
-    size: 6
-    costSell: 780000
-    transferTime: 96
-    weight: 1
-    bigSprite: 43
-    floorSprite: 0
-    handSprite: 0
-    bulletSprite: 5
-    fireSound: 11
-    hitSound: 19
-    hitAnimation: 36
-    power: 130
-    damageType: 4
-    accuracySnap: 60
-    accuracyAimed: 120
-    tuSnap: 25
-    tuAimed: 50
-    battleType: 1
-    fixedWeapon: true
-    turretType: 2
-    clipSize: -1
-    invWidth: 2
-    invHeight: 3
-    armor: 20
-  - type: STR_SECTOPOD_DISRUPTOR
     size: 6
     costSell: 780000
     transferTime: 96
@@ -1402,6 +1071,147 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 20
+  - type: STR_HOVERTANK_CANNON
+    size: 6
+    costSell: 340000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 4
+    fireSound: 2
+    compatibleAmmo:
+      - STR_HWP_CANNON_SHELLS
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 0
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HOVERTANK_ROCKET_LAUNCHER
+    size: 6
+    costBuy: 480000
+    costSell: 360000
+    transferTime: 96
+    weight: 1
+    bigSprite: 42
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 0
+    fireSound: 52
+    compatibleAmmo:
+      - STR_HWP_ROCKETS
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HOVERTANK_LASER_CANNON
+    size: 6
+    costSell: 594000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 100
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HOVERTANK_PLASMA
+    size: 6
+    costSell: 980000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 8
+    fireSound: 11
+    hitSound: 19
+    power: 150
+    damageType: 5
+    hitAnimation: 46
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 40
+    tuAimed: 80
+    battleType: 1
+    fixedWeapon: true
+    turretType: 3
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HOVERTANK_LAUNCHER
+    size: 6
+    costSell: 1043000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 10
+    fireSound: 53
+    compatibleAmmo:
+      - STR_HWP_FUSION_BOMB
+    accuracyAimed: 120
+    tuAimed: 80
+    battleType: 1
+    fixedWeapon: true
+    turretType: 4
+    waypoint: true
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_HOVERTANK_DISRUPTOR
+    size: 6
+    costSell: 780000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 130
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
   - type: STR_HOVERTANK_RAIL
     size: 6
     costSell: 1043000
@@ -1421,6 +1231,147 @@ items:
     battleType: 1
     fixedWeapon: true
     turretType: 4
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_CANNON
+    size: 6
+    costSell: 340000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 4
+    fireSound: 2
+    compatibleAmmo:
+      - STR_HWP_CANNON_SHELLS
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 0
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_ROCKET_LAUNCHER
+    size: 6
+    costBuy: 480000
+    costSell: 360000
+    transferTime: 96
+    weight: 1
+    bigSprite: 42
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 0
+    fireSound: 52
+    compatibleAmmo:
+      - STR_HWP_ROCKETS
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 33
+    tuAimed: 66
+    battleType: 1
+    fixedWeapon: true
+    turretType: 1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_LASER_CANNON
+    size: 6
+    costSell: 594000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 100
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_PLASMA
+    size: 6
+    costSell: 980000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 8
+    fireSound: 11
+    hitSound: 19
+    power: 150
+    damageType: 5
+    hitAnimation: 46
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 40
+    tuAimed: 80
+    battleType: 1
+    fixedWeapon: true
+    turretType: 3
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_LAUNCHER
+    size: 6
+    costSell: 1043000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 10
+    fireSound: 53
+    compatibleAmmo:
+      - STR_HWP_FUSION_BOMB
+    accuracyAimed: 120
+    tuAimed: 80
+    battleType: 1
+    fixedWeapon: true
+    turretType: 4
+    waypoint: true
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+  - type: STR_SECTOPOD_DISRUPTOR
+    size: 6
+    costSell: 780000
+    transferTime: 96
+    weight: 1
+    bigSprite: 43
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: 5
+    fireSound: 11
+    hitSound: 19
+    hitAnimation: 36
+    power: 130
+    damageType: 4
+    accuracySnap: 60
+    accuracyAimed: 120
+    tuSnap: 25
+    tuAimed: 50
+    battleType: 1
+    fixedWeapon: true
+    turretType: 2
+    clipSize: -1
     invWidth: 2
     invHeight: 3
     armor: 20
@@ -1445,6 +1396,55 @@ items:
     turretType: 4
     invWidth: 2
     invHeight: 3
+    armor: 20
+  - type: STR_HWP_CANNON_SHELLS
+    size: 0.1
+    costBuy: 200
+    costSell: 100
+    transferTime: 48
+    weight: 1
+    bigSprite: 12
+    floorSprite: 12
+    hitSound: 13
+    hitAnimation: 26
+    power: 110
+    damageType: 1
+    clipSize: 30
+    battleType: 2
+    invWidth: 2
+    invHeight: 1
+    armor: 20
+  - type: STR_HWP_ROCKETS
+    size: 0.6
+    costBuy: 3000
+    costSell: 2250
+    transferTime: 48
+    weight: 1
+    bigSprite: 16
+    floorSprite: 16
+    hitSound: 0
+    hitAnimation: 0
+    power: 120
+    damageType: 3
+    clipSize: 8
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    armor: 20
+  - type: STR_HWP_FUSION_BOMB
+    size: 6
+    costSell: 31500
+    weight: 3
+    bigSprite: 36
+    floorSprite: 35
+    hitSound: 0
+    hitAnimation: 0
+    power: 200
+    damageType: 3
+    clipSize: 8
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
     armor: 20
   - type: STR_HWP_RAIL_SLUG
     size: 3
