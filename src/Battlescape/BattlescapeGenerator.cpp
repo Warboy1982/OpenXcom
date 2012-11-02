@@ -54,6 +54,7 @@
 #include "../Engine/CrossPlatform.h"
 #include "../Savegame/Vehicle.h"
 #include "../Savegame/TerrorSite.h"
+#include "../Savegame/AlienBase.h"
 #include "../Engine/Options.h"
 #include "PatrolBAIState.h"
 
@@ -72,6 +73,7 @@ BattlescapeGenerator::BattlescapeGenerator(Game *game) : _game(game)
 	_craft = 0;
 	_base = 0;
 	_terror = 0;
+	_alienBase = 0;
 	_terrain = 0;
 	_craftInventoryTile = 0;
 }
@@ -166,6 +168,15 @@ void BattlescapeGenerator::setTerrorSite(TerrorSite *terror)
 	_terror->setInBattlescape(true);
 }
 
+/**
+ * Sets the alien base involved in the battle.
+ * @param base Pointer to alien base.
+ */
+void BattlescapeGenerator::setAlienBase(AlienBase *base)
+{
+	_alienBase = base;
+	_alienBase->setInBattlescape(true);
+}
 
 /**
  * This will start the generator: it will fill up the battlescapesavegame with data.

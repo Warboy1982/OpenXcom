@@ -32,6 +32,7 @@
 #include "Ufo.h"
 #include "Waypoint.h"
 #include "TerrorSite.h"
+#include "AlienBase.h"
 #include "Vehicle.h"
 #include "../Ruleset/RuleItem.h"
 
@@ -122,6 +123,17 @@ void Craft::load(const YAML::Node &node, const Ruleset *rule, SavedGame *save)
 		else if (type == "STR_TERROR_SITE")
 		{
 			for (std::vector<TerrorSite*>::iterator i = save->getTerrorSites()->begin(); i != save->getTerrorSites()->end(); ++i)
+			{
+				if ((*i)->getId() == id)
+				{
+					setDestination(*i);
+					break;
+				}
+			}
+		}
+		else if (type == "STR_ALIEN_BASE")
+		{
+			for (std::vector<AlienBase*>::iterator i = save->getAlienBases()->begin(); i != save->getAlienBases()->end(); ++i)
 			{
 				if ((*i)->getId() == id)
 				{

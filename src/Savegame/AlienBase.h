@@ -27,7 +27,7 @@ namespace OpenXcom
 {
 
 /**
- * Represents an alien terror site on the world.
+ * Represents an alien base on the world.
  */
 class AlienBase : public Target
 {
@@ -68,7 +68,7 @@ public:
 	/// Gets the alien base's time since last resupply.
 	int getSupplyTime () const;
 	/// resets the alien base's resupply counter.
-	void resetSupplyTime ();
+	void setSupplyTime (int time);
 };
 
 }

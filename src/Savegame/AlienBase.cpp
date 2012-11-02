@@ -174,8 +174,8 @@ int AlienBase::getSupplyTime() const
 /**
  * Resets the alien base's time since last resupply.
  */
-void AlienBase::resetSupplyTime()
+void AlienBase::setSupplyTime(int time)
 {
-	_supplyTime = 0;
+	_supplyTime = time;
 }
 }

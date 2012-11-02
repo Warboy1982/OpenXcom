@@ -41,6 +41,7 @@ class ResearchProject;
 class Soldier;
 class RuleManufacture;
 class TerrorSite;
+class AlienBase;
 
 /**
  * Enumerator containing all the possible game difficulties.
@@ -67,6 +68,7 @@ private:
 	std::vector<Ufo*> _ufos;
 	std::vector<Waypoint*> _waypoints;
 	std::vector<TerrorSite*> _terrorSites;
+	std::vector<AlienBase*> _alienBases;
 	SavedBattleGame *_battleGame;
 	std::vector<const RuleResearch *> _discovered;
 	bool _debug;
@@ -129,6 +131,8 @@ public:
 	std::vector<Waypoint*> *const getWaypoints();
 	/// Gets the list of terror sites.
 	std::vector<TerrorSite*> *const getTerrorSites();
+	/// Gets the list of terror sites.
+	std::vector<AlienBase*> *const getAlienBases();
 	/// Gets the current battle game.
 	SavedBattleGame *const getBattleGame();
 	/// Sets the current battle game.

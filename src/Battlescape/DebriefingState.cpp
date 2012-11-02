@@ -40,6 +40,7 @@
 #include "../Ruleset/RuleItem.h"
 #include "../Savegame/Vehicle.h"
 #include "../Savegame/TerrorSite.h"
+#include "../Savegame/AlienBase.h"
 #include "PromotionsState.h"
 #include "NoContainmentState.h"
 #include "CannotReequipState.h"
@@ -335,6 +336,17 @@ void DebriefingState::prepareDebriefing()
 		{
 			delete *i;
 			save->getTerrorSites()->erase(i);
+			break;
+		}
+	}
+
+	// alien base disappears
+	for (std::vector<AlienBase*>::iterator i = save->getAlienBases()->begin(); i != save->getAlienBases()->end(); ++i)
+	{
+		if ((*i)->isInBattlescape())
+		{
+			delete *i;
+			save->getAlienBases()->erase(i);
 			break;
 		}
 	}
