@@ -1138,11 +1138,33 @@ void GeoscapeState::time1Day()
 			{
 				(*c)->setActivityXcom((*iter)->getRules()->getPoints());
 			}
+			RuleResearch * bonus = 0;
+			if((*iter)->getRules()->getFree().size() != 0)
+			{
+				std::vector<std::string> possibilities;
+				for(std::vector<std::string>::const_iterator f = (*iter)->getRules()->getFree().begin(); f != (*iter)->getRules()->getFree().end(); ++f)
+				{
+					bool newfound = true;
+					for(std::vector<const RuleResearch*>::const_iterator discovered = _game->getSavedGame()->getDiscoveredResearch().begin(); discovered != _game->getSavedGame()->getDiscoveredResearch().end(); ++discovered)
+					{
+						if(*f == (*discovered)->getName())
+							newfound = false;
+					}
+					if(newfound)
+						possibilities.push_back(*f);
+				}
+				if(possibilities.size() !=0)
+				{
+					int winner = RNG::generate(0, possibilities.size()-1);
+					std::string pwner = possibilities.at(winner);
+					bonus = _game->getRuleset()->getResearch(pwner);
+				}
+			}
+			popup(new ResearchCompleteState(_game, research, bonus));
 			if (!newPossibleResearch.empty())
 			{
 			popup(new NewPossibleResearchState(_game, *i, newPossibleResearch));
 			}
-			popup(new ResearchCompleteState (_game, research));
 			if (!newPossibleManufacture.empty())
 			{
 				popup(new NewPossibleManufactureState(_game, *i, newPossibleManufacture));

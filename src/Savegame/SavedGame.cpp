@@ -656,9 +656,36 @@ void SavedGame::setBattleGame(SavedBattleGame *battleGame)
  * Add a ResearchProject to the list of already discovered ResearchProject
  * @param r The newly found ResearchProject
 */
-void SavedGame::addFinishedResearch (const RuleResearch * r, Ruleset * ruleset)
-{
-	_discovered.push_back(r);
+void SavedGame::addFinishedResearch (const RuleResearch * r, Ruleset * ruleset){
+	const RuleResearch * r2 = r;
+	if(r->getName().substr(r->getName().length()-10, r->getName().length()) == "_NAVIGATOR")
+		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-10));
+	else if(r->getName().substr(r->getName().length()-10, r->getName().length()) == "_COMMANDER")
+		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-10));
+	else if(r->getName().substr(r->getName().length()-9, r->getName().length()) == "_ENGINEER")
+		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-9));
+	else if(r->getName().substr(r->getName().length()-8, r->getName().length()) == "_SOLDIER")
+		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-8));
+	else if(r->getName().substr(r->getName().length()-7, r->getName().length()) == "_LEADER")
+		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-7));
+	else if(r->getName().substr(r->getName().length()-6, r->getName().length()) == "_MEDIC")
+		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-6));
+	bool add(true);
+	for(std::vector<const OpenXcom::RuleResearch *>::iterator it = _discovered.begin();it != _discovered.end();++it)
+	{
+		if(r->getName() == (*it)->getName())
+			add = false;
+	}
+	if (add)
+		_discovered.push_back(r);
+	add = true;
+	for(std::vector<const OpenXcom::RuleResearch *>::iterator it = _discovered.begin();it != _discovered.end();++it)
+	{
+		if(r2->getName() == (*it)->getName())
+			add = false;
+	}
+	if (add)
+		_discovered.push_back(r2);
 	if(ruleset)
 	{
 		std::vector<RuleResearch*> availableResearch;
@@ -764,8 +791,27 @@ void SavedGame::getAvailableProductions (std::vector<RuleManufacture *> & produc
 */
 bool SavedGame::isResearchAvailable (RuleResearch * r, const std::vector<const RuleResearch *> & unlocked, Ruleset * ruleset) const
 {
+	if(r->getCost() == 0)
+		return false;
 	std::vector<std::string> deps = r->getDependencies();
+	std::vector<std::string> free = r->getFree();
 	const std::vector<const RuleResearch *> & discovered(getDiscoveredResearch());
+	if(free.size())
+	{
+		int check(0);
+		for(std::vector<std::string>::const_iterator iter = free.begin (); iter != free.end (); ++ iter)
+		{
+			for(std::vector<const RuleResearch *>::const_iterator d = discovered.begin (); d != discovered.end ();++d)
+			{
+				if((*d)->getName() == *iter)
+				check++;
+			}
+		}
+		if(check == free.size())
+			return false;
+		else
+			return true;
+	}
 	if(std::find(unlocked.begin (), unlocked.end (),
 			 r) != unlocked.end ())
 	{

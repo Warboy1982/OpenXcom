@@ -27,7 +27,9 @@ namespace OpenXcom
 {
 /**
    Represent one research project.
-   Dependency and unlock. Dependency is the list of RuleResearch which must be discovered before a RuleResearch became available. Unlock  are used to immediately unlock a RuleResearch(even if not all dependency have been researched).
+   Dependency and unlock. Dependency is the list of RuleResearch which must be discovered before a RuleResearch became available. 
+   Unlock are used to immediately unlock a RuleResearch(even if not all dependency have been researched).
+   Free is what research you gain from this project (ie: ship types from engineers) one will be added at random
 
    Fake ResearchProject. A RuleResearch is fake one, if t's cost is 0. They are used to to create check point in the dependency tree.
    For example if we have a Research E which need either A & B or C & D. We create 2 fake research project:
@@ -40,7 +42,7 @@ class RuleResearch
  private:
 	std::string _name;
 	int _cost, _points;
-	std::vector<std::string> _dependencies, _unlocks;
+	std::vector<std::string> _dependencies, _unlocks, _free, _requirement;
 	bool _needItem;
 public:
 	RuleResearch(const std::string & name);
@@ -60,6 +62,9 @@ public:
 	bool needItem() const;
 	/// Get the list of ResearchProjects unlocked by this research
 	const std::vector<std::string> & getUnlocked () const;
+	/// get the list of ResearcgProjects granted by this research
+	const std::vector<std::string> & getFree() const;
+	const std::vector<std::string> & getRequirement() const;
 };
 }
 

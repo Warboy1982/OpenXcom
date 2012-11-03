@@ -39,10 +39,10 @@ class ResearchCompleteState : public State
 	Window *_window;
 	Text *_txtTitle;
     TextButton *_btnReport, *_btnOk;
-	const RuleResearch * _research;
+	const RuleResearch * _research, *_bonus;
 public:
 	/// Creates the EndResearch state.
-	ResearchCompleteState(Game * game, const RuleResearch * research);
+	ResearchCompleteState(Game * game, const RuleResearch * research, RuleResearch * bonus);
 	/// Updates the palette.
 	void init();
 	/// Handler for clicking the OK button.

@@ -7902,6 +7902,15 @@ research:
     needItem: true
     unlocks:
       - STR_HYPER_WAVE_DECODER
+    free:
+      - STR_ALIEN_RESEARCH
+      - STR_ALIEN_HARVEST
+      - STR_ALIEN_ABDUCTION
+      - STR_ALIEN_INFILTRATION
+      - STR_ALIEN_BASE
+      - STR_ALIEN_TERROR
+      - STR_ALIEN_RETALIATION
+      - STR_ALIEN_SUPPLY
   - name: STR_SECTOID_MEDIC
     cost: 192
     points: 50
@@ -7995,6 +8004,34 @@ research:
       - STR_CLONING_LAB
   - name: STR_ALIEN_REPRODUCTION
     cost: 192
+    needItem: true
+  - name: STR_SECTOID
+    unlocks:
+      - STR_ALIEN_ORIGINS
+    cost: 0
+  - name: STR_ALIEN_RESEARCH
+    cost: 0
+    needItem: true
+  - name: STR_ALIEN_HARVEST
+    cost: 0
+    needItem: true
+  - name: STR_ALIEN_ABDUCTION
+    cost: 0
+    needItem: true
+  - name: STR_ALIEN_INFILTRATION
+    cost: 0
+    needItem: true
+  - name: STR_ALIEN_BASE
+    cost: 0
+    needItem: true
+  - name: STR_ALIEN_TERROR
+    cost: 0
+    needItem: true
+  - name: STR_ALIEN_RETALIATION
+    cost: 0
+    needItem: true
+  - name: STR_ALIEN_SUPPLY
+    cost: 0
     needItem: true
 manufacture:
   - name: STR_FUSION_BALL_LAUNCHER

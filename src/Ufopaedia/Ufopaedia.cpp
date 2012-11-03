@@ -145,27 +145,7 @@ namespace OpenXcom
 	 */
 	void Ufopaedia::openArticle(Game *game, std::string &article_id)
 	{
-		
-		if (article_id.substr(article_id.size() - 6, article_id.size()) == "CORPSE")
-			article_id = article_id.substr(0, article_id.size()-6)+"AUTOPSY";
-		else if (article_id.substr(article_id.size() - 8, article_id.size()) == "_SOLDIER")
-			article_id = article_id.substr(0, article_id.size()-8);
-		else if (article_id.substr(article_id.size() - 6, article_id.size()) == "_MEDIC")
-			article_id = article_id.substr(0, article_id.size()-6);
-		else if (article_id.substr(article_id.size() - 9, article_id.size()) == "_ENGINEER")
-			article_id = article_id.substr(0, article_id.size()-9);
-		else if (article_id.substr(article_id.size() - 10, article_id.size()) == "_NAVIGATOR")
-			article_id = article_id.substr(0, article_id.size()-10);
-		else if (article_id.substr(article_id.size() - 7, article_id.size()) == "_LEADER")
-			article_id = article_id.substr(0, article_id.size()-7);
-		else if (article_id.substr(article_id.size() - 10, article_id.size()) == "_COMMANDER")
-			article_id = article_id.substr(0, article_id.size()-10);
-		_current_index = getArticleIndex(game, article_id);	
-		if(_current_index != -1)
-		{
-		ArticleDefinitionList articles = getAvailableArticles(game);
-		game->pushState(createArticleState(game, articles[_current_index]));
-		}
+		game->pushState(createArticleState(game, game->getRuleset()->getUfopaediaArticle(article_id)));
 	}
 
 	/**
@@ -249,33 +229,6 @@ namespace OpenXcom
 			if ((isArticleAvailable(game, *it) || !article->needsResearch) && article->section != UFOPAEDIA_NOT_AVAILABLE)
 			{
 				articles.push_back(article);
-			}
-			if (article->section == UFOPAEDIA_ALIEN_LIFE_FORMS)
-			{
-				if (isArticleAvailable(game, *it + "_SOLDIER"))
-				{
-					articles.push_back(article);
-				}
-				if (isArticleAvailable(game, *it + "_MEDIC"))
-				{
-					articles.push_back(article);
-				}
-				if (isArticleAvailable(game, *it + "_NAVIGATOR"))
-				{
-					articles.push_back(article);
-				}
-				if (isArticleAvailable(game, *it + "_ENGINEER"))
-				{
-					articles.push_back(article);
-				}
-				if (isArticleAvailable(game, *it + "_LEADER"))
-				{
-					articles.push_back(article);
-				}
-				if (isArticleAvailable(game, *it + "_COMMANDER"))
-				{
-					articles.push_back(article);
-				}
 			}
 		}
 		return articles;

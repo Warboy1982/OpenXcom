@@ -38,7 +38,7 @@ namespace OpenXcom
  * @param game Pointer to the core game.
  * @param research Pointer to the completed research.
  */
-ResearchCompleteState::ResearchCompleteState(Game * game, const RuleResearch * research) : State (game), _research(research)
+ResearchCompleteState::ResearchCompleteState(Game * game, const RuleResearch * research, RuleResearch * bonus) : State (game), _research(research), _bonus(bonus)
 {
 	_screen = false;
 	for (std::vector<Country*>::iterator k = game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
@@ -101,7 +101,26 @@ void ResearchCompleteState::btnReportClick(Action *action)
 {
 	_game->popState();
 	std::string name (_research->getName ());
-	Ufopaedia::openArticle(_game, name);
+	if(name.substr(name.length()-10, name.length()) == "_NAVIGATOR")
+		name = name.substr(0, name.length()-10);
+	else if(name.substr(name.length()-10, name.length()) == "_COMMANDER")
+		name = name.substr(0, name.length()-10);
+	else if(name.substr(name.length()-9, name.length()) == "_ENGINEER")
+		name = name.substr(0, name.length()-9);
+	else if(name.substr(name.length()-8, name.length()) == "_SOLDIER")
+		name = name.substr(0, name.length()-8);
+	else if(name.substr(name.length()-7, name.length()) == "_LEADER")
+		name = name.substr(0, name.length()-7);
+	else if(name.substr(name.length()-6, name.length()) == "_MEDIC")
+		name = name.substr(0, name.length()-6);
+	if (name.substr(name.length() - 6, name.length()) == "CORPSE")
+		name = name.substr(0, name.length()-6) + "AUTOPSY";
+		Ufopaedia::openArticle(_game, name);
+	if(_bonus != 0)
+	{
+		name = _bonus->getName();
+			Ufopaedia::openArticle(_game, name);
+	}
 }
 
 }

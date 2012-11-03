@@ -13,6 +13,9 @@ fix ufopedia to only show articles you actually have available.
 see how horribly generating a base assault goes. 
     - looks like all the code is in place, but it needs a base to assault, so i'm thinking have a sub menu to choose which saved game to load a base from, with a sub-menu to pick which base from within that save.
 
+    RESEARCH:
+ranked aliens need to give extra info (ie: engineers give info on ship types)
+make ufopedia only show each item once
     
     UNITS:
 Battle mech need secondary weapons for more mayhem.
@@ -28,7 +31,7 @@ Inventory screens for all units in game
 make aliens pick up weapons if any nearby and none in hand
 aliens get a "free peek" on turn 20 (screw you, yes they do.)
 alien stats should be affected by difficulty
-soldiers need a new information section for days dead, and only actually REMOVE them from the game after this 
+bases need a new vector for dead soldiers with information on days dead, and only actually REMOVE them from the game after this 
     counter reaches... 2 days? after which decomposition kicks in and the scientists "clean out the fridge"
     
     
