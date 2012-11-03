@@ -1128,12 +1128,8 @@ void GeoscapeState::time1Day()
 		{
 			(*i)->removeResearch(*iter);
 			const RuleResearch * research = (*iter)->getRules ();
-			_game->getSavedGame()->addFinishedResearch(research, _game->getRuleset ());
-			std::vector<RuleResearch *> newPossibleResearch;
-			_game->getSavedGame()->getDependableResearch (newPossibleResearch, (*iter)->getRules(), _game->getRuleset(), *i);
-			std::vector<RuleManufacture *> newPossibleManufacture;
-			_game->getSavedGame()->getDependableManufacture (newPossibleManufacture, (*iter)->getRules(), _game->getRuleset(), *i);
 			timerReset();
+			if((*iter)->getRules()->getPoints())
 			for (std::vector<Country*>::iterator c = _game->getSavedGame()->getCountries()->begin(); c != _game->getSavedGame()->getCountries()->end(); ++c)
 			{
 				(*c)->setActivityXcom((*iter)->getRules()->getPoints());
@@ -1155,12 +1151,22 @@ void GeoscapeState::time1Day()
 				}
 				if(possibilities.size() !=0)
 				{
-					int winner = RNG::generate(0, possibilities.size()-1);
-					std::string pwner = possibilities.at(winner);
-					bonus = _game->getRuleset()->getResearch(pwner);
+					int lottoPick = RNG::generate(0, possibilities.size()-1);
+					std::string winner = possibilities.at(lottoPick);
+					bonus = _game->getRuleset()->getResearch(winner);
+					_game->getSavedGame()->addFinishedResearch(bonus, _game->getRuleset ());
 				}
 			}
+
+			if(!Ufopaedia::isArticleAvailable(_game, research->getName()))
 			popup(new ResearchCompleteState(_game, research, bonus));
+			else 
+			popup(new ResearchCompleteState(_game, bonus, 0));
+			_game->getSavedGame()->addFinishedResearch(research, _game->getRuleset ());
+			std::vector<RuleResearch *> newPossibleResearch;
+			_game->getSavedGame()->getDependableResearch (newPossibleResearch, (*iter)->getRules(), _game->getRuleset(), *i);
+			std::vector<RuleManufacture *> newPossibleManufacture;
+			_game->getSavedGame()->getDependableManufacture (newPossibleManufacture, (*iter)->getRules(), _game->getRuleset(), *i);
 			if (!newPossibleResearch.empty())
 			{
 			popup(new NewPossibleResearchState(_game, *i, newPossibleResearch));

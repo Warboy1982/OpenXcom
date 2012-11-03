@@ -658,16 +658,53 @@ void SavedGame::setBattleGame(SavedBattleGame *battleGame)
 */
 void SavedGame::addFinishedResearch (const RuleResearch * r, Ruleset * ruleset){
 	const RuleResearch * r2 = r;
+	if(r->getName().length() > 10)
 	if(r->getName().substr(r->getName().length()-10, r->getName().length()) == "_NAVIGATOR")
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-10));
 	else if(r->getName().substr(r->getName().length()-10, r->getName().length()) == "_COMMANDER")
+	{
+		bool downgrade = false;
+		// for next loop of what it unlocks that checks what it unlocks for requirements and then checks if those requirements are met, and if not, revert to soldier.
+		for(std::vector<std::string>::const_iterator ul = r->getUnlocked().begin();ul != r->getUnlocked().end();++ul)
+		{
+			if(ruleset->getResearch(*ul)->getRequirement().size()>0)
+				for(std::vector<const OpenXcom::RuleResearch *>::iterator d = _discovered.begin();d != _discovered.end();++d)
+				{
+					for(std::vector<std::string>::const_iterator rq = ruleset->getResearch(*ul)->getRequirement().begin();rq != ruleset->getResearch(*ul)->getRequirement().end();++rq)
+					{
+					if( *rq == (*d)->getName())
+						downgrade = true;
+					}
+				}
+		}
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-10));
+		if(downgrade == true)
+			r=ruleset->getResearch(r->getName().substr(0, r->getName().length()-10)+"_SOLDIER");
+	}
 	else if(r->getName().substr(r->getName().length()-9, r->getName().length()) == "_ENGINEER")
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-9));
 	else if(r->getName().substr(r->getName().length()-8, r->getName().length()) == "_SOLDIER")
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-8));
 	else if(r->getName().substr(r->getName().length()-7, r->getName().length()) == "_LEADER")
+	{
+		bool downgrade = false;
+		// for next loop of what it unlocks that checks what it unlocks for requirements and then checks if those requirements are met, and if not, revert to soldier.
+		for(std::vector<std::string>::const_iterator ul = r->getUnlocked().begin();ul != r->getUnlocked().end();++ul)
+		{
+			if(ruleset->getResearch(*ul)->getRequirement().size()>0)
+				for(std::vector<const OpenXcom::RuleResearch *>::iterator d = _discovered.begin();d != _discovered.end();++d)
+				{
+					for(std::vector<std::string>::const_iterator rq = ruleset->getResearch(*ul)->getRequirement().begin();rq != ruleset->getResearch(*ul)->getRequirement().end();++rq)
+					{
+					if( *rq == (*d)->getName())
+						downgrade = true;
+					}
+				}
+		}
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-7));
+		if(downgrade == true)
+			r=ruleset->getResearch(r->getName().substr(0, r->getName().length()-7)+"_SOLDIER");
+	}
 	else if(r->getName().substr(r->getName().length()-6, r->getName().length()) == "_MEDIC")
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-6));
 	bool add(true);
@@ -721,9 +758,13 @@ const std::vector<const RuleResearch *> & SavedGame::getDiscoveredResearch() con
 void SavedGame::getAvailableResearchProjects (std::vector<RuleResearch *> & projects, Ruleset * ruleset, Base * base) const
 {
 	const std::vector<const RuleResearch *> & discovered(getDiscoveredResearch());
+
 	std::vector<std::string> researchProjects = ruleset->getResearchList();
+
 	const std::vector<ResearchProject *> & baseResearchProjects = base->getResearch();
+
 	std::vector<const RuleResearch *> unlocked;
+
 	for(std::vector<const RuleResearch *>::const_iterator it = discovered.begin (); it != discovered.end (); ++it)
 	{
 		for(std::vector<std::string>::const_iterator itUnlocked = (*it)->getUnlocked ().begin (); itUnlocked != (*it)->getUnlocked ().end (); ++itUnlocked)
@@ -731,6 +772,8 @@ void SavedGame::getAvailableResearchProjects (std::vector<RuleResearch *> & proj
 			unlocked.push_back(ruleset->getResearch(*itUnlocked));
 		}
 	}
+
+
 	for(std::vector<std::string>::const_iterator iter = researchProjects.begin (); iter != researchProjects.end (); ++iter)
 	{
 		RuleResearch *research = ruleset->getResearch(*iter);
@@ -741,6 +784,19 @@ void SavedGame::getAvailableResearchProjects (std::vector<RuleResearch *> & proj
 		std::vector<const RuleResearch *>::const_iterator itDiscovered = std::find(discovered.begin (), discovered.end (), research);
 		if (itDiscovered != discovered.end ())
 		{
+			int check = 0;
+			std::vector<std::string> free = ruleset->getResearch(*iter)->getFree();
+			if(free.size() > 0)
+			{
+				for(std::vector<std::string>::const_iterator iter = free.begin (); iter != free.end (); ++ iter)
+				{
+					if((*itDiscovered)->getName() == *iter)
+						check++;
+				}
+				if(check == free.size())
+					continue;
+			}
+			else
 			continue;
 		}
 		if (std::find_if (baseResearchProjects.begin(), baseResearchProjects.end (), findRuleResearch(research)) != baseResearchProjects.end ())
@@ -794,23 +850,19 @@ bool SavedGame::isResearchAvailable (RuleResearch * r, const std::vector<const R
 	if(r->getCost() == 0)
 		return false;
 	std::vector<std::string> deps = r->getDependencies();
-	std::vector<std::string> free = r->getFree();
+	std::vector<std::string> reqs = r->getRequirement();
 	const std::vector<const RuleResearch *> & discovered(getDiscoveredResearch());
-	if(free.size())
+	if(reqs.size() > 0)
 	{
-		int check(0);
-		for(std::vector<std::string>::const_iterator iter = free.begin (); iter != free.end (); ++ iter)
+		for(std::vector<const RuleResearch *>::const_iterator d = discovered.begin (); d != discovered.end ();++d)
 		{
-			for(std::vector<const RuleResearch *>::const_iterator d = discovered.begin (); d != discovered.end ();++d)
+			for(std::vector<std::string>::const_iterator req = reqs.begin (); req != reqs.end (); ++ req)
 			{
-				if((*d)->getName() == *iter)
-				check++;
+				if((*d)->getName() == *req)
+					return true;
 			}
 		}
-		if(check == free.size())
-			return false;
-		else
-			return true;
+		return false;
 	}
 	if(std::find(unlocked.begin (), unlocked.end (),
 			 r) != unlocked.end ())

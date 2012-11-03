@@ -58,11 +58,24 @@ namespace OpenXcom
 	 * @param article_id Article id to release.
 	 * @returns true, if the article is available.
 	 */
-	bool Ufopaedia::isArticleAvailable(Game *game, std::string &article_id)
+	bool Ufopaedia::isArticleAvailable(Game *game, std::string article_id)
 	{
-		if(article_id.substr(article_id.size()-7, article_id.size()) == "AUTOPSY")
-			article_id = article_id.substr(0, article_id.size()-7) + "CORPSE";
-		return game->getSavedGame()->isResearched(article_id);
+	if(article_id.length()>10)
+	if(article_id.substr(article_id.length()-10, article_id.length()) == "_NAVIGATOR")
+		article_id = article_id.substr(0, article_id.length()-10);
+	else if(article_id.substr(article_id.length()-10, article_id.length()) == "_COMMANDER")
+		article_id = article_id.substr(0, article_id.length()-10);
+	else if(article_id.substr(article_id.length()-9, article_id.length()) == "_ENGINEER")
+		article_id = article_id.substr(0, article_id.length()-9);
+	else if(article_id.substr(article_id.length()-8, article_id.length()) == "_SOLDIER")
+		article_id = article_id.substr(0, article_id.length()-8);
+	else if(article_id.substr(article_id.length()-7, article_id.length()) == "_LEADER")
+		article_id = article_id.substr(0, article_id.length()-7);
+	else if(article_id.substr(article_id.length()-7, article_id.length()) == "_MEDIC")
+		article_id = article_id.substr(0, article_id.length()-6);
+	else if(article_id.substr(article_id.size()-7, article_id.size()) == "AUTOPSY")
+		article_id = article_id.substr(0, article_id.size()-7) + "CORPSE";
+	return game->getSavedGame()->isResearched(article_id);
 	}
 
 	/**

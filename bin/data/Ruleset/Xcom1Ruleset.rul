@@ -7561,7 +7561,12 @@ research:
   - name: STR_ALIEN_ORIGINS
     cost: 300
     points: 60
-    needItem: true
+    dependencies:
+      - STR_SECTOID_NAVIGATOR
+      - STR_FLOATER
+      - STR_MUTON
+      - STR_SNAKEMAN
+      - STR_ETHEREAL
   - name: STR_ALIEN_REPRODUCTION
     cost: 150
     points: 30
@@ -7581,7 +7586,7 @@ research:
   - name: STR_CYDONIA_OR_BUST
     cost: 600
     points: 60
-    dependencies:
+    requirement:
       - STR_THE_MARTIAN_SOLUTION
   - name: STR_ELERIUM_115
     cost: 450
@@ -7747,7 +7752,7 @@ research:
   - name: STR_THE_MARTIAN_SOLUTION
     cost: 500
     points: 60
-    dependencies:
+    requirement:
       - STR_ALIEN_ORIGINS
   - name: STR_UFO_CONSTRUCTION
     cost: 450
@@ -7896,11 +7901,14 @@ research:
     cost: 192
     points: 50
     needItem: true
+    unlocks:
+      - STR_ALIEN_ORIGINS
   - name: STR_SECTOID_NAVIGATOR
     cost: 192
     points: 50
     needItem: true
     unlocks:
+      - STR_ALIEN_ORIGINS
       - STR_HYPER_WAVE_DECODER
     free:
       - STR_ALIEN_RESEARCH
@@ -7915,22 +7923,45 @@ research:
     cost: 192
     points: 50
     needItem: true
+    unlocks:
+      - STR_ALIEN_ORIGINS
+    free:
+      - STR_SNAKEMAN
+      - STR_MUTON
+      - STR_ETHEREAL
+      - STR_FLOATER
   - name: STR_SECTOID_LEADER
     cost: 192
     points: 50
     needItem: true
     unlocks:
+      - STR_ALIEN_ORIGINS
       - STR_PSI_LAB
+      - STR_THE_MARTIAN_SOLUTION
   - name: STR_SECTOID_ENGINEER
     cost: 192
     points: 50
     needItem: true
+    unlocks:
+      - STR_ALIEN_ORIGINS
+    free:
+      - STR_SMALL_SCOUT
+      - STR_MEDIUM_SCOUT
+      - STR_LARGE_SCOUT
+      - STR_HARVESTER
+      - STR_ABDUCTOR
+      - STR_TERROR_SHIP
+      - STR_BATTLESHIP
+      - STR_SUPPLY_SHIP
   - name: STR_SECTOID_COMMANDER
     cost: 190
     points: 50
     needItem: true
     unlocks:
+      - STR_ALIEN_ORIGINS
       - STR_PSI_LAB
+      - STR_THE_MARTIAN_SOLUTION
+      - STR_CYDONIA_OR_BUST
   - name: STR_ETHEREAL_SOLDIER
     cost: 192
     points: 50
@@ -8031,6 +8062,32 @@ research:
     cost: 0
     needItem: true
   - name: STR_ALIEN_SUPPLY
+    cost: 0
+    needItem: true
+  - name: STR_SMALL_SCOUT
+    cost: 0
+    needItem: true
+    cost: 0
+    needItem: true
+  - name: STR_MEDIUM_SCOUT
+    cost: 0
+    needItem: true
+  - name: STR_LARGE_SCOUT
+    cost: 0
+    needItem: true
+  - name: STR_HARVESTER
+    cost: 0
+    needItem: true
+  - name: STR_ABDUCTOR
+    cost: 0
+    needItem: true
+  - name: STR_TERROR_SHIP
+    cost: 0
+    needItem: true
+  - name: STR_BATTLESHIP
+    cost: 0
+    needItem: true
+  - name: STR_SUPPLY_SHIP
     cost: 0
     needItem: true
 manufacture:

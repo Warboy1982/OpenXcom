@@ -61,7 +61,7 @@ namespace OpenXcom
 		static void releaseArticle(Game *game, std::string &article_id);
 
 		/// check, if a specific article is currently available.
-		static bool isArticleAvailable(Game *game, std::string &article_id);
+		static bool isArticleAvailable(Game *game, std::string article_id);
 
 		/// open Ufopaedia on a certain entry.
 		static void openArticle(Game *game, std::string &article_id);

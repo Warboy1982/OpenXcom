@@ -41,6 +41,7 @@ namespace OpenXcom
 ResearchCompleteState::ResearchCompleteState(Game * game, const RuleResearch * research, RuleResearch * bonus) : State (game), _research(research), _bonus(bonus)
 {
 	_screen = false;
+	if(_research)
 	for (std::vector<Country*>::iterator k = game->getSavedGame()->getCountries()->begin(); k != _game->getSavedGame()->getCountries()->end(); ++k)
 	{
 		(*k)->setActivityXcom(research->getPoints());
@@ -100,6 +101,8 @@ void ResearchCompleteState::btnOkClick(Action *action)
 void ResearchCompleteState::btnReportClick(Action *action)
 {
 	_game->popState();
+	if(_research)
+	{
 	std::string name (_research->getName ());
 	if(name.substr(name.length()-10, name.length()) == "_NAVIGATOR")
 		name = name.substr(0, name.length()-10);
@@ -120,6 +123,7 @@ void ResearchCompleteState::btnReportClick(Action *action)
 	{
 		name = _bonus->getName();
 			Ufopaedia::openArticle(_game, name);
+	}
 	}
 }
 
