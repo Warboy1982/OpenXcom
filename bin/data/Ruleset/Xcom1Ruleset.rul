@@ -7586,6 +7586,8 @@ research:
   - name: STR_CYDONIA_OR_BUST
     cost: 600
     points: 60
+    dependencies:
+      - STR_SECTOID_COMMANDER
     requirement:
       - STR_THE_MARTIAN_SOLUTION
   - name: STR_ELERIUM_115
@@ -7754,6 +7756,9 @@ research:
     points: 60
     requirement:
       - STR_ALIEN_ORIGINS
+    dependencies:
+      - STR_SECTOID_LEADER
+      - STR_SECTOID_COMMANDER
   - name: STR_UFO_CONSTRUCTION
     cost: 450
     points: 30
@@ -7938,6 +7943,13 @@ research:
       - STR_ALIEN_ORIGINS
       - STR_PSI_LAB
       - STR_THE_MARTIAN_SOLUTION
+  - name: STR_SECTOID_PSI
+    cost: 192
+    points: 50
+    needItem: true
+    unlocks:
+      - STR_ALIEN_ORIGINS
+      - STR_PSI_LAB
   - name: STR_SECTOID_ENGINEER
     cost: 192
     points: 50

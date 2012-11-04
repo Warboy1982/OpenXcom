@@ -663,23 +663,45 @@ void SavedGame::addFinishedResearch (const RuleResearch * r, Ruleset * ruleset){
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-10));
 	else if(r->getName().substr(r->getName().length()-10, r->getName().length()) == "_COMMANDER")
 	{
-		bool downgrade = false;
-		// for next loop of what it unlocks that checks what it unlocks for requirements and then checks if those requirements are met, and if not, revert to soldier.
+		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-10));
+		bool downgrade = true;
+		bool toLeader = true;
 		for(std::vector<std::string>::const_iterator ul = r->getUnlocked().begin();ul != r->getUnlocked().end();++ul)
 		{
 			if(ruleset->getResearch(*ul)->getRequirement().size()>0)
+			{
 				for(std::vector<const OpenXcom::RuleResearch *>::iterator d = _discovered.begin();d != _discovered.end();++d)
 				{
 					for(std::vector<std::string>::const_iterator rq = ruleset->getResearch(*ul)->getRequirement().begin();rq != ruleset->getResearch(*ul)->getRequirement().end();++rq)
 					{
-					if( *rq == (*d)->getName())
-						downgrade = true;
+					if(*rq == (*d)->getName())
+						downgrade = false;
 					}
 				}
+			}
 		}
-		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-10));
-		if(downgrade == true)
-			r=ruleset->getResearch(r->getName().substr(0, r->getName().length()-10)+"_SOLDIER");
+
+		
+		for(std::vector<const OpenXcom::RuleResearch *>::iterator d = _discovered.begin();d != _discovered.end();++d)
+		{
+			if((*d)->getName() == "STR_THE_MARTIAN_SOLUTION")
+				toLeader = false;
+		}
+		if(downgrade||toLeader)
+		{
+			if(toLeader && !downgrade)
+			{
+				r=ruleset->getResearch(r->getName().substr(0, r->getName().length()-10)+"_LEADER");
+			}
+			else if(r->getName() == "STR_SECTOID_COMMANDER")
+			{
+				r=ruleset->getResearch(r->getName().substr(0, r->getName().length()-10)+"_PSI");
+			}
+			else
+			{
+				r=ruleset->getResearch(r->getName().substr(0, r->getName().length()-10)+"_SOLDIER");
+			}
+		}
 	}
 	else if(r->getName().substr(r->getName().length()-9, r->getName().length()) == "_ENGINEER")
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-9));
@@ -687,23 +709,33 @@ void SavedGame::addFinishedResearch (const RuleResearch * r, Ruleset * ruleset){
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-8));
 	else if(r->getName().substr(r->getName().length()-7, r->getName().length()) == "_LEADER")
 	{
-		bool downgrade = false;
-		// for next loop of what it unlocks that checks what it unlocks for requirements and then checks if those requirements are met, and if not, revert to soldier.
+		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-7));
+		bool downgrade = true;
 		for(std::vector<std::string>::const_iterator ul = r->getUnlocked().begin();ul != r->getUnlocked().end();++ul)
 		{
 			if(ruleset->getResearch(*ul)->getRequirement().size()>0)
+			{
 				for(std::vector<const OpenXcom::RuleResearch *>::iterator d = _discovered.begin();d != _discovered.end();++d)
 				{
 					for(std::vector<std::string>::const_iterator rq = ruleset->getResearch(*ul)->getRequirement().begin();rq != ruleset->getResearch(*ul)->getRequirement().end();++rq)
 					{
 					if( *rq == (*d)->getName())
-						downgrade = true;
+						downgrade = false;
 					}
 				}
+			}
 		}
-		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-7));
 		if(downgrade == true)
-			r=ruleset->getResearch(r->getName().substr(0, r->getName().length()-7)+"_SOLDIER");
+		{
+			if(r->getName() == "STR_SECTOID_LEADER")
+			{
+				r=ruleset->getResearch(r->getName().substr(0, r->getName().length()-7)+"_PSI");
+			}
+			else
+			{
+				r=ruleset->getResearch(r->getName().substr(0, r->getName().length()-7)+"_SOLDIER");
+			}
+		}
 	}
 	else if(r->getName().substr(r->getName().length()-6, r->getName().length()) == "_MEDIC")
 		r2 = ruleset->getResearch(r->getName().substr(0, r->getName().length()-6));
@@ -852,6 +884,8 @@ bool SavedGame::isResearchAvailable (RuleResearch * r, const std::vector<const R
 	std::vector<std::string> deps = r->getDependencies();
 	std::vector<std::string> reqs = r->getRequirement();
 	const std::vector<const RuleResearch *> & discovered(getDiscoveredResearch());
+	if(std::find(unlocked.begin (), unlocked.end (), r) != unlocked.end ())
+	{
 	if(reqs.size() > 0)
 	{
 		for(std::vector<const RuleResearch *>::const_iterator d = discovered.begin (); d != discovered.end ();++d)
@@ -864,10 +898,7 @@ bool SavedGame::isResearchAvailable (RuleResearch * r, const std::vector<const R
 		}
 		return false;
 	}
-	if(std::find(unlocked.begin (), unlocked.end (),
-			 r) != unlocked.end ())
-	{
-		return true;
+	return true;
 	}
 	for(std::vector<std::string>::const_iterator iter = deps.begin (); iter != deps.end (); ++ iter)
 	{
@@ -917,12 +948,15 @@ void SavedGame::getDependableResearchBasic (std::vector<RuleResearch *> & depend
 	getAvailableResearchProjects(possibleProjects, ruleset, base);
 	for(std::vector<RuleResearch *>::iterator iter = possibleProjects.begin (); iter != possibleProjects.end (); ++iter)
 	{
-		if (std::find((*iter)->getDependencies().begin (), (*iter)->getDependencies().end (), research->getName()) != (*iter)->getDependencies().end ()
+		if ((std::find((*iter)->getDependencies().begin (), (*iter)->getDependencies().end (), research->getName()) != (*iter)->getDependencies().end ()
 			||
-			std::find((*iter)->getUnlocked().begin (), (*iter)->getUnlocked().end (), research->getName()) != (*iter)->getUnlocked().end ()
+			std::find((*iter)->getUnlocked().begin (), (*iter)->getUnlocked().end (), research->getName()) != (*iter)->getUnlocked().end ()	
+			)
+			&&
+			!(std::find((*iter)->getUnlocked().begin (), (*iter)->getUnlocked().end (), "STR_ALIEN_ORIGINS") != (*iter)->getUnlocked().end ())
 			)
 		{
-				dependables.push_back(*iter);
+			dependables.push_back(*iter);
 			if ((*iter)->getCost() == 0)
 			{
 				getDependableResearchBasic(dependables, *iter, ruleset, base);
