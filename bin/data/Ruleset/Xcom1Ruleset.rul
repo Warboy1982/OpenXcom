@@ -7562,11 +7562,33 @@ research:
     cost: 300
     points: 60
     dependencies:
+      - STR_SECTOID_COMMANDER
+      - STR_SECTOID_LEADER
+      - STR_SECTOID_ENGINEER
+      - STR_SECTOID_MEDIC
       - STR_SECTOID_NAVIGATOR
-      - STR_FLOATER
-      - STR_MUTON
-      - STR_SNAKEMAN
-      - STR_ETHEREAL
+      - STR_SECTOID_SOLDIER
+      - STR_SNAKEMAN_COMMANDER
+      - STR_SNAKEMAN_LEADER
+      - STR_SNAKEMAN_ENGINEER
+      - STR_SNAKEMAN_SOLDIER
+      - STR_SNAKEMAN_NAVIGATOR
+      - STR_CHRYSSALID
+      - STR_ETHEREAL_COMMANDER
+      - STR_ETHEREAL_LEADER
+      - STR_ETHEREAL_SOLDIER
+      - STR_MUTON_ENGINEER
+      - STR_MUTON_NAVIGATOR
+      - STR_MUTON_SOLDIER
+      - STR_SILACOID
+      - STR_CELATID
+      - STR_FLOATER_COMMANDER
+      - STR_FLOATER_LEADER
+      - STR_FLOATER_ENGINEER
+      - STR_FLOATER_MEDIC
+      - STR_FLOATER_NAVIGATOR
+      - STR_FLOATER_SOLDIER
+      - STR_REAPER
   - name: STR_ALIEN_REPRODUCTION
     cost: 150
     points: 30
@@ -7588,6 +7610,9 @@ research:
     points: 60
     dependencies:
       - STR_SECTOID_COMMANDER
+      - STR_SNAKEMAN_COMMANDER
+      - STR_ETHEREAL_COMMANDER
+      - STR_FLOATER_COMMANDER
     requirement:
       - STR_THE_MARTIAN_SOLUTION
   - name: STR_ELERIUM_115
@@ -7757,8 +7782,14 @@ research:
     requirement:
       - STR_ALIEN_ORIGINS
     dependencies:
-      - STR_SECTOID_LEADER
       - STR_SECTOID_COMMANDER
+      - STR_SECTOID_LEADER
+      - STR_SNAKEMAN_COMMANDER
+      - STR_SNAKEMAN_LEADER
+      - STR_ETHEREAL_COMMANDER
+      - STR_ETHEREAL_LEADER
+      - STR_FLOATER_COMMANDER
+      - STR_FLOATER_LEADER
   - name: STR_UFO_CONSTRUCTION
     cost: 450
     points: 30
@@ -8144,21 +8175,25 @@ research:
   - name: STR_REAPER
     cost: 170
     points: 50
+    needItem: true
     unlocks:
       - STR_ALIEN_ORIGINS
   - name: STR_CHRYSSALID
     cost: 170
     points: 50
+    needItem: true
     unlocks:
       - STR_ALIEN_ORIGINS
   - name: STR_SILACOID
     cost: 170
     points: 50
+    needItem: true
     unlocks:
       - STR_ALIEN_ORIGINS
   - name: STR_CELATID
     cost: 170
     points: 50
+    needItem: true
     unlocks:
       - STR_ALIEN_ORIGINS
   - name: STR_SECTOPOD

@@ -883,22 +883,26 @@ bool SavedGame::isResearchAvailable (RuleResearch * r, const std::vector<const R
 		return false;
 	std::vector<std::string> deps = r->getDependencies();
 	std::vector<std::string> reqs = r->getRequirement();
+	int reqCheck = 0;
 	const std::vector<const RuleResearch *> & discovered(getDiscoveredResearch());
 	if(std::find(unlocked.begin (), unlocked.end (), r) != unlocked.end ())
 	{
-	if(reqs.size() > 0)
-	{
-		for(std::vector<const RuleResearch *>::const_iterator d = discovered.begin (); d != discovered.end ();++d)
+		if(reqs.size() > 0)
 		{
-			for(std::vector<std::string>::const_iterator req = reqs.begin (); req != reqs.end (); ++ req)
+			for(std::vector<const RuleResearch *>::const_iterator d = discovered.begin (); d != discovered.end ();++d)
 			{
-				if((*d)->getName() == *req)
-					return true;
+				for(std::vector<std::string>::const_iterator req = reqs.begin (); req != reqs.end (); ++ req)
+				{
+					if((*d)->getName() == *req)
+						reqCheck++;
+				}
 			}
+			if(reqCheck == reqs.size())
+				return true;
+			else
+				return false;
 		}
-		return false;
-	}
-	return true;
+		return true;
 	}
 	for(std::vector<std::string>::const_iterator iter = deps.begin (); iter != deps.end (); ++ iter)
 	{
@@ -948,21 +952,17 @@ void SavedGame::getDependableResearchBasic (std::vector<RuleResearch *> & depend
 	getAvailableResearchProjects(possibleProjects, ruleset, base);
 	for(std::vector<RuleResearch *>::iterator iter = possibleProjects.begin (); iter != possibleProjects.end (); ++iter)
 	{
-		if ((std::find((*iter)->getDependencies().begin (), (*iter)->getDependencies().end (), research->getName()) != (*iter)->getDependencies().end ()
+		if (std::find((*iter)->getDependencies().begin (), (*iter)->getDependencies().end (), research->getName()) != (*iter)->getDependencies().end ()
 			||
 			std::find((*iter)->getUnlocked().begin (), (*iter)->getUnlocked().end (), research->getName()) != (*iter)->getUnlocked().end ()	
 			)
-			&&
-			!(std::find((*iter)->getUnlocked().begin (), (*iter)->getUnlocked().end (), "STR_ALIEN_ORIGINS") != (*iter)->getUnlocked().end ())
-			)
 		{
+			if(research->getName() == "STR_ALIEN_ORIGINS"||research->getName() == "STR_THE_MARTIAN_SOLUTION" || research->getName() == "STR_CYDONIA_OR_BUST")
+				continue;
 			dependables.push_back(*iter);
 			if ((*iter)->getCost() == 0)
 			{
 				getDependableResearchBasic(dependables, *iter, ruleset, base);
-			}
-			else
-			{
 			}
 		}
 	}
