@@ -9,14 +9,9 @@ work on monthly report screen
     - set up "funding withdrawn" scenario - trigger should be lower on higher levels
 mission types: STR_ANTI_INFILTRATION, STR_MILITARY_DEFENCE STR_PURGE, STR_CULTIST_DEFENCE, STR_CULTIST_BASE
 hope and pray that the state-based AI works as intended, merge it.
-fix ufopedia to only show articles you actually have available.
 see how horribly generating a base assault goes. 
     - looks like all the code is in place, but it needs a base to assault, so i'm thinking have a sub menu to choose which saved game to load a base from, with a sub-menu to pick which base from within that save.
 
-    RESEARCH:
-ranked aliens need to give extra info (ie: engineers give info on ship types)
-make ufopedia only show each item once
-    
     UNITS:
 Battle mech need secondary weapons for more mayhem.
 all weapons available for all tank types - make them manufacturable
@@ -63,6 +58,9 @@ use weapon mount on craft in missions?
 
 
     DONE:
+live alien research works, including martian solution and cydonia or bust and stuff.
+ranked aliens give extra info (ie: engineers give info on ship types)
+ufopedia only shows researched items once
 funding nations are gathering relevant data
 activity points for research completion
 BATTLE MECHS!
