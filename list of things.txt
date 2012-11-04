@@ -13,9 +13,6 @@ see how horribly generating a base assault goes.
     - looks like all the code is in place, but it needs a base to assault, so i'm thinking have a sub menu to choose which saved game to load a base from, with a sub-menu to pick which base from within that save.
 
     UNITS:
-Battle mech need secondary weapons for more mayhem.
-all weapons available for all tank types - make them manufacturable
-    battlemechs will get a free autocannon
     ground tanks will get sonic detector arrays (motion scanner) and better armour
     hovertanks will get.... screwed because they can already fly.
 tank scanner - uses motion scanner algorithm to place "blips" representing movement on the battlescape (passive effect?) 
@@ -63,7 +60,7 @@ ranked aliens give extra info (ie: engineers give info on ship types)
 ufopedia only shows researched items once
 funding nations are gathering relevant data
 activity points for research completion
-BATTLE MECHS!
+BATTLE MECHS! - HWP with burst fire.
 alien containment.
 all new facilities now have new graphics, now they need new maps.
 looks like no mechanic exists for psi training? fixed.

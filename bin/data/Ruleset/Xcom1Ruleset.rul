@@ -1248,6 +1248,8 @@ items:
       - STR_HWP_CANNON_SHELLS
     accuracySnap: 60
     accuracyAimed: 120
+    accuracyAuto: 50
+    tuAuto: 45
     tuSnap: 33
     tuAimed: 66
     battleType: 1
@@ -1295,6 +1297,8 @@ items:
     damageType: 4
     accuracySnap: 60
     accuracyAimed: 120
+    accuracyAuto: 50
+    tuAuto: 45
     tuSnap: 25
     tuAimed: 50
     battleType: 1
@@ -1320,6 +1324,8 @@ items:
     hitAnimation: 46
     accuracySnap: 60
     accuracyAimed: 120
+    accuracyAuto: 50
+    tuAuto: 45
     tuSnap: 40
     tuAimed: 80
     battleType: 1
@@ -1366,6 +1372,8 @@ items:
     damageType: 4
     accuracySnap: 60
     accuracyAimed: 120
+    accuracyAuto: 50
+    tuAuto: 45
     tuSnap: 25
     tuAimed: 50
     battleType: 1
@@ -1389,6 +1397,8 @@ items:
       - STR_HWP_RAIL_SLUG
     accuracySnap: 60
     accuracyAimed: 120
+    accuracyAuto: 50
+    tuAuto: 45
     tuSnap: 33
     tuAimed: 66
     battleType: 1
@@ -7887,13 +7897,23 @@ research:
       - STR_SNAKEMAN
       - STR_MUTON
       - STR_ETHEREAL
-      - STR_SECTOID
+      - STR_FLOATER
       - STR_CHRYSSALID
       - STR_SECTOPOD
       - STR_CYBERDISC
       - STR_SILACOID
       - STR_CELATID
       - STR_REAPER
+      - STR_SNAKEMAN_CORPSE
+      - STR_MUTON_CORPSE
+      - STR_ETHEREAL_CORPSE
+      - STR_FLOATER_CORPSE
+      - STR_CHRYSSALID_CORPSE
+      - STR_SECTOPOD_CORPSE
+      - STR_CYBERDISC_CORPSE
+      - STR_SILACOID_CORPSE
+      - STR_CELATID_CORPSE
+      - STR_REAPER_CORPSE
   - name: STR_FLOATER_LEADER
     cost: 192
     points: 50
@@ -8052,6 +8072,16 @@ research:
       - STR_SILACOID
       - STR_CELATID
       - STR_REAPER
+      - STR_SNAKEMAN_CORPSE
+      - STR_MUTON_CORPSE
+      - STR_ETHEREAL_CORPSE
+      - STR_FLOATER_CORPSE
+      - STR_CHRYSSALID_CORPSE
+      - STR_SECTOPOD_CORPSE
+      - STR_CYBERDISC_CORPSE
+      - STR_SILACOID_CORPSE
+      - STR_CELATID_CORPSE
+      - STR_REAPER_CORPSE
   - name: STR_SECTOID_LEADER
     cost: 192
     points: 50
@@ -8318,6 +8348,65 @@ manufacture:
     space: 25
     time: 1200
     cost: 500000
+  - name: STR_TANK_PLASMA
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_PLASMA_CANNON
+    space: 25
+    time: 1200
+    cost: 500000
+  - name: STR_TANK_DISRUPTOR
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_DISRUPTOR_CANNON
+    space: 25
+    time: 1200
+    cost: 500000
+  - name: STR_TANK_RAIL
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_RAIL_CANNON
+    space: 25
+    time: 1200
+    cost: 500000
+  - name: STR_TANK_LAUNCHER
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_FUSION_MISSILE
+    space: 25
+    time: 1200
+    cost: 500000
+  - name: STR_HOVERTANK_CANNON
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_NEW_FIGHTER_CRAFT
+    space: 30
+    time: 1200
+    cost: 850000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 5
+      STR_ELERIUM_115: 10
+  - name: STR_HOVERTANK_ROCKET
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_NEW_FIGHTER_CRAFT
+    space: 30
+    time: 1200
+    cost: 850000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 5
+      STR_ELERIUM_115: 10
+  - name: STR_HOVERTANK_LASER
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_LASER_CANNON
+      - STR_NEW_FIGHTER_CRAFT
+    space: 30
+    time: 1200
+    cost: 850000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 5
+      STR_ELERIUM_115: 10
   - name: STR_HOVERTANK_PLASMA
     category: STR_HEAVY_WEAPONS_PLATFORM
     requires:
@@ -8328,6 +8417,81 @@ manufacture:
     cost: 850000
     requiredItems:
       STR_ALIEN_ALLOYS: 5
+      STR_ELERIUM_115: 30
+  - name: STR_HOVERTANK_DISRUPTOR
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_DISRUPTOR_CANNON
+      - STR_NEW_FIGHTER_CRAFT
+    space: 30
+    time: 1200
+    cost: 850000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 5
+      STR_ELERIUM_115: 20
+  - name: STR_HOVERTANK_RAIL
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_RAIL_CANNON
+      - STR_NEW_FIGHTER_CRAFT
+    space: 30
+    time: 1200
+    cost: 850000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 5
+      STR_ELERIUM_115: 20
+  - name: STR_HOVERTANK_LAUNCHER
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_FUSION_MISSILE
+      - STR_NEW_FIGHTER_CRAFT
+    space: 30
+    time: 1200
+    cost: 900000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 8
+      STR_ELERIUM_115: 25
+  - name: STR_SECTOPOD_CANNON
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_SECTOPOD_CONSTRUCTION
+    space: 30
+    time: 1200
+    cost: 900000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 10
+      STR_ELERIUM_115: 20
+  - name: STR_SECTOPOD_ROCKET
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_SECTOPOD_CONSTRUCTION
+    space: 30
+    time: 1200
+    cost: 900000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 10
+      STR_ELERIUM_115: 20
+  - name: STR_SECTOPOD_LASER
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_LASER_CANNON
+      - STR_SECTOPOD_CONSTRUCTION
+    space: 30
+    time: 1200
+    cost: 900000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 10
+      STR_ELERIUM_115: 20
+  - name: STR_SECTOPOD_PLASMA
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_PLASMA_CANNON
+      - STR_SECTOPOD_CONSTRUCTION
+    space: 30
+    time: 1200
+    cost: 900000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 10
       STR_ELERIUM_115: 30
   - name: STR_SECTOPOD_DISRUPTOR
     category: STR_HEAVY_WEAPONS_PLATFORM
@@ -8352,6 +8516,17 @@ manufacture:
     requiredItems:
       STR_ALIEN_ALLOYS: 10
       STR_ELERIUM_115: 20
+  - name: STR_SECTOPOD_LAUNCHER
+    category: STR_HEAVY_WEAPONS_PLATFORM
+    requires:
+      - STR_FUSION_MISSILE
+      - STR_SECTOPOD_CONSTRUCTION
+    space: 30
+    time: 1200
+    cost: 900000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 10
+      STR_ELERIUM_115: 20
   - name: STR_HWP_RAIL_SLUG
     category: STR_HWP_CANNON_SHELLS
     requires:
@@ -8362,17 +8537,6 @@ manufacture:
     cost: 15000
     requiredItems:
       STR_ALIEN_ALLOYS: 8
-  - name: STR_HOVERTANK_LAUNCHER
-    category: STR_HEAVY_WEAPONS_PLATFORM
-    requires:
-      - STR_FUSION_MISSILE
-      - STR_NEW_FIGHTER_CRAFT
-    space: 30
-    time: 1200
-    cost: 900000
-    requiredItems:
-      STR_ALIEN_ALLOYS: 8
-      STR_ELERIUM_115: 25
   - name: STR_HWP_FUSION_BOMB
     category: STR_HWP_CANNON_SHELLS
     requires:
