@@ -38,7 +38,7 @@ namespace OpenXcom
 /**
  * Sets up an UnitTurnBState.
  */
-UnitTurnBState::UnitTurnBState(BattlescapeGame *parent, BattleAction action) : BattleState(parent, action), _unit(0)
+UnitTurnBState::UnitTurnBState(BattlescapeGame *parent, BattleAction action) : BattleState(parent, action), _unit(0), _turret(false)
 {
 
 }
@@ -95,7 +95,7 @@ void UnitTurnBState::think()
 
 	if (_unit->spendTimeUnits(tu, _parent->dontSpendTUs()))
 	{
-		_unit->turn(turret);
+		_unit->turn(_turret);
 		_parent->getTileEngine()->calculateFOV(_unit);
 		_parent->getMap()->cacheUnit(_unit);
 		if (_unit->getStatus() == STATUS_STANDING)

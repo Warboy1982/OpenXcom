@@ -44,7 +44,7 @@ namespace OpenXcom
 /**
  * Initializes a brand new battlescape saved game.
  */
-SavedBattleGame::SavedBattleGame(SavedGame* savedGame) : _width(0), _length(0), _height(0), _tiles(), _selectedUnit(0), _nodes(), _units(), _items(), _pathfinding(0), _tileEngine(0), _missionType(""), _globalShade(0), _side(FACTION_PLAYER), _turn(1), _debugMode(false), _aborted(false), _itemId(0), _difficulty(0)
+SavedBattleGame::SavedBattleGame(SavedGame* savedGame) : _width(0), _length(0), _height(0), _tiles(), _selectedUnit(0), _nodes(), _units(), _items(), _pathfinding(0), _tileEngine(0), _missionType(""), _globalShade(0), _side(FACTION_PLAYER), _turn(1), _debugMode(false), _aborted(false), _itemId(0), _difficulty(0), _lastSelectedUnit(0)
 {
 	_difficulty = savedGame->getDifficulty();
 	std::string temp;
