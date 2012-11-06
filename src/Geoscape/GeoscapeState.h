@@ -35,6 +35,7 @@ class DogfightState;
 class Craft;
 class Ufo;
 class Region;
+class GeoscapeAI;
 
 /**
  * Geoscape screen which shows an overview of
@@ -56,6 +57,7 @@ private:
 	std::vector<State*> _popups;
 	std::vector<DogfightState*> _dogfights, _dogfightsToBeStarted;
 	int _minimizedDogfights;
+	GeoscapeAI *_alienAI;
 
 public:
 	/// Creates the Geoscape state.

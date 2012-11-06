@@ -9522,13 +9522,13 @@ startingBase:
           STR_RIFLE_CLIP: 12
           STR_SHOTGUN: 1
           STR_SHOTGUN_AMMO: 2
-
         vehicles:
           []
         status: STR_READY
         lowFuel: false
         inBattlescape: false
         inDogfight: false
+        patrol: false
         interceptionOrder: 0
       - lon: 0.0
         lat: 0.0
@@ -9555,6 +9555,7 @@ startingBase:
         lowFuel: false
         inBattlescape: false
         inDogfight: false
+        patrol: false
         interceptionOrder: 0
       - lon: 0.0
         lat: 0.0
@@ -9581,6 +9582,7 @@ startingBase:
         lowFuel: false
         inBattlescape: false
         inDogfight: false
+        patrol: false
         interceptionOrder: 0
     items:
       STR_AC_AP_AMMO: 6

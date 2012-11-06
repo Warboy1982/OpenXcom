@@ -11,6 +11,7 @@ mission types: STR_ANTI_INFILTRATION, STR_MILITARY_DEFENCE STR_PURGE, STR_CULTIS
 hope and pray that the state-based AI works as intended, merge it.
 see how horribly generating a base assault goes. 
     - looks like all the code is in place, but it needs a base to assault, so i'm thinking have a sub menu to choose which saved game to load a base from, with a sub-menu to pick which base from within that save.
+hyper-wave decoding.
 
     UNITS:
     ground tanks will get sonic detector arrays (motion scanner) and better armour

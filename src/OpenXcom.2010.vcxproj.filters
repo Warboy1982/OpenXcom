@@ -672,6 +672,15 @@
     <ClCompile Include="Geoscape\AlienBaseState.cpp">
       <Filter>Geoscape</Filter>
     </ClCompile>
+    <ClCompile Include="Geoscape\GeoscapeAI.cpp">
+      <Filter>Geoscape</Filter>
+    </ClCompile>
+    <ClCompile Include="Geoscape\GeoscapeEvents.cpp">
+      <Filter>Geoscape</Filter>
+    </ClCompile>
+    <ClCompile Include="Savegame\AlienAI.cpp">
+      <Filter>Savegame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basescape\ManufactureState.h">
@@ -1346,6 +1355,24 @@
       <Filter>Savegame</Filter>
     </ClInclude>
     <ClInclude Include="Geoscape\AlienBaseState.h">
+      <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Geoscape\GeoEventUfo.h">
+      <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Geoscape\GeoscapeAI.h">
+      <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Geoscape\GeoscapeEvents.h">
+      <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Geoscape\GeoscapeEventsImpl.h">
+      <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Savegame\AlienAI.h">
+      <Filter>Savegame</Filter>
+    </ClInclude>
+    <ClInclude Include="Geoscape\TimerGeoEvents.h">
       <Filter>Geoscape</Filter>
     </ClInclude>
   </ItemGroup>

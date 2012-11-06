@@ -42,6 +42,7 @@ class Soldier;
 class RuleManufacture;
 class TerrorSite;
 class AlienBase;
+class AlienAI;
 
 /**
  * Enumerator containing all the possible game difficulties.
@@ -72,6 +73,7 @@ private:
 	SavedBattleGame *_battleGame;
 	std::vector<const RuleResearch *> _discovered;
 	bool _debug;
+	AlienAI *_alienAI;
 
 	/// Check whether a ResearchProject can be researched
 	bool isResearchAvailable (RuleResearch * r, const std::vector<const RuleResearch *> & unlocked, Ruleset * ruleset) const;
@@ -163,6 +165,10 @@ public:
 	void setDebugMode();
 	/// Gets debug mode.
 	bool getDebugMode() const;
+	/// Access the AlienAI data.
+	AlienAI &accessAlienAI() { return *_alienAI; } //Decidedly non-const
+	/// Access the AlienAI data (Read-Only)
+	const AlienAI &accessAlienAI() const { return *_alienAI; }
 };
 
 }

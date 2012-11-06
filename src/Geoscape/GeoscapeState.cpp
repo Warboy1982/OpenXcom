@@ -87,6 +87,10 @@
 #include "TrainingState.h"
 #include "../Savegame/AlienBase.h"
 #include "AlienBaseState.h"
+#include "GeoscapeAI.h"
+#include "GeoscapeEvents.h"
+#include "GeoEventUfo.h"
+#include "TimerGeoEvents.h"
 
 namespace OpenXcom
 {
@@ -95,7 +99,7 @@ namespace OpenXcom
  * Initializes all the elements in the Geoscape screen.
  * @param game Pointer to the core game.
  */
-	GeoscapeState::GeoscapeState(Game *game) : State(game), _pause(false), _music(false), _popups(), _dogfights(), _dogfightsToBeStarted(), _zoomInEffectDone(false), _zoomOutEffectDone(false), _minimizedDogfights(0)
+	GeoscapeState::GeoscapeState(Game *game) : State(game), _pause(false), _music(false), _popups(), _dogfights(), _dogfightsToBeStarted(), _zoomInEffectDone(false), _zoomOutEffectDone(false), _minimizedDogfights(0), _alienAI(new GeoscapeAI(*game, *this))
 {
 	// Create objects
 	_bg = new Surface(320, 200, 0, 0);
@@ -307,6 +311,7 @@ namespace OpenXcom
  */
 GeoscapeState::~GeoscapeState()
 {
+	delete _alienAI;
 	delete _timer;
 	delete _zoomInEffectTimer;
 	delete _zoomOutEffectTimer;
@@ -661,7 +666,7 @@ void GeoscapeState::time5Seconds()
 			}
 		}
 	}
-
+	
 	// Clean up dead UFOs and end dogfights which were minimized.
 	for (std::vector<Ufo*>::iterator i = _game->getSavedGame()->getUfos()->begin(); i != _game->getSavedGame()->getUfos()->end();)
 	{
@@ -693,6 +698,7 @@ void GeoscapeState::time5Seconds()
 	{
 		if ((*i)->getHoursActive() == 0 && (*i)->getFollowers()->empty()) // CHEEKY EXPLOIT
 		{
+			_alienAI->process(TerrorSiteExpired(**i));
 			delete *i;
 			i = _game->getSavedGame()->getTerrorSites()->erase(i);
 		}
@@ -757,52 +763,8 @@ void GeoscapeState::time10Minutes()
  */
 void GeoscapeState::time30Minutes()
 {
-	// Spawn UFOs
-	std::vector<std::string> ufos = _game->getRuleset()->getUfosList();
-	int chance = RNG::generate(1, 100);
-	if (chance <= 40)
-	{
-		// Makes smallest UFO the more likely, biggest UFO the least likely
-		// eg. 0 - 0..6, 1 - 6..10, etc.
-		unsigned int range = RNG::generate(1, (ufos.size()*(ufos.size()+1))/2);
-		unsigned int type = 0;
-		for (unsigned int i = 0, j = 1; i < ufos.size(); ++i, j += ufos.size()-i)
-		{
-			if (j <= range && range < j + ufos.size()-i)
-			{
-				type = i;
-				break;
-			}
-		}
-		Ufo *u = new Ufo(_game->getRuleset()->getUfo(ufos[type]));
-		u->setLongitude(RNG::generate(0.0, 2*M_PI));
-		u->setLatitude(RNG::generate(-M_PI_2, M_PI_2));
-		Waypoint *w = new Waypoint();
-		w->setLongitude(RNG::generate(0.0, 2*M_PI));
-		w->setLatitude(RNG::generate(-M_PI_2, M_PI_2));
-		u->setDestination(w);
-		u->setSpeed(RNG::generate(u->getRules()->getMaxSpeed() / 4, u->getRules()->getMaxSpeed() / 2));
-		int race = RNG::generate(1, 2);
-		if(_game->getSavedGame()->getTime()->getTotalDays() > 45)
-			race += RNG::generate(0, 1);
-		if(_game->getSavedGame()->getTime()->getTotalDays() > 90)
-			race += RNG::generate(0, 1);
-		if(_game->getSavedGame()->getTime()->getTotalDays() > 135)
-			race += RNG::generate(0, 2);
-		if (race == 1)
-			u->setAlienRace("STR_SECTOID");
-		else if (race == 2)
-			u->setAlienRace("STR_FLOATER");
-		else if (race == 3)
-			u->setAlienRace("STR_SNAKEMAN");
-		else if (race == 4)
-			u->setAlienRace("STR_MUTON");
-		else if (race == 5)
-			u->setAlienRace("STR_ETHERIAL");
-		else
-			u->setAlienRace("STR_MIXED");
-		_game->getSavedGame()->getUfos()->push_back(u);
-	}
+	// Notify alien mission control of time passage.
+	_alienAI->process(GeoEvent30Minutes());
 
 	// Handle craft maintenance
 	for (std::vector<Base*>::iterator i = _game->getSavedGame()->getBases()->begin(); i != _game->getSavedGame()->getBases()->end(); ++i)
@@ -886,6 +848,7 @@ void GeoscapeState::time30Minutes()
 			{
 				(*u)->setDetected(detected);
 				popup(new UfoDetectedState(_game, (*u), this, true));
+				_alienAI->process(UfoDetected(**u));
 			}
 		}
 		else
@@ -900,6 +863,11 @@ void GeoscapeState::time30Minutes()
 				}
 			}
 			(*u)->setDetected(detected);
+			if (!detected)
+			{
+				_alienAI->process(UfoLost(**u));
+			}
+
 			if (!detected && !(*u)->getFollowers()->empty())
 			{
 				popup(new UfoLostState(_game, (*u)->getName(_game->getLanguage())));
@@ -914,6 +882,7 @@ void GeoscapeState::time30Minutes()
  */
 void GeoscapeState::time1Hour()
 {
+	_alienAI->process(GeoEvent30Minutes());
 	// Handle craft maintenance
 	for (std::vector<Base*>::iterator i = _game->getSavedGame()->getBases()->begin(); i != _game->getSavedGame()->getBases()->end(); ++i)
 	{
@@ -1011,95 +980,7 @@ void GeoscapeState::time1Hour()
  */
 void GeoscapeState::time1Day()
 {
-	// Spawn terror sites
-	int chance = RNG::generate(1, 20);
-	if (chance <= 2)
-	{
-		// Pick a city
-		RuleRegion* region = 0;
-		std::vector<std::string> regions = _game->getRuleset()->getRegionsList();
-		do
-		{
-			region = _game->getRuleset()->getRegion(regions[RNG::generate(0, regions.size()-1)]);
-		}
-		while (region->getCities()->empty());
-		City *city = (*region->getCities())[RNG::generate(0, region->getCities()->size()-1)];
-
-		TerrorSite *t = new TerrorSite();
-		t->setLongitude(city->getLongitude());
-		t->setLatitude(city->getLatitude());
-		t->setId(_game->getSavedGame()->getId("STR_TERROR_SITE"));
-		t->setHoursActive(24 + RNG::generate(0, 24));
-		int race = RNG::generate(1, 2);
-		if(_game->getSavedGame()->getTime()->getTotalDays() > 45)
-			race += RNG::generate(0, 1);
-		if(_game->getSavedGame()->getTime()->getTotalDays() > 90)
-			race += RNG::generate(0, 1);
-		if(_game->getSavedGame()->getTime()->getTotalDays() > 135)
-			race += RNG::generate(0, 2);
-		if (race == 1)
-			t->setAlienRace("STR_SECTOID");
-		else if (race == 2)
-			t->setAlienRace("STR_FLOATER");
-		else if (race == 3)
-			t->setAlienRace("STR_SNAKEMAN");
-		else if (race == 4)
-			t->setAlienRace("STR_MUTON");
-		else if (race == 5)
-			t->setAlienRace("STR_ETHERIAL");
-		else
-			t->setAlienRace("STR_MIXED");
-		_game->getSavedGame()->getTerrorSites()->push_back(t);
-		popup(new AlienTerrorState(_game, city, this));
-	}
-	else if (chance >= 19 && _game->getSavedGame()->getAlienBases()->size() < 9)
-	{
-		// Pick a city
-		RuleRegion* region = 0;
-		std::vector<std::string> regions = _game->getRuleset()->getRegionsList();
-		do
-		{
-			region = _game->getRuleset()->getRegion(regions[RNG::generate(0, regions.size()-1)]);
-		}
-		while (region->getCities()->empty());
-		City *city = (*region->getCities())[RNG::generate(0, region->getCities()->size()-1)];
-		double lon;
-		double lat;
-		do
-		{
-			double ran = RNG::generate(-100, 100)*.001;
-			double ran2 = RNG::generate(-100, 100)*.001;
-			lon = city->getLongitude() + ran;
-			lat = city->getLatitude() + ran2;
-		}
-		while(!_globe->insideLand(lon, lat));
-		AlienBase *b = new AlienBase();
-		b->setLongitude(lon);
-		b->setLatitude(lat);
-		b->setSupplyTime(0);
-		b->setDiscovered(false);
-		b->setId(_game->getSavedGame()->getId("STR_ALIEN_BASE_"));
-		int race = RNG::generate(1, 2);
-		if(_game->getSavedGame()->getTime()->getTotalDays() > 45)
-			race += RNG::generate(0, 1);
-		if(_game->getSavedGame()->getTime()->getTotalDays() > 90)
-			race += RNG::generate(0, 1);
-		if(_game->getSavedGame()->getTime()->getTotalDays() > 135)
-			race += RNG::generate(0, 2);
-		if (race == 1)
-			b->setAlienRace("STR_SECTOID");
-		else if (race == 2)
-			b->setAlienRace("STR_FLOATER");
-		else if (race == 3)
-			b->setAlienRace("STR_SNAKEMAN");
-		else if (race == 4)
-			b->setAlienRace("STR_MUTON");
-		else if (race == 5)
-			b->setAlienRace("STR_ETHERIAL");
-		else
-			b->setAlienRace("STR_MIXED");
-		_game->getSavedGame()->getAlienBases()->push_back(b);
-	}
+	_alienAI->process(GeoEvent30Minutes());
 	for (std::vector<Base*>::iterator i = _game->getSavedGame()->getBases()->begin(); i != _game->getSavedGame()->getBases()->end(); ++i)
 	{
 		// Handle facility construction
@@ -1201,6 +1082,7 @@ void GeoscapeState::time1Day()
  */
 void GeoscapeState::time1Month()
 {
+	_alienAI->process(GeoEvent30Minutes());
 	// Handle funding
 	timerReset();
 	_game->getSavedGame()->monthlyFunding();
