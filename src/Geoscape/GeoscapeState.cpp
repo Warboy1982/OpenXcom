@@ -768,7 +768,7 @@ void GeoscapeState::time30Minutes()
 	// Spawn UFOs
 	std::vector<std::string> ufos = _game->getRuleset()->getUfosList();
 	std::vector<std::string> missions = _game->getRuleset()->getMissionList();
-	RuleMission* mission = _game->getRuleset()->getMission(missions.at(RNG::generate(0, missions.size()-1)));
+	RuleMission* mission = _game->getRuleset()->getMission(missions.at(RNG::generate(0, missions.size()-2)));
 	int chance = RNG::generate(1, 100);
 	if (chance <= 40)
 	{
