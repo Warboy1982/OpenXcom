@@ -48,6 +48,7 @@ class RuleResearch;
 class RuleManufacture;
 class AlienRace;
 class AlienDeployment;
+class RuleMission;
 
 /**
  * Set of rules and stats for a game.
@@ -77,10 +78,11 @@ protected:
 	std::map<std::string, RuleInventory*> _invs;
 	std::map<std::string, RuleResearch *> _research;
 	std::map<std::string, RuleManufacture *> _manufacture;
+	std::map<std::string, RuleMission*> _mission;
 	int _costSoldier, _costEngineer, _costScientist, _costDoctor, _timePersonnel;
 	std::auto_ptr<YAML::Node> _startingBase;
 	std::vector<std::string> _countriesIndex, _regionsIndex, _facilitiesIndex, _craftsIndex, _craftWeaponsIndex, _itemsIndex, _ufosIndex;
-	std::vector<std::string> _aliensIndex, _deploymentsIndex, _armorsIndex, _ufopaediaIndex, _researchIndex, _manufactureIndex;
+	std::vector<std::string> _aliensIndex, _deploymentsIndex, _armorsIndex, _ufopaediaIndex, _researchIndex, _manufactureIndex, _missionIndex;
 public:
 	/// Creates a blank ruleset.
 	Ruleset();
@@ -168,6 +170,10 @@ public:
 	RuleManufacture *getManufacture (const std::string &id) const;
 	/// Get the list of all manufacture projects.
 	std::vector<std::string> getManufactureList () const;
+	/// Gets the ruleset for a specific manufacture project.
+	RuleMission *getMission (const std::string &id) const;
+	/// Get the list of all manufacture projects.
+	std::vector<std::string> getMissionList () const;
 };
 
 }

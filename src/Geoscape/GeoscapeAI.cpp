@@ -60,15 +60,18 @@ void GeoscapeAI::process(const GeoscapeEvents::Base &event)
 
 /**
  * Temporary code to spawn a UFO, code moved from GeoscapeState.
- * @todo Write proper missions and remove this function.
+ * @todo get help with YAML interpretation, and move these tables to a ruleset.
  */
-void GeoscapeAI::fakeUFOSpawn()
+void GeoscapeAI::SpawnUFO()
 {
+
 	// Spawn UFOs
 	std::vector<std::string> ufos = _game.getRuleset()->getUfosList();
+	std::vector<std::string> missions = _game.getRuleset()->getMissionList();
 	int chance = RNG::generate(1, 100);
 	if (chance <= 40)
 	{
+		unsigned int missiontype = RNG::generate(0, missions.size());
 		// Makes smallest UFO the more likely, biggest UFO the least likely
 		// eg. 0 - 0..6, 1 - 6..10, etc.
 		unsigned int range = RNG::generate(1, (ufos.size()*(ufos.size()+1))/2);
@@ -142,7 +145,7 @@ void GeoscapeAI::fakeTerrorSpawn()
 void GeoscapeAI::handle(GeoEvent30Minutes *event)
 {
 	(void)event; //Keep both gcc and Doxygen happy
-	fakeUFOSpawn();
+	SpawnUFO();
 	/*
 	 * Count down until a new terror mission can begin.
 	 * The time passes in 30 minute increments.
