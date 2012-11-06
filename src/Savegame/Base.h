@@ -156,6 +156,7 @@ public:
 	int getShortRangeDetection() const;
 	/// Gets the base's long range detection.
 	int getLongRangeDetection() const;
+	bool getHyperDetection() const;
 	/// Gets the base's crafts of a certain type.
 	int getCraftCount(const std::string &craft) const;
 	/// Gets the base's craft maintenance.

@@ -918,6 +918,23 @@ int Base::getLongRangeDetection() const
 }
 
 /**
+ * Returns the total amount of hyper-wave
+ * detection facilities in the base.
+ * @return Defense value.
+ */
+bool Base::getHyperDetection() const
+{
+	for (std::vector<BaseFacility*>::const_iterator i = _facilities.begin(); i != _facilities.end(); ++i)
+	{
+		if ((*i)->getBuildTime() == 0 && (*i)->getRules()->isHyperwave())
+		{
+			return true;
+		}		
+	}
+	return false;
+}
+
+/**
  * Returns the total amount of craft of
  * a certain type stored in the base.
  * @param craft Craft type.

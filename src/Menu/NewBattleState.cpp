@@ -274,7 +274,7 @@ void NewBattleState::initSave()
 	std::vector<std::string> research = rule->getResearchList();
 	for (std::vector<std::string>::iterator i = research.begin(); i != research.end(); ++i)
 	{
-		save->addFinishedResearch(rule->getResearch(*i));
+		save->addFinishedResearch(rule->getResearch(*i), rule);
 	}
 
 	_game->setSavedGame(save);

@@ -681,6 +681,12 @@
     <ClCompile Include="Savegame\AlienAI.cpp">
       <Filter>Savegame</Filter>
     </ClCompile>
+    <ClCompile Include="Geoscape\UfoHyperDetectedState.cpp">
+      <Filter>Geoscape</Filter>
+    </ClCompile>
+    <ClCompile Include="Ruleset\RuleMission.cpp">
+      <Filter>Ruleset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basescape\ManufactureState.h">
@@ -1374,6 +1380,12 @@
     </ClInclude>
     <ClInclude Include="Geoscape\TimerGeoEvents.h">
       <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Geoscape\UfoHyperDetectedState.h">
+      <Filter>Geoscape</Filter>
+    </ClInclude>
+    <ClInclude Include="Ruleset\RuleMission.h">
+      <Filter>Ruleset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
