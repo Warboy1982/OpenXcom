@@ -185,14 +185,70 @@ std::string RuleMission::getType() const
 }
 
 /**
- * Returns the probability of a given race being in charge of a mission
- * @param month The month dataset to use (value > 8 = 8)
- * @param race The Alien race we want the numbers on
- * @return The probability of a given alien race being in charge.
+ * Returns the probability tables of a given race being in charge of a mission
+ * @return The probability tables of a given alien race being in charge of this mission.
+ * note: i'm not 100% sure this is how this should be handled.
  */
-int RuleMission::getRace(int *month, AlienRace *race) const
+const std::vector<RaceSet> RuleMission::getRaceSet() const
 {
-	return 0;//return _races.at(.at(month).find(race->getId())->second;
+	return _races;
 }
 
+std::vector<std::string> RuleMission::getScoutList() const
+{
+	return _scoutList;
+}
+std::vector<std::string> RuleMission::getMissionShipList() const
+{
+	return _missionShip;
+}
+
+int RuleMission::getMinScouts() const
+{
+	return _minScouts;
+}
+int RuleMission::getMaxScouts() const
+{
+	return _maxScouts;
+}
+int RuleMission::getMinScoutTime() const
+{
+	return _minScoutTime;
+}
+int RuleMission::getMaxScoutTime() const
+{
+	return _maxScoutTime;
+}
+int RuleMission::getMinMissionTime() const
+{
+	return _minMissionTime;
+}
+int RuleMission::getMaxMissionTime() const
+{
+	return _maxMissionTime;
+}
+int RuleMission::getPoints() const
+{
+	return _points;
+}
+int RuleMission::getMinMissionShips() const
+{
+	return _minMissionShips;
+}
+int RuleMission::getMaxMissionShips() const
+{
+	return _maxMissionShips;
+}
+RuleFlightPattern RuleMission::getScoutFlightPattern() const
+{
+	return _scoutFlightPattern;
+}
+RuleFlightPattern RuleMission::getMissionFlightPattern() const
+{
+	return _missionFlightPattern;
+}
+std::string RuleMission::getSpawnOnComplete() const
+{
+	return _spawnOnComplete;
+}
 }

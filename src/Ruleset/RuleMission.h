@@ -67,7 +67,35 @@ public:
 	/// Gets the mission's type.
 	std::string getType() const;
 	/// Gets a mission's racial appearance ratios.
-	int getRace(int *month, AlienRace *race) const;
+	const std::vector<RaceSet> getRaceSet() const;
+	/// Gets a mission's list of ships to use for scouting this mission.
+	std::vector<std::string> getScoutList() const;
+	/// Gets a mission's list of ships to use for this mission.
+	std::vector<std::string> getMissionShipList() const;
+	/// Gets a mission's minimum number of ships to use for scouting this mission.
+	int getMinScouts() const;
+	/// Gets a mission's maximum number of ships to use for scouting this mission.
+	int getMaxScouts() const;
+	/// Gets a mission's minimum amount of time to spend scouting this mission.
+	int getMinScoutTime() const;
+	/// Gets a mission's maximum amount of time to spend scouting this mission.
+	int getMaxScoutTime() const;
+	/// Gets a mission's minimum amount of time to spend on this mission.
+	int getMinMissionTime() const;
+	/// Gets a mission's maximum amount of time to spend on this mission.
+	int getMaxMissionTime() const;
+	/// Gets how many points the aliens score for successfully completing this mission.
+	int getPoints() const;
+	/// Gets a mission's maximum number of ships to use for this mission.
+	int getMaxMissionShips() const;
+	/// Gets a mission's minimum number of ships to use for this mission.
+	int getMinMissionShips() const;
+	/// Gets a mission's scout flight pattern behaviour.
+	RuleFlightPattern getScoutFlightPattern() const;
+	/// Gets a mission's scout flight pattern behaviour.
+	RuleFlightPattern getMissionFlightPattern() const;
+	/// What should we spawn when the mission is successful (if anything).
+	std::string getSpawnOnComplete() const;
 };
 
 }
