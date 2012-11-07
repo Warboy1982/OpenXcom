@@ -76,7 +76,7 @@ void GeoscapeAI::SpawnUFO()
 		int _pick = RNG::generate(0, missions.size()-2);
 		RuleMission* mission = _game.getRuleset()->getMission(missions.at(_pick)); // -2 because alien retaliation is a special case
 		int ships = RNG::generate(1, _pick+1); // 1 for research, 1+ for other types (so we can send scouts)
-		Country _target(0); // base on activity levels
+		//Country _target(0); // base on activity levels
 		int _period(0); //time period - how long until mission expires - base on type?
 		unsigned int _type = 0; // should depend on mission type, role in mission based on number of ships and anger towards player
 		                // make race based on ruleset variables and a function of totaldays

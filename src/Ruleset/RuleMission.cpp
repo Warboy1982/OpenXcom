@@ -19,16 +19,50 @@
 #include <cmath>
 #include "RuleMission.h"
 #include "AlienRace.h"
+#include "RuleUfo.h"
+#include "RuleCraft.h"
+#include "../Savegame/Ufo.h"
+#include "../Savegame/Craft.h"
 
 namespace OpenXcom
 {
+	
+void operator >> (const YAML::Node& node, RuleFlightPattern& s)
+{
+	node[0] >> s.a;
+	node[1] >> s.b;
+	node[2] >> s.c;
+	node[3] >> s.d;
+	node[4] >> s.e;
+	node[5] >> s.f;
+	node[6] >> s.g;
+	node[7] >> s.h;
+}
+YAML::Emitter& operator << (YAML::Emitter& out, const RuleFlightPattern& s)
+{
+	out << YAML::Flow;
+	out << YAML::BeginSeq << s.a << s.b << s.c << s.d << s.e << s.f << s.g << s.h << YAML::EndSeq;
+	return out;
+}
+
+void operator >> (const YAML::Node& node, RaceSet& s)
+{
+	node >> s.races;
+}
+
+YAML::Emitter& operator << (YAML::Emitter& out, const RaceSet& s)
+{
+	out << s.races;
+	return out;
+}
 
 /**
  * Creates a blank ruleset for a certain
  * type of Mission.
  * @param type String defining the type.
  */
-RuleMission::RuleMission(const std::string &type)
+RuleMission::RuleMission(const std::string &type) : _type(""), _spawnOnComplete(""), _races(0), _scoutList(0), _missionShip(0), _minScouts(0),
+	_maxScouts(0), _minScoutTime(0), _maxScoutTime(0), _minMissionTime(0), _maxMissionTime(0), _points(0), _maxMissionShips(0), _minMissionShips(0)
 {
 }
 
@@ -51,37 +85,65 @@ void RuleMission::load(const YAML::Node &node)
 		{
 			i.second() >> _type;
 		}
-		else if (key == "month1")
+		if (key == "scoutList")
 		{
-			i.second() >> _month1;
+			i.second() >> _scoutList;
 		}
-		else if (key == "month2")
+		if (key == "minScouts")
 		{
-			i.second() >> _month2;
+			i.second() >> _minScouts;
 		}
-		else if (key == "month3")
+		if (key == "maxScouts")
 		{
-			i.second() >> _month3;
+			i.second() >> _maxScouts;
 		}
-		else if (key == "month4")
+		if (key == "minScoutTime")
 		{
-			i.second() >> _month4;
+			i.second() >> _minScoutTime;
 		}
-		else if (key == "month5")
+		if (key == "maxScoutTime")
 		{
-			i.second() >> _month5;
+			i.second() >> _maxScoutTime;
 		}
-		else if (key == "month6")
+		if (key == "scoutFlightPattern")
 		{
-			i.second() >> _month6;
+			i.second() >> _scoutFlightPattern;
 		}
-		else if (key == "month7")
+		if (key == "missionShip")
 		{
-			i.second() >> _month7;
+			i.second() >> _missionShip;
 		}
-		else if (key == "month8")
+		if (key == "minMissionShips")
 		{
-			i.second() >> _month8;
+			i.second() >> _minMissionShips;
+		}
+		if (key == "minMissionShips")
+		{
+			i.second() >> _minMissionShips;
+		}
+		if (key == "minMissionTime")
+		{
+			i.second() >> _minMissionTime;
+		}
+		if (key == "maxMissionTime")
+		{
+			i.second() >> _maxMissionTime;
+		}
+		if (key == "missionFlightPattern")
+		{
+			i.second() >> _missionFlightPattern;
+		}
+		if (key == "spawnOnComplete")
+		{
+			i.second() >> _spawnOnComplete;
+		}
+		if (key == "points")
+		{
+			i.second() >> _points;
+		}
+		else if (key == "races")
+		{
+			i.second() >> _races;
 		}
 	}
 }
@@ -94,14 +156,21 @@ void RuleMission::save(YAML::Emitter &out) const
 {
 	out << YAML::BeginMap;
 	out << YAML::Key << "type" << YAML::Value << _type;
-	out << YAML::Key << "month1" << YAML::Value << _month1;
-	out << YAML::Key << "month2" << YAML::Value << _month2;
-	out << YAML::Key << "month3" << YAML::Value << _month3;
-	out << YAML::Key << "month4" << YAML::Value << _month4;
-	out << YAML::Key << "month5" << YAML::Value << _month5;
-	out << YAML::Key << "month6" << YAML::Value << _month6;
-	out << YAML::Key << "month7" << YAML::Value << _month7;
-	out << YAML::Key << "month8" << YAML::Value << _month8;
+	out << YAML::Key << "scoutList" << YAML::Value << _scoutList;
+	out << YAML::Key << "minScouts" << YAML::Value << _minScouts;
+	out << YAML::Key << "maxScouts" << YAML::Value << _maxScouts;
+	out << YAML::Key << "minScoutTime" << YAML::Value << _minScoutTime;
+	out << YAML::Key << "maxScoutTime" << YAML::Value << _maxScoutTime;
+	out << YAML::Key << "scoutFlightPattern" << YAML::Value << _scoutFlightPattern;
+	out << YAML::Key << "missionShip" << YAML::Value << _missionShip;
+	out << YAML::Key << "minMissionShips" << YAML::Value << _minMissionShips;
+	out << YAML::Key << "maxMissionShips" << YAML::Value << _maxMissionShips;
+	out << YAML::Key << "minMissionTime" << YAML::Value << _minMissionTime;
+	out << YAML::Key << "maxMissionTime" << YAML::Value << _maxMissionTime;
+	out << YAML::Key << "missionFlightPattern" << YAML::Value << _missionFlightPattern;
+	out << YAML::Key << "spawnOnComplete" << YAML::Value << _spawnOnComplete;
+	out << YAML::Key << "points" << YAML::Value << _points;
+	out << YAML::Key << "races" << YAML::Value << _races;
 	out << YAML::EndMap;
 }
 
@@ -121,27 +190,9 @@ std::string RuleMission::getType() const
  * @param race The Alien race we want the numbers on
  * @return The probability of a given alien race being in charge.
  */
-int RuleMission::getRace(int month, AlienRace *race) const
+int RuleMission::getRace(int *month, AlienRace *race) const
 {
-	switch(month)
-	{
-	case 1:
-		return _month1.find(race->getId())->second;
-	case 2:
-		return _month2.find(race->getId())->second;
-	case 3:
-		return _month3.find(race->getId())->second;
-	case 4:
-		return _month4.find(race->getId())->second;
-	case 5:
-		return _month5.find(race->getId())->second;
-	case 6:
-		return _month6.find(race->getId())->second;
-	case 7:
-		return _month7.find(race->getId())->second;
-	default:
-		return _month8.find(race->getId())->second;
-	}
+	return 0;//return _races.at(.at(month).find(race->getId())->second;
 }
 
 }

@@ -26,8 +26,19 @@
 
 namespace OpenXcom
 {
+	
+struct RuleFlightPattern
+{
+	int a, b, c, d, e, f, g, h;
+};
+
+struct RaceSet
+{
+	std::map<std::string, int> races;
+};
 
 class AlienRace;
+class Craft;
 
 /**
  * Represents an Alien Mission
@@ -36,8 +47,14 @@ class AlienRace;
 class RuleMission
 {
 private:
-	std::string _type;
-	std::map<std::string, int> _month1, _month2, _month3, _month4, _month5, _month6, _month7, _month8;
+	std::string _type, _spawnOnComplete;
+	std::vector<RaceSet> _races;
+	std::vector<std::string> _scoutList, _missionShip;
+	int _minScouts, _maxScouts, _minScoutTime, _maxScoutTime;
+	int _minMissionTime, _maxMissionTime, _points;
+	int _maxMissionShips, _minMissionShips;
+	RuleFlightPattern _scoutFlightPattern, _missionFlightPattern;
+
 public:
 	/// Creates a blank mission ruleset
 	RuleMission(const std::string &type);
@@ -50,7 +67,7 @@ public:
 	/// Gets the mission's type.
 	std::string getType() const;
 	/// Gets a mission's racial appearance ratios.
-	int getRace(int month, AlienRace *race) const;
+	int getRace(int *month, AlienRace *race) const;
 };
 
 }
