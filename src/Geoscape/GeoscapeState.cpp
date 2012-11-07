@@ -766,12 +766,15 @@ void GeoscapeState::time10Minutes()
 void GeoscapeState::time30Minutes()
 {
 	// Spawn UFOs
+	_alienAI->SpawnUFO();
+	/*
 	std::vector<std::string> ufos = _game->getRuleset()->getUfosList();
 	std::vector<std::string> missions = _game->getRuleset()->getMissionList();
-	RuleMission* mission = _game->getRuleset()->getMission(missions.at(RNG::generate(0, missions.size()-2)));
 	int chance = RNG::generate(1, 100);
 	if (chance <= 40)
 	{
+		
+		RuleMission* mission = _game->getRuleset()->getMission(missions.at(RNG::generate(0, missions.size()-2))); // -2 because alien retaliation is a special case
 		// Makes smallest UFO the more likely, biggest UFO the least likely
 		// eg. 0 - 0..6, 1 - 6..10, etc.
 		unsigned int range = RNG::generate(1, (ufos.size()*(ufos.size()+1))/2);
@@ -812,7 +815,7 @@ void GeoscapeState::time30Minutes()
 		else
 			u->setAlienRace("STR_MIXED");
 		_game->getSavedGame()->getUfos()->push_back(u);
-	}
+	}*/
 	// Handle craft maintenance
 	for (std::vector<Base*>::iterator i = _game->getSavedGame()->getBases()->begin(); i != _game->getSavedGame()->getBases()->end(); ++i)
 	{

@@ -30,6 +30,7 @@ namespace OpenXcom
 
 class GeoscapeState;
 class Game;
+class Country;
 
 /**
  * Handle Geoscape game events.
@@ -44,12 +45,14 @@ public:
 	GeoscapeAI(Game &game, GeoscapeState &state);
 	/// Process the information from an event.
 	void process(const GeoscapeEvents::Base &event);
+	void SpawnUFO();
 
 protected:
 	/// Called every 30 game minutes.
 	void handle(GeoEvent30Minutes *);
 
 private:
+	int _angerlevel;
 	/// Access to data and rules.
 	Game &_game;
 	/// This is who can display our messages.
@@ -57,8 +60,8 @@ private:
 
 	// Immitate existing behaviour.
 	void fakeUFOSpawn();
-	void SpawnUFO();
 	void fakeTerrorSpawn();
+
 	#define M_PI 3.14159265358979323846
 	#define M_PI_2 1.57079632679489661923
 };

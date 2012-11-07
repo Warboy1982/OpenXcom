@@ -26,11 +26,15 @@
 #include "../Ruleset/RuleRegion.h"
 #include "../Ruleset/Ruleset.h"
 #include "../Ruleset/RuleUfo.h"
+#include "../Ruleset/RuleMission.h"
+#include "../Ruleset/RuleCountry.h"
+#include "../Savegame/Country.h"
 #include "../Savegame/AlienAI.h"
 #include "../Savegame/SavedGame.h"
 #include "../Savegame/TerrorSite.h"
 #include "../Savegame/Ufo.h"
 #include "../Savegame/Waypoint.h"
+#include "../Savegame/GameTime.h"
 #include <cmath>
 #include <algorithm>
 
@@ -64,14 +68,18 @@ void GeoscapeAI::process(const GeoscapeEvents::Base &event)
  */
 void GeoscapeAI::SpawnUFO()
 {
-
-	// Spawn UFOs
 	std::vector<std::string> ufos = _game.getRuleset()->getUfosList();
 	std::vector<std::string> missions = _game.getRuleset()->getMissionList();
 	int chance = RNG::generate(1, 100);
 	if (chance <= 40)
-	{
-		unsigned int missiontype = RNG::generate(0, missions.size());
+	{		
+		int _pick = RNG::generate(0, missions.size()-2);
+		RuleMission* mission = _game.getRuleset()->getMission(missions.at(_pick)); // -2 because alien retaliation is a special case
+		int ships = RNG::generate(1, _pick+1); // 1 for research, 1+ for other types (so we can send scouts)
+		Country _target(0); // base on activity levels
+		int _period(0); //time period - how long until mission expires - base on type?
+		unsigned int _type = 0; // should depend on mission type, role in mission based on number of ships and anger towards player
+		                // make race based on ruleset variables and a function of totaldays
 		// Makes smallest UFO the more likely, biggest UFO the least likely
 		// eg. 0 - 0..6, 1 - 6..10, etc.
 		unsigned int range = RNG::generate(1, (ufos.size()*(ufos.size()+1))/2);
@@ -93,12 +101,25 @@ void GeoscapeAI::SpawnUFO()
 		u->setDestination(w);
 		u->setSpeed(RNG::generate(u->getRules()->getMaxSpeed() / 4, u->getRules()->getMaxSpeed() / 2));
 		int race = RNG::generate(1, 2);
+		if(_game.getSavedGame()->getTime()->getTotalDays() > 45)
+			race += RNG::generate(0, 1);
+		if(_game.getSavedGame()->getTime()->getTotalDays() > 90)
+			race += RNG::generate(0, 1);
+		if(_game.getSavedGame()->getTime()->getTotalDays() > 135)
+			race += RNG::generate(0, 2);
 		if (race == 1)
 			u->setAlienRace("STR_SECTOID");
-		else
+		else if (race == 2)
 			u->setAlienRace("STR_FLOATER");
+		else if (race == 3)
+			u->setAlienRace("STR_SNAKEMAN");
+		else if (race == 4)
+			u->setAlienRace("STR_MUTON");
+		else if (race == 5)
+			u->setAlienRace("STR_ETHERIAL");
+		else
+			u->setAlienRace("STR_MIXED");
 		_game.getSavedGame()->getUfos()->push_back(u);
-		process(UfoSpawned(*u));
 	}
 }
 
