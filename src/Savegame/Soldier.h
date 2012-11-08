@@ -53,8 +53,8 @@ private:
 	Craft *_craft;
 	SoldierGender _gender;
 	SoldierLook _look;
-	int _missions, _kills, _recovery;
-	bool _recentlyPromoted;
+	int _missions, _kills, _recovery, _factor;
+	bool _recentlyPromoted, _psiTraining, _training;
 	Armor *_armor;
 public:
 	/// Creates a new soldier.
@@ -114,7 +114,19 @@ public:
 	/// Sets the soldier's wound recovery time.
 	void setWoundRecovery(int recovery);
 	/// Heals wound recoveries.
-	void heal();
+	void heal(int factor);
+	/// Trains a soldier's physical stats
+	void trainPhys();
+	/// Trains a soldier's psychic stats
+	void trainPsi();
+	/// Returns whether the unit is in psi training or not
+	bool isInPsiTraining();
+	/// set the psi training status
+	void setPsiTraining();
+	/// Returns whether the unit is in training or not
+	bool isInTraining();
+	/// set the training status
+	void setTraining();
 };
 
 }

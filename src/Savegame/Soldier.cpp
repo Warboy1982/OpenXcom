@@ -35,13 +35,13 @@ namespace OpenXcom
  * @param names List of name pools for soldier generation.
  * @param id Pointer to unique soldier id for soldier generation.
  */
-Soldier::Soldier(RuleSoldier *rules, Armor *armor, const std::vector<SoldierNamePool*> *names, int id) : _name(L""), _id(0), _rules(rules), _initialStats(), _currentStats(), _rank(RANK_ROOKIE), _craft(0), _gender(GENDER_MALE), _look(LOOK_BLONDE), _missions(0), _kills(0), _recovery(0), _recentlyPromoted(false), _armor(armor)
+Soldier::Soldier(RuleSoldier *rules, Armor *armor, const std::vector<SoldierNamePool*> *names, int id) : _name(L""), _id(0), _rules(rules), _initialStats(), _currentStats(), _rank(RANK_ROOKIE), _craft(0), _gender(GENDER_MALE), _look(LOOK_BLONDE), _missions(0), _kills(0), _recovery(0), _recentlyPromoted(false), _armor(armor), _factor(0), _psiTraining(false), _training(false)
 {
 	if (names != 0)
 	{
 		UnitStats minStats = rules->getMinStats();
 		UnitStats maxStats = rules->getMaxStats();
-
+		
 		_initialStats.tu = RNG::generate(minStats.tu, maxStats.tu);
 		_initialStats.stamina = RNG::generate(minStats.stamina, maxStats.stamina);
 		_initialStats.health = RNG::generate(minStats.health, maxStats.health);
@@ -52,13 +52,16 @@ Soldier::Soldier(RuleSoldier *rules, Armor *armor, const std::vector<SoldierName
 		_initialStats.strength = RNG::generate(minStats.strength, maxStats.strength);
 		_initialStats.psiStrength = RNG::generate(minStats.psiStrength, maxStats.psiStrength);
 		_initialStats.melee = RNG::generate(minStats.melee, maxStats.melee);
-		_initialStats.psiSkill = 0;
+		_initialStats.psiSkill = RNG::generate(minStats.psiSkill, maxStats.psiSkill);;
 
 		_currentStats = _initialStats;	
 
 		if (!names->empty())
 		{
-			_name = names->at(RNG::generate(0, names->size()-1))->genName(&_gender);
+			int gender;
+			_name = names->at(RNG::generate(0, names->size()-1))->genName(&gender);
+			_gender = (SoldierGender)gender;
+
 		}
 		else
 		{
@@ -103,6 +106,8 @@ void Soldier::load(const YAML::Node &node, const Ruleset *rule)
 	node["missions"] >> _missions;
 	node["kills"] >> _kills;
 	node["recovery"] >> _recovery;
+	node["training"] >> _training;
+	node["psiTraining"] >> _psiTraining;
 	std::string armor;
 	node["armor"] >> armor;
 	_armor = rule->getArmor(armor);
@@ -130,6 +135,8 @@ void Soldier::save(YAML::Emitter &out) const
 	out << YAML::Key << "missions" << YAML::Value << _missions;
 	out << YAML::Key << "kills" << YAML::Value << _kills;
 	out << YAML::Key << "recovery" << YAML::Value << _recovery;
+	out << YAML::Key << "training" << YAML::Value << _training;
+	out << YAML::Key << "psiTraining" << YAML::Value << _psiTraining;
 	out << YAML::Key << "armor" << YAML::Value << _armor->getType();
 	out << YAML::EndMap;
 }
@@ -382,7 +389,10 @@ void Soldier::setArmor(Armor *armor)
  */
 int Soldier::getWoundRecovery() const
 {
-	return _recovery;
+	if(_factor)
+		return _recovery/_factor;
+	else
+		return _recovery;
 }
 
 /**
@@ -397,15 +407,88 @@ void Soldier::setWoundRecovery(int recovery)
 	if (_recovery > 0)
 	{
 		_craft = 0;
+		if(_psiTraining)
+			_psiTraining = false;
+		if(_training)
+			_training = false;
 	}
 }
 
 /**
  * Heals soldier wounds.
  */
-void Soldier::heal()
+void Soldier::heal(int factor)
 {
-	_recovery--;
+	_factor = factor;
+	_recovery -= 1 + factor;
+	if(_recovery <= 0)
+	{
+		_recovery = 0;
+		_factor = 0;
+	}
 }
 
+/**
+ * Trains a soldier's Physical abilities
+ */
+void Soldier::trainPhys()
+{
+	if(_currentStats.firing < 100 && RNG::generate(0, 100) > _currentStats.firing)
+		_currentStats.firing++;	
+	if(_currentStats.health < 100 && RNG::generate(0, 100) > _currentStats.health)
+		_currentStats.health++;
+	if(_currentStats.melee < 100 && RNG::generate(0, 100) > _currentStats.melee)
+		_currentStats.melee++;
+	if(_currentStats.throwing < 100 && RNG::generate(0, 100) > _currentStats.throwing)
+		_currentStats.throwing++;
+	if(_currentStats.strength < 100 && RNG::generate(0, 100) > _currentStats.strength)
+		_currentStats.strength++;
+	if(_currentStats.tu < 100 && RNG::generate(0, 100) > _currentStats.tu)
+		_currentStats.tu++;
+	if(_currentStats.stamina < 100 && RNG::generate(0, 100) > _currentStats.stamina)
+		_currentStats.stamina++;
+}
+
+/**
+ * Trains a soldier's Psychic abilities
+ */
+void Soldier::trainPsi()
+{
+	if(_currentStats.psiSkill <= 16)
+		_currentStats.psiSkill += RNG::generate(16, 24);
+	else if(_currentStats.psiSkill <= 16)
+		_currentStats.psiSkill += RNG::generate(5, 12);
+	else if(_currentStats.psiSkill < 100)
+		_currentStats.psiSkill += RNG::generate(1, 3);
+	if(_currentStats.psiSkill > 100)
+		_currentStats.psiSkill = 100;
+}
+/**
+ * returns whether or not the unit is in psi training
+ */
+bool Soldier::isInPsiTraining()
+{
+	return _psiTraining;
+}
+/**
+ * changes whether or not the unit is in psi training
+ */
+void Soldier::setPsiTraining()
+{
+	_psiTraining = !_psiTraining;
+}
+/**
+ * returns whether or not the unit is in physical training
+ */
+bool Soldier::isInTraining()
+{
+	return _training;
+}
+/**
+ * changes whether or not the unit is in physical training
+ */
+void Soldier::setTraining()
+{
+	_training = !_training;
+}
 }

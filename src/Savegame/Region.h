@@ -48,6 +48,10 @@ public:
 	void save(YAML::Emitter& out) const;
 	/// Gets the region's ruleset.
 	RuleRegion *const getRules() const;
+	void setActivityXcom(int activity);
+	void setActivityAlien(int activity);
+	int getActivityXcom() const;
+	int getActivityAlien() const;
 };
 
 }

@@ -34,7 +34,6 @@ class Craft;
 class ItemContainer;
 class Transfer;
 class Language;
-class Ruleset;
 class SavedGame;
 class ResearchProject;
 class Production;
@@ -53,7 +52,7 @@ private:
 	std::vector<Craft*> _crafts;
 	std::vector<Transfer*> _transfers;
 	ItemContainer *_items;
-	int _scientists, _engineers;
+	int _scientists, _engineers, _doctors;
 	std::vector<ResearchProject *> _research;
 	std::vector<Production *> _productions;
 public:
@@ -85,6 +84,10 @@ public:
 	int getScientists() const;
 	/// Sets the base's scientists.
 	void setScientists(int scientists);
+	/// Gets the base's doctors.
+	int getDoctors() const;
+	/// Sets the base's doctors.
+	void setDoctors(int doctors);
 	/// Gets the base's engineers.
 	int getEngineers() const;
 	/// Sets the base's engineers.
@@ -101,6 +104,10 @@ public:
 	int getAvailableScientists() const;
 	/// Gets the base's total scientists.
 	int getTotalScientists() const;
+	/// Gets the base's available doctors.
+	int getAvailableDoctors() const;
+	/// Gets the base's total doctors.
+	int getTotalDoctors() const;
 	/// Gets the base's available engineers.
 	int getAvailableEngineers() const;
 	/// Gets the base's total engineers.
@@ -117,6 +124,14 @@ public:
 	int getUsedLaboratories() const;
 	/// Gets the base's available laboratory space.
 	int getAvailableLaboratories() const;
+	/// Gets the base's used psi lab space.
+	int getUsedPsiLabs() const;
+	/// Gets the base's total available psi lab space.
+	int getAvailablePsiLabs() const;
+	/// Gets the base's used psi lab space.
+	int getUsedTraining() const;
+	/// Gets the base's total available psi lab space.
+	int getAvailableTraining() const;
 	/// Gets the base's used workshop space.
 	int getUsedWorkshops() const;
 	/// Gets the base's available workshop space.
@@ -127,6 +142,8 @@ public:
 	int getAvailableHangars() const;
 	/// Get the number of available space lab (not used by a ResearchProject)
 	int getFreeLaboratories () const;
+	/// Get the number of hospitals
+	int getHospitals () const;
 	/// Get the number of available space lab (not used by a Production)
 	int getFreeWorkshops () const;
 
@@ -139,6 +156,7 @@ public:
 	int getShortRangeDetection() const;
 	/// Gets the base's long range detection.
 	int getLongRangeDetection() const;
+	bool getHyperDetection() const;
 	/// Gets the base's crafts of a certain type.
 	int getCraftCount(const std::string &craft) const;
 	/// Gets the base's craft maintenance.
@@ -161,6 +179,7 @@ public:
 	void removeProduction (Production * p);
 	/// Get the list of Base Production's
 	const std::vector<Production *> & getProductions () const;
+	int getAvailableAliens() const;
 };
 
 }

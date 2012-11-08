@@ -21,7 +21,7 @@
 namespace OpenXcom
 {
 
-RuleResearch::RuleResearch(const std::string & name) : _name(name), _cost(0), _needItem(false)
+RuleResearch::RuleResearch(const std::string & name) : _name(name), _cost(0), _needItem(false), _points(0), _free(0), _requirement(0)
 {
 }
 
@@ -43,6 +43,10 @@ void RuleResearch::load(const YAML::Node &node)
 		{
 			i.second() >> _cost;
 		}
+		else if (key == "points")
+		{
+			i.second() >> _points;
+		}
 		else if (key == "needItem")
 		{
 			i.second() >> _needItem;
@@ -54,6 +58,14 @@ void RuleResearch::load(const YAML::Node &node)
 		else if (key == "unlocks")
 		{
 			i.second() >> _unlocks;
+		}
+		else if (key == "free")
+		{
+			i.second() >> _free;
+		}
+		else if (key == "requirement")
+		{
+			i.second() >> _requirement;
 		}
 	}
 }
@@ -67,9 +79,12 @@ void RuleResearch::save(YAML::Emitter &out) const
 	out << YAML::BeginMap;
 	out << YAML::Key << "name" << YAML::Value << _name;
 	out << YAML::Key << "cost" << YAML::Value << _cost;
+	out << YAML::Key << "points" << YAML::Value << _points;
 	out << YAML::Key << "needItem" << YAML::Value << _needItem;
 	out << YAML::Key << "dependencies" << YAML::Value << _dependencies;
 	out << YAML::Key << "unlocks" << YAML::Value << _unlocks;
+	out << YAML::Key << "free" << YAML::Value << _free;
+	out << YAML::Key << "requirement" << YAML::Value << _requirement;
 	out << YAML::EndMap;
 }
 
@@ -80,6 +95,15 @@ void RuleResearch::save(YAML::Emitter &out) const
 int RuleResearch::getCost() const
 {
 	return _cost;
+}
+
+/**
+   Get the points gained for this ResearchProject
+   @return points gained for this ResearchProject
+*/
+int RuleResearch::getPoints() const
+{
+	return _points;
 }
 
 /**
@@ -117,4 +141,15 @@ const std::vector<std::string> & RuleResearch::getUnlocked () const
 	return _unlocks;
 }
 
+/**
+   @return The list of ResearchProject unlocked by this research project.
+*/
+const std::vector<std::string> & RuleResearch::getFree () const
+{
+	return _free;
+}
+const std::vector<std::string> & RuleResearch::getRequirement() const
+{
+	return _requirement;
+}
 }

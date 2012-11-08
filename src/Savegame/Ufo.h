@@ -40,11 +40,11 @@ private:
 	RuleUfo *_rules;
 	int _id, _damage;
 	std::string _direction, _altitude;
-	bool _detected;
+	bool _detected, _hyperDetected;
 	int _hoursCrashed;
-	std::string _race;
+	std::string _race, _mission;
 	bool _inBattlescape;
-	int _hit;
+	int _shotDownByCraftId;
 
 	/// Calculates a new speed vector to the destination.
 	void calculateSpeed();
@@ -75,6 +75,10 @@ public:
 	bool getDetected() const;
 	/// Sets the UFO's detection status.
 	void setDetected(bool detected);
+	/// Gets the UFO's detection status.
+	bool getHyperDetected() const;
+	/// Sets the UFO's detection status.
+	void setHyperDetected(bool hyperdetected);
 	/// Gets the UFO's amount of crashed hours.
 	int getHoursCrashed() const;
 	/// Sets the UFO's amount of crashed hours.
@@ -99,12 +103,16 @@ public:
 	std::string getAlienRace() const;
 	/// Sets the UFO's alien race.
 	void setAlienRace(const std::string &race);
-	/// Set hit status.
-	void setHit(int hit);
-	/// Get hit status.
-	int getHit() const;
+	/// Sets the ID of craft which shot down the UFO.
+	void setShotDownByCraftId(const int id);
+	/// Gets the ID of craft which shot down the UFO.
+	int getShotDownByCraftId() const;
 	/// Gets the UFO's visibility.
 	int getVisibility() const;
+	/// Gets the UFO's Mission.
+	std::string getMission() const;
+	/// Sets the UFO's Mission.
+	void setMission(const std::string &mission);
 };
 
 }

@@ -54,7 +54,7 @@ namespace OpenXcom
 /**
  * Creates a ruleset with blank sets of rules.
  */
-Ruleset::Ruleset() : _costSoldier(0), _costEngineer(0), _costScientist(0), _timePersonnel(0)
+Ruleset::Ruleset() : _costSoldier(0), _costEngineer(0), _costScientist(0), _costDoctor(0), _timePersonnel(0)
 {
 	// Add soldier names
 	std::vector<std::string> names = CrossPlatform::getFolderContents(Options::getDataFolder() + "SoldierName/", "nam");
@@ -551,6 +551,10 @@ void Ruleset::loadFile(const std::string &filename)
 		{
 			i.second() >> _costScientist;
 		}
+		else if (key == "costDoctor")
+		{
+			i.second() >> _costDoctor;
+		}
 		else if (key == "timePersonnel")
 		{
 			i.second() >> _timePersonnel;
@@ -714,6 +718,7 @@ void Ruleset::save(const std::string &filename) const
 	out << YAML::Key << "costSoldier" << YAML::Value << _costSoldier;
 	out << YAML::Key << "costEngineer" << YAML::Value << _costEngineer;
 	out << YAML::Key << "costScientist" << YAML::Value << _costScientist;
+	out << YAML::Key << "costDoctor" << YAML::Value << _costDoctor;
 	out << YAML::Key << "timePersonnel" << YAML::Value << _timePersonnel;
 	out << YAML::EndMap;
 	sav << out.c_str();
@@ -750,7 +755,9 @@ SavedGame *Ruleset::newSave() const
 	ids["STR_UFO"] = 1;
 	ids["STR_WAYPOINT"] = 1;
 	ids["STR_TERROR_SITE"] = 1;
+	ids["STR_ALIEN_BASE"] = 1;
 	ids["STR_SOLDIER"] = 1;
+	ids["STR_LANDING_SITE"] = 1;
 	save->initIds(ids);
 
 	// Set up starting base
@@ -1074,6 +1081,16 @@ int Ruleset::getScientistCost() const
 }
 
 /**
+ * Returns the cost of an individual doctor
+ * for purchase/maintenance.
+ * @return Cost.
+ */
+int Ruleset::getDoctorCost() const
+{
+	return _costDoctor;
+}
+
+/**
  * Returns the time it takes to transfer personnel
  * between bases.
  * @return Time in hours.
@@ -1159,5 +1176,4 @@ std::vector<std::string> Ruleset::getManufactureList () const
 {
 	return _manufactureIndex;
 }
-
 }

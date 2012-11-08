@@ -31,7 +31,7 @@ namespace OpenXcom
  * Initializes a transfer.
  * @param hours Hours in-transit.
  */
-Transfer::Transfer(int hours) : _hours(hours), _soldier(0), _craft(0), _itemId(""), _itemQty(0), _scientists(0), _engineers(0), _delivered(false)
+Transfer::Transfer(int hours) : _hours(hours), _soldier(0), _craft(0), _itemId(""), _itemQty(0), _scientists(0), _doctors(0), _engineers(0), _delivered(false)
 {
 }
 
@@ -77,6 +77,10 @@ void Transfer::load(const YAML::Node &node, Base *base, const Ruleset *rule)
 	{
 		*pName >> _scientists;
 	}
+	else if (const YAML::Node *pName = node.FindValue("doctors"))
+	{
+		*pName >> _doctors;
+	}
 	else if (const YAML::Node *pName = node.FindValue("engineers"))
 	{
 		*pName >> _engineers;
@@ -110,6 +114,10 @@ void Transfer::save(YAML::Emitter &out) const
 	else if (_scientists != 0)
 	{
 		out << YAML::Key << "scientists" << YAML::Value << _scientists;
+	}
+	else if (_doctors != 0)
+	{
+		out << YAML::Key << "doctors" << YAML::Value << _doctors;
 	}
 	else if (_engineers != 0)
 	{
@@ -167,6 +175,15 @@ void Transfer::setScientists(int scientists)
 }
 
 /**
+ * Changes the scientists being transferred.
+ * @param scientists Amount of scientists.
+ */
+void Transfer::setDoctors(int doctors)
+{
+	_doctors = doctors;
+}
+
+/**
  * Changes the engineers being transferred.
  * @param engineers Amount of engineers.
  */
@@ -193,6 +210,10 @@ std::wstring Transfer::getName(Language *lang) const
 	else if (_scientists != 0)
 	{
 		return lang->getString("STR_SCIENTISTS");
+	}
+	else if (_doctors != 0)
+	{
+		return lang->getString("STR_DOCTORS");
 	}
 	else if (_engineers != 0)
 	{
@@ -225,6 +246,10 @@ int Transfer::getQuantity() const
 	{
 		return _scientists;
 	}
+	else if (_doctors != 0)
+	{
+		return _doctors;
+	}
 	else if (_engineers != 0)
 	{
 		return _engineers;
@@ -249,6 +274,10 @@ TransferType Transfer::getType() const
 	else if (_scientists != 0)
 	{
 		return TRANSFER_SCIENTIST;
+	}
+	else if (_doctors != 0)
+	{
+		return TRANSFER_DOCTOR;
 	}
 	else if (_engineers != 0)
 	{
@@ -284,6 +313,10 @@ void Transfer::advance(Base *base)
 		else if (_scientists != 0)
 		{
 			base->setScientists(base->getScientists() + _scientists);
+		}
+		else if (_doctors != 0)
+		{
+			base->setDoctors(base->getDoctors() + _doctors);
 		}
 		else if (_engineers != 0)
 		{

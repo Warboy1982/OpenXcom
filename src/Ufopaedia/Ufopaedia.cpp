@@ -43,14 +43,39 @@ namespace OpenXcom
 	size_t Ufopaedia::_current_index = 0;
 
 	/**
+	 * Adds a new article to the visible list, mainly after a successful research.
+	 * @param game Pointer to actual game.
+	 * @param article_id Article id to release.
+	 */
+	void Ufopaedia::releaseArticle(Game *game, std::string &article_id)
+	{
+		// TODO: get definition from Ruleset and add it to UPSaved...
+	}
+
+	/**
 	 * Checks, if an article has already been released.
 	 * @param game Pointer to actual game.
-	 * @param article Article definition to release.
+	 * @param article_id Article id to release.
 	 * @returns true, if the article is available.
 	 */
-	bool Ufopaedia::isArticleAvailable(Game *game, ArticleDefinition *article)
+	bool Ufopaedia::isArticleAvailable(Game *game, std::string article_id)
 	{
-		return game->getSavedGame()->isResearched(article->requires);
+	if(article_id.length()>10)
+	if(article_id.substr(article_id.length()-10, article_id.length()) == "_NAVIGATOR")
+		article_id = article_id.substr(0, article_id.length()-10);
+	else if(article_id.substr(article_id.length()-10, article_id.length()) == "_COMMANDER")
+		article_id = article_id.substr(0, article_id.length()-10);
+	else if(article_id.substr(article_id.length()-9, article_id.length()) == "_ENGINEER")
+		article_id = article_id.substr(0, article_id.length()-9);
+	else if(article_id.substr(article_id.length()-8, article_id.length()) == "_SOLDIER")
+		article_id = article_id.substr(0, article_id.length()-8);
+	else if(article_id.substr(article_id.length()-7, article_id.length()) == "_LEADER")
+		article_id = article_id.substr(0, article_id.length()-7);
+	else if(article_id.substr(article_id.length()-7, article_id.length()) == "_MEDIC")
+		article_id = article_id.substr(0, article_id.length()-6);
+	else if(article_id.substr(article_id.size()-7, article_id.size()) == "AUTOPSY")
+		article_id = article_id.substr(0, article_id.size()-7) + "CORPSE";
+	return game->getSavedGame()->isResearched(article_id);
 	}
 
 	/**
@@ -122,10 +147,7 @@ namespace OpenXcom
 	void Ufopaedia::openArticle(Game *game, ArticleDefinition *article)
 	{
 		_current_index = getArticleIndex(game, article->id);
-		if (_current_index != -1)
-		{
-			game->pushState(createArticleState(game, article));
-		}
+		game->pushState(createArticleState(game, article));
 	}
 
 	/**
@@ -136,12 +158,7 @@ namespace OpenXcom
 	 */
 	void Ufopaedia::openArticle(Game *game, std::string &article_id)
 	{
-		_current_index = getArticleIndex(game, article_id);
-		if (_current_index != -1)
-		{
-			ArticleDefinition *article = game->getRuleset()->getUfopaediaArticle(article_id);
-			game->pushState(createArticleState(game, article));
-		}
+		game->pushState(createArticleState(game, game->getRuleset()->getUfopaediaArticle(article_id)));
 	}
 
 	/**
@@ -222,7 +239,7 @@ namespace OpenXcom
 		for (std::vector<std::string>::iterator it=list.begin(); it!=list.end(); ++it)
 		{
 			ArticleDefinition *article = game->getRuleset()->getUfopaediaArticle(*it);
-			if (isArticleAvailable(game, article) && article->section != UFOPAEDIA_NOT_AVAILABLE)
+			if ((isArticleAvailable(game, *it) || !article->needsResearch) && article->section != UFOPAEDIA_NOT_AVAILABLE)
 			{
 				articles.push_back(article);
 			}

@@ -77,7 +77,7 @@ protected:
 	std::map<std::string, RuleInventory*> _invs;
 	std::map<std::string, RuleResearch *> _research;
 	std::map<std::string, RuleManufacture *> _manufacture;
-	int _costSoldier, _costEngineer, _costScientist, _timePersonnel;
+	int _costSoldier, _costEngineer, _costScientist, _costDoctor, _timePersonnel;
 	std::auto_ptr<YAML::Node> _startingBase;
 	std::vector<std::string> _countriesIndex, _regionsIndex, _facilitiesIndex, _craftsIndex, _craftWeaponsIndex, _itemsIndex, _ufosIndex;
 	std::vector<std::string> _aliensIndex, _deploymentsIndex, _armorsIndex, _ufopaediaIndex, _researchIndex, _manufactureIndex;
@@ -161,6 +161,8 @@ public:
 	int getEngineerCost() const;
 	/// Gets the cost of a scientist.
 	int getScientistCost() const;
+	/// Gets the cost of a doctor.
+	int getDoctorCost() const;
 	/// Gets the transfer time of personnel.
 	int getPersonnelTime() const;
 	/// Gets the ruleset for a specific research project.

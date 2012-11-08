@@ -69,7 +69,7 @@ private:
 	int _walkPhase, _fallPhase;
 	std::vector<BattleUnit *> _visibleUnits;
 	std::vector<Tile *> _visibleTiles;
-	int _tu, _energy, _health, _morale, _stunlevel;
+	int _tu, _energy, _health, _morale, _stunlevel, _flashlevel;
 	bool _kneeled, _floating, _dontReselect;
 	int _currentArmor[5];
 	int _fatalWounds[6];
@@ -81,7 +81,6 @@ private:
 	bool _cacheInvalid;
 	int _expBravery, _expReactions, _expFiring, _expThrowing, _expPsiSkill, _expMelee;
 	int improveStat(int exp);
-	int _turretType;
 	bool _needPainKiller;
 	int _motionPoints;
 	int _kills;
@@ -174,8 +173,11 @@ public:
 	void damage(Position position, int power, ItemDamageType type, bool ignoreArmor = false);
 	/// Heal stun level of the unit.
 	void healStun(int power);
+	void healFlash(int power);
 	/// Gets the unit's stun level.
 	int getStunlevel() const;
+	/// Gets the unit's stun level.
+	int getFlashlevel() const;
 	/// Start falling sequence.
 	void startFalling();
 	/// Increment the falling sequence.
@@ -272,10 +274,6 @@ public:
 	bool postMissionProcedures(SavedGame *geoscape);
 	/// Get the sprite index for the minimap
 	int getMiniMapSpriteIndex () const;
-	/// Set the turret type. -1 is no turret.
-	void setTurretType(int turretType);
-	/// Get the turret type. -1 is no turret.
-	int getTurretType() const;
 	/// Get fatal wound amount of a body part
 	int getFatalWound(int part) const;
 	/// Heal one fatal wound
@@ -325,6 +323,11 @@ public:
 	std::string getActiveHand() const;
 	/// Convert's unit to a faction
 	void convertToFaction(UnitFaction f);
+	void setFemale(int g);
+	void setFaction(UnitFaction f);
+	void setSpecAb();
+	void killUnit();
+	void InvalidateCache();
 };
 
 }
