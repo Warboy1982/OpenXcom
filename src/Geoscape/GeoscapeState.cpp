@@ -87,12 +87,10 @@
 #include "TrainingState.h"
 #include "../Savegame/AlienBase.h"
 #include "AlienBaseState.h"
-#include "GeoscapeAI.h"
 #include "GeoscapeEvents.h"
 #include "GeoEventUfo.h"
 #include "TimerGeoEvents.h"
 #include "UfoHyperDetectedState.h"
-#include "../Ruleset/RuleMission.h"
 
 namespace OpenXcom
 {
@@ -101,7 +99,7 @@ namespace OpenXcom
  * Initializes all the elements in the Geoscape screen.
  * @param game Pointer to the core game.
  */
-	GeoscapeState::GeoscapeState(Game *game) : State(game), _pause(false), _music(false), _popups(), _dogfights(), _dogfightsToBeStarted(), _zoomInEffectDone(false), _zoomOutEffectDone(false), _minimizedDogfights(0), _alienAI(new GeoscapeAI(*game, *this))
+	GeoscapeState::GeoscapeState(Game *game) : State(game), _pause(false), _music(false), _popups(), _dogfights(), _dogfightsToBeStarted(), _zoomInEffectDone(false), _zoomOutEffectDone(false), _minimizedDogfights(0)
 {
 	// Create objects
 	_bg = new Surface(320, 200, 0, 0);
@@ -700,7 +698,6 @@ void GeoscapeState::time5Seconds()
 	{
 		if ((*i)->getHoursActive() == 0 && (*i)->getFollowers()->empty()) // CHEEKY EXPLOIT
 		{
-			_alienAI->process(TerrorSiteExpired(**i));
 			delete *i;
 			i = _game->getSavedGame()->getTerrorSites()->erase(i);
 		}
@@ -766,15 +763,11 @@ void GeoscapeState::time10Minutes()
 void GeoscapeState::time30Minutes()
 {
 	// Spawn UFOs
-	_alienAI->SpawnUFO();
-	/*
 	std::vector<std::string> ufos = _game->getRuleset()->getUfosList();
-	std::vector<std::string> missions = _game->getRuleset()->getMissionList();
 	int chance = RNG::generate(1, 100);
 	if (chance <= 40)
 	{
 		
-		RuleMission* mission = _game->getRuleset()->getMission(missions.at(RNG::generate(0, missions.size()-2))); // -2 because alien retaliation is a special case
 		// Makes smallest UFO the more likely, biggest UFO the least likely
 		// eg. 0 - 0..6, 1 - 6..10, etc.
 		unsigned int range = RNG::generate(1, (ufos.size()*(ufos.size()+1))/2);
@@ -815,7 +808,7 @@ void GeoscapeState::time30Minutes()
 		else
 			u->setAlienRace("STR_MIXED");
 		_game->getSavedGame()->getUfos()->push_back(u);
-	}*/
+	}
 	// Handle craft maintenance
 	for (std::vector<Base*>::iterator i = _game->getSavedGame()->getBases()->begin(); i != _game->getSavedGame()->getBases()->end(); ++i)
 	{
@@ -906,7 +899,6 @@ void GeoscapeState::time30Minutes()
 					popup(new UfoDetectedState(_game, (*u), this, true));
 				else
 					popup(new UfoHyperDetectedState(_game, (*u), this, true));
-				_alienAI->process(UfoDetected(**u));
 			}
 		}
 		else
@@ -921,10 +913,6 @@ void GeoscapeState::time30Minutes()
 				}
 			}
 			(*u)->setDetected(detected);
-			if (!detected)
-			{
-				_alienAI->process(UfoLost(**u));
-			}
 
 			if (!detected && !(*u)->getFollowers()->empty())
 			{

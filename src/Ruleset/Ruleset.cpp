@@ -47,7 +47,6 @@
 #include "../Savegame/Soldier.h"
 #include "../Savegame/Craft.h"
 #include "../Ufopaedia/Ufopaedia.h"
-#include "RuleMission.h"
 
 namespace OpenXcom
 {
@@ -147,10 +146,6 @@ Ruleset::~Ruleset()
 		delete i->second;
 	}
 	for (std::map<std::string, RuleManufacture *>::const_iterator i = _manufacture.begin (); i != _manufacture.end (); ++i)
-	{
-		delete i->second;
-	}
-	for (std::map<std::string, RuleMission *>::const_iterator i = _mission.begin (); i != _mission.end (); ++i)
 	{
 		delete i->second;
 	}
@@ -551,26 +546,6 @@ void Ruleset::load(const std::string &filename)
 		{
 			i.second() >> _timePersonnel;
 		}
-		else if (key == "missions")
-		{
-			for (YAML::Iterator j = i.second().begin(); j != i.second().end(); ++j)
-			{
-				std::string type;
-				(*j)["type"] >> type;
-				RuleMission *rule;
-				if (_mission.find(type) != _mission.end())
-				{
-					rule = _mission[type];
-				}
-				else
-				{
-					rule = new RuleMission(type);
-					_mission[type] = rule;
-					_missionIndex.push_back(type);
-				}
-				rule->load(*j);
-			}
-		}
 	}
 
 	fin.close();
@@ -707,13 +682,6 @@ void Ruleset::save(const std::string &filename) const
 	out << YAML::Key << "ufopaedia" << YAML::Value;
 	out << YAML::BeginSeq;
 	for (std::map<std::string, ArticleDefinition*>::const_iterator i = _ufopaediaArticles.begin(); i != _ufopaediaArticles.end(); ++i)
-	{
-		i->second->save(out);
-	}
-	out << YAML::EndSeq;
-	out << YAML::Key << "missions" << YAML::Value;
-	out << YAML::BeginSeq;
-	for (std::map<std::string, RuleMission*>::const_iterator i = _mission.begin(); i != _mission.end(); ++i)
 	{
 		i->second->save(out);
 	}
@@ -1180,23 +1148,5 @@ RuleManufacture *Ruleset::getManufacture (const std::string &id) const
 std::vector<std::string> Ruleset::getManufactureList () const
 {
 	return _manufactureIndex;
-}
-/**
- * Returns the rules for the specified manufacture project.
- * @param id Manufacture project type.
- * @return Rules for the manufacture project.
- */
-RuleMission *Ruleset::getMission (const std::string &id) const
-{
-	return _mission.find(id)->second;
-}
-
-/**
- * Returns the list of manufacture projects.
- * @return The list of manufacture projects.
- */
-std::vector<std::string> Ruleset::getMissionList () const
-{
-	return _missionIndex;
 }
 }

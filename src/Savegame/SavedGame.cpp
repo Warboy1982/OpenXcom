@@ -46,7 +46,6 @@
 #include "Production.h"
 #include "TerrorSite.h"
 #include "AlienBase.h"
-#include "AlienAI.h"
 
 namespace OpenXcom
 {
@@ -87,7 +86,7 @@ bool equalProduction::operator()(const Production * p) const
 /**
  * Initializes a brand new saved game according to the specified difficulty.
  */
-SavedGame::SavedGame() : _difficulty(DIFF_BEGINNER), _funds(0), _globeLon(0.0), _globeLat(0.0), _globeZoom(0), _battleGame(0), _debug(false), _alienAI(new AlienAI())
+SavedGame::SavedGame() : _difficulty(DIFF_BEGINNER), _funds(0), _globeLon(0.0), _globeLat(0.0), _globeZoom(0), _battleGame(0), _debug(false)
 {
 	RNG::init();
 	_time = new GameTime(6, 1, 1, 1999, 12, 0, 0, 0);
@@ -293,9 +292,7 @@ void SavedGame::load(const std::string &filename, Ruleset *rule)
 		*it >> research;
 		_discovered.push_back(rule->getResearch(research));
 	}
-
-	_alienAI->load(*this, *doc.FindValue("alienAI"));
-
+	
 	if (const YAML::Node *pName = doc.FindValue("battleGame"))
 	{
 		_battleGame = new SavedBattleGame(this);
@@ -398,8 +395,6 @@ void SavedGame::save(const std::string &filename) const
 		out << (*i)->getName ();
 	}
 	out << YAML::EndSeq;
-	out << YAML::Key << "alienAI" << YAML::Value;
-	_alienAI->save(out);
 	if (_battleGame != 0)
 	{
 		out << YAML::Key << "battleGame" << YAML::Value;
