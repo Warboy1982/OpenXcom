@@ -1170,7 +1170,7 @@ void GeoscapeState::time1Day()
 				}
 			}
 
-			if(!Ufopaedia::isArticleAvailable(_game, research->getName()))
+			if(!Ufopaedia::isArticleAvailable(_game, _game->getRuleset()->getUfopaediaArticle(research->getName())))
 			popup(new ResearchCompleteState(_game, research, bonus));
 			else 
 			popup(new ResearchCompleteState(_game, bonus, 0));
