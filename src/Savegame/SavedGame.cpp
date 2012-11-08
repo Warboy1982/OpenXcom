@@ -126,7 +126,6 @@ SavedGame::~SavedGame()
 	{
 		delete *i;
 	}
-	delete _alienAI;
 	delete _battleGame;
 }
 

@@ -304,7 +304,6 @@
     <ClCompile Include="Geoscape\ConfirmNewBaseState.cpp" />
     <ClCompile Include="Geoscape\CraftPatrolState.cpp" />
     <ClCompile Include="Geoscape\DogfightState.cpp" />
-    <ClCompile Include="Geoscape\GeoscapeEvents.cpp" />
     <ClCompile Include="Geoscape\NewPossibleManufactureState.cpp" />
     <ClCompile Include="Geoscape\PsiTrainingState.cpp" />
     <ClCompile Include="Geoscape\ResearchCompleteState.cpp" />
@@ -536,10 +535,7 @@
     <ClInclude Include="Geoscape\CraftPatrolState.h" />
     <ClInclude Include="Geoscape\DogfightState.h" />
     <ClInclude Include="Geoscape\FundingState.h" />
-    <ClInclude Include="Geoscape\GeoEventUfo.h" />
     <ClInclude Include="Geoscape\GeoscapeCraftState.h" />
-    <ClInclude Include="Geoscape\GeoscapeEvents.h" />
-    <ClInclude Include="Geoscape\GeoscapeEventsImpl.h" />
     <ClInclude Include="Geoscape\NewPossibleManufactureState.h" />
     <ClInclude Include="Geoscape\NewPossibleResearchState.h" />
     <ClInclude Include="Geoscape\ProductionCompleteState.h" />
@@ -558,7 +554,6 @@
     <ClInclude Include="Geoscape\ResearchCompleteState.h" />
     <ClInclude Include="Geoscape\SelectDestinationState.h" />
     <ClInclude Include="Geoscape\TargetInfoState.h" />
-    <ClInclude Include="Geoscape\TimerGeoEvents.h" />
     <ClInclude Include="Geoscape\TrainingState.h" />
     <ClInclude Include="Geoscape\UfoDetectedState.h" />
     <ClInclude Include="Geoscape\UfoHyperDetectedState.h" />

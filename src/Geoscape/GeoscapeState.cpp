@@ -87,9 +87,6 @@
 #include "TrainingState.h"
 #include "../Savegame/AlienBase.h"
 #include "AlienBaseState.h"
-#include "GeoscapeEvents.h"
-#include "GeoEventUfo.h"
-#include "TimerGeoEvents.h"
 #include "UfoHyperDetectedState.h"
 
 namespace OpenXcom
@@ -311,7 +308,6 @@ namespace OpenXcom
  */
 GeoscapeState::~GeoscapeState()
 {
-	delete _alienAI;
 	delete _timer;
 	delete _zoomInEffectTimer;
 	delete _zoomOutEffectTimer;

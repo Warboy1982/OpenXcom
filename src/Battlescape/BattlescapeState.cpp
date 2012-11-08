@@ -542,7 +542,6 @@ void BattlescapeState::btnUnitDownClick(Action *action)
  */
 void BattlescapeState::btnMapUpClick(Action *action)
 {
-	if (playableUnitSelected())
 	_map->getCamera()->up();
 }
 
@@ -552,7 +551,6 @@ void BattlescapeState::btnMapUpClick(Action *action)
  */
 void BattlescapeState::btnMapDownClick(Action *action)
 {
-	if (playableUnitSelected())
 	_map->getCamera()->down();
 }
 
@@ -563,7 +561,7 @@ void BattlescapeState::btnMapDownClick(Action *action)
 void BattlescapeState::btnShowMapClick(Action *action)
 {
 	//MiniMapState
-	if (playableUnitSelected())
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
 	_game->pushState (new MiniMapState (_game, _map->getCamera(), _save));
 }
 
@@ -613,7 +611,7 @@ void BattlescapeState::btnCenterClick(Action *action)
  */
 void BattlescapeState::btnNextSoldierClick(Action *action)
 {
-	if (playableUnitSelected())
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
 	selectNextPlayerUnit(false);
 }
 
@@ -623,7 +621,7 @@ void BattlescapeState::btnNextSoldierClick(Action *action)
  */
 void BattlescapeState::btnNextStopClick(Action *action)
 {
-	if (playableUnitSelected())
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
 	selectNextPlayerUnit(true);
 }
 
@@ -633,7 +631,7 @@ void BattlescapeState::btnNextStopClick(Action *action)
  */
 void BattlescapeState::selectNextPlayerUnit(bool checkReselect)
 {
-	if (playableUnitSelected())
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
 	{
 		if (_battleGame->getCurrentAction()->type != BA_NONE) return;
 		BattleUnit *unit = _save->selectNextPlayerUnit(checkReselect);
@@ -670,7 +668,7 @@ void BattlescapeState::btnHelpClick(Action *action)
  */
 void BattlescapeState::btnEndTurnClick(Action *action)
 {
-	if (playableUnitSelected())
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
 	_battleGame->requestEndTurn();
 }
 /**
@@ -679,7 +677,6 @@ void BattlescapeState::btnEndTurnClick(Action *action)
  */
 void BattlescapeState::btnAbortClick(Action *action)
 {
-	if (playableUnitSelected())
 	_game->pushState(new AbortMissionState(_game, _save, this));
 }
 

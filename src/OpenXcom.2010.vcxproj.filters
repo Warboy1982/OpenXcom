@@ -672,9 +672,6 @@
     <ClCompile Include="Geoscape\AlienBaseState.cpp">
       <Filter>Geoscape</Filter>
     </ClCompile>
-    <ClCompile Include="Geoscape\GeoscapeEvents.cpp">
-      <Filter>Geoscape</Filter>
-    </ClCompile>
     <ClCompile Include="Geoscape\UfoHyperDetectedState.cpp">
       <Filter>Geoscape</Filter>
     </ClCompile>
@@ -1352,18 +1349,6 @@
       <Filter>Savegame</Filter>
     </ClInclude>
     <ClInclude Include="Geoscape\AlienBaseState.h">
-      <Filter>Geoscape</Filter>
-    </ClInclude>
-    <ClInclude Include="Geoscape\GeoEventUfo.h">
-      <Filter>Geoscape</Filter>
-    </ClInclude>
-    <ClInclude Include="Geoscape\GeoscapeEvents.h">
-      <Filter>Geoscape</Filter>
-    </ClInclude>
-    <ClInclude Include="Geoscape\GeoscapeEventsImpl.h">
-      <Filter>Geoscape</Filter>
-    </ClInclude>
-    <ClInclude Include="Geoscape\TimerGeoEvents.h">
       <Filter>Geoscape</Filter>
     </ClInclude>
     <ClInclude Include="Geoscape\UfoHyperDetectedState.h">
