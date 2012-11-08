@@ -33,6 +33,7 @@
 #include "NewResearchListState.h"
 #include "../Interface/ArrowButton.h"
 #include "../Engine/Timer.h"
+#include "../Savegame/ItemContainer.h"
 #include "../Engine/RNG.h"
 
 #include <sstream>
@@ -132,6 +133,10 @@ void ResearchInfoState::buildUi ()
 	if (_rule)
 	{
 		_base->addResearch(_project);
+		//research destroys the item, if there is one.
+		if(_project->getRules()->needItem())
+			if(_base->getItems()->getItem(_project->getRules()->getName()))
+			_base->getItems()->removeItem(_project->getRules()->getName(), 1);
 	}
 	SetAssignedScientist();
 	_btnMore->setColor(Palette::blockOffset(13)+5);

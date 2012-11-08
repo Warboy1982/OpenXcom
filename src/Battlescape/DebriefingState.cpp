@@ -40,8 +40,14 @@
 #include "../Ruleset/RuleItem.h"
 #include "../Savegame/Vehicle.h"
 #include "../Savegame/TerrorSite.h"
+#include "../Savegame/AlienBase.h"
 #include "PromotionsState.h"
+#include "NoContainmentState.h"
 #include "CannotReequipState.h"
+#include "../Geoscape/Globe.h"
+#include "../Savegame/Country.h"
+#include "../Savegame/Region.h"
+#include "../Ruleset/RuleRegion.h"
 
 namespace OpenXcom
 {
@@ -119,7 +125,8 @@ DebriefingState::DebriefingState(Game *game) : State(game)
 	_lstTotal->setColor(Palette::blockOffset(8)+5);
 	_lstTotal->setColumns(2, 244, 64);
 	_lstTotal->setDot(true);
-
+	location = 0;
+	noContainment = false;
 	prepareDebriefing();
 
 	int total = 0, statsY = 0, recoveryY = 0;
@@ -182,7 +189,10 @@ DebriefingState::DebriefingState(Game *game) : State(game)
 		rating += _game->getLanguage()->getString("STR_RATING_EXCELLENT");
 	}
 	_txtRating->setText(rating);
-
+	if(location)
+	{
+		location->setActivityXcom(total);
+	}
 	// Set music
 	_game->getResourcePack()->getMusic("GMMARS")->play();
 }
@@ -213,6 +223,10 @@ void DebriefingState::btnOkClick(Action *action)
 	if (!_missingItems.empty())
 	{
 		_game->pushState(new CannotReequipState(_game, _missingItems));
+	}
+	if (noContainment)
+	{	
+		_game->pushState (new NoContainmentState(_game));
 	}
 }
 
@@ -286,6 +300,14 @@ void DebriefingState::prepareDebriefing()
 		{
 			if ((*j)->isInBattlescape())
 			{
+				// Get area
+				for (std::vector<Region*>::iterator k = _game->getSavedGame()->getRegions()->begin(); k != _game->getSavedGame()->getRegions()->end(); ++k)
+				{
+					if ((*k)->getRules()->insideRegion((*j)->getLongitude(), (*j)->getLatitude()))
+					{
+						location = *k;
+					}
+				}
 				craft = (*j);
 				base = (*i);
 				craftIterator = j;
@@ -314,6 +336,17 @@ void DebriefingState::prepareDebriefing()
 		{
 			delete *i;
 			save->getTerrorSites()->erase(i);
+			break;
+		}
+	}
+
+	// alien base disappears
+	for (std::vector<AlienBase*>::iterator i = save->getAlienBases()->begin(); i != save->getAlienBases()->end(); ++i)
+	{
+		if ((*i)->isInBattlescape())
+		{
+			delete *i;
+			save->getAlienBases()->erase(i);
 			break;
 		}
 	}
@@ -384,6 +417,17 @@ void DebriefingState::prepareDebriefing()
 			if (faction == FACTION_HOSTILE && (!aborted || (*j)->isInExitArea()))
 			{
 				addStat("STR_LIVE_ALIENS_RECOVERED", 1, value*2);
+				// silly vanilla behaviour - no limit to alien containment.
+				if(base->getAvailableAliens())
+				{
+				std::stringstream ss;
+				ss << "STR_" << (*j)->getType();
+				base->getItems()->addItem(ss.str(), 1);
+				}
+				else
+				{
+					noContainment = true;
+				}
 			}
 		}
 		else
@@ -452,7 +496,7 @@ void DebriefingState::prepareDebriefing()
 
 	if (!aborted && playersSurvived > 0) 	// RECOVER UFO : run through all tiles to recover UFO components and items
 	{
-		if (battle->getMissionType() == "STR_BASE_DEFENSE")
+		if (battle->getMissionType() == "STR_BASE_DEFENSE" || battle->getMissionType() == "STR_MILITARY_DEFENSE")
 		{
 			_txtTitle->setText(_game->getLanguage()->getString("STR_BASE_IS_SAVED"));
 		}
@@ -527,7 +571,7 @@ void DebriefingState::prepareDebriefing()
 	}
 	else
 	{
-		if (battle->getMissionType() == "STR_BASE_DEFENSE")
+		if (battle->getMissionType() == "STR_BASE_DEFENSE" || battle->getMissionType() == "STR_MILITARY_DEFENSE")
 		{
 			_txtTitle->setText(_game->getLanguage()->getString("STR_BASE_IS_LOST"));
 		}

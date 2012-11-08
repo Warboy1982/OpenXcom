@@ -435,10 +435,20 @@ void UnitInfoState::init()
 	_barMorale->setValue(_unit->getMorale());
 
 	ss.str(L"");
-	ss << _unit->getStats()->reactions;
+	if(_unit->getFlashlevel() > 1)
+		ss << _unit->getStats()->reactions/3;
+	else if(_unit->getFlashlevel() > 0)
+		ss << (_unit->getStats()->reactions/3)*2;
+	else
+		ss << _unit->getStats()->reactions;
 	_numReactions->setText(ss.str());
 	_barReactions->setMax(_unit->getStats()->reactions);
-	_barReactions->setValue(_unit->getStats()->reactions);
+	if(_unit->getFlashlevel() > 1)
+		_barReactions->setValue(_unit->getStats()->reactions/3);
+	else if(_unit->getFlashlevel() > 0)
+		_barReactions->setValue((_unit->getStats()->reactions/3)*2);
+	else
+		_barReactions->setValue(_unit->getStats()->reactions);
 
 	ss.str(L"");
 	ss << (int)(_unit->getStats()->firing * _unit->getAccuracyModifier());

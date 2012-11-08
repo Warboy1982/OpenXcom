@@ -463,10 +463,15 @@ void XcomResourcePack::loadBattlescapeResources()
 							"MUTON.PCK",
 							"X_REAP.PCK",
 							"ETHEREAL.PCK",
-							"X_ROB.PCK"
-					 };
+							"X_ROB.PCK",
+							"XCOM_3.PCK",
+							"XCOM_4.PCK",
+							"POLICEM.PCK",
+							"POLICEF.PCK",
+							"G_SOLDIER.PCK",
+							"TANK2.PCK"};
 
-	for (int i = 0; i < 20; ++i)
+	for (int i = 0; i < 26; ++i)
 	{
 		std::stringstream s;
 		s << "UNITS/" << usets[i];
@@ -516,7 +521,8 @@ void XcomResourcePack::loadBattlescapeResources()
 	std::string invs[] = {"MAN_0",
 						  "MAN_1",
 						  "MAN_2",
-						  "MAN_3"};
+						  "MAN_3",
+						  "MAN_4"};
 	std::string sets[] = {"F0",
 						  "F1",
 						  "F2",
@@ -526,7 +532,7 @@ void XcomResourcePack::loadBattlescapeResources()
 						  "M2",
 						  "M3"};
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		std::stringstream s1, s1full, s2, s2full;
 		s1 << invs[i] << ".SPK";

@@ -52,6 +52,8 @@ public:
 	std::string getResult() const;
 	/// Convert a unit to a corpse.
 	void convertUnitToCorpse();
+	/// Convert a unit to a corpse.
+	void convertUnitToChryssalid();
 };
 
 }

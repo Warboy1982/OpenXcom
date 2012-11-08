@@ -1558,9 +1558,9 @@ Automated heavy weapons platforms are designed to complement an XCom squad. The 
 STR_TANK_ROCKET_LAUNCHER_UFOPEDIA
 This automated heavy weapons platform is armed with powerful rockets.  This will be devastating for any alien foe. Make sure your stores are kept supplied with HWP rockets.
 STR_TANK_LASER_CANNON_UFOPEDIA
-Laser weapons are a useful addition for HWPs. It combines heavy firepower with no ammunition restrictions.
+{NEWLINE}{NEWLINE}{NEWLINE}{NEWLINE}{NEWLINE}Laser weapons are a useful addition for HWPs. It combines heavy firepower with no ammunition restrictions.
 STR_HOVERTANK_PLASMA_UFOPEDIA
-Alien technology has given the HWP a new lease of life. The added manoeuvrability of air travel and the power of plasma beams is a lethal combination.
+{NEWLINE}{NEWLINE}{NEWLINE}{NEWLINE}{NEWLINE}Alien technology has given the HWP a new lease of life. The added manoeuvrability of air travel and the power of plasma beams is a lethal combination.
 STR_HOVERTANK_LAUNCHER_UFOPEDIA
 This hovertank has a fusion ball launcher that is capable of immense devastation.  Use it with great care.  You will have to manufacture the fusion balls to keep these HWPs fully armed. A fusion ball is an intelligent guided weapon. In order to fire it you select a number of 'way points' with the cursor and then click on the launch icon to fire the fusion ball.
 STR_HEAVY_PLASMA_CLIP_UFOPEDIA
@@ -1650,9 +1650,9 @@ AC-I Ammo
 STR_ROCKET_LAUNCHER
 Rocket Launcher
 STR_SMALL_ROCKET
-Small Rocket
+Rocket
 STR_LARGE_ROCKET
-Large Rocket
+Guided Rocket
 STR_INCENDIARY_ROCKET
 Incendiary Rocket
 STR_GRENADE
@@ -2083,3 +2083,187 @@ STR_DESERT
 Desert
 STR_POLAR
 Polar
+STR_FULLAUTO
+Full Auto
+STR_GRENADE_LAUNCHER
+Grenade Launcher
+STR_LAUNCHER_FRAG
+44mm Grenade
+STR_LAUNCHER_INC
+44mm Inc. Grenade
+STR_LAUNCHER_STUN
+44mm Conc. Grenade
+STR_COMBAT_ARMOR
+Combat Armour
+STR_FLASHBANG
+Flashbang
+STR_COMBAT_ARMOR_UC
+COMBAT ARMOUR
+STR_PLASMA_BLADE
+Plasma Blade
+STR_LONG_BURN
+Long Burn
+STR_SHORT_BURN
+Short Burn
+STR_SNIPER_RIFLE
+Sniper Rifle
+STR_SNIPER_AMMO
+Sniper Rifle Clip
+STR_MELEE
+Melee Attack
+STR_SHOTGUN
+Shotgun
+STR_SHOTGUN_AMMO
+Shotgun Ammo
+STR_FLAMETHROWER
+Flamethrower
+STR_FLAMETHROWER_AMMO
+Flamethrower Fuel
+STR_STUN_GRENADE
+Concussion Grenade
+STR_INCEND_GRENADE
+Incendiary Grenade
+STR_COMBAT_KNIFE
+Combat Knife
+STR_TIME_UNITS_RESERVED_FOR_FULLAUTO
+Time Units reserved for Full Auto
+STR_MALE_POLICE
+Police Officer
+STR_FEMALE_POLICE
+Police Officer
+STR_DISRUPTOR_PISTOL
+Disruptor Pistol
+STR_DISRUPTOR_RIFLE
+Disruptor Rifle
+STR_GAUSS_RIFLE
+Gauss Rifle
+STR_POLICE
+Local Law Enforcement
+STR_PRIME_THROW
+Prime/Throw
+STR_MILITARY_DEFENSE
+Military Defence
+STR_GAUSS_RIFLE_CLIP
+Gauss Rifle Clip
+STR_RAIL_GUN
+Rail Gun
+STR_RAIL_GUN_CLIP
+Rail Gun Clip
+STR_HUMAN_SOLDIER
+Military Personnel
+STR_MILITARY_DEFENCE
+Military Defence
+STR_ANTI_INFILTRATION
+Counter-Infiltration
+STR_UNABLE_TO_SHOOT_HERE
+Unable to shoot here!
+STR_ZOMBIE
+Zombie
+STR_SENTINEL
+SENTINEL
+STR_HWP_RAIL_SLUG
+Rail Cannon Slug
+STR_RAIL_CANNON
+Rail Cannon
+STR_RAIL_CANNON_SLUG
+Rail Cannon Slug
+STR_DISRUPTOR_CANNON
+Disruptor Cannon
+STR_MEDICAL_BAY
+Medical Bay
+STR_CLONING_LAB
+Cloning Lab
+STR_ALIEN_REPRODUCTION
+Alien Reproduction
+STR_DOCTOR
+Doctor
+STR_DOCTORS
+Doctors
+STR_TRAINING_FACILITY
+Phys. Training Facility
+STR_TRAINING
+In Training
+STR_NOT_ENOUGH_HOSPITAL_SPACE
+NOT ENOUGH HOSPITAL SPACE!{SMALLLINE}Build new Medical Bay or transfer personnel to other bases.
+STR_NO_FREE_HOSPITALS
+NO FREE HOSPITALS!{SMALLLINE}The destination base does not have enough space in hospitals.
+STR_SECTOPOD_DISRUPTOR
+Sectopod/Disruptor
+STR_SECTOPOD_RAIL
+Sectopod/Railgun
+STR_SECTOID_SOLDIER
+Sectoid Soldier
+STR_SECTOID_ENGINEER
+Sectoid Engineer
+STR_SECTOID_MEDIC
+Sectoid Medic
+STR_SECTOID_NAVIGATOR
+Sectoid Navigator
+STR_SECTOID_LEADER
+Sectoid Leader
+STR_SECTOID_COMMANDER
+Sectoid Commander
+STR_FLOATER_SOLDIER
+Floater Soldier
+STR_FLOATER_ENGINEER
+Floater Engineer
+STR_FLOATER_MEDIC
+Floater Medic
+STR_FLOATER_NAVIGATOR
+Floater Navigator
+STR_FLOATER_LEADER
+Floater Leader
+STR_FLOATER_COMMANDER
+Floater Commander
+STR_SNAKEMAN_SOLDIER
+Snakeman Soldier
+STR_SNAKEMAN_ENGINEER
+Snakeman Engineer
+STR_SNAKEMAN_NAVIGATOR
+Snakeman Navigator
+STR_SNAKEMAN_LEADER
+Snakeman Leader
+STR_SNAKEMAN_COMMANDER
+Snakeman Commander
+STR_MUTON_SOLDIER
+Muton Soldier
+STR_MUTON_NAVIGATOR
+Muton Navigator
+STR_MUTON_ENGINEER
+Muton Engineer
+STR_ETHEREAL_SOLDIER
+Ethereal Soldier
+STR_ETHEREAL_LEADER
+Ethereal Leader
+STR_ETHEREAL_COMMANDER
+Ethereal Commander
+STR_TANK_PLASMA
+Tank/Plasma
+STR_TANK_LAUNCHER
+Tank/Launcher
+STR_TANK_DISRUPTOR
+Tank/Disruptor
+STR_TANK_RAIL
+Tank/Railgun
+STR_HOVERTANK_CANNON
+Hovertank/Cannon
+STR_HOVERTANK_ROCKET_LAUNCHER
+Hovertank/Rocket
+STR_HOVERTANK_LASER_CANNON
+Hovertank/Laser
+STR_HOVERTANK_DISRUPTOR
+Hovertank/Disruptor
+STR_HOVERTANK_RAIL
+Hovertank/Railgun
+STR_SECTOPOD_CANNON
+Sectopod/Cannon
+STR_SECTOPOD_ROCKET_LAUNCHER
+Sectopod/Rocket
+STR_SECTOPOD_LASER_CANNON
+Sectopod/Laser
+STR_SECTOPOD_PLASMA
+Sectopod/Plasma
+STR_SECTOPOD_LAUNCHER
+Sectopod/Launcher
+STR_MIXED
+Mixed

@@ -187,11 +187,28 @@ void BattlescapeGame::handleAI(BattleUnit *unit)
 		statePushBack(new UnitWalkBState(this, action));
 	}
 
-	if (action.type == BA_SNAPSHOT || action.type == BA_AUTOSHOT || action.type == BA_THROW)
+	if (action.type == BA_SNAPSHOT || action.type == BA_AUTOSHOT || action.type == BA_FULLAUTO || action.type == BA_THROW)
 	{
 		statePushBack(new ProjectileFlyBState(this, action));
 	}
-
+	
+	if (action.type == BA_HIT)
+	{
+		
+		Tile *targetTile = _save->getTile(action.target);
+		BattleUnit *target = targetTile->getUnit();
+		if (action.actor->getType() == "CHRYSSALID"||action.actor->getType() == "ZOMBIE")
+			{
+				if (target != 0 && target->getType() != "CHRYSSALID" && target->getArmor()->getSize() == 1)
+				{
+					target->setSpecAb();
+				}
+			}
+		action.actor->lookAt(action.target);
+		Position voxel = Position(targetTile->getPosition().x*16,targetTile->getPosition().y*16,targetTile->getPosition().z*24);
+		voxel.x += 8;voxel.y += 8;voxel.z += 8;
+		statePushBack(new ExplosionBState(this, voxel, action.weapon, action.actor));
+	}
 	if (action.type == BA_NONE)
 	{
 		_AIActionCounter = 0;
@@ -508,6 +525,15 @@ void BattlescapeGame::handleNonTargetAction()
 			{
 				if (_currentAction.actor->spendTimeUnits(_currentAction.TU, dontSpendTUs()))
 				{
+					if (_currentAction.actor->getType() == "CHRYSSALID"||_currentAction.actor->getType() == "ZOMBIE")
+					{
+						Tile *targetTile = _save->getTile(_currentAction.target);
+						BattleUnit *target = targetTile->getUnit();
+						if (target != 0 && target->getType() != "CHRYSSALID" && target->getArmor()->getSize() == 1)
+						{
+							target->setSpecAb();
+						}
+					}
 					Position p;
 					Pathfinding::directionToVector(_currentAction.actor->getDirection(), &p);
 					Tile * tile (_save->getTile(_currentAction.actor->getPosition() + p));
@@ -704,7 +730,7 @@ void BattlescapeGame::popState()
 			if (_save->getSide() != FACTION_PLAYER && !_debugPlay)
 			{
 				 // AI does two things per unit, before switching to the next, or it got killed before doing the second thing
-				if (_AIActionCounter > 1 || _save->getSelectedUnit() == 0 || _save->getSelectedUnit()->isOut())
+				if (_AIActionCounter > 2 || _save->getSelectedUnit() == 0 || _save->getSelectedUnit()->isOut())
 				{
 					_AIActionCounter = 0;
 					if (_save->selectNextPlayerUnit(true) == 0)
@@ -901,11 +927,14 @@ bool BattlescapeGame::handlePanickingUnit(BattleUnit *unit)
 		}
 		if (_save->getTile(ba.target) != 0)
 		{
-			ba.type = BA_SNAPSHOT;
 			ba.weapon = unit->getMainHandWeapon();
-			for (int i= 0; i < 10; i++)
+			if(ba.weapon)
 			{
-				statePushBack(new ProjectileFlyBState(this, ba));
+				ba.type = BA_SNAPSHOT;
+				for (int i= 0; i < 10; i++)
+				{
+					statePushBack(new ProjectileFlyBState(this, ba));
+				}
 			}
 		}
 		ba.type = BA_NONE;
@@ -1013,7 +1042,7 @@ void BattlescapeGame::primaryAction(const Position &pos)
 		}
 		else if (_currentAction.type == BA_USE && _currentAction.weapon->getRules()->getBattleType() == BT_MINDPROBE)
 		{
-			if (_save->selectUnit(pos) && _save->selectUnit(pos)->getFaction() != _save->getSelectedUnit()->getFaction())
+			if (_save->selectUnit(pos)->getFaction() != _save->getSelectedUnit()->getFaction())
 			{
 				_parentState->getGame()->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_currentAction.weapon->getRules()->getHitSound())->play();
 				_parentState->getGame()->pushState (new UnitInfoState (_parentState->getGame(), _save->selectUnit(pos)));
@@ -1183,14 +1212,13 @@ void BattlescapeGame::dropItem(const Position &position, BattleItem *item, bool 
 	}
 
 	if (removeItem)
-	{
+ 	{
 		item->moveToOwner(0);
 	}
 	else
 	{
 		item->setOwner(0);
 	}
-
 	getTileEngine()->applyItemGravity(_save->getTile(p));
 
 	if (item->getRules()->getBattleType() == BT_FLARE)

@@ -33,6 +33,8 @@ class TextList;
 class BattleItem;
 class Craft;
 class Base;
+class Globe;
+class Region;
 
 struct DebriefingStat { DebriefingStat(std::string _item, bool recovery) : item(_item), qty(0), score(0), recovery(recovery) {}; std::string item; int qty; int score; bool recovery; };
 
@@ -55,6 +57,8 @@ private:
 	void prepareDebriefing();
 	void recoverItems(std::vector<BattleItem*> *from, Base *base);
 	void reequipCraft(Base *base, Craft *craft);
+	Region *location;
+	bool noContainment;
 public:
 	/// Creates the Debriefing state.
 	DebriefingState(Game *game);

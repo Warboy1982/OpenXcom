@@ -66,12 +66,15 @@ ActionMenuState::ActionMenuState(Game *game, BattleAction *action, int x, int y)
 	// throwing (if not a fixed weapon)
 	if (!weapon->isFixed())
 	{
-		addItem(BA_THROW, "STR_THROW", &id);
+		if(weapon->getBattleType() == BT_GRENADE && weapon->getDamageType() == DT_FLASH )
+			addItem(BA_THROW, "STR_PRIME_THROW", &id);
+		else
+			addItem(BA_THROW, "STR_THROW", &id);
 	}
 
 	// priming
 	if ((weapon->getBattleType() == BT_GRENADE || weapon->getBattleType() == BT_PROXIMITYGRENADE)
-		&& _action->weapon->getExplodeTurn() == 0)
+		&& _action->weapon->getExplodeTurn() == 0 && weapon->getDamageType() != DT_FLASH)
 	{
 		addItem(BA_PRIME, "STR_PRIME_GRENADE", &id);
 	}
@@ -81,6 +84,9 @@ ActionMenuState::ActionMenuState(Game *game, BattleAction *action, int x, int y)
 		if (weapon->isWaypoint())
 		{
 			addItem(BA_LAUNCH, "STR_LAUNCH_MISSILE", &id);
+			if(_action->weapon->getAmmoItem())
+				if(_action->weapon->getAmmoItem()->getRules()->isWaypoint())
+					addItem(BA_LAUNCH, "STR_LAUNCH_MISSILE", &id);
 		}
 		else
 		{
@@ -90,10 +96,19 @@ ActionMenuState::ActionMenuState(Game *game, BattleAction *action, int x, int y)
 			}
 			if (weapon->getAccuracySnap() != 0)
 			{
+				
+				if(weapon->isFullAuto())
+					addItem(BA_FULLAUTO, "STR_FULLAUTO", &id);
+				else if(weapon->isFlamer())
+					addItem(BA_SNAPSHOT, "STR_SHORT_BURN", &id);
+				else
 				addItem(BA_SNAPSHOT, "STR_SNAP_SHOT", &id);
 			}
 			if (weapon->getAccuracyAimed() != 0)
 			{
+				if(weapon->isFlamer())
+					addItem(BA_AIMEDSHOT, "STR_LONG_BURN", &id);
+				else
 				addItem(BA_AIMEDSHOT, "STR_AIMED_SHOT", &id);
 			}
 		}
@@ -108,7 +123,7 @@ ActionMenuState::ActionMenuState(Game *game, BattleAction *action, int x, int y)
 		else
 		// melee weapon
 		{
-			addItem(BA_HIT, "STR_HIT", &id);
+			addItem(BA_HIT, "STR_MELEE", &id);
 		}
 	}
 	// special items
@@ -206,7 +221,7 @@ void ActionMenuState::btnActionMenuItemClick(Action *action)
 			}
 			else
 			{
-				_game->pushState(new PrimeGrenadeState(_game, _action, false, 0));
+				_game->pushState(new PrimeGrenadeState(_game, _action));
 			}
 		}
 		else if (_action->type == BA_USE && weapon->getBattleType() == BT_MEDIKIT)

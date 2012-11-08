@@ -34,7 +34,6 @@
 #include "../Savegame/Country.h"
 #include "../Ruleset/RuleCountry.h"
 #include "../Interface/Text.h"
-#include "../Engine/Font.h"
 #include "../Engine/Language.h"
 #include "../Engine/Exception.h"
 #include "../Ruleset/RuleRegion.h"
@@ -48,6 +47,7 @@
 #include "../Engine/ShaderRepeat.h"
 #include "../Engine/Options.h"
 #include "../Savegame/TerrorSite.h"
+#include "../Savegame/AlienBase.h"
 
 namespace OpenXcom
 {
@@ -757,7 +757,7 @@ void Globe::toggleDetail()
  * @param y Y coordinate of point.
  * @return True if it's near, false otherwise.
  */
-bool Globe::targetNear(Target* target, int x, int y) const
+bool Globe::targetNear(Target* target, int x, int y, int radius) const
 {
 	Sint16 tx, ty;
 	if (pointBack(target->getLongitude(), target->getLatitude()))
@@ -766,9 +766,21 @@ bool Globe::targetNear(Target* target, int x, int y) const
 
 	int dx = x - tx;
 	int dy = y - ty;
-	return (dx * dx + dy * dy <= NEAR_RADIUS);
+	return (dx * dx + dy * dy <= radius);
 }
 
+bool Globe::targetNearPolar(Target* target, double x, double y, int radius) const
+{
+	Sint16 tx, ty, mx, my;
+	if (pointBack(target->getLongitude(), target->getLatitude()))
+		return false;
+	polarToCart(x, y, &mx, &my);
+	polarToCart(target->getLongitude(), target->getLatitude(), &tx, &ty);
+	int dx = mx - tx;
+	int dy = my - ty;
+	int wat = dx * dx + dy * dy;
+	return (dx * dx + dy * dy <= radius);
+}
 /**
  * Returns a list of all the targets currently near a certain
  * cartesian point over the globe.
@@ -787,7 +799,7 @@ std::vector<Target*> Globe::getTargets(int x, int y, bool craft) const
 			if ((*i)->getLongitude() == 0.0 && (*i)->getLatitude() == 0.0)
 				continue;
 
-			if (targetNear((*i), x, y))
+			if (targetNear((*i), x, y, 25))
 			{
 				v.push_back(*i);
 			}
@@ -797,7 +809,7 @@ std::vector<Target*> Globe::getTargets(int x, int y, bool craft) const
 				if ((*j)->getLongitude() == (*i)->getLongitude() && (*j)->getLatitude() == (*i)->getLatitude() && (*j)->getDestination() == 0)
 					continue;
 
-				if (targetNear((*j), x, y))
+				if (targetNear((*j), x, y, 25))
 				{
 					v.push_back(*j);
 				}
@@ -809,21 +821,30 @@ std::vector<Target*> Globe::getTargets(int x, int y, bool craft) const
 		if (!(*i)->getDetected())
 			continue;
 
-		if (targetNear((*i), x, y))
+		if (targetNear((*i), x, y, 25))
 		{
 			v.push_back(*i);
 		}
 	}
 	for (std::vector<Waypoint*>::iterator i = _game->getSavedGame()->getWaypoints()->begin(); i != _game->getSavedGame()->getWaypoints()->end(); ++i)
 	{
-		if (targetNear((*i), x, y))
+		if (targetNear((*i), x, y, 25))
 		{
 			v.push_back(*i);
 		}
 	}
 	for (std::vector<TerrorSite*>::iterator i = _game->getSavedGame()->getTerrorSites()->begin(); i != _game->getSavedGame()->getTerrorSites()->end(); ++i)
 	{
-		if (targetNear((*i), x, y))
+		if (targetNear((*i), x, y, 25))
+		{
+			v.push_back(*i);
+		}
+	}
+	for (std::vector<AlienBase*>::iterator i = _game->getSavedGame()->getAlienBases()->begin(); i != _game->getSavedGame()->getAlienBases()->end(); ++i)
+	{
+		if (!(*i)->isDiscovered())
+			continue;
+		if (targetNear((*i), x, y, 25))
 		{
 			v.push_back(*i);
 		}
@@ -1293,6 +1314,22 @@ void Globe::drawMarkers()
 		_mkAlienSite->setY(y - 1);
 		_mkAlienSite->blit(_markers);
 	}
+	
+	// Draw the Alien Base markers
+	for (std::vector<AlienBase*>::iterator i = _game->getSavedGame()->getAlienBases()->begin(); i != _game->getSavedGame()->getAlienBases()->end(); ++i)
+	{
+		if (pointBack((*i)->getLongitude(), (*i)->getLatitude()))
+			continue;
+
+		polarToCart((*i)->getLongitude(), (*i)->getLatitude(), &x, &y);
+
+		if ((*i)->isDiscovered())
+		{
+			_mkAlienBase->setX(x - 1);
+			_mkAlienBase->setY(y - 1);
+			_mkAlienBase->blit(_markers);
+		}
+	}
 }
 
 /**
@@ -1406,6 +1443,38 @@ void Globe::getPolygonTextureAndShade(double lon, double lat, int *texture, int 
 			*texture = (*i)->getTexture();
 			return;
 		}
+	}
+}
+
+/**
+ * Checks if the globe is zoomed in to it's maximum.
+ * @return Returns true if globe is at max zoom, otherwise returns false.
+ */
+bool Globe::isZoomedInToMax() const
+{
+	if(_zoom == static_data.getRadiusNum() - 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+/**
+ * Checks if the globe is zoomed out to it's maximum.
+ * @return Returns true if globe is at max zoom, otherwise returns false.
+ */
+bool Globe::isZoomedOutToMax() const
+{
+	if(_zoom == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 

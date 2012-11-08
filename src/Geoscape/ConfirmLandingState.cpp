@@ -32,8 +32,10 @@
 #include "../Savegame/Ufo.h"
 #include "../Ruleset/Ruleset.h"
 #include "../Savegame/TerrorSite.h"
+#include "../Savegame/AlienBase.h"
 #include "../Battlescape/BriefingState.h"
 #include "../Battlescape/BattlescapeGenerator.h"
+#include "../SaveGame/GameTime.h"
 
 namespace OpenXcom
 {
@@ -119,9 +121,10 @@ void ConfirmLandingState::btnYesClick(Action *action)
 	_game->popState();
 	Ufo* u = dynamic_cast<Ufo*>(_craft->getDestination());
 	TerrorSite* t = dynamic_cast<TerrorSite*>(_craft->getDestination());
+	AlienBase* b = dynamic_cast<AlienBase*>(_craft->getDestination());
 	if (u != 0)
 	{
-		SavedBattleGame *bgame = new SavedBattleGame();
+		SavedBattleGame *bgame = new SavedBattleGame(_game->getSavedGame());
 		_game->getSavedGame()->setBattleGame(bgame);
 		bgame->setMissionType("STR_UFO_CRASH_RECOVERY");
 		BattlescapeGenerator bgen = BattlescapeGenerator(_game);
@@ -130,14 +133,20 @@ void ConfirmLandingState::btnYesClick(Action *action)
 		bgen.setCraft(_craft);
 		bgen.setUfo(u);
 		bgen.setAlienRace(u->getAlienRace());
-		bgen.setAlienItemlevel(0);
+		_game->getSavedGame()->getTime();
+		if(_game->getSavedGame()->getTime()->getTotalDays() < 90)
+			bgen.setAlienItemlevel(0);
+		else if(_game->getSavedGame()->getTime()->getTotalDays() < 180)
+			bgen.setAlienItemlevel(1);
+		else
+			bgen.setAlienItemlevel(2);
 		bgen.run();
 
 		_game->pushState(new BriefingState(_game, _craft));
 	}
 	else if (t != 0)
 	{
-		SavedBattleGame *bgame = new SavedBattleGame();
+		SavedBattleGame *bgame = new SavedBattleGame(_game->getSavedGame());
 		_game->getSavedGame()->setBattleGame(bgame);
 		bgame->setMissionType("STR_TERROR_MISSION");
 		BattlescapeGenerator bgen = BattlescapeGenerator(_game);
@@ -146,7 +155,33 @@ void ConfirmLandingState::btnYesClick(Action *action)
 		bgen.setCraft(_craft);
 		bgen.setTerrorSite(t);
 		bgen.setAlienRace(t->getAlienRace());
-		bgen.setAlienItemlevel(0);
+		if(_game->getSavedGame()->getTime()->getTotalDays() < 90)
+			bgen.setAlienItemlevel(0);
+		else if(_game->getSavedGame()->getTime()->getTotalDays() < 180)
+			bgen.setAlienItemlevel(1);
+		else
+			bgen.setAlienItemlevel(2);
+		bgen.run();
+
+		_game->pushState(new BriefingState(_game, _craft));
+	}
+	else if (b != 0)
+	{
+		SavedBattleGame *bgame = new SavedBattleGame(_game->getSavedGame());
+		_game->getSavedGame()->setBattleGame(bgame);
+		bgame->setMissionType("STR_ALIEN_BASE_ASSAULT");
+		BattlescapeGenerator bgen = BattlescapeGenerator(_game);
+		bgen.setWorldTexture(_texture);
+		bgen.setWorldShade(_shade);
+		bgen.setCraft(_craft);
+		bgen.setAlienBase(b);
+		bgen.setAlienRace(b->getAlienRace());
+		if(_game->getSavedGame()->getTime()->getTotalDays() < 90)
+			bgen.setAlienItemlevel(0);
+		else if(_game->getSavedGame()->getTime()->getTotalDays() < 180)
+			bgen.setAlienItemlevel(1);
+		else
+			bgen.setAlienItemlevel(2);
 		bgen.run();
 
 		_game->pushState(new BriefingState(_game, _craft));

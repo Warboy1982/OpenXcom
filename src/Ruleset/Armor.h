@@ -37,7 +37,7 @@ class Armor
 private:
 	static const int DAMAGE_TYPES = 10;
 	std::string _type, _spriteSheet, _spriteInv, _corpseItem, _storeItem;
-	int _frontArmor, _sideArmor, _rearArmor, _underArmor, _drawingRoutine;
+	int _frontArmor, _sideArmor, _rearArmor, _underArmor, _drawingRoutine, _drawMethod, _modifiedWalk;
 	MovementType _movementType;
 	int _size;
 	float _damageModifier[DAMAGE_TYPES];
@@ -76,6 +76,8 @@ public:
 	int getSize() const;
 	/// Gets damage modifier.
 	float getDamageModifier(ItemDamageType dt);
+	/// use alternate render method?
+	int getDrawMethod() const;
 };
 
 }

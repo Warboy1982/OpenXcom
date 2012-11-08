@@ -561,6 +561,7 @@ void BattlescapeState::btnMapDownClick(Action *action)
 void BattlescapeState::btnShowMapClick(Action *action)
 {
 	//MiniMapState
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
 	_game->pushState (new MiniMapState (_game, _map->getCamera(), _save));
 }
 
@@ -570,10 +571,13 @@ void BattlescapeState::btnShowMapClick(Action *action)
  */
 void BattlescapeState::btnKneelClick(Action *action)
 {
-	BattleUnit *bu = _save->getSelectedUnit();
-	if (bu)
+	if (playableUnitSelected())
 	{
-		_battleGame->kneel(bu);
+		BattleUnit *bu = _save->getSelectedUnit();
+		if (bu)
+		{
+			_battleGame->kneel(bu);
+		}
 	}
 }
 
@@ -607,6 +611,7 @@ void BattlescapeState::btnCenterClick(Action *action)
  */
 void BattlescapeState::btnNextSoldierClick(Action *action)
 {
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
 	selectNextPlayerUnit(false);
 }
 
@@ -616,6 +621,7 @@ void BattlescapeState::btnNextSoldierClick(Action *action)
  */
 void BattlescapeState::btnNextStopClick(Action *action)
 {
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
 	selectNextPlayerUnit(true);
 }
 
@@ -625,13 +631,16 @@ void BattlescapeState::btnNextStopClick(Action *action)
  */
 void BattlescapeState::selectNextPlayerUnit(bool checkReselect)
 {
-	if (_battleGame->getCurrentAction()->type != BA_NONE) return;
-	BattleUnit *unit = _save->selectNextPlayerUnit(checkReselect);
-	updateSoldierInfo();
-	if (unit) _map->getCamera()->centerOnPosition(unit->getPosition());
-	_battleGame->cancelCurrentAction();
-	_battleGame->getCurrentAction()->actor = unit;
-	_battleGame->setupCursor();
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
+	{
+		if (_battleGame->getCurrentAction()->type != BA_NONE) return;
+		BattleUnit *unit = _save->selectNextPlayerUnit(checkReselect);
+		updateSoldierInfo();
+		if (unit) _map->getCamera()->centerOnPosition(unit->getPosition());
+		_battleGame->cancelCurrentAction();
+		_battleGame->getCurrentAction()->actor = unit;
+		_battleGame->setupCursor();
+	}
 }
 
 /**
@@ -659,6 +668,7 @@ void BattlescapeState::btnHelpClick(Action *action)
  */
 void BattlescapeState::btnEndTurnClick(Action *action)
 {
+	if (_battleGame->getSave()->getSide() == FACTION_PLAYER || _save->getDebugMode())
 	_battleGame->requestEndTurn();
 }
 /**

@@ -54,6 +54,8 @@
 #include "../Engine/CrossPlatform.h"
 #include "../Savegame/Vehicle.h"
 #include "../Savegame/TerrorSite.h"
+#include "../Savegame/AlienBase.h"
+#include "../Engine/Options.h"
 #include "PatrolBAIState.h"
 
 namespace OpenXcom
@@ -64,7 +66,7 @@ namespace OpenXcom
  * @param game pointer to Game object.
  */
 BattlescapeGenerator::BattlescapeGenerator(Game *game) : _game(game), _save(game->getSavedGame()->getBattleGame()), _res(_game->getResourcePack()), _craft(0), _ufo(0), _base(0), _terror(0), _terrain(0),
-														 _width(0), _length(0), _height(0), _worldTexture(0), _worldShade(0), _unitSequence(0), _craftInventoryTile(0), _alienRace(""), _alienItemLevel(0)
+	_width(0), _length(0), _height(0), _worldTexture(0), _worldShade(0), _unitSequence(0), _craftInventoryTile(0), _alienRace(""), _alienItemLevel(0)
 {
 }
 
@@ -158,6 +160,15 @@ void BattlescapeGenerator::setTerrorSite(TerrorSite *terror)
 	_terror->setInBattlescape(true);
 }
 
+/**
+ * Sets the alien base involved in the battle.
+ * @param base Pointer to alien base.
+ */
+void BattlescapeGenerator::setAlienBase(AlienBase *base)
+{
+	_alienBase = base;
+	_alienBase->setInBattlescape(true);
+}
 
 /**
  * This will start the generator: it will fill up the battlescapesavegame with data.
@@ -173,7 +184,24 @@ void BattlescapeGenerator::run()
 	// find out the terrain type
 	if (_save->getMissionType() == "STR_TERROR_MISSION")
 	{
+		int terrortype = RNG::generate(0,2);
+		if( terrortype == 0)
+		_terrain = _game->getRuleset()->getTerrain("BASE");
+		else if( terrortype == 1)
 		_terrain = _game->getRuleset()->getTerrain("URBAN");
+		else
+		_terrain = _game->getRuleset()->getTerrain("COMMERCIAL");
+	}
+	else
+	if (_save->getMissionType() == "STR_ANTI_INFILTRATION")
+	{
+		_terrain = _game->getRuleset()->getTerrain("BASE");
+	}
+	else
+	if (_save->getMissionType() == "STR_MILITARY_DEFENSE")
+	{
+		_terrain = _game->getRuleset()->getTerrain("XBASE");
+		_worldShade = 5;
 	}
 	else
 	if (_save->getMissionType() == "STR_BASE_DEFENSE")
@@ -261,12 +289,14 @@ void BattlescapeGenerator::run()
 			for (std::vector<Vehicle*>::iterator i = _craft->getVehicles()->begin(); i != _craft->getVehicles()->end(); ++i)
 			{
 				std::string vehicle = (*i)->getRules()->getType();
-				std::string ammo = (*i)->getRules()->getCompatibleAmmo()->front();
 				Unit *rule = _game->getRuleset()->getUnit(vehicle.substr(4));
 				unit = addXCOMUnit(new BattleUnit(rule, FACTION_PLAYER, _unitSequence++, _game->getRuleset()->getArmor(rule->getArmor())));
 				addItem(_game->getRuleset()->getItem(vehicle), unit);
-				addItem(_game->getRuleset()->getItem(ammo), unit)->setAmmoQuantity((*i)->getAmmo());
-				unit->setTurretType(0);
+				if((*i)->getRules()->getClipSize() != -1)
+				{
+					std::string ammo = (*i)->getRules()->getCompatibleAmmo()->front();
+					addItem(_game->getRuleset()->getItem(ammo), unit)->setAmmoQuantity((*i)->getAmmo());
+				}
 			}
 		}
 
@@ -316,8 +346,8 @@ void BattlescapeGenerator::run()
 				{
 					for (int count=0; count < i->second; count++)
 					{
-						_craftInventoryTile->addItem(new BattleItem(_game->getRuleset()->getItem(i->first), _save->getCurrentItemId()),
-							_game->getRuleset()->getInventory("STR_GROUND"));
+				        _craftInventoryTile->addItem(new BattleItem(_game->getRuleset()->getItem(i->first), _save->getCurrentItemId()),
+					        _game->getRuleset()->getInventory("STR_GROUND"));
 					}
 					_base->getItems()->removeItem(i->first, i->second);
 				}
@@ -357,12 +387,26 @@ void BattlescapeGenerator::run()
 			}
 		}
 	}
-
-	deployAliens(_game->getRuleset()->getAlienRace(_alienRace), ruleDeploy);
+	if(_save->getMissionType() != "STR_MILITARY_DEFENSE")
+		deployAliens(_game->getRuleset()->getAlienRace(_alienRace), ruleDeploy);
+	else
+		for (std::vector<DeploymentData>::iterator d = ruleDeploy->getDeploymentData()->begin(); d != ruleDeploy->getDeploymentData()->end(); ++d)
+		{
+			int quantity = (*d).lowQty + RNG::generate(0, (*d).dQty);
+			if( _game->getSavedGame()->getDifficulty() > 3 )
+				quantity = (*d).highQty + RNG::generate(0, (*d).dQty);
+			deployMilitary(quantity);
+		}
 
 	if (_save->getMissionType() ==  "STR_TERROR_MISSION")
 	{
+		if(_terrain == _game->getRuleset()->getTerrain("BASE"))
+			deployMilitary(RNG::generate(8,16));
+		else
+		{
 		deployCivilians(16);
+		deployPolice(6);
+		}
 	}
 
 
@@ -373,7 +417,7 @@ void BattlescapeGenerator::run()
 		explodePowerSources();
 	}
 
-	if (_save->getMissionType() == "STR_BASE_DEFENSE")
+	if (_save->getMissionType() == "STR_BASE_DEFENSE"||_save->getMissionType() == "STR_MILITARY_DEFENSE")
 	{
 		for (int i = 0; i < _save->getWidth() * _save->getLength() * _save->getHeight(); ++i)
 		{
@@ -459,15 +503,28 @@ void BattlescapeGenerator::deployAliens(AlienRace *race, AlienDeployment *deploy
 	for (std::vector<DeploymentData>::iterator d = deployment->getDeploymentData()->begin(); d != deployment->getDeploymentData()->end(); ++d)
 	{
 		std::string alienName = race->getMember((*d).alienRank);
-		// TODO: make this depend on difficulty level
+
 		int quantity = (*d).lowQty + RNG::generate(0, (*d).dQty);
+		if( _game->getSavedGame()->getDifficulty() > 1 )
+			quantity = (*d).lowQty+(((*d).highQty-(*d).lowQty)/2) + RNG::generate(0, (*d).dQty);
+		else if( _game->getSavedGame()->getDifficulty() > 3 )
+			quantity = (*d).highQty + RNG::generate(0, (*d).dQty);
 		for (int i = 0; i < quantity; i++)
 		{
 			bool outside = RNG::generate(0,99) < (*d).percentageOutsideUfo;
 			if (_ufo == 0)
 				outside = false;
 			BattleUnit *unit = addAlien(_game->getRuleset()->getUnit(alienName), (*d).alienRank, outside);
-			for (std::vector<std::string>::iterator it = (*d).itemSets.at(_alienItemLevel).items.begin(); it != (*d).itemSets.at(_alienItemLevel).items.end(); ++it)
+			int randomset = 0;
+			if(_alienItemLevel == 0)
+				randomset = RNG::generate(0,2);
+			else if(_alienItemLevel == 1)
+				randomset = RNG::generate(2,4);
+			else if(_alienItemLevel == 2)
+				randomset = RNG::generate(2,5);
+			if((*d).itemSets.size() == 1)
+				randomset = 0;
+			for (std::vector<std::string>::iterator it = (*d).itemSets.at(randomset).items.begin(); it != (*d).itemSets.at(randomset).items.end(); ++it)
 			{
 				RuleItem *ruleItem = _game->getRuleset()->getItem((*it));
 				if (ruleItem)
@@ -476,7 +533,7 @@ void BattlescapeGenerator::deployAliens(AlienRace *race, AlienDeployment *deploy
 				}
 			}
 			// terrorist alien's equipment is a special case - they are fitted with a weapon which is the alien's name with suffix _WEAPON
-			if ((*d).alienRank == AR_TERRORIST)
+			if ((*d).alienRank == AR_TERRORIST||(*d).alienRank == AR_TERRORIST2)
 			{
 				std::stringstream terroristWeapon;
 				terroristWeapon << alienName;
@@ -541,9 +598,15 @@ BattleUnit *BattlescapeGenerator::addAlien(Unit *rules, int alienRank, bool outs
  * @return pointer to the created unit.
  */
 BattleUnit *BattlescapeGenerator::addCivilian(Unit *rules)
-{
+{	
 	BattleUnit *unit = new BattleUnit(rules, FACTION_NEUTRAL, _unitSequence++, _game->getRuleset()->getArmor(rules->getArmor()));
 	Node *node = _save->getSpawnNode(0, unit);
+
+	if(_save->getMissionType() == "STR_ANTI_INFILTRATION" || _save->getMissionType() == "STR_MILITARY_DEFENCE")
+	{
+		unit->setFaction(FACTION_HOSTILE);
+		node = _save->getSpawnNode(6, unit);
+	}
 
 	if (node)
 	{
@@ -589,7 +652,6 @@ BattleItem* BattlescapeGenerator::addItem(BattleItem *item)
 		}
 		break;
 	case BT_FIREARM:
-	case BT_MELEE:
 		// maybe we find ammo on the ground to load it with
 		if (item->getRules()->getCompatibleAmmo()->empty())
 		{
@@ -612,11 +674,42 @@ BattleItem* BattlescapeGenerator::addItem(BattleItem *item)
 
 				if (!(*i)->getItem("STR_RIGHT_HAND"))
 				{
-					item->moveToOwner((*i));
-					item->setSlot(righthand);
-					break;
+					if ((*i)->getItem("STR_LEFT_HAND"))
+					{
+						if(!(*i)->getItem("STR_LEFT_HAND")->getRules()->isTwoHanded() && !item->getRules()->isTwoHanded())
+						{
+						item->moveToOwner((*i));
+						item->setSlot(righthand);
+						}
+					}
+					else
+					{
+						if(item->getRules()->getWeight() > 10 && (*i)->getStats()->strength < 35 )
+							continue;
+						item->moveToOwner((*i));
+						item->setSlot(righthand);
+					}
 				}
 			}
+		}
+		break;
+	case BT_MELEE:
+		for (std::vector<BattleUnit*>::iterator i = _save->getUnits()->begin(); i != _save->getUnits()->end(); ++i)
+			{
+				if ((*i)->getArmor()->getSize() > 1) continue;
+				if ((*i)->getItem("STR_RIGHT_HAND"))
+				{
+					if(!(*i)->getItem("STR_RIGHT_HAND")->getRules()->isTwoHanded() && !(*i)->getItem("STR_LEFT_HAND"))
+					{
+						item->moveToOwner((*i));
+						item->setSlot(_game->getRuleset()->getInventory("STR_LEFT_HAND"));
+					}
+				}
+				else
+				{
+					item->moveToOwner((*i));
+					item->setSlot(_game->getRuleset()->getInventory("STR_LEFT_HAND"));
+				}
 		}
 		break;
 	case BT_MEDIKIT:
@@ -641,7 +734,7 @@ BattleItem* BattlescapeGenerator::addItem(BattleItem *item)
 
 	_save->getItems()->push_back(item);
 	item->setXCOMProperty(true);
-
+	
 	return item;
 }
 
@@ -684,13 +777,28 @@ BattleItem* BattlescapeGenerator::addItem(RuleItem *item, BattleUnit *unit)
 		}
 		break;
 	case BT_FIREARM:
-	case BT_MELEE:
 		if (!unit->getItem("STR_RIGHT_HAND"))
 		{
 			bi->moveToOwner(unit);
 			bi->setSlot(_game->getRuleset()->getInventory("STR_RIGHT_HAND"));
 			placed = true;
 		}
+		break;
+	case BT_MELEE:
+		if (unit->getItem("STR_RIGHT_HAND"))
+		if (!unit->getItem("STR_RIGHT_HAND")->getRules()->isTwoHanded() && !item->isTwoHanded())
+		{
+			bi->moveToOwner(unit);
+			bi->setSlot(_game->getRuleset()->getInventory("STR_LEFT_HAND"));
+			placed = true;
+		}
+		if (item->isFixed())
+		{
+			bi->moveToOwner(unit);
+			bi->setSlot(_game->getRuleset()->getInventory("STR_RIGHT_HAND"));
+			placed = true;
+		}
+
 		break;
 	case BT_MEDIKIT:
 	case BT_SCANNER:
@@ -842,7 +950,7 @@ void BattlescapeGenerator::generateMap()
 		}
 	}
 	/* determine positioning of base modules */
-	else if (_save->getMissionType() == "STR_BASE_DEFENSE")
+	else if (_save->getMissionType() == "STR_BASE_DEFENSE"||_save->getMissionType() == "STR_MILITARY_DEFENSE")
 	{
 		for (std::vector<BaseFacility*>::const_iterator i = _base->getFacilities()->begin(); i != _base->getFacilities()->end(); ++i)
 		{
@@ -1320,9 +1428,12 @@ void BattlescapeGenerator::loadRMP(MapBlock *mapblock, int xoff, int yoff, int s
  */
 void BattlescapeGenerator::fuelPowerSources()
 {
+	BattleItem *item;
+	RuleInventory *ground = _game->getRuleset()->getInventory("STR_GROUND");
+	RuleItem *elerium = _game->getRuleset()->getItem("STR_ELERIUM_115");
 	for (int i = 0; i < _save->getWidth() * _save->getLength() * _save->getHeight(); ++i)
 	{
-		if (_save->getTiles()[i]->getMapData(MapData::O_OBJECT) 
+		if (_save->getTiles()[i]->getMapData(MapData::O_OBJECT)
 			&& _save->getTiles()[i]->getMapData(MapData::O_OBJECT)->getSpecialType() == UFO_POWER_SOURCE)
 		{
 			BattleItem *elerium = new BattleItem(_game->getRuleset()->getItem("STR_ELERIUM_115"), _save->getCurrentItemId());
@@ -1340,7 +1451,7 @@ void BattlescapeGenerator::explodePowerSources()
 {
 	for (int i = 0; i < _save->getWidth() * _save->getLength() * _save->getHeight(); ++i)
 	{
-		if (_save->getTiles()[i]->getMapData(MapData::O_OBJECT) 
+		if (_save->getTiles()[i]->getMapData(MapData::O_OBJECT)
 			&& _save->getTiles()[i]->getMapData(MapData::O_OBJECT)->getSpecialType() == UFO_POWER_SOURCE && RNG::generate(0,100) < 75)
 		{
 			Position pos;
@@ -1370,6 +1481,124 @@ void BattlescapeGenerator::deployCivilians(int max)
 			addCivilian(_game->getRuleset()->getUnit("FEMALE_CIVILIAN"));
 		}
 	}
+}
+
+
+/**
+ * spawn 1-max police on a terror mission.
+ */
+void BattlescapeGenerator::deployPolice(int max)
+{
+	int number = RNG::generate(1, max);
+	for (int i = 0; i < number; i++)
+	{
+		if (RNG::generate(0,100) < 50)
+		{
+			officerGender = "MALE_POLICE";
+		}
+		else
+		{
+			officerGender = "FEMALE_POLICE";
+
+		}
+		
+		BattleUnit *unit = addCivilian(_game->getRuleset()->getUnit(officerGender));
+		unit->setFemale(RNG::generate(0,1));		
+		if (RNG::generate(0, 1))
+		{
+			RuleItem *ruleItem = _game->getRuleset()->getItem("STR_PISTOL");
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_PISTOL_CLIP");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+		}
+		else
+		{
+			RuleItem *ruleItem = _game->getRuleset()->getItem("STR_SHOTGUN");
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_SHOTGUN_AMMO");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+		}
+	}	
+}
+
+void BattlescapeGenerator::deployMilitary(int amount)
+{
+	for (int i = 0; i < amount; i++)
+	{		
+		BattleUnit *unit = addCivilian(_game->getRuleset()->getUnit("HUMAN_SOLDIER"));
+		unit->setFemale(RNG::generate(0,1));
+		int number = RNG::generate(0, 7);
+		if (number == 0)
+		{
+			RuleItem *ruleItem = _game->getRuleset()->getItem("STR_SNIPER_RIFLE");
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_SNIPER_AMMO");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_FLASHBANG");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+		}
+		else if (number == 1)
+		{
+			RuleItem *ruleItem = _game->getRuleset()->getItem("STR_SHOTGUN");
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_SHOTGUN_AMMO");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_FLASHBANG");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+		}
+		else if (number == 2)
+		{
+			RuleItem *ruleItem = _game->getRuleset()->getItem("STR_GRENADE_LAUNCHER");
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_FLASHBANG");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+			addItem(ruleItem, unit);
+		}
+		else if (number == 3)
+		{
+			RuleItem *ruleItem = _game->getRuleset()->getItem("STR_AUTO_CANNON");
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_AC_AP_AMMO");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_FLASHBANG");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+		}
+		else if (number == 4)
+		{
+			RuleItem *ruleItem = _game->getRuleset()->getItem("STR_SHOTGUN");
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_SHOTGUN_AMMO");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_FLASHBANG");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+		}
+		else
+		{
+			RuleItem *ruleItem = _game->getRuleset()->getItem("STR_RIFLE");
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_RIFLE_CLIP");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+			ruleItem = _game->getRuleset()->getItem("STR_FLASHBANG");			
+			addItem(ruleItem, unit);		
+			addItem(ruleItem, unit);
+		}
+	}	
 }
 
 }

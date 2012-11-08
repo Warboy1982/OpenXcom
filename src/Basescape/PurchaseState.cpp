@@ -138,8 +138,12 @@ PurchaseState::PurchaseState(Game *game, Base *base) : State(game), _base(base),
 	_lstItems->addRow(4, _game->getLanguage()->getString("STR_SCIENTIST").c_str(), Text::formatFunding(_game->getRuleset()->getScientistCost() * 2).c_str(), ss2.str().c_str(), L"0");
 	_qtys.push_back(0);
 	std::wstringstream ss3;
-	ss3 << _base->getTotalEngineers();
-	_lstItems->addRow(4, _game->getLanguage()->getString("STR_ENGINEER").c_str(), Text::formatFunding(_game->getRuleset()->getEngineerCost() * 2).c_str(), ss3.str().c_str(), L"0");
+	ss3 << _base->getTotalDoctors();
+	_lstItems->addRow(4, _game->getLanguage()->getString("STR_DOCTOR").c_str(), Text::formatFunding(_game->getRuleset()->getDoctorCost() * 2).c_str(), ss3.str().c_str(), L"0");
+	_qtys.push_back(0);
+	std::wstringstream ss4;
+	ss4 << _base->getTotalEngineers();
+	_lstItems->addRow(4, _game->getLanguage()->getString("STR_ENGINEER").c_str(), Text::formatFunding(_game->getRuleset()->getEngineerCost() * 2).c_str(), ss4.str().c_str(), L"0");
 
 	std::vector<std::string> crafts = _game->getRuleset()->getCraftsList();
 	for (std::vector<std::string>::iterator i = crafts.begin(); i != crafts.end(); ++i)
@@ -226,15 +230,22 @@ void PurchaseState::btnOkClick(Action *action)
 				t->setScientists(_qtys[i]);
 				_base->getTransfers()->push_back(t);
 			}
-			// Buy engineers
+			// Buy doctors
 			else if (i == 2)
+			{
+				Transfer *t = new Transfer(_game->getRuleset()->getPersonnelTime());
+				t->setDoctors(_qtys[i]);
+				_base->getTransfers()->push_back(t);
+			}
+			// Buy engineers
+			else if (i == 3)
 			{
 				Transfer *t = new Transfer(_game->getRuleset()->getPersonnelTime());
 				t->setEngineers(_qtys[i]);
 				_base->getTransfers()->push_back(t);
 			}
 			// Buy crafts
-			else if (i >= 3 && i < 3 + _crafts.size())
+			else if (i >= 4 && i < 4 + _crafts.size())
 			{
 				for (int c = 0; c < _qtys[i]; c++)
 				{
@@ -297,21 +308,24 @@ void PurchaseState::lstItemsLeftArrowClick(Action *action)
 	{
 		int maxByMoney = (_game->getSavedGame()->getFunds() - _total) / getPrice();
 		int canBeBought = 0;
-		if (_sel <= 2)
+		if (_sel <= 3)
 		{
 			// Personnel count
 			int maxByQuarters = _base->getAvailableQuarters() - _base->getUsedQuarters() - _pQty;
 			canBeBought = std::min(maxByMoney, maxByQuarters);
+			// in case of doctor
+			if (_sel == 2)
+				canBeBought = std::min(std::min(maxByMoney, maxByQuarters),_base->getHospitals());
 			if (0 < canBeBought) _pQty += canBeBought;
 		}
-		else if (_sel >= 3 && _sel < 3 + _crafts.size())
+		else if (_sel >= 4 && _sel < 4 + _crafts.size())
 		{
 			// Craft count
 			int maxByHangars = _base->getAvailableHangars() - _base->getUsedHangars() - _cQty;
 			canBeBought = std::min(maxByMoney, maxByHangars);
 			if (0 < canBeBought) _cQty += canBeBought;
 		}
-		else if (_sel >= 3 + _crafts.size())
+		else if (_sel >= 4 + _crafts.size())
 		{
 			// Item count
 			float storesNeededPerItem = _game->getRuleset()->getItem(_items[_sel - 3 - _crafts.size()])->getSize();
@@ -369,19 +383,19 @@ void PurchaseState::lstItemsRightArrowClick(Action *action)
 		if (_qtys[_sel] > 0)
 		{
 			// Personnel count
-			if (_sel <= 2)
+			if (_sel <= 3)
 			{
 				_pQty -= _qtys[_sel];
 			}
 			// Craft count
-			else if (_sel >= 3 && _sel < 3 + _crafts.size())
+			else if (_sel >= 4 && _sel < 4 + _crafts.size())
 			{
 				_cQty -= _qtys[_sel];
 			}
 			// Item count
 			else
 			{
-				_iQty -= _game->getRuleset()->getItem(_items[_sel - 3 - _crafts.size()])->getSize() * ((float)(_qtys[_sel]));
+				_iQty -= _game->getRuleset()->getItem(_items[_sel - 4 - _crafts.size()])->getSize() * ((float)(_qtys[_sel]));
 			}
 			_total -= getPrice() * _qtys[_sel];
 			std::wstring s = _game->getLanguage()->getString("STR_COST_OF_PURCHASES");
@@ -410,20 +424,25 @@ int PurchaseState::getPrice()
 	{
 		return _game->getRuleset()->getScientistCost() * 2;
 	}
-	// Engineer cost
+	// Doctor cost
 	else if (_sel == 2)
+	{
+		return _game->getRuleset()->getDoctorCost() * 2;
+	}
+	// Engineer cost
+	else if (_sel == 3)
 	{
 		return _game->getRuleset()->getEngineerCost() * 2;
 	}
 	// Craft cost
-	else if (_sel >= 3 && _sel < 3 + _crafts.size())
+	else if (_sel >= 4 && _sel < 4 + _crafts.size())
 	{
-		return _game->getRuleset()->getCraft(_crafts[_sel - 3])->getBuyCost();
+		return _game->getRuleset()->getCraft(_crafts[_sel - 4])->getBuyCost();
 	}
 	// Item cost
 	else
 	{
-		return _game->getRuleset()->getItem(_items[_sel - 3 - _crafts.size()])->getBuyCost();
+		return _game->getRuleset()->getItem(_items[_sel - 4 - _crafts.size()])->getBuyCost();
 	}
 }
 
@@ -437,17 +456,22 @@ void PurchaseState::increase()
 		_timerInc->stop();
 		_game->pushState(new ErrorMessageState(_game, "STR_NOT_ENOUGH_MONEY", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
 	}
-	else if (_sel <= 2 && _pQty + 1 > _base->getAvailableQuarters() - _base->getUsedQuarters())
+	else if (_sel == 2 && _pQty + 1 > _base->getHospitals())
+	{
+		_timerInc->stop();
+		_game->pushState(new ErrorMessageState(_game, "STR_NOT_ENOUGH_HOSPITAL_SPACE", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
+	}
+	else if (_sel <= 3 && _pQty + 1 > _base->getAvailableQuarters() - _base->getUsedQuarters())
 	{
 		_timerInc->stop();
 		_game->pushState(new ErrorMessageState(_game, "STR_NOT_ENOUGH_LIVING_SPACE", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
 	}
-	else if (_sel >= 3 && _sel < 3 + _crafts.size() && _cQty + 1 > _base->getAvailableHangars() - _base->getUsedHangars())
+	else if (_sel >= 4 && _sel < 4 + _crafts.size() && _cQty + 1 > _base->getAvailableHangars() - _base->getUsedHangars())
 	{
 		_timerInc->stop();
 		_game->pushState(new ErrorMessageState(_game, "STR_NO_FREE_HANGARS_FOR_PURCHASE", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
 	}
-	else if (_sel >= 3 + _crafts.size() && _iQty + _game->getRuleset()->getItem(_items[_sel - 3 - _crafts.size()])->getSize() > _base->getAvailableStores() - _base->getUsedStores())
+	else if (_sel >= 4 + _crafts.size() && _iQty + _game->getRuleset()->getItem(_items[_sel - 4 - _crafts.size()])->getSize() > _base->getAvailableStores() - _base->getUsedStores())
 	{
 		_timerInc->stop();
 		_game->pushState(new ErrorMessageState(_game, "STR_NOT_ENOUGH_STORE_SPACE", Palette::blockOffset(15)+1, "BACK13.SCR", 0));
@@ -455,19 +479,19 @@ void PurchaseState::increase()
 	else
 	{
 		// Personnel count
-		if (_sel <= 2)
+		if (_sel <= 3)
 		{
 			_pQty++;
 		}
 		// Craft count
-		else if (_sel >= 3 && _sel < 3 + _crafts.size())
+		else if (_sel >= 4 && _sel < 4 + _crafts.size())
 		{
 			_cQty++;
 		}
 		// Item count
 		else
 		{
-			_iQty += _game->getRuleset()->getItem(_items[_sel - 3 - _crafts.size()])->getSize();
+			_iQty += _game->getRuleset()->getItem(_items[_sel - 4 - _crafts.size()])->getSize();
 		}
 		_qtys[_sel]++;
 		std::wstringstream ss;
@@ -488,19 +512,19 @@ void PurchaseState::decrease()
 	if (_qtys[_sel] > 0)
 	{
 		// Personnel count
-		if (_sel <= 2)
+		if (_sel <= 3)
 		{
 			_pQty--;
 		}
 		// Craft count
-		else if (_sel >= 3 && _sel < 3 + _crafts.size())
+		else if (_sel >= 4 && _sel < 4 + _crafts.size())
 		{
 			_cQty--;
 		}
 		// Item count
 		else
 		{
-			_iQty -= _game->getRuleset()->getItem(_items[_sel - 3 - _crafts.size()])->getSize();
+			_iQty -= _game->getRuleset()->getItem(_items[_sel - 4 - _crafts.size()])->getSize();
 		}
 		_qtys[_sel]--;
 		std::wstringstream ss;

@@ -23,6 +23,8 @@
 #include "BattlescapeState.h"
 #include "Map.h"
 #include "Camera.h"
+#include "PatrolBAIState.h"
+#include "Pathfinding.h"
 #include "../Engine/Game.h"
 #include "../Savegame/BattleUnit.h"
 #include "../Savegame/SavedBattleGame.h"
@@ -34,6 +36,7 @@
 #include "../Engine/RNG.h"
 #include "../Ruleset/Armor.h"
 #include "../Ruleset/Unit.h"
+#include "../Savegame/BattleItem.h"
 
 namespace OpenXcom
 {
@@ -61,11 +64,11 @@ UnitDieBState::UnitDieBState(BattlescapeGame *parent, BattleUnit *unit, ItemDama
 
 	if (!_noSound)
 	{
-		if ((_unit->getType() == "SOLDIER" && _unit->getGender() == GENDER_MALE) || _unit->getType() == "MALE_CIVILIAN")
+		if ((_unit->getType() == "SOLDIER" && _unit->getGender() == GENDER_MALE) || _unit->getType() == "MALE_CIVILIAN" || _unit->getType() == "MALE_POLICE" )
 		{
 			_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(RNG::generate(41,43))->play();
 		}
-		else if ((_unit->getType() == "SOLDIER" && _unit->getGender() == GENDER_FEMALE) || _unit->getType() == "FEMALE_CIVILIAN")
+		else if ((_unit->getType() == "SOLDIER" && _unit->getGender() == GENDER_FEMALE) || _unit->getType() == "FEMALE_CIVILIAN" || _unit->getType() == "FEMALE_POLICE" )
 		{
 			_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(RNG::generate(44,46))->play();
 		}
@@ -95,6 +98,7 @@ void UnitDieBState::init()
  */
 void UnitDieBState::think()
 {
+	
 	if (_unit->getStatus() == STATUS_TURNING)
 	{
 		_unit->turn();
@@ -110,7 +114,11 @@ void UnitDieBState::think()
 
 	if (_unit->getStatus() == STATUS_DEAD || _unit->getStatus() == STATUS_UNCONSCIOUS)
 	{
+		if (_unit->getSpecialAbility() == SPECAB_MORPHONDEATH && _unit->getArmor()->getSize() == 1)
+		convertUnitToChryssalid();
+		else 
 		convertUnitToCorpse();
+
 		_parent->getTileEngine()->calculateUnitLighting();
 		_parent->popState();
 		if (_unit->getSpecialAbility() == SPECAB_EXPLODEONDEATH)
@@ -178,6 +186,55 @@ void UnitDieBState::convertUnitToCorpse()
 			}
 		}
 	}
+}
+
+void UnitDieBState::convertUnitToChryssalid()
+{
+	// in case the unit was unconscious
+	_parent->getSave()->removeUnconsciousBodyItem(_unit);
+	_unit->killUnit();
+	if(_unit->getType() != "ZOMBIE")
+	for (std::vector<BattleItem*>::iterator i = _unit->getInventory()->begin(); i != _unit->getInventory()->end(); ++i)
+	{
+		_parent->dropItem(_unit->getPosition(), (*i));
+	}
+
+	_unit->getInventory()->clear();
+
+	// remove unit-tile link
+	_unit->setTile(0);
+
+	// set up the new unit, i know it's bad to hardcode things like unit names, 
+	// especially in a manner like this, as it will crash if these units aren't defined in the ruleset
+	// todo: perhaps add additional flags to unit types, like _inflictsmorph, _morphToInflict and morphTo, instead of using hardcoded names?
+	_parent->getSave()->getTile(_unit->getPosition())->setUnit(0);
+		char *_newRace = "ZOMBIE";
+		char *_newArmor = "ZOMBIE_ARMOR";
+		char *_newWeapon = "ZOMBIE_WEAPON";
+	
+	if(_unit->getType() == "ZOMBIE")
+	{
+		_newRace = "CHRYSSALID";
+		_newArmor = "CHRYSSALID_ARMOR";
+		_newWeapon = "CHRYSSALID_WEAPON";
+	}
+
+	BattleUnit *_newUnit = new BattleUnit(_parent->getRuleset()->getUnit(_newRace), FACTION_HOSTILE, _parent->getSave()->getUnits()->size(), _parent->getRuleset()->getArmor(_newArmor));
+	RuleItem *newItem = _parent->getRuleset()->getItem(_newWeapon);
+
+	_parent->getSave()->getTile(_unit->getPosition())->setUnit(_newUnit);
+	_newUnit->setPosition(_unit->getPosition());
+	_newUnit->setDirection(3);
+	_newUnit->setCache(0);
+	_newUnit->InvalidateCache();
+	_parent->getSave()->addUnit(_newUnit);
+	_parent->getMap()->cacheUnit(_newUnit);
+	_newUnit->setAIState(new PatrolBAIState(_parent->getSave(), _newUnit, 0));
+	
+	BattleItem *bi = new BattleItem(newItem, _parent->getSave()->getCurrentItemId());
+	bi->moveToOwner(_newUnit);
+	bi->setSlot(_parent->getRuleset()->getInventory("STR_RIGHT_HAND"));
+
 }
 
 }

@@ -40,6 +40,7 @@ class AlienDeployment;
 class Game;
 class Base;
 class TerrorSite;
+class AlienBase;
 
 /**
  * A utility class that generates the initial battlescape data. Taking into account mission type, craft and ufo involved, terrain type,...
@@ -54,6 +55,7 @@ private:
 	Ufo *_ufo;
 	Base *_base;
 	TerrorSite *_terror;
+	AlienBase *_alienBase;
 	RuleTerrain *_terrain;
 	int _width, _length, _height;
 	int _worldTexture, _worldShade;
@@ -61,6 +63,9 @@ private:
 	Tile *_craftInventoryTile;
 	std::string _alienRace;
 	int _alienItemLevel;
+	int _PoliceItems;
+	std::string officerGender;
+	BattleUnit *unit;
 
 	/// Generate a new battlescape map.
 	void generateMap();
@@ -71,6 +76,7 @@ private:
 	/// Add an alien to the game
 	BattleUnit *addAlien(Unit *rules, int alienRank, bool outside);
 	BattleUnit *addCivilian(Unit *rules);
+	BattleUnit *addPoliceman(Unit *rules);
 	/// Add an item to the game
 	BattleItem* addItem(BattleItem *item);
 	// Add an item to a unit
@@ -83,6 +89,8 @@ private:
 	void explodePowerSources();
 	void deployAliens(AlienRace *race, AlienDeployment *deployment);
 	void deployCivilians(int max);
+	void deployPolice(int max);
+	void deployMilitary(int max);
 public:
 	/// Creates a new BattlescapeGenerator class
 	BattlescapeGenerator(Game *game);
@@ -104,9 +112,10 @@ public:
 	void setBase(Base *base);
 	/// Sets the terror site.
 	void setTerrorSite(TerrorSite* site);
+	/// Sets the alien base
+	void setAlienBase(AlienBase* base);
 	/// Runs the generator.
 	void run();
-
 };
 
 }

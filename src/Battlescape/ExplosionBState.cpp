@@ -46,9 +46,8 @@ namespace OpenXcom
  * @param unit Unit involved in the explosion (eg unit throwing the grenade)
  * @param tile Tile the explosion is on.
  */
-ExplosionBState::ExplosionBState(BattlescapeGame *parent, Position center, BattleItem *item, BattleUnit *unit, Tile *tile) : BattleState(parent), _unit(unit), _center(center), _item(item), _tile(tile), _power(0), _areaOfEffect(false)
+ExplosionBState::ExplosionBState(BattlescapeGame *parent, Position center, BattleItem *item, BattleUnit *unit, Tile *tile) : BattleState(parent), _unit(unit), _center(center), _item(item), _tile(tile)
 {
-
 }
 
 /**
@@ -61,71 +60,75 @@ ExplosionBState::~ExplosionBState()
 
 /**
  * init explosion :
- * The animation and sound starts here.
- * If the animation is finished, the actually effect takes place.
+ * - create an explosion sprite
+ * - add it to the list of explosion sprites(on map)
+ * - explosion sound
  */
 void ExplosionBState::init()
 {
 	if (_item)
 	{
-		_power = _item->getRules()->getPower();
-		// heavy explosions, incendiary, smoke or stun bombs create AOE explosions
-		// all the rest hits one point:
-		// AP, melee (stun or AP), laser, plasma, acid
-		_areaOfEffect = _item->getRules()->getBattleType() != BT_MELEE && 
-						(_item->getRules()->getDamageType() == DT_HE 
-						|| _item->getRules()->getDamageType() == DT_IN 
-						|| _item->getRules()->getDamageType() == DT_SMOKE
-						|| _item->getRules()->getDamageType() == DT_STUN);
-	}
-	else if (_tile)
-	{
-		_power = _tile->getExplosive();
-		_areaOfEffect = true;
-	}
-	else
-	{
-		_power = 120;
-		_areaOfEffect = true;
-	}
-
-	if (_areaOfEffect)
-	{
-		for (int i = 0; i < _power/5; i++)
+		if (_item->getRules()->getHitAnimation() == 0)
 		{
-			int X = RNG::generate(-_power/2,_power/2);
-			int Y = RNG::generate(-_power/2,_power/2);
-			Position p = _center;
-			p.x += X; p.y += Y;
-			Explosion *explosion = new Explosion(p, RNG::generate(0,6), true);
+			_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED);
+			for (int i = 0; i < _item->getRules()->getPower()/5; i++)
+			{
+				int X = RNG::generate(-_item->getRules()->getPower()/2,_item->getRules()->getPower()/2);
+				int Y = RNG::generate(-_item->getRules()->getPower()/2,_item->getRules()->getPower()/2);
+				Position p = _center;
+				p.x += X; p.y += Y;
+				Explosion *explosion = new Explosion(p, RNG::generate(0,6), true);
+				// add the explosion on the map
+				_parent->getMap()->getExplosions()->insert(explosion);
+			}
+			// explosion sound
+			 if (_item->getRules()->getPower() <= 80)
+				   _parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(12)->play();
+			 else
+				 _parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(5)->play();
+		}
+		else if (_item->getRules()->getType()== "STR_HWP_CANNON_SHELLS")
+		{
+			_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED);
+			Explosion *explosion = new Explosion(_center, RNG::generate(0,6), true);
 			// add the explosion on the map
 			_parent->getMap()->getExplosions()->insert(explosion);
+		   _parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(12)->play();
 		}
-		_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED);
-		// explosion sound
-		if (_power <= 80)
-			_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(12)->play();
 		else
-			_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(5)->play();
+		{
+			_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED/2);
+			// create a bulet hit
+			Explosion *explosion = new Explosion(_center, _item->getRules()->getHitAnimation(), false);
+			// add the explosion on the map
+			_parent->getMap()->getExplosions()->insert(explosion);
+			// bullet hit sound
+			_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_item->getRules()->getHitSound())->play();
+		}
 	}
 	else
-	// create a bullet hit
 	{
-		_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED/2);
-		Explosion *explosion = new Explosion(_center, _item->getRules()->getHitAnimation(), false);
-		_parent->getMap()->getExplosions()->insert(explosion);
-		// bullet hit sound
-		_parent->getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(_item->getRules()->getHitSound())->play();
+		for (int i = -32; i < 48; i+=32)
+			for (int j = -32; j < 48; j+=32)
+			{
+				Position p = _center;
+				p.x += i; p.y += j;
+				Explosion *explosion = new Explosion(p, RNG::generate(0,6), true);
+				// add the explosion on the map
+				_parent->getMap()->getExplosions()->insert(explosion);
+		    }
 	}
-
 }
 
 /*
  * Animate explosion sprites. If their animation is finished remove them from the list.
- * If the list is empty, this state is finished and the actual calculations take place.
+ * If the list is empty, this states is finished.
  */
 void ExplosionBState::think()
 {
+//	if(_parent->getMap()->getExplosions()->empty() == 0)
+//	_parent->popState();
+
 	for (std::set<Explosion*>::const_iterator i = _parent->getMap()->getExplosions()->begin(), inext = i; i != _parent->getMap()->getExplosions()->end(); i = inext)
 	{
 		++inext;
@@ -139,23 +142,33 @@ void ExplosionBState::think()
 				// after the animation is done, the real explosion/hit takes place
 				if (_item)
 				{
-					if (_areaOfEffect)
+					// heavy explosions, incendiary, smoke or stun bombs create AOE explosions
+					// all the rest hits one point:
+					// AP, melee (stun or AP), laser, plasma, acid
+					if (_item->getRules()->getBattleType() != BT_MELEE && ((_item->getRules()->getDamageType() == DT_FLASH || _item->getRules()->getDamageType() == DT_HE || _item->getRules()->getDamageType() == DT_SMOKE|| _item->getRules()->getDamageType() == DT_STUN)||(_item->getRules()->getDamageType() == DT_IN && !_item->getRules()->isFlamer())))
 					{
-						save->getTileEngine()->explode(_center, _power, _item->getRules()->getDamageType(), _item->getRules()->getExplosionRadius(), _unit);
+						save->getTileEngine()->explode(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), _item->getRules()->getExplosionRadius(), _unit);
+					}
+					else if (_item->getRules()->getType()== "STR_HWP_CANNON_SHELLS")
+					{
+						save->getTileEngine()->explode(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), 1, _unit);
 					}
 					else
 					{
-						save->getTileEngine()->hit(_center, _power, _item->getRules()->getDamageType(), _unit);
+						if(!_item->getRules()->isFlamer())
+						{
+						save->getTileEngine()->hit(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), _unit);
+						}
 					}
 				}
 				if (_tile)
 				{
-					save->getTileEngine()->explode(_center, _power, DT_HE, 100);
+					save->getTileEngine()->explode(_center, _tile->getExplosive(), DT_HE, 100);
 				}
 				if (!_tile && !_item)
 				{
 					// explosion not caused by terrain or an item, must be by a unit (cyberdisc)
-					save->getTileEngine()->explode(_center, _power, DT_HE, 8);
+					save->getTileEngine()->explode(_center, 120, DT_HE, 8);
 					terrainExplosion = true;
 				}
 

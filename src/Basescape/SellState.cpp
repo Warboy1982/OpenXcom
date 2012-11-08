@@ -47,7 +47,7 @@ namespace OpenXcom
  * @param game Pointer to the core game.
  * @param base Pointer to the base to get info from.
  */
-SellState::SellState(Game *game, Base *base) : State(game), _base(base), _qtys(), _soldiers(), _crafts(), _items(), _sel(0), _total(0), _sOffset(0), _eOffset(0)
+SellState::SellState(Game *game, Base *base) : State(game), _base(base), _qtys(), _soldiers(), _crafts(), _items(), _sel(0), _total(0), _sOffset(0), _dOffset(0), _eOffset(0)
 {
 	// Create objects
 	_window = new Window(this, 320, 200, 0, 0);
@@ -155,6 +155,14 @@ SellState::SellState(Game *game, Base *base) : State(game), _base(base), _qtys()
 		ss << _base->getAvailableScientists();
 		_lstItems->addRow(4, _game->getLanguage()->getString("STR_SCIENTIST").c_str(), ss.str().c_str(), L"0", Text::formatFunding(0).c_str());
 	}
+	if (_base->getAvailableDoctors() > 0)
+	{
+		_qtys.push_back(0);
+		_dOffset++;
+		std::wstringstream ss;
+		ss << _base->getAvailableDoctors();
+		_lstItems->addRow(4, _game->getLanguage()->getString("STR_DOCTOR").c_str(), ss.str().c_str(), L"0", Text::formatFunding(0).c_str());
+	}
 	if (_base->getAvailableEngineers() > 0)
 	{
 		_qtys.push_back(0);
@@ -167,7 +175,7 @@ SellState::SellState(Game *game, Base *base) : State(game), _base(base), _qtys()
 	for (std::vector<std::string>::iterator i = items.begin(); i != items.end(); ++i)
 	{
 		int qty = _base->getItems()->getItem(*i);
-		if (qty > 0)
+		if (qty > 0 && !_game->getRuleset()->getItem(*i)->getAlien())
 		{
 			_qtys.push_back(0);
 			_items.push_back(*i);
@@ -274,15 +282,20 @@ void SellState::btnOkClick(Action *action)
 			{
 				_base->setScientists(_base->getScientists() - _qtys[i]);
 			}
+			// Sell doctors
+			else if (_base->getAvailableDoctors() > 0 && i == _soldiers.size() + _crafts.size() + _sOffset)
+			{
+				_base->setDoctors(_base->getDoctors() - _qtys[i]);
+			}
 			// Sell engineers
-			else if (_base->getAvailableEngineers() > 0 && i == _soldiers.size() + _crafts.size() + _sOffset)
+			else if (_base->getAvailableEngineers() > 0 && i == _soldiers.size() + _crafts.size() + _sOffset + _dOffset)
 			{
 				_base->setEngineers(_base->getEngineers() - _qtys[i]);
 			}
 			// Sell items
 			else
 			{
-				_base->getItems()->removeItem(_items[i - _soldiers.size() - _crafts.size() - _sOffset - _eOffset], _qtys[i]);
+				_base->getItems()->removeItem(_items[i - _soldiers.size() - _crafts.size() - _sOffset - _eOffset - _dOffset], _qtys[i]);
 			}
 		}
 	}
@@ -391,14 +404,14 @@ void SellState::lstItemsRightArrowClick(Action *action)
 int SellState::getPrice()
 {
 	// Personnel/craft aren't worth anything
-	if (_sel < _soldiers.size() + _crafts.size() + _sOffset + _eOffset)
+	if (_sel < _soldiers.size() + _crafts.size() + _sOffset + _eOffset + _dOffset)
 	{
 		return 0;
 	}
 	// Item cost
 	else
 	{
-		return _game->getRuleset()->getItem(_items[_sel - _soldiers.size() - _crafts.size() - _sOffset - _eOffset])->getSellCost();
+		return _game->getRuleset()->getItem(_items[_sel - _soldiers.size() - _crafts.size() - _sOffset - _eOffset - _dOffset])->getSellCost();
 	}
 }
 
@@ -418,15 +431,20 @@ int SellState::getQuantity()
 	{
 		return _base->getAvailableScientists();
 	}
+	// Doctor quantity
+	else if (_base->getAvailableDoctors() > 0 && _sel == _soldiers.size() + _crafts.size() + _sOffset)
+	{
+		return _base->getAvailableDoctors();
+	}
 	// Engineer quantity
-	else if (_base->getAvailableEngineers() > 0 && _sel == _soldiers.size() + _crafts.size() + _sOffset)
+	else if (_base->getAvailableEngineers() > 0 && _sel == _soldiers.size() + _crafts.size() + _sOffset + _dOffset)
 	{
 		return _base->getAvailableEngineers();
 	}
 	// Item quantity
 	else
 	{
-		return _base->getItems()->getItem(_items[_sel - _soldiers.size() - _crafts.size() - _sOffset - _eOffset]);
+		return _base->getItems()->getItem(_items[_sel - _soldiers.size() - _crafts.size() - _sOffset - _eOffset - _dOffset]);
 	}
 }
 

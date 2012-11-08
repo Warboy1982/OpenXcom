@@ -39,7 +39,15 @@ private:
 	int _autoshotCounter;
 	int _projectileImpact;
 	void createNewProjectile();
+	int _buckshotCounter;
+	Position pelleta;
+	Position pelletb;
+	Position pelletc;
+	Position pelletd;
+	Position pellete;
+	Position pelletf;
 	bool _initialized;
+	int dummy;
 public:
 	/// Creates a new ProjectileFly class
 	ProjectileFlyBState(BattlescapeGame *parent, BattleAction action);
@@ -53,6 +61,7 @@ public:
 	/// Runs state functionality every cycle.
 	void think();
 	static bool validThrowRange(BattleAction *action);
+	bool validShootRange(BattleAction *action);
 	bool validMeleeRange(BattleAction *action);
 };
 
