@@ -84,6 +84,9 @@ void InteractiveSurface::setVisible(bool visible)
  */
 void InteractiveSurface::handle(Action *action, State *state)
 {
+	if(action->getDetails()->button.button == 7 || action->getDetails()->button.button == 6)
+		return;
+
 	if (!_visible || _hidden)
 		return;
 
