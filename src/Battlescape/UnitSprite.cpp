@@ -29,7 +29,6 @@
 #include "../Savegame/BattleUnit.h"
 #include "../Savegame/BattleItem.h"
 #include "../Savegame/Soldier.h"
-#include "../Engine/Game.h"
 #include "../Ruleset/RuleInventory.h"
 #include "../Ruleset/Ruleset.h"
 
@@ -112,8 +111,8 @@ void UnitSprite::setAnimationFrame(int frame)
 void UnitSprite::draw()
 {
 	Surface::draw();
-
-	switch (_unit->getArmor()->getDrawingRoutine())
+	_drawingRoutine = _unit->getArmor()->getDrawingRoutine();
+	switch (_drawingRoutine)
 	{
 	case 0:
 		drawRoutine0();
@@ -145,12 +144,15 @@ void UnitSprite::draw()
 	case 9:
 		drawRoutine9();
 		break;
+	case 10: // muton
+		drawRoutine0();
+		break;
 	}
 
 }
 
 /**
- * Drawing routine for xcom soldiers in overalls and Sectoids.
+ * Drawing routine for xcom soldiers in overalls and Sectoids and Mutons (routine 10).
  */
 void UnitSprite::drawRoutine0()
 {
@@ -202,8 +204,8 @@ void UnitSprite::drawRoutine0()
 	if (_unit->getStatus() == STATUS_WALKING)
 	{
 		torso->setY(yoffWalk[_unit->getWalkingPhase()]);
-		if(_unit->getArmor()->getDrawMethod() == 1)
-		torso->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
+		if(_drawingRoutine == 10)
+			torso->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
 		legs = _unitSurface->getFrame(legsWalk[_unit->getDirection()] + _unit->getWalkingPhase());
 		leftArm = _unitSurface->getFrame(larmWalk[_unit->getDirection()] + _unit->getWalkingPhase());
 		rightArm = _unitSurface->getFrame(rarmWalk[_unit->getDirection()] + _unit->getWalkingPhase());
@@ -214,7 +216,7 @@ void UnitSprite::drawRoutine0()
 		{
 			legs = _unitSurface->getFrame(legsKneel + _unit->getDirection());
 		}
-		else if (_unit->isFloating())
+		else if (_unit->isFloating() && _unit->getArmor()->getMovementType() == MT_FLY)
 		{
 			legs = _unitSurface->getFrame(legsFloat + _unit->getDirection());
 		}
@@ -240,7 +242,7 @@ void UnitSprite::drawRoutine0()
 		else
 		{
 			item = _itemSurface->getFrame(_item->getRules()->getHandSprite() + _unit->getDirection());
-			if(_unit->getArmor()->getDrawMethod() == 1)
+			if(_drawingRoutine == 10)
 			{
 				if(_item->getRules()->isTwoHanded())
 				{
@@ -276,7 +278,7 @@ void UnitSprite::drawRoutine0()
 		}
 		else
 		{
-			if(_unit->getArmor()->getDrawMethod() == 1)
+			if(_drawingRoutine == 10)
 				rightArm = _unitSurface->getFrame(rarm2H + _unit->getDirection()); // missing/wrong arms on muton here, investigate spriteset
 			else
 				rightArm = _unitSurface->getFrame(rarm1H + _unit->getDirection());
@@ -286,7 +288,7 @@ void UnitSprite::drawRoutine0()
 		// the fixed arm(s) have to be animated up/down when walking
 		if (_unit->getStatus() == STATUS_WALKING)
 		{
-			if(_unit->getArmor()->getDrawMethod() == 1)
+			if(_drawingRoutine == 10)
 			{
 				item->setY(item->getY() + alternateyoffWalk[_unit->getWalkingPhase()]);
 				rightArm->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
@@ -309,7 +311,7 @@ void UnitSprite::drawRoutine0()
 		{
 			leftArm = _unitSurface->getFrame(larm2H + _unit->getDirection());
 			itema = _itemSurface->getFrame(_itema->getRules()->getHandSprite() + _unit->getDirection());
-			if(_unit->getArmor()->getDrawMethod() == 1)
+			if(_drawingRoutine == 10)
 			{
 				itema->setX(offX4[_unit->getDirection()]);
 				itema->setY(offY4[_unit->getDirection()]);
@@ -322,7 +324,7 @@ void UnitSprite::drawRoutine0()
 
 			if (_unit->getStatus() == STATUS_WALKING)
 			{
-				if(_unit->getArmor()->getDrawMethod() == 1)
+				if(_drawingRoutine == 10)
 				{
 					leftArm->setY(alternateyoffWalk[_unit->getWalkingPhase()]);
 					itema->setY(itema->getY() + alternateyoffWalk[_unit->getWalkingPhase()]);
@@ -535,7 +537,7 @@ void UnitSprite::drawRoutine2()
 	const int offy[8] = { -1, -3, -4, -5, -4, -3, -1, -1 }; // hovertank offsets
 
 	Surface *s = 0;
-	int turret = _unit->getMainHandWeapon()->getRules()->getTurretType();
+	int turret = _unit->getTurretType();
 
 	// draw the animated propulsion below the hwp
 	if (_part > 0 && hoverTank != 0)
@@ -845,6 +847,10 @@ void UnitSprite::drawRoutine6()
 	}
 
 }
+
+/**
+ * Drawing routine for chryssalid
+ */
 void UnitSprite::drawRoutine7()
 {
 
@@ -952,4 +958,5 @@ void UnitSprite::drawRoutine9()
 
 	torso->blit(this);
 }
+
 }

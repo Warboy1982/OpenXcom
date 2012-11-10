@@ -191,15 +191,16 @@ void ProjectileFlyBState::init()
 		return;
 	}
 
-	createNewProjectile();
-
-	BattleAction action;
-	BattleUnit *potentialVictim = _parent->getSave()->getTile(_action.target)->getUnit();
-	if (potentialVictim && potentialVictim->getFaction() != _unit->getFaction())
+	if (createNewProjectile() == true)
 	{
-		if (_parent->getSave()->getTileEngine()->checkReactionFire(_unit, &action, potentialVictim, false))
+		BattleAction action;
+		BattleUnit *potentialVictim = _parent->getSave()->getTile(_action.target)->getUnit();
+		if (potentialVictim && potentialVictim->getFaction() != _unit->getFaction())
 		{
-			_parent->statePushBack(new ProjectileFlyBState(_parent, action));
+			if (_parent->getSave()->getTileEngine()->checkReactionFire(_unit, &action, potentialVictim, false))
+			{
+				_parent->statePushBack(new ProjectileFlyBState(_parent, action));
+			}
 		}
 	}
 }
@@ -207,8 +208,9 @@ void ProjectileFlyBState::init()
 /**
  * - create a projectile sprite & add it to the map
  * - calculate it's trajectory
+ * @return whether it succeeded
  */
-void ProjectileFlyBState::createNewProjectile()
+bool ProjectileFlyBState::createNewProjectile()
 {
 	// create a new projectile
 	Projectile *projectile = new Projectile(_parent->getResourcePack(), _parent->getSave(), _action, _origin);
@@ -236,7 +238,7 @@ void ProjectileFlyBState::createNewProjectile()
 			_parent->getMap()->setProjectile(0);
 			_action.result = "STR_UNABLE_TO_THROW_HERE";
 			_parent->popState();
-			return;
+			return false;
 		}
 	}
 	else
@@ -251,7 +253,7 @@ void ProjectileFlyBState::createNewProjectile()
 				_parent->getMap()->setProjectile(0);
 				_action.result = "STR_UNABLE_TO_SHOOT_HERE";
 				_parent->popState();
-				return;
+				return false;
 			}
 
 		}
@@ -283,9 +285,11 @@ void ProjectileFlyBState::createNewProjectile()
 			_parent->getMap()->setProjectile(0);
 			_action.result = "STR_NO_LINE_OF_FIRE";
 			_parent->popState();
-			return;
+			return false;
 		}
 	}
+
+	return true;
 }
 
 /**

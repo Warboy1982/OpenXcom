@@ -178,7 +178,7 @@ void BattlescapeGame::handleAI(BattleUnit *unit)
 	_AIActionCounter++;
 
 	AggroBAIState *aggro = dynamic_cast<AggroBAIState*>(ai);
-	
+
 	BattleAction action;
 	unit->think(&action);
 	if (action.type == BA_WALK)
@@ -189,6 +189,7 @@ void BattlescapeGame::handleAI(BattleUnit *unit)
 
 	if (action.type == BA_SNAPSHOT || action.type == BA_AUTOSHOT || action.type == BA_FULLAUTO || action.type == BA_THROW)
 	{
+		action.actor->lookAt(action.target);
 		statePushBack(new ProjectileFlyBState(this, action));
 	}
 	
@@ -717,7 +718,7 @@ void BattlescapeGame::popState()
 						_currentAction.waypoints.clear();
 					}
 
-					cancelCurrentAction();
+					cancelCurrentAction(true);
 				}
 				_parentState->getGame()->getCursor()->setVisible(true);
 				setupCursor();
@@ -965,13 +966,13 @@ bool BattlescapeGame::dontSpendTUs()
   * This will cancel the current action the user had selected (firing, throwing,..)
   * @return Whether an action was cancelled or not.
   */
-bool BattlescapeGame::cancelCurrentAction()
+bool BattlescapeGame::cancelCurrentAction(bool bForce)
 {
 	bool bPreviewed = Options::getBool("battlePreviewPath");
 
 	if (_save->getPathfinding()->removePreview() && bPreviewed) return true;
 
-	if (_states.empty())
+	if (_states.empty() || bForce)
 	{
 		if (_currentAction.targeting)
 		{
@@ -1204,6 +1205,10 @@ void BattlescapeGame::dropItem(const Position &position, BattleItem *item, bool 
 	if (_save->getTile(p) == 0)
 		return;
 
+	// don't ever drop fixed items
+	if (item->getRules()->isFixed())
+		return;
+
 	_save->getTile(p)->addItem(item, getRuleset()->getInventory("STR_GROUND"));
 
 	if(newItem)
@@ -1227,6 +1232,52 @@ void BattlescapeGame::dropItem(const Position &position, BattleItem *item, bool 
 	}
 
 }
+
+/*
+ * Convert a unit into a unit of another type.
+ */
+BattleUnit *BattlescapeGame::convertUnit(BattleUnit *unit, std::string newType)
+{
+	// in case the unit was unconscious
+	getSave()->removeUnconsciousBodyItem(unit);
+	unit->instaKill();
+	for (std::vector<BattleItem*>::iterator i = unit->getInventory()->begin(); i != unit->getInventory()->end(); ++i)
+	{
+		dropItem(unit->getPosition(), (*i));
+	}
+
+	unit->getInventory()->clear();
+
+	// remove unit-tile link
+	unit->setTile(0);
+
+	getSave()->getTile(unit->getPosition())->setUnit(0);
+	std::stringstream newArmor;
+	newArmor << newType;
+	newArmor << "_ARMOR";
+	std::stringstream newWeapon;
+	newWeapon << newType;
+	newWeapon << "_WEAPON";
+	
+	BattleUnit *_newUnit = new BattleUnit(getRuleset()->getUnit(newType), FACTION_HOSTILE, getSave()->getUnits()->size(), getRuleset()->getArmor(newArmor.str()));
+	RuleItem *newItem = getRuleset()->getItem(newWeapon.str());
+
+	getSave()->getTile(unit->getPosition())->setUnit(_newUnit);
+	_newUnit->setPosition(unit->getPosition());
+	_newUnit->setCache(0);
+	getSave()->getUnits()->push_back(_newUnit);
+	getMap()->cacheUnit(_newUnit);
+	_newUnit->setAIState(new PatrolBAIState(getSave(), _newUnit, 0));
+	
+	BattleItem *bi = new BattleItem(newItem, getSave()->getCurrentItemId());
+	bi->moveToOwner(_newUnit);
+	bi->setSlot(getRuleset()->getInventory("STR_RIGHT_HAND"));
+	getSave()->getItems()->push_back(bi);
+
+	return _newUnit;
+
+}
+
 
 /**
  * Get map

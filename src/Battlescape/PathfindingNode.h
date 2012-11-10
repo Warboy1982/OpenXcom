@@ -35,7 +35,7 @@ class PathfindingNode
 private:
 	Position _pos;
 	bool _checked;
-	int _tuCost, _stepsNum;
+	int _tuCost;
 	PathfindingNode* _prevNode;
 	int _prevDir;
 	/// Approximate cost to reach goal position.
@@ -70,6 +70,18 @@ public:
 	int getTUGuess() const { return _tuGuess; }
 	/// Connect to previous node along the path.
 	void connect(int tuCost, PathfindingNode* prevNode, int prevDir, const Position &target);
+	/// Connect to previous node along a visit.
+	void connect(int tuCost, PathfindingNode* prevNode, int prevDir);
+};
+
+/** Compare PathfindingNode pointers based on TU cost. */
+class MinNodeCosts
+{
+public:
+	bool operator()(const PathfindingNode *a, const PathfindingNode *b) const
+	{
+		return a->getTUCost() < b->getTUCost();
+	}
 };
 
 }

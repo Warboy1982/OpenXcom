@@ -41,6 +41,9 @@ private:
 	Position _center;
 	BattleItem *_item;
 	Tile *_tile;
+	int _power;
+	bool _areaOfEffect;
+	void explode();
 public:
 	/// Creates a new ExplosionBState class
 	ExplosionBState(BattlescapeGame *parent, Position center, BattleItem *item, BattleUnit *unit, Tile *tile = 0);

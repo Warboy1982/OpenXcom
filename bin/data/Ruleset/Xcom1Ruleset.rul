@@ -2403,10 +2403,12 @@ items:
     size: 0.1
     costSell: 15200
     weight: 3
-    bigSprite: 38
-    floorSprite: 37
-    hitSound: 0
-    hitAnimation: 0
+    bigSprite: 32
+    floorSprite: 31
+    handSprite: 104
+    hitSound: 48
+    hitAnimation: 36
+    clipSize: -1
     power: 90
     damageType: 6
     clipSize: 1
@@ -2797,7 +2799,9 @@ items:
     bigSprite: 32
     floorSprite: 31
     handSprite: 104
-    hitSound: 48
+    bulletSprite: 8
+    fireSound: 51
+    hitSound: 19
     hitAnimation: 36
     power: 140
     damageType: 8
@@ -2810,7 +2814,6 @@ items:
     invWidth: 1
     invHeight: 2
     clipSize: -1
-    bulletSprite: 9
     recover: false
     grenade: true
   - type: SILACOID_WEAPON
@@ -5549,9 +5552,9 @@ units:
     loftemps: 3
     value: 15
     deathSound: 8
+    moveSound: 0
     intelligence: 2
     aggression: 2
-    moveSound: 0
   - type: SNAKEMAN_NAVIGATOR
     race: STR_SNAKEMAN
     rank: STR_LIVE_NAVIGATOR
@@ -5573,9 +5576,9 @@ units:
     loftemps: 3
     value: 17
     deathSound: 8
+    moveSound: 0
     intelligence: 3
     aggression: 2
-    moveSound: 0
   - type: SNAKEMAN_ENGINEER
     race: STR_SNAKEMAN
     rank: STR_LIVE_ENGINEER
@@ -5597,9 +5600,9 @@ units:
     loftemps: 3
     value: 20
     deathSound: 8
+    moveSound: 0
     intelligence: 4
     aggression: 2
-    moveSound: 0
   - type: SNAKEMAN_LEADER
     race: STR_SNAKEMAN
     rank: STR_LIVE_LEADER
@@ -5621,9 +5624,9 @@ units:
     loftemps: 3
     value: 28
     deathSound: 8
+    moveSound: 0
     intelligence: 5
     aggression: 2  
-    moveSound: 0
   - type: SNAKEMAN_COMMANDER
     race: STR_SNAKEMAN
     rank: STR_LIVE_COMMANDER
@@ -5645,9 +5648,9 @@ units:
     loftemps: 3
     value: 36
     deathSound: 8
+    moveSound: 0
     intelligence: 6
     aggression: 2 
-    moveSound: 0
   - type: MUTON_SOLDIER
     race: STR_MUTON
     rank: STR_LIVE_SOLDIER
@@ -5812,6 +5815,7 @@ units:
     deathSound: 49
     intelligence: 4
     aggression: 1
+    zombieUnit: ZOMBIE
   - type: SILACOID
     race: STR_SILACOID
     rank: STR_LIVE_TERRORIST
@@ -5836,6 +5840,7 @@ units:
     moveSound: 47
     intelligence: 3
     aggression: 2
+    specab: 2
   - type: CELATID
     race: STR_CELATID
     rank: STR_LIVE_TERRORIST
@@ -5909,6 +5914,7 @@ units:
     intelligence: 3
     aggression: 2
     specab: 2
+    spawnUnit: CHRYSSALID
 alienRaces:
   - id: STR_SECTOID
     members:
@@ -7168,11 +7174,11 @@ alienDeployments:
         percentageOutsideUfo: 0
         itemSets:
           -
-            []	
+            []			
       - alienRank: 7
-        lowQty: 0
-        highQty: 1
-        dQty: 1
+        lowQty: 1
+        highQty: 3
+        dQty: 2
         percentageOutsideUfo: 50
         itemSets:
           -
@@ -7393,15 +7399,15 @@ alienDeployments:
         percentageOutsideUfo: 50
         itemSets:
           -
-            []			
+            []
       - alienRank: 7
-        lowQty: 0
-        highQty: 1
+        lowQty: 1
+        highQty: 3
         dQty: 2
-        percentageOutsideUfo: 50
+        percentageOutsideUfo: 0
         itemSets:
           -
-            []		
+            []
     width: 50
     length: 50
     height: 4
@@ -9239,8 +9245,6 @@ ufopaedia:
   - id: STR_FUSION_BALL_DEFENSES
     type_id: 6
     section: STR_BASE_FACILITIES
-    requires:
-      - STR_FUSION_BALL_DEFENSES
     text: STR_FUSION_BALL_DEFENSES_UFOPEDIA
   - id: STR_GRAV_SHIELD
     type_id: 6

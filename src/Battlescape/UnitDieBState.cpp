@@ -23,8 +23,6 @@
 #include "BattlescapeState.h"
 #include "Map.h"
 #include "Camera.h"
-#include "PatrolBAIState.h"
-#include "Pathfinding.h"
 #include "../Engine/Game.h"
 #include "../Savegame/BattleUnit.h"
 #include "../Savegame/SavedBattleGame.h"
@@ -36,7 +34,7 @@
 #include "../Engine/RNG.h"
 #include "../Ruleset/Armor.h"
 #include "../Ruleset/Unit.h"
-#include "../Savegame/BattleItem.h"
+#include "PatrolBAIState.h"
 
 namespace OpenXcom
 {
@@ -59,6 +57,7 @@ UnitDieBState::UnitDieBState(BattlescapeGame *parent, BattleUnit *unit, ItemDama
 	{
 		_parent->getMap()->getCamera()->centerOnPosition(_unit->getPosition());
 		_parent->setStateInterval(BattlescapeState::DEFAULT_ANIM_SPEED);
+		_originalDir = _unit->getDirection();
 		_unit->lookAt(3); // unit goes into status TURNING to prepare for a nice dead animation
 	}
 
@@ -114,11 +113,16 @@ void UnitDieBState::think()
 
 	if (_unit->getStatus() == STATUS_DEAD || _unit->getStatus() == STATUS_UNCONSCIOUS)
 	{
-		if (_unit->getSpecialAbility() == SPECAB_MORPHONDEATH && _unit->getArmor()->getSize() == 1)
-		convertUnitToChryssalid();
+		if (!_unit->getSpawnUnit().empty())
+		{
+			// converts the dead zombie to a chryssalid
+			BattleUnit *newUnit = _parent->convertUnit(_unit, _unit->getSpawnUnit());
+			newUnit->lookAt(_originalDir);
+		}
 		else 
-		convertUnitToCorpse();
-
+		{
+			convertUnitToCorpse();
+		}
 		_parent->getTileEngine()->calculateUnitLighting();
 		_parent->popState();
 		if (_unit->getSpecialAbility() == SPECAB_EXPLODEONDEATH)
@@ -140,8 +144,6 @@ void UnitDieBState::cancel()
 
 /*
  * Convert unit to corpse(item).
- * @param unit
- * @param terrain
  */
 void UnitDieBState::convertUnitToCorpse()
 {
@@ -186,55 +188,6 @@ void UnitDieBState::convertUnitToCorpse()
 			}
 		}
 	}
-}
-
-void UnitDieBState::convertUnitToChryssalid()
-{
-	// in case the unit was unconscious
-	_parent->getSave()->removeUnconsciousBodyItem(_unit);
-	_unit->killUnit();
-	if(_unit->getType() != "ZOMBIE")
-	for (std::vector<BattleItem*>::iterator i = _unit->getInventory()->begin(); i != _unit->getInventory()->end(); ++i)
-	{
-		_parent->dropItem(_unit->getPosition(), (*i));
-	}
-
-	_unit->getInventory()->clear();
-
-	// remove unit-tile link
-	_unit->setTile(0);
-
-	// set up the new unit, i know it's bad to hardcode things like unit names, 
-	// especially in a manner like this, as it will crash if these units aren't defined in the ruleset
-	// todo: perhaps add additional flags to unit types, like _inflictsmorph, _morphToInflict and morphTo, instead of using hardcoded names?
-	_parent->getSave()->getTile(_unit->getPosition())->setUnit(0);
-		char *_newRace = "ZOMBIE";
-		char *_newArmor = "ZOMBIE_ARMOR";
-		char *_newWeapon = "ZOMBIE_WEAPON";
-	
-	if(_unit->getType() == "ZOMBIE")
-	{
-		_newRace = "CHRYSSALID";
-		_newArmor = "CHRYSSALID_ARMOR";
-		_newWeapon = "CHRYSSALID_WEAPON";
-	}
-
-	BattleUnit *_newUnit = new BattleUnit(_parent->getRuleset()->getUnit(_newRace), FACTION_HOSTILE, _parent->getSave()->getUnits()->size(), _parent->getRuleset()->getArmor(_newArmor));
-	RuleItem *newItem = _parent->getRuleset()->getItem(_newWeapon);
-
-	_parent->getSave()->getTile(_unit->getPosition())->setUnit(_newUnit);
-	_newUnit->setPosition(_unit->getPosition());
-	_newUnit->setDirection(3);
-	_newUnit->setCache(0);
-	_newUnit->InvalidateCache();
-	_parent->getSave()->addUnit(_newUnit);
-	_parent->getMap()->cacheUnit(_newUnit);
-	_newUnit->setAIState(new PatrolBAIState(_parent->getSave(), _newUnit, 0));
-	
-	BattleItem *bi = new BattleItem(newItem, _parent->getSave()->getCurrentItemId());
-	bi->moveToOwner(_newUnit);
-	bi->setSlot(_parent->getRuleset()->getInventory("STR_RIGHT_HAND"));
-
 }
 
 }

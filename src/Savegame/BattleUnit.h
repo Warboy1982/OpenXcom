@@ -95,6 +95,7 @@ private:
 	int _value, _deathSound, _moveSound;
 	int _intelligence, _aggression;
 	SpecialAbility _specab;
+	std::string _zombieUnit, _spawnUnit;
 	Armor *_armor;
 	SoldierGender _gender;
 	std::string _activeHand;
@@ -323,11 +324,14 @@ public:
 	std::string getActiveHand() const;
 	/// Convert's unit to a faction
 	void convertToFaction(UnitFaction f);
+	/// Changes unit's gender
 	void setFemale(int g);
-	void setFaction(UnitFaction f);
-	void setSpecAb();
-	void killUnit();
-	void InvalidateCache();
+	/// Set health to 0 and set status dead
+	void instaKill();
+	/// Gets the unit's zombie unit.
+	std::string getZombieUnit() const;
+	/// Gets the unit's spawn unit.
+	std::string getSpawnUnit() const;
 };
 
 }

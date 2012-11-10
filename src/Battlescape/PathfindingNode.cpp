@@ -27,7 +27,7 @@ namespace OpenXcom
  * Sets up a PathfindingNode.
  * @param pos Position.
  */
-PathfindingNode::PathfindingNode(Position pos) : _pos(pos), _checked(false), _tuCost(0), _stepsNum(0), _prevNode(0), _prevDir(0)
+PathfindingNode::PathfindingNode(Position pos) : _pos(pos), _openentry(0)
 {
 
 }
@@ -76,15 +76,6 @@ int PathfindingNode::getTUCost() const
 }
 
 /**
- * Get steps num
- * @return steps num
- */
-int PathfindingNode::getStepsNum() const
-{
-	return _stepsNum;
-}
-
-/**
  * Get previous node
  * @return pointer to previous node
  */
@@ -119,9 +110,22 @@ void PathfindingNode::connect(int tuCost, PathfindingNode* prevNode, int prevDir
 	{
 		Position d = target - _pos;
 		d *= d;
-		float number = d.x + d.y + d.z;
-		_tuGuess = 4 * sqrt(number);
+		_tuGuess = 4 * sqrt((double)d.x + d.y + d.z);
 	}
+}
+
+/**
+ * Connect node. This will connect the node to the previous node along the path.
+ * @param tuCost The total cost of the path so far.
+ * @param prevNode The previous node along the path.
+ * @param prevDir The direction FROM the previous node.
+*/
+void PathfindingNode::connect(int tuCost, PathfindingNode* prevNode, int prevDir)
+{
+	_tuCost = tuCost;
+	_prevNode = prevNode;
+	_prevDir = prevDir;
+	_tuGuess = 0;
 }
 
 

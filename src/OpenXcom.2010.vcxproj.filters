@@ -675,14 +675,15 @@
     <ClCompile Include="Geoscape\UfoHyperDetectedState.cpp">
       <Filter>Geoscape</Filter>
     </ClCompile>
-    <ClCompile Include="Basescape\PlaceStartFacilityState.cpp">
+    <ClCompile Include="Basescape\SelectStartFacilityState.cpp">
       <Filter>Basescape</Filter>
     </ClCompile>
-    <ClCompile Include="Basescape\SelectStartFacilityState.cpp">
+    <ClCompile Include="Basescape\PlaceStartFacilityState.cpp">
       <Filter>Basescape</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Basescape\ManufactureState.h">
       <Filter>Basescape</Filter>
     </ClInclude>
@@ -762,6 +763,9 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Timer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Font.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Game.h">
@@ -1005,6 +1009,9 @@
       <Filter>Battlescape</Filter>
     </ClInclude>
     <ClInclude Include="Battlescape\PathfindingNode.h">
+      <Filter>Battlescape</Filter>
+    </ClInclude>
+    <ClInclude Include="Battlescape\PathfindingOpenSet.h">
       <Filter>Battlescape</Filter>
     </ClInclude>
     <ClInclude Include="Savegame\BattleItem.h">
@@ -1318,9 +1325,6 @@
     <ClInclude Include="Geoscape\NewPossibleManufactureState.h">
       <Filter>Geoscape</Filter>
     </ClInclude>
-    <ClInclude Include="Battlescape\PathfindingOpenSet.h">
-      <Filter>Battlescape</Filter>
-    </ClInclude>
     <ClInclude Include="Geoscape\PsiTrainingState.h">
       <Filter>Geoscape</Filter>
     </ClInclude>
@@ -1332,9 +1336,6 @@
     </ClInclude>
     <ClInclude Include="Menu\SavedGameState.h">
       <Filter>Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Font.h">
-      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Geoscape\AllocatePsiTrainingState.h">
       <Filter>Geoscape</Filter>
@@ -1360,12 +1361,15 @@
     <ClInclude Include="Geoscape\UfoHyperDetectedState.h">
       <Filter>Geoscape</Filter>
     </ClInclude>
-    <ClInclude Include="Basescape\PlaceStartFacilityState.h">
-      <Filter>Basescape</Filter>
-    </ClInclude>
     <ClInclude Include="Basescape\SelectStartFacilityState.h">
       <Filter>Basescape</Filter>
     </ClInclude>
+    <ClInclude Include="Basescape\PlaceStartFacilityState.h">
+      <Filter>Basescape</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OpenXcom.rc" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Geoscape">

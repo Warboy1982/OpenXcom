@@ -137,60 +137,7 @@ void ExplosionBState::think()
 			_parent->getMap()->getExplosions()->erase((*i));
 			if (_parent->getMap()->getExplosions()->empty())
 			{
-				bool terrainExplosion = false;
-				SavedBattleGame *save = _parent->getSave();
-				// after the animation is done, the real explosion/hit takes place
-				if (_item)
-				{
-					// heavy explosions, incendiary, smoke or stun bombs create AOE explosions
-					// all the rest hits one point:
-					// AP, melee (stun or AP), laser, plasma, acid
-					if (_item->getRules()->getBattleType() != BT_MELEE && ((_item->getRules()->getDamageType() == DT_FLASH || _item->getRules()->getDamageType() == DT_HE || _item->getRules()->getDamageType() == DT_SMOKE|| _item->getRules()->getDamageType() == DT_STUN)||(_item->getRules()->getDamageType() == DT_IN && !_item->getRules()->isFlamer())))
-					{
-						save->getTileEngine()->explode(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), _item->getRules()->getExplosionRadius(), _unit);
-					}
-					else if (_item->getRules()->getType()== "STR_HWP_CANNON_SHELLS")
-					{
-						save->getTileEngine()->explode(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), 1, _unit);
-					}
-					else
-					{
-						if(!_item->getRules()->isFlamer())
-						{
-						save->getTileEngine()->hit(_center, _item->getRules()->getPower(), _item->getRules()->getDamageType(), _unit);
-						}
-					}
-				}
-				if (_tile)
-				{
-					save->getTileEngine()->explode(_center, _tile->getExplosive(), DT_HE, 100);
-				}
-				if (!_tile && !_item)
-				{
-					// explosion not caused by terrain or an item, must be by a unit (cyberdisc)
-					save->getTileEngine()->explode(_center, 120, DT_HE, 8);
-					terrainExplosion = true;
-				}
-
-				// now check for new casualties
-				_parent->checkForCasualties(_item, _unit, false, terrainExplosion);
-
-				// if this explosion was caused by a unit shooting, now it's the time to put the gun down
-				if (_unit && !_unit->isOut())
-				{
-					_unit->aim(false);
-				}
-				_parent->getMap()->cacheUnits();
-				_parent->popState();
-
-				// check for terrain explosions
-				Tile *t = save->getTileEngine()->checkForTerrainExplosions();
-				if (t)
-				{
-					Position p = Position(t->getPosition().x * 16, t->getPosition().y * 16, t->getPosition().z * 24);
-					_parent->statePushNext(new ExplosionBState(_parent, p, 0, _unit, t));
-				}
-
+				explode();
 				return;
 			}
 		}
@@ -202,6 +149,60 @@ void ExplosionBState::think()
  */
 void ExplosionBState::cancel()
 {
+}
+
+void ExplosionBState::explode()
+{
+	bool terrainExplosion = false;
+	SavedBattleGame *save = _parent->getSave();
+	// after the animation is done, the real explosion/hit takes place
+	if (_item)
+	{
+		if (_areaOfEffect)
+		{
+			save->getTileEngine()->explode(_center, _power, _item->getRules()->getDamageType(), _item->getRules()->getExplosionRadius(), _unit);
+		}
+		else
+		{
+			BattleUnit *victim = save->getTileEngine()->hit(_center, _power, _item->getRules()->getDamageType(), _unit);
+			// check if this unit turns others into zombies
+			if (!_unit->getZombieUnit().empty() && victim)
+			{
+				// converts the victim to a zombie
+				_parent->convertUnit(victim, _unit->getZombieUnit());
+			}
+		}
+	}
+	if (_tile)
+	{
+		save->getTileEngine()->explode(_center, _power, DT_HE, 100);
+	}
+	if (!_tile && !_item)
+	{
+		// explosion not caused by terrain or an item, must be by a unit (cyberdisc)
+		save->getTileEngine()->explode(_center, _power, DT_HE, 8);
+		terrainExplosion = true;
+	}
+
+	// now check for new casualties
+	_parent->checkForCasualties(_item, _unit, false, terrainExplosion);
+
+	// if this explosion was caused by a unit shooting, now it's the time to put the gun down
+	if (_unit && !_unit->isOut())
+	{
+		_unit->aim(false);
+	}
+	_parent->getMap()->cacheUnits();
+	_parent->popState();
+
+	// check for terrain explosions
+	Tile *t = save->getTileEngine()->checkForTerrainExplosions();
+	if (t)
+	{
+		Position p = Position(t->getPosition().x * 16, t->getPosition().y * 16, t->getPosition().z * 24);
+		_parent->statePushNext(new ExplosionBState(_parent, p, 0, _unit, t));
+	}
+
 }
 
 }

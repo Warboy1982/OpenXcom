@@ -98,7 +98,12 @@ void AggroBAIState::save(YAML::Emitter &out) const
 void AggroBAIState::enter()
 {
 	// ROOOAARR !
-
+	if (unit->getType() == "CHRYSSALID" && aggro)
+	{
+		// if the unit is in aggro state and starts walking (to get in melee range) play this aggro sound
+		// todo: put the aggro sound in the ruleset
+		getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(49)->play();
+	}
 }
 
 
@@ -157,6 +162,7 @@ void AggroBAIState::think(BattleAction *action)
 		if (_unit->getHealth() < _unit->getStats()->health)
 			number += 10;
 		number -= _game->getDifficulty()*10;
+
 		// aggrotarget has no weapon - chances of take cover get smaller
 		if (!_aggroTarget->getMainHandWeapon())
 			number -= 50;
@@ -192,7 +198,7 @@ void AggroBAIState::think(BattleAction *action)
 				// do we have a grenade on our belt?
 				BattleItem *grenade = _unit->getGrenadeFromBelt();
 				// do we have enough TUs to prime and throw the grenade?
-				if (grenade)
+				if (grenade && RNG::generate(0,2) == 0)
 				{
 					action->weapon = grenade;
 					tu += _unit->getActionTUs(BA_PRIME, grenade);
@@ -223,6 +229,7 @@ void AggroBAIState::think(BattleAction *action)
 				else
 				{
 					if(((_unit->getFaction() == FACTION_NEUTRAL && _aggroTarget->getFaction() == FACTION_HOSTILE) || _unit->getFaction() == FACTION_HOSTILE) && _game->getTileEngine()->distance(_unit->getPosition(), _aggroTarget->getPosition()) <= action->weapon->getRules()->getWeaponRange())
+
 					{
 						if (action->weapon->getRules()->getBattleType() == BT_MELEE)
 							action->type = BA_HIT;

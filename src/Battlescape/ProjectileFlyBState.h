@@ -38,7 +38,6 @@ private:
 	Position _origin;
 	int _autoshotCounter;
 	int _projectileImpact;
-	void createNewProjectile();
 	int _buckshotCounter;
 	Position pelleta;
 	Position pelletb;
@@ -46,6 +45,7 @@ private:
 	Position pelletd;
 	Position pellete;
 	Position pelletf;
+	bool createNewProjectile();
 	bool _initialized;
 	int dummy;
 public:

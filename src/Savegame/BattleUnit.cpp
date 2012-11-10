@@ -111,6 +111,8 @@ BattleUnit::BattleUnit(Unit *unit, UnitFaction faction, int id, Armor *armor) : 
 	_intelligence = unit->getIntelligence();
 	_aggression = unit->getAggression();
 	_specab = (SpecialAbility) unit->getSpecialAbility();
+	_zombieUnit = unit->getZombieUnit();
+	_spawnUnit = unit->getSpawnUnit();
 	_value = unit->getValue();
 	_gender = GENDER_MALE;
 
@@ -978,7 +980,7 @@ int BattleUnit::getActionTUs(BattleActionType actionType, BattleItem *item)
  */
 bool BattleUnit::spendTimeUnits(int tu, bool debugmode)
 {
-	if (debugmode && _faction == FACTION_PLAYER) return true;
+	if (debugmode) return true;
 
 	if (tu <= _tu)
 	{
@@ -1923,6 +1925,24 @@ int BattleUnit::getSpecialAbility() const
 }
 
 /**
+ * Get the unit that the victim is morphed into when attacked.
+ * @return unit.
+ */
+std::string BattleUnit::getZombieUnit() const
+{
+	return _zombieUnit;
+}
+
+/**
+ * Get the unit that is spawned when this one dies.
+ * @return unit.
+ */
+std::string BattleUnit::getSpawnUnit() const
+{
+	return _spawnUnit;
+}
+
+/**
 /// Get the units's rank string.
  */
 std::string BattleUnit::getRankString() const
@@ -1955,7 +1975,7 @@ void BattleUnit::setActiveHand(const std::string &hand)
 	_activeHand = hand;
 }
 /**
-/// Get unit's active hand.
+ * Get unit's active hand.
  */
 std::string BattleUnit::getActiveHand() const
 {
@@ -1964,6 +1984,9 @@ std::string BattleUnit::getActiveHand() const
 	return "STR_RIGHT_HAND";
 }
 
+/**
+ * Converts unit to another faction (original faction is still stored).
+ */
 void BattleUnit::convertToFaction(UnitFaction f)
 {
 	_faction = f;
@@ -1974,25 +1997,13 @@ void BattleUnit::setFemale(int g)
 	_gender = GENDER_FEMALE;
 }
 
-void BattleUnit::setFaction(UnitFaction f)
-{
-	_faction = f;
-	_originalFaction = f;
-}
-
-void BattleUnit::setSpecAb()
-{
-	if(!_specab)
-	_specab = SPECAB_MORPHONDEATH;
-}
-void BattleUnit::killUnit()
+/**
+ * Set health to 0 and set status dead - used when getting zombified.
+ */
+void BattleUnit::instaKill()
 {
 	_health = 0;
 	_status = STATUS_DEAD;
-}
-void BattleUnit::InvalidateCache()
-{
-	_cacheInvalid = true;
 }
 }
 
