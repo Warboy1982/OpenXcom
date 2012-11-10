@@ -98,12 +98,6 @@ void AggroBAIState::save(YAML::Emitter &out) const
 void AggroBAIState::enter()
 {
 	// ROOOAARR !
-	if (unit->getType() == "CHRYSSALID" && aggro)
-	{
-		// if the unit is in aggro state and starts walking (to get in melee range) play this aggro sound
-		// todo: put the aggro sound in the ruleset
-		getResourcePack()->getSoundSet("BATTLE.CAT")->getSound(49)->play();
-	}
 }
 
 

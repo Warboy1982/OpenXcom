@@ -537,7 +537,7 @@ void UnitSprite::drawRoutine2()
 	const int offy[8] = { -1, -3, -4, -5, -4, -3, -1, -1 }; // hovertank offsets
 
 	Surface *s = 0;
-	int turret = _unit->getTurretType();
+	int turret = _unit->getMainHandWeapon()->getRules()->getTurretType();
 
 	// draw the animated propulsion below the hwp
 	if (_part > 0 && hoverTank != 0)

@@ -332,6 +332,8 @@ public:
 	std::string getZombieUnit() const;
 	/// Gets the unit's spawn unit.
 	std::string getSpawnUnit() const;
+	/// Convert's unit to a faction (complete conversion)
+	void setFaction(UnitFaction f);
 };
 
 }

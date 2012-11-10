@@ -198,13 +198,6 @@ void BattlescapeGame::handleAI(BattleUnit *unit)
 		
 		Tile *targetTile = _save->getTile(action.target);
 		BattleUnit *target = targetTile->getUnit();
-		if (action.actor->getType() == "CHRYSSALID"||action.actor->getType() == "ZOMBIE")
-			{
-				if (target != 0 && target->getType() != "CHRYSSALID" && target->getArmor()->getSize() == 1)
-				{
-					target->setSpecAb();
-				}
-			}
 		action.actor->lookAt(action.target);
 		Position voxel = Position(targetTile->getPosition().x*16,targetTile->getPosition().y*16,targetTile->getPosition().z*24);
 		voxel.x += 8;voxel.y += 8;voxel.z += 8;
@@ -530,10 +523,6 @@ void BattlescapeGame::handleNonTargetAction()
 					{
 						Tile *targetTile = _save->getTile(_currentAction.target);
 						BattleUnit *target = targetTile->getUnit();
-						if (target != 0 && target->getType() != "CHRYSSALID" && target->getArmor()->getSize() == 1)
-						{
-							target->setSpecAb();
-						}
 					}
 					Position p;
 					Pathfinding::directionToVector(_currentAction.actor->getDirection(), &p);

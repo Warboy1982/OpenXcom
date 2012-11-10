@@ -683,7 +683,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Basescape\ManufactureState.h">
       <Filter>Basescape</Filter>
     </ClInclude>
@@ -1367,9 +1366,6 @@
     <ClInclude Include="Basescape\PlaceStartFacilityState.h">
       <Filter>Basescape</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="OpenXcom.rc" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Geoscape">

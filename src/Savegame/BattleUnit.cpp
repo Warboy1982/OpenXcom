@@ -2005,5 +2005,14 @@ void BattleUnit::instaKill()
 	_health = 0;
 	_status = STATUS_DEAD;
 }
+
+/**
+ * Converts unit to another faction (original faction too).
+ */
+void BattleUnit::setFaction(UnitFaction f)
+{
+	_originalFaction = f;
+	_faction = f;
+}
 }
 

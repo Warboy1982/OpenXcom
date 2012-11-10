@@ -172,14 +172,6 @@ void ProjectileFlyBState::init()
 			_parent->popState();
 			return;
 		}
-		if (_action.actor->getType() == "CHRYSSALID"||_action.actor->getType() == "ZOMBIE")
-			{
-				BattleUnit *target = _parent->getSave()->getTile(_action.target)->getUnit();
-				if (target != 0 && target->getType() != "CHRYSSALID" && target->getArmor()->getSize() == 1)
-				{
-					target->setSpecAb();
-				}
-			}
 
 		break;
 	case BA_PANIC:
