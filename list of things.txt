@@ -1,0 +1,99 @@
+    GEOSCAPE:
+make funding nations much harder to please, make them drop out more often, and when they sign a pact, start 
+    generating anti-infiltration missions somewhere in their country (use alien base as a template for how to 
+    generate a hidden mission) at a rate of about 1.5 per month, and start generating military defence missions 
+    every few weeks or so until all anti-infiltration missions are complete, and set the funding nation to "happy" 
+mission types: STR_ANTI_INFILTRATION, STR_MILITARY_DEFENCE STR_PURGE, STR_CULTIST_DEFENCE, STR_CULTIST_BASE
+
+    UNITS:
+    ground tanks will get sonic detector arrays (motion scanner) and better armour
+    hovertanks will get.... screwed because they can already fly.
+tank scanner - uses motion scanner algorithm to place "blips" representing movement on the battlescape (passive effect?) 
+    - false positives
+pester luke to finish sailors for port terror missions. give them all knives and surly dispositions.
+Cult of Sirius! (rank 8 alien, human cultist, 1 in 6 chance for 3-5 humans)
+Inventory screens for all units in game
+bases need a new vector for dead soldiers with information on days dead, and only actually REMOVE them from the game after this 
+    counter reaches... 2 days? after which decomposition kicks in and the scientists "clean out the fridge"
+    
+    
+    BASE:
+make wounded soldiers transferrable at double the usual time, with no healing en-route
+sattelite defense network? - extra base with free planet wide hyper-wave decode, 
+    quadruple transit times, no possibility for manufacturing facilities, no hangers. - new map
+research of reproduction leads to new base facility - cloning facility 
+    - allows for dead soldiers to be revived with their stats reduced slightly - option to splice with 
+    alien DNA to improve psychic defence by x amount at the cost of... strength? health? stamina? all of the above?
+    soldier revival will show up as a research project with an additional sub-menu that lists all "dead" soldiers
+    less than 2 days old.
+    
+    MAPS:
+add expanded terror sites
+add port terror site
+pester luke for more rotated ships.
+make a new map type for ground-based assaults, with a 40x40 tile to represent the base compound on a 60x60 map
+spawn 10-20 engineers and scientists on base defence missions, faction_neutral,
+Race specific items and Maps EG: Egg sacks for snakeman, clone tanks for sectiods - recover as alien reproduction
+cultist bases pop up - new mission type: purge - destroy the cultists
+
+    CRAFTS:
+ufopedia entries for new weapons
+use weapon mount on craft in missions?
+
+
+
+    DONE:
+live alien research works, including martian solution and cydonia or bust and stuff.
+ranked aliens give extra info (ie: engineers give info on ship types)
+ufopedia only shows researched items once
+funding nations are gathering relevant data
+activity points for research completion
+BATTLE MECHS! - HWP with burst fire.
+alien containment.
+all new facilities now have new graphics, now they need new maps.
+looks like no mechanic exists for psi training? fixed.
+Training Room for xcom agents using similar rules to X-com apocalypse - not similar, exactly the damn same.
+number of aliens on veteran and genius should be the average of beginner/experienced and superhuman
+grenade likelihood is affected by difficulty
+aliens will "remember" where you are for an extra turn per difficulty level
+aliens now get activity points for flying around, or if you ignore a terror mission.
+you now get activity points (with regions and countries) for shooting down UFOs, carrying out missions and completing research
+funky new sprite for sentinel implemented :D
+psi training works, yeehaw.
+New ufo layouts for variety
+tank shells explode.
+new tank type - sectopods! - need to research to construct, recolour of original sprites? (thinking give em a blue visor)
+medical bay and doctors added - decreases convalescence time of wounded units based on the number of doctors on hand (current formula is 15 doctors = double heal rate, 40 doctors = triple, 60+ doctors (requires 2 hospitals) = quadruple)
+cloning facility added
+third map type for terror missions: now has commercial, residential and military base.
+researchable disruptor and gauss cannons for hovertanks and crafts
+complete armour rework
+complete weapon damage workover
+hovertank turret placement fixed.
+snakemen slither!
+hovertanks and laser tanks and sentinel fighters, oh my!
+added sentinel class interceptor (costs more, is better, funky new sprite)
+tweaked firestorm to be actually good
+set avenger to have one weapon slot only, hybrid transports don't get to be effective fighter craft too, sorry.
+all missing alien races re-implemented, including Chryssalids, and their evil powers.
+terror missions at military bases (new map type) with military personnel (new unit type) with flashbangs and all mundane weapon types available
+plasma blade (alien combat knife), disruptors (alien laser tech) and gauss guns (alien AP tech) - aliens spawn with them - researchable, manufacturable
+flashbangs - explode immediately, no priming, reduces reactions, accuracy and detection radius for 2-3 turns
+sped up all projectiles by a factor of 2
+heavy weapons will only be issued to soldiers capable of using them (weight > 10, strength > 35)
+added police, they will show up as local law enforcement on terror missions and actually fight aliens
+incendiary grenades
+stun grenades
+combat knife
+grenade launcher with arcing projectile
+flamethrower with area of effect
+shotgun with multiple simultaneous projectiles
+full automatic fire mode for selected weapons (5 bullet auto fire)
+sniper rifle replaces heavy cannon
+combat armor added, purchasable from buy interface
+power armour replaced with re-coloured TFTD ion armour
+flying armour helmet graphics altered
+inventory screens for all new/updated armour
+left handedness now graphically represented
+dual wielding now properly represented on battlescape
+soldiers, if issued with pistols, will grab a melee weapon in their left hand, if one is available
