@@ -249,9 +249,9 @@ void PurchaseState::btnOkClick(Action *action)
 			{
 				for (int c = 0; c < _qtys[i]; c++)
 				{
-					RuleCraft *rc = _game->getRuleset()->getCraft(_crafts[i - 3]);
+					RuleCraft *rc = _game->getRuleset()->getCraft(_crafts[i - 4]);
 					Transfer *t = new Transfer(rc->getTransferTime());
-					Craft *craft = new Craft(rc, _base, _game->getSavedGame()->getId(_crafts[i - 3]));
+					Craft *craft = new Craft(rc, _base, _game->getSavedGame()->getId(_crafts[i - 4]));
 					craft->setStatus("STR_REFUELLING");
 					t->setCraft(craft);
 					_base->getTransfers()->push_back(t);
@@ -260,9 +260,9 @@ void PurchaseState::btnOkClick(Action *action)
 			// Buy items
 			else
 			{
-				RuleItem *ri = _game->getRuleset()->getItem(_items[i - 3 - _crafts.size()]);
+				RuleItem *ri = _game->getRuleset()->getItem(_items[i - 4 - _crafts.size()]);
 				Transfer *t = new Transfer(ri->getTransferTime());
-				t->setItems(_items[i - 3 - _crafts.size()], _qtys[i]);
+				t->setItems(_items[i - 4 - _crafts.size()], _qtys[i]);
 				_base->getTransfers()->push_back(t);
 			}
 		}
