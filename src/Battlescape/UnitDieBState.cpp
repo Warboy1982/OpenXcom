@@ -129,6 +129,10 @@ void UnitDieBState::think()
 		{
 			Position p = Position(_unit->getPosition().x * 16, _unit->getPosition().y * 16, _unit->getPosition().z * 24);
 			_parent->statePushNext(new ExplosionBState(_parent, p, 0, _unit, 0));
+			if(_unit->getStatus() == STATUS_UNCONSCIOUS)
+			{
+				_unit->instaKill();
+			}
 		}
 	}
 
