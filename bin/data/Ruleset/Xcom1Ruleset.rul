@@ -958,7 +958,7 @@ items:
     costSell: 594000
     transferTime: 96
     weight: 1
-    bigSprite: 43
+    bigSprite: 54
     floorSprite: 0
     handSprite: 0
     bulletSprite: 5
@@ -1008,7 +1008,7 @@ items:
     costSell: 1043000
     transferTime: 96
     weight: 1
-    bigSprite: 43
+    bigSprite: 42
     floorSprite: 0
     handSprite: 0
     bulletSprite: 10
@@ -1019,7 +1019,7 @@ items:
     tuAimed: 80
     battleType: 1
     fixedWeapon: true
-    turretType: 4
+    turretType: 1
     waypoint: true
     invWidth: 2
     invHeight: 3
@@ -1029,7 +1029,7 @@ items:
     costSell: 780000
     transferTime: 96
     weight: 1
-    bigSprite: 43
+    bigSprite: 54
     floorSprite: 0
     handSprite: 0
     bulletSprite: 5
@@ -1171,7 +1171,7 @@ items:
     costSell: 1043000
     transferTime: 96
     weight: 1
-    bigSprite: 43
+    bigSprite: 42
     floorSprite: 0
     handSprite: 0
     bulletSprite: 10
@@ -1182,7 +1182,7 @@ items:
     tuAimed: 80
     battleType: 1
     fixedWeapon: true
-    turretType: 4
+    turretType: 1
     waypoint: true
     invWidth: 2
     invHeight: 3
