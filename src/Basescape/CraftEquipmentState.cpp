@@ -457,22 +457,32 @@ void CraftEquipmentState::moveRight()
 			// Check if there's enough room
 			if (c->getNumVehicles() < c->getRules()->getVehicles() && c->getSpaceAvailable() >= 4)
 			{
-				RuleItem *ammo = _game->getRuleset()->getItem(item->getCompatibleAmmo()->front());
-				int qty = _base->getItems()->getItem(ammo->getType());
-				if (qty == 0)
+				bool add(true);
+				if(item->getClipSize() != -1)
 				{
-					std::wstringstream ss;
-					ss << _game->getLanguage()->getString("STR_NOT_ENOUGH");
-					ss << _game->getLanguage()->getString(ammo->getType());
-					ss << _game->getLanguage()->getString("STR_TO_ARM_HWP");
-					_game->pushState(new ErrorMessageState(_game, ss.str(), Palette::blockOffset(15)+1, "BACK04.SCR", 2));
-					_timerRight->stop();
+					RuleItem *ammo = _game->getRuleset()->getItem(item->getCompatibleAmmo()->front());
+					int qty = _base->getItems()->getItem(ammo->getType());
+					if (qty == 0)
+					{
+						std::wstringstream ss;
+						ss << _game->getLanguage()->getString("STR_NOT_ENOUGH");
+						ss << _game->getLanguage()->getString(ammo->getType());
+						ss << _game->getLanguage()->getString("STR_TO_ARM_HWP");
+						_game->pushState(new ErrorMessageState(_game, ss.str(), Palette::blockOffset(15)+1, "BACK04.SCR", 2));
+						add = false;
+						_timerRight->stop();
+					}
+					else
+					{
+						int newAmmo = std::min(qty, ammo->getClipSize());
+						c->getVehicles()->push_back(new Vehicle(item, newAmmo));
+						_base->getItems()->removeItem(ammo->getType(), newAmmo);
+						_base->getItems()->removeItem(_items[_sel]);
+					}
 				}
 				else
 				{
-					int newAmmo = std::min(qty, ammo->getClipSize());
-					c->getVehicles()->push_back(new Vehicle(item, newAmmo));
-					_base->getItems()->removeItem(ammo->getType(), newAmmo);
+					c->getVehicles()->push_back(new Vehicle(item, 255));
 					_base->getItems()->removeItem(_items[_sel]);
 				}
 			}

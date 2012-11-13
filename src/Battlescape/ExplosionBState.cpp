@@ -76,7 +76,8 @@ void ExplosionBState::init()
 						(_item->getRules()->getDamageType() == DT_HE 
 						|| _item->getRules()->getDamageType() == DT_IN 
 						|| _item->getRules()->getDamageType() == DT_SMOKE
-						|| _item->getRules()->getDamageType() == DT_STUN);
+						|| _item->getRules()->getDamageType() == DT_STUN
+						|| _item->getRules()->getDamageType() == DT_FLASH);
 	}
 	else if (_tile)
 	{

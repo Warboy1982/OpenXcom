@@ -35,6 +35,7 @@
 #include "../Savegame/SavedGame.h"
 #include "../Savegame/Waypoint.h"
 #include "SelectDestinationState.h"
+#include "DogfightState.h"
 
 namespace OpenXcom
 {
@@ -292,6 +293,10 @@ void GeoscapeCraftState::init()
 void GeoscapeCraftState::btnBaseClick(Action *action)
 {
 	_game->popState();
+	if(_craft->isInDogfight())
+	{
+		_craft->setInDogfight(false);
+	}
 	_craft->returnToBase();
 	delete _waypoint;
 }
