@@ -211,8 +211,8 @@ bool Pathfinding::aStarPath(const Position &startPosition, const Position &endPo
 			if (nextNode->isChecked()) // Our algorithm means this node is already at minimum cost.
 				continue;
 			_totalTUCost = currentNode->getTUCost(missile) + tuCost;
-			// If this node is unvisited or visited from a better path.
-			if ((!nextNode->inOpenSet() || nextNode->getTUCost(missile) > _totalTUCost) && nextNode->getTUCost(missile) < maxTUCost)
+			// If this node is unvisited or has only been visited from inferior paths...
+			if ((!nextNode->inOpenSet() || nextNode->getTUCost(missile) > _totalTUCost) && _totalTUCost <= maxTUCost)
 			{
 				nextNode->connect(_totalTUCost, currentNode, direction, endPosition);
 				openList.push(nextNode);
