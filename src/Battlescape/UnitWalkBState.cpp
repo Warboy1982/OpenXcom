@@ -432,7 +432,7 @@ void UnitWalkBState::postPathProcedures()
         {        
             // if we can't see the target, try to face where they might come from        
             _pf->abortPath();
-            _pf->calculate(_unit, _finalFacing);
+            _pf->calculate(_unit, _finalFacing, _parent->getSave()->getTile(_finalFacing)->getUnit());
 
             if (_pf->getStartDirection() != -1)
             {

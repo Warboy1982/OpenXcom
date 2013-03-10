@@ -513,6 +513,12 @@ bool TileEngine::surveyXComThreatToTile(Tile *tile, Position &tilePos, BattleUni
 		_save->getTiles()[i->first]->setUnit(i->second);
 	}
 	
+	if (tile->soldiersVisible == 0)
+	{
+		tile->closestSoldierDSqr = -1; 
+		tile->closestSoldierPos = Position(INT_MAX, INT_MAX, INT_MAX);
+	}
+	
 	return true;
 }
 
