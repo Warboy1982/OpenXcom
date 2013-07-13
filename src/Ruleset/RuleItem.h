@@ -65,7 +65,7 @@ private:
 	int _turretType;
 	bool _recover, _liveAlien;
 	int _blastRadius, _attraction;
-	bool _flatRate, _arcingShot;
+	bool _flatRate, _arcingShot, _shotgun;
 	int _listOrder, _range, _bulletSpeed;
 public:
 	/// Creates a blank item ruleset.
@@ -188,6 +188,7 @@ public:
 	int getRange() const;
 	/// how fast does a projectile fired from this weapon travel?
 	int getBulletSpeed() const;
+	bool isShotgun() const;
 
 };
 

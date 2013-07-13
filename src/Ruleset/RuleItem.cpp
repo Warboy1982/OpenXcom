@@ -33,7 +33,7 @@ RuleItem::RuleItem(const std::string &type) : _type(type), _name(type), _size(0.
 											_accuracyAuto(0), _accuracyFullAuto(0), _accuracySnap(0), _accuracyAimed(0), _tuAuto(0), _tuFullAuto(0), _tuSnap(0), _tuAimed(0), _clipSize(0), _accuracyMelee(0), _tuMelee(0),
 											_battleType(BT_NONE), _twoHanded(false), _waypoint(false), _fixedWeapon(false), _invWidth(1), _invHeight(1),
 											_painKiller(0), _heal(0), _stimulant(0), _healAmount(0), _healthAmount(0), _stun(0), _energy(0), _tuUse(0), _recoveryPoints(0), _armor(20), _turretType(-1),
-											_recover(true), _liveAlien(false), _blastRadius(-1), _attraction(0), _flatRate(false), _arcingShot(false), _listOrder(0), _range(0), _bulletSpeed(0)
+											_recover(true), _liveAlien(false), _blastRadius(-1), _attraction(0), _flatRate(false), _arcingShot(false), _shotgun(false), _listOrder(0), _range(0), _bulletSpeed(0)
 {
 }
 
@@ -303,6 +303,10 @@ void RuleItem::load(const YAML::Node &node, int modIndex, int listOrder)
 		{
 			i.second() >> _bulletSpeed;
 		}
+		else if (key == "shotgun")
+		{
+			i.second() >> _shotgun;
+		}
 	}
 	if (!_listOrder)
 	{
@@ -366,6 +370,7 @@ void RuleItem::save(YAML::Emitter &out) const
 	out << YAML::Key << "blastRadius" << YAML::Value << _blastRadius;
 	out << YAML::Key << "flatRate" << YAML::Value << _flatRate;
 	out << YAML::Key << "arcingShot" << YAML::Value << _arcingShot;
+	out << YAML::Key << "shotgun" << YAML::Value << _shotgun;
 	out << YAML::Key << "attraction" << YAML::Value << _attraction;
 	out << YAML::Key << "bulletSpeed" << YAML::Value << _bulletSpeed;
 	out << YAML::EndMap;
@@ -907,6 +912,11 @@ int RuleItem::getRange() const
 int RuleItem::getBulletSpeed() const
 {
 	return _bulletSpeed;
+}
+
+bool RuleItem::isShotgun() const
+{
+	return _shotgun;
 }
 
 }

@@ -20,6 +20,7 @@
 #include <cmath>
 #include "ProjectileFlyBState.h"
 #include "ExplosionBState.h"
+#include "Explosion.h"
 #include "Projectile.h"
 #include "TileEngine.h"
 #include "Map.h"
@@ -319,6 +320,11 @@ void ProjectileFlyBState::think()
 	}
 	else
 	{
+		if (_action.type != BA_THROW && _action.weapon->getRules()->isShotgun())
+		{
+			_parent->getMap()->getProjectile()->skipTrajectory();
+			_parent->getMap()->getProjectile()->move();
+		}
 		if(!_parent->getMap()->getProjectile()->move())
 		{
 			// impact !
@@ -400,6 +406,25 @@ void ProjectileFlyBState::think()
 
 			delete _parent->getMap()->getProjectile();
 			_parent->getMap()->setProjectile(0);
+		}
+		if (_action.type != BA_THROW && _action.weapon->getRules()->isShotgun())
+		{
+			for (int i = 0; i != 5; ++i)
+			{
+				// create a new projectile
+				++_action.autoShotCounter;
+				Projectile *projectile = new Projectile(_parent->getResourcePack(), _parent->getSave(), _action, _origin);
+				int projectileImpact = projectile->calculateTrajectory(std::max((_unit->getFiringAccuracy(_action.type, _action.weapon) - _action.autoShotCounter * 5), 1.0));
+				projectile->skipTrajectory();
+				projectile->move();
+				if (projectileImpact != 5) // out of map
+				{
+					Explosion *explosion = new Explosion(projectile->getPosition(0), _action.weapon->getAmmoItem()->getRules()->getHitAnimation(), false);
+					_parent->getMap()->getExplosions()->insert(explosion);
+					_parent->getTileEngine()->hit(projectile->getPosition(0), _action.weapon->getAmmoItem()->getRules()->getPower(), _action.weapon->getAmmoItem()->getRules()->getDamageType(), _unit);
+				}
+				delete projectile;
+			}
 		}
 	}
 }
