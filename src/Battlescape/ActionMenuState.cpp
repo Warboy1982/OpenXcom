@@ -86,6 +86,10 @@ ActionMenuState::ActionMenuState(Game *game, BattleAction *action, int x, int y)
 		}
 		else
 		{
+			if (weapon->getAccuracyFullAuto() != 0)
+			{
+				addItem(BA_FULLAUTO, "STR_FULL_AUTO", &id);
+			}
 			if (weapon->getAccuracyAuto() != 0)
 			{
 				addItem(BA_AUTOSHOT, "STR_AUTO_SHOT", &id);
@@ -156,7 +160,7 @@ void ActionMenuState::addItem(BattleActionType ba, const std::string &name, int 
 		acc = (int)floor(_action->actor->getThrowingAccuracy() * 100);
 	int tu = _action->actor->getActionTUs(ba, _action->weapon);
 
-	if (ba == BA_THROW || ba == BA_AIMEDSHOT || ba == BA_SNAPSHOT || ba == BA_AUTOSHOT || ba == BA_LAUNCH)
+	if (ba == BA_THROW || ba == BA_AIMEDSHOT || ba == BA_SNAPSHOT || ba == BA_AUTOSHOT || ba == BA_LAUNCH || ba == BA_FULLAUTO)
 		ss1 << _game->getLanguage()->getString("STR_ACC") << acc << "%";
 	ss2 << _game->getLanguage()->getString("STR_TUS") << tu;
 	_actionMenu[*id]->setAction(ba, _game->getLanguage()->getString(name), ss1.str(), ss2.str(), tu);

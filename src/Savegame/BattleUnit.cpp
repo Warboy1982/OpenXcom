@@ -1169,6 +1169,8 @@ int BattleUnit::getActionTUs(BattleActionType actionType, BattleItem *item)
 		case BA_LAUNCH:
 		case BA_AIMEDSHOT:
 			return (int)(getStats()->tu * item->getRules()->getTUAimed() / 100);
+		case BA_FULLAUTO:
+			return (int)(getStats()->tu * item->getRules()->getTUFullAuto() / 100);
 		case BA_USE:
 		case BA_MINDCONTROL:
 		case BA_PANIC:
@@ -1326,6 +1328,8 @@ double BattleUnit::getFiringAccuracy(BattleActionType actionType, BattleItem *it
 		weaponAcc = item->getRules()->getAccuracyAimed();
 	else if (actionType == BA_AUTOSHOT)
 		weaponAcc = item->getRules()->getAccuracyAuto();
+	else if (actionType == BA_FULLAUTO)
+		weaponAcc = item->getRules()->getAccuracyFullAuto();
 	else if (actionType == BA_HIT)
 		weaponAcc = item->getRules()->getAccuracyMelee();
 

@@ -51,7 +51,7 @@ private:
 	int _power;
 	std::vector<std::string> _compatibleAmmo;
 	ItemDamageType _damageType;
-	int _accuracyAuto, _accuracySnap, _accuracyAimed, _tuAuto, _tuSnap, _tuAimed;
+	int _accuracyAuto, _accuracyFullAuto, _accuracySnap, _accuracyAimed, _tuAuto, _tuFullAuto, _tuSnap, _tuAimed;
 	int _clipSize, _accuracyMelee, _tuMelee;
 	BattleType _battleType;
 	bool _twoHanded, _waypoint, _fixedWeapon;
@@ -118,6 +118,8 @@ public:
 	int getAccuracySnap() const;
 	/// Gets the item's autoshot accuracy.
 	int getAccuracyAuto() const;
+	/// Gets the item's full auto accuracy.
+	int getAccuracyFullAuto() const;
 	/// Gets the item's aimed shot accuracy.
 	int getAccuracyAimed() const;
 	/// Gets the item's melee accuracy.
@@ -126,6 +128,8 @@ public:
 	int getTUSnap() const;
 	/// Gets the item's autoshot TU cost.
 	int getTUAuto() const;
+	/// Gets the item's full auto TU cost.
+	int getTUFullAuto() const;
 	/// Gets the item's aimed shot TU cost.
 	int getTUAimed() const;
 	/// Gets the item's melee TU cost.
